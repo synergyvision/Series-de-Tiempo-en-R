@@ -1,5 +1,3 @@
-<script src="https://cdn.datacamp.com/datacamp-light-latest.min.js"></script>
-
 --- 
 title: "Series de Tiempo en R"
 subtitle: "Ciencia de los Datos Financieros"
@@ -23,82 +21,27 @@ github-repo: synergyvision/Series-de-Tiempo-en-R/
 cover-image: images/cover.png
 ---
 
-
-
-
-
 # Prefacio {-}
-
-<a href="https://synergy.vision/LibrosInteractivos/" target="_blank"><img src="images/cover.png" style="display: block; margin: auto;" /></a>
-
-
-![Creative Commons License](images/by-nc-sa.png)  
-La versión en línea de este libro se comparte bajo la licencia [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
-
 ## ¿Por qué  leer este libro? {-}
-
-Este libro es el resultado de enfocarnos en proveer la mayor cantidad de material sobre Probabilidad y Estadística Matemática con un desarrollo teórico lo más explícito posible, con el valor agregado de incorporar ejemplos de las finanzas y la programación en `R`. Finalmente tenemos un libro interactivo que ofrece una experiencia de aprendizaje distinta e innovadora.
-
-El un mundo abierto, ya no es tanto el acceso a la información, sino el acceso al conocimiento. Este libro es la base teórica para nuestro Diplomado en Probabilidades y Estadística Matemática aplicado a las Finanzas. Aunque es un material de corte general, hay ejemplos específicos traido de las finanzas. En el Diplomado nos enfocamos en el participante, el propósito es que el instructor ocupa a lo sumo el 20% del tiempo y el resto del tiempo los participantes se dedican a practicar y resolver ejercicios, tanto teóricos como de programación y modelaje en `R` al nivel de un curso de Postgrado. Ésta es la base de un programa en Ciencia de los Datos Financieros.
-
-Es mucha la literatura, pero son pocas las opciones donde se pueda navegar el libro de forma amigable y además contar con ejemplos en `R` y ejercicios interactivos, además del contenido multimedia. Esperamos que ésta sea un contribución sobre nuevas prácticas para publicar el contenido y darle vida, crear una experiencia distinta, una experiencia interactiva y visual. El reto es darle vida al contenido asistidos con las herramientas de Internet.
-
-Finalmente este es un intento de ofrecer otra visión sobre la enseñanza y la generación de material más accesible. Estamos en un mundo multidisciplinado, es por ello que ahora hay que generar contenido que conjugue en un mismo lugar las matemáticas, estadística, finanzas y la computación.
-
-Lo dejamos público ya que las herramientas que usamos para ensamblarlo son abiertas y públicas.
-
 ## Estructura del libro {-}
-
-TODO: Describir la estructura
-
 ## Información sobre los programas y convenciones {-}
-
-Este libro es posible gracias a una gran cantidad de desarrolladores que contribuyen en la construcción de herramientas para generar documentos enriquecidos e interactivos. En particular al autor de los paquetes Yihui Xie xie2015.
-
 ## Prácticas interactivas con R {-}
-
-Vamos a utilizar el paquete [Datacamp Tutorial](https://github.com/datacamp/tutorial) que utiliza la librería en JavaScript [Datacamp Light](https://github.com/datacamp/datacamp-light) para crear ejercicios y prácticas con `R`. De esta forma el libro es completamente interactivo y con prácticas incluidas. De esta forma estamos creando una experiencia única de aprendizaje en línea.
-
-<div data-datacamp-exercise data-height="300" data-encoded="true">eyJsYW5ndWFnZSI6InIiLCJwcmVfZXhlcmNpc2VfY29kZSI6ImIgPC0gNSIsInNhbXBsZSI6IiMgQ3JlYSB1bmEgdmFyaWFibGUgYSwgaWd1YWwgYSA1XG5cblxuIyBNdWVzdHJhIGVsIHZhbG9yIGRlIGEiLCJzb2x1dGlvbiI6IiMgQ3JlYSB1bmEgdmFyaWFibGUgYSwgaWd1YWwgYSA1XG5hIDwtIDVcblxuIyBNdWVzdHJhIGVsIHZhbG9yIGRlIGFcbmEiLCJzY3QiOiJ0ZXN0X29iamVjdChcImFcIilcbnRlc3Rfb3V0cHV0X2NvbnRhaW5zKFwiYVwiLCBpbmNvcnJlY3RfbXNnID0gXCJBc2VnJnVhY3V0ZTtyYXRlIGRlIG1vc3RyYXIgZWwgdmFsb3IgZGUgYGFgLlwiKVxuc3VjY2Vzc19tc2coXCJFeGNlbGVudGUhXCIpIn0=</div>
-
-
-
-
-
-
-
 ## Agradecimientos {-}
-
-A todo el equipo de Synergy Vision que no deja de soñar. Hay que hacer lo que pocos hacen, insistir, insistir hasta alcanzar. Lo más importante es concretar las ideas. La idea es sólo el inicio y solo vale cuando se concreta.
-
-
-\BeginKnitrBlock{flushright}<p class="flushright">Synergy Vision, Caracas, Venezuela</p>\EndKnitrBlock{flushright}
-
-
-
-
-
-
-
 
 <!--chapter:end:index.Rmd-->
 
 
 # Acerca del Autor {-}
 
-Este material es un esfuerzo de equipo en Synergy Vision, (<http://synergy.vision/nosotros/>).		 
-
-El propósito de este material es ofrecer una experiencia de aprendizaje distinta y enfocada en el estudiante. El propósito es que realmente aprenda y practique con mucha intensidad. La idea es cambiar el modelo de clases magistrales y ofrecer una experiencia más centrada en el estudiante y menos centrado en el profesor. Para los temas más técnicos y avanzados es necesario trabajar de la mano con el estudiante y asistirlo en el proceso de aprendizaje con prácticas guiadas, material en línea e interactivo, videos, evaluación contínua de brechas y entendimiento, entre otros, para procurar el dominio de la materia.
-  		  
-Nuestro foco es la Ciencia de los Datos Financieros y para ello se desarrollará material sobre: **Probabilidad y Estadística Matemática en R**, **Programación Científica en R**, **Mercados**, **Inversiones y Trading**, **Datos y Modelos Financieros en R**, **Renta Fija**, **Inmunización de Carteras de Renta Fija**, **Teoría de Riesgo en R**, **Finanzas Cuantitativas**, **Ingeniería Financiera**, **Procesos Estocásticos en R**, **Series de Tiempo en R**, **Ciencia de los Datos**, **Ciencia de los Datos Financieros**, **Simulación en R**, **Desarrollo de Aplicaciones Interactivas en R**, **Minería de Datos**, **Aprendizaje Estadístico**, **Estadística Multivariante**, **Riesgo de Crédito**, **Riesgo de Liquidez**, **Riesgo de Mercado**, **Riesgo Operacional**, **Riesgo de Cambio**, **Análisis Técnico**, **Inversión Visual**, **Finanzas**, **Finanzas Corporativas**, **Valoración**, **Teoría de Portafolio**, entre otros.
-
-Nuestra cuenta de Twitter es (https://twitter.com/bysynergyvision) y nuestros repositorios están en GitHub (https://github.com/synergyvision).
-  		  
- **Somos Científicos de Datos Financieros**
-
 <!--chapter:end:000-author.Rmd-->
 
+
 # Introducción 
+## Motivation
+
+<!--chapter:end:010-introduction.Rmd-->
+
+# Introducción 2
 
 Las series de tiempo ya han desempeñado un papel importante en las primeras ciencias naturales. La astronomía babilónica utilizó series de tiempo de las posiciones relativas de estrellas y planetas para predecir eventos astronómicos. Las observaciones de los movimientos de los planetas formaron la base de las leyes que Johannes Kepler descubrió.
  El análisis de las series de tiempo ayuda a detectar las regularidades en las observaciones de una variable y a derivar "leyes" de ellas, y/o explotar toda la información incluida en esta variable para predecir mejor los desarrollos futuros. La idea metodológica básica detrás de estos procedimientos, que también eran válidos para los babilonios, es que es posible descomponer series de tiempos en un número finito de componentes independientes pero no directamente observables que se desarrollan regularmente y que por lo tanto pueden ser calculados de antemano. Para este procedimiento es necesario que existan diferentes factores independientes que incidan en la variable.
@@ -193,24 +136,20 @@ Los comandos en R para cargar el archivo y graficar la serie de tiempo son los s
 
 
 ```r
-jj=ts(scan("data/jj.txt"),start=1960,freq=4) 
-plot(jj, type="l",ylab="Beneficios por acción trimestrales")
+#jj=ts(scan("data/jj.txt"),start=1960,freq=4) 
+#plot(jj, type="l",ylab="Beneficios por acción trimestrales")
 ```
-
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-8-1.svg)<!-- -->
 
 \BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:reservas-internacionales"><strong>(\#exm:reservas-internacionales) </strong></span>El archivo *"ReservasInternacionales.xlsx"*, contiene el registro mensual de Reservas Internacionales Venezolanas en millones de dólares ($), iniciando en el mes de enero de 1996 hasta el mes de diciembre de 2017</div>\EndKnitrBlock{example}
 
 
 ```r
 #library(readxl)
-reservas <- read_excel("data/ReservasInternacionales.xlsx")
-reservas=ts(reservas,start = 1996,frequency = 12)
-plot.ts(reservas[,2], xlab="Año",ylab="Monto",
-        main="Reservas Internacionales de Venezuela (millones $)")
+#reservas <- read_excel("data/ReservasInternacionales.xlsx")
+#reservas=ts(reservas,start = 1996,frequency = 12)
+#plot.ts(reservas[,2], xlab="Año",ylab="Monto",
+#        main="Reservas Internacionales de Venezuela (millones $)")
 ```
-
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-9-1.svg)<!-- -->
 
 
 \BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:precio-petroleo"><strong>(\#exm:precio-petroleo) </strong></span>El archivo *"PreciosPetroleoVzla.xlsx"* contiene el precio promedio mensual de venta para el petróleo venezolano (en dólares) desde enero 2006 hasta noviembre 2017</div>\EndKnitrBlock{example}
@@ -218,48 +157,48 @@ plot.ts(reservas[,2], xlab="Año",ylab="Monto",
 
 ```r
 # library(readxl)
-petroleo <- read_excel("data/PreciosPetroleoVzla.xlsx")
-petroleo=ts(petroleo,start = 2006,frequency = 12)
-plot.ts(petroleo[,2], xlab="Año",ylab="Monto",
-        main="Precio promedio del petróleo venezolano (en dolares $)")
+# petroleo <- read_excel("data/PreciosPetroleoVzla.xlsx")
+# petroleo=ts(petroleo,start = 2006,frequency = 12)
+# plot.ts(petroleo[,2], xlab="Año",ylab="Monto",
+#         main="Precio promedio del petróleo venezolano (en dolares $)")
 ```
-
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-10-1.svg)<!-- -->
 
 
 \BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:indice-dow-jones"><strong>(\#exm:indice-dow-jones) </strong></span>El archivo *"IndiceDowJones.xlsx"* contiene los valores histórico del índice Dow-Jones desde enero de 1930 hasta octubre de 2017. En el archivo podems notar que desde enero de 1930 hasta diciembre de 1994, los registros son el promedio semanal, a partir de enero de 1995, los registros son diarios. La primera columa es la fecha, la segunda columna es el valor de apertura, la tercera columna el valor máximo, la cuarta el valor mínimo, la quinta el último valor del índice o valor de cierre y la sexta columna es el volumen de acciones.</div>\EndKnitrBlock{example}
 
 
 ```r
-DJ=read_excel("data/IndiceDowJones.xlsx")
-DJ=ts(DJ)
-plot.ts(DJ[,-1], xlab="Días",
-        main="Índice Dow-Jones desde enero 1930 hasta octubre 2017")
+# DJ=read_excel("data/IndiceDowJones.xlsx")
+# DJ=ts(DJ)
+# plot.ts(DJ[,-1], xlab="Días", 
+#         main="Índice Dow-Jones desde enero 1930 hasta octubre 2017")
 ```
-
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-11-1.svg)<!-- -->
 
 
 \BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:Bolsa-Valores-New-York"><strong>(\#exm:Bolsa-Valores-New-York) </strong></span>La figura siguiente muestra los porcentajes de cambio diario de la Bolsa de Valores de New York desde el 2 de febrero de 1984 hasta el 31 de diciembre de 1991. Como se ve hay una caída fuerte, esta ocurrió el 19 de octubre de 1987 en $t=938$. El archivo de datos es *"nyse.txt"*.</div>\EndKnitrBlock{example}
 
 
 ```r
-NYSE=ts(scan("data/nyse.txt"))
-plot(NYSE,xlab="Tiempo",ylab="Porcentaje de cambio, NYSE")
+# NYSE=ts(scan("data/nyse.txt"))
+# plot(NYSE,xlab="Tiempo",ylab="Porcentaje de cambio, NYSE")
 ```
-
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-12-1.svg)<!-- -->
 
 ### Clasificación de las series de tiempo
 
 Como se ha mostrado en los ejemplos anteriores, hay una amplia variedad de series de tiempo que pueden clasificarse en varias categorías desde varios puntos de vista. 
 
+
+
 - **Series de tiempo continuas y discretas**. 
 Los datos registrados continuamente, por ejemplo, por un dispositivo analógico, se denominan series de tiempo continuas. Por otra parte, los datos observados en ciertos intervalos de tiempo, como la presión atmosférica medida cada hora, se denominan series de tiempo discretas. Existen dos tipos de series de tiempo discretas: una en la que las observaciones de los datos se realizan a intervalos de igual espaciamiento y otra en la que las observaciones de los datos se realizan a intervalos de espaciamiento desigual. Aunque las series de tiempo mostradas en los ejemplos anteriores están conectadas continuamente por líneas sólidas, todas ellas son series de tiempo discretas. A partir de ahora en este libro, consideramos sólo discretas series de tiempo grabadas a intervalos igualmente espaciados, porque las series de tiempo que analizamos en ordenadores digitales son generalmente series de tiempo discretas.
+
+
 
 - **Series de tiempo univariadas y multivariadas**. 
 Las series de tiempo que consisten en una sola observación en cada punto temporal, como se muestran en los ejemplos 1.1, 1.2, 1.3 y 1.5, se denominan series de tiempo univariadas. Por otra parte, las series de tiempo que se obtienen grabando simultáneamente 
 dos o más fenómenos como los ilustrados en el ejemplo 1.4 se denominan series de tiempo multivariadas. Sin embargo, puede ser difícil distinguir entre series de tiempo univariadas y multivariadas desde su naturaleza; más bien, la distinción se hace desde el punto de vista del analista y por varios otros factores, como la restricción de la medición y los conocimientos empíricos o teóricos sobre el tema. Desde el punto de vista del modelado estadístico, la selección de variables en sí misma es un problema importante en el análisis de series de tiempo.
+
+
 
 - **Series de tiempo estacionarias y no estacionarias**. 
 Una serie de tiempo es un registro de un fenómeno que varía irregularmente con el tiempo. En el análisis de series de tiempo, las series de tiempo de variación irregular se expresan generalmente mediante modelos estocásticos. En algunos casos, un fenómeno aleatorio puede ser considerado como la realización de un modelo estocástico con una estructura de variación temporal. Estas series de tiempo se denominan series de tiempo estacinarias. El ejemplo 1.5 es un ejemplo típico de una serie de tiempo estacionaria. Por otra parte, si la estructura estocástica de una serie de tiempo cambia con el tiempo, se denomina serie de tiempo no estacionaria. Como ejemplos típicos de series de tiempo no estacionarias, considere la serie en los ejemplos 1.1 a 1.4 . Se puede observar que los valores medios cambian a lo largo del tiempo.
@@ -271,6 +210,8 @@ Cuando una distribución de una serie de tiempo sigue una distribución normal, 
 
 - **Series de tiempo lineales y no lineales**. 
 Una serie de tiempo expresable como la salida de un modelo lineal se denomina serie de tiempo lineal. Por el contrario, la salida de un modelo no lineal se denomina serie de tiempo no lineal.
+
+
 
 - **Datos faltantes y valores atípicos**. 
 En el modelado de series de tiempo de problemas del mundo real, a veces necesitamos tratar con observaciones faltante y valores atípicos. Algunos valores de las series de tiempo que no se han registrado por algunas razones se denominan observaciones que faltan en las series de tiempo. Los valores atípicos (observaciones exteriores) pueden ocurrir debido al comportamiento extraordinario del objeto, mal funcionamiento del dispositivo de observación o errores en el registro. En los datos de los ejemplos 1.4 y 1.5 se pueden observar datos atípicos. En el ejemplo 1.4 podemos notar caídas en los índices del DowJones y en el ejemplo 1.4 podemos notar una fuerte caída en el porcentaje de cambio de diario ocurrido el 19 de octubre de 1987.
@@ -317,7 +258,7 @@ La componente $T_t$ en algunos casos también puede ser una componente estaciona
 En la Figura \ref{grafica-tema3-modelo-aditivo} se muestra la idea de la descomposición. Al superponer las series en los gráficos (a), (b) y (c) se obtiene la serie en el gráfico (d).
 
 
-<img src="images/Grafica-tema3-modelo-aditivo.png" style="display: block; margin: auto;" />
+
 
 Asumiendo el modelo aditivo, el análisis de series de tiempo consiste en modelar y estimar $T_t$ y $E_t$ y luego extraerlas de $X_t$ para obtener $\hat{\epsilon}_t = X_t - \hat{T}_t - \hat{E}_t$. La serie $\hat{\epsilon}_t$ se modela y estima para finalmente reconstruír $X_t$, $\hat{X}_t = \hat{T}_t+\hat{E}_t+\hat{\epsilon}_t$, y poder realizar el pronóstico $\hat{X}_{t+h}=\hat{T}_{t+h}+\hat{E}_{t+h}+\hat{\epsilon}_{t+h}$, utilizando la información disponible $X_t,\ldots,X_n$ con $h=1,2,\ldots,m$. Sin embargo, puede suceder que la serie $\hat{\epsilon}_t$ sea incorrelacionada, es decir, $Corr(\hat{\epsilon}_t,\hat{\epsilon}_{t+s}) = 0$, para $s\neq0$. En este caso $\hat{\epsilon}_{t+h}=0$ para todo $h>0$.
 
@@ -450,7 +391,7 @@ En ausencia de la componente estacional $E_t$ el modelo \@ref(eq:eq-modelo-aditi
 X_t = T_t + \epsilon_t,\quad t=1,\ldots,n
 (\#eq:eq-modelo-tendencia)
 \end{equation}
-donde, sin perdida de generalidad, podemos asumir que $E(\epsilon_t)=0$.
+donde, sin perdida de generalidad, podemos asumir que $\E(\epsilon_t)=0$.
 
 1. **Método T1: Estimación de $T_t$ por mínimos cuadrados**. En este procedimiento intentamos ajustar una familia paramétrica de funciones como vimos en la sección~\ref{seccion-modelo-aditivo}, a los datos eligiendo los parámetros que minimicen $\sum_t(X_t-T_t)^2$.
 
@@ -462,43 +403,16 @@ para la población de EE.UU en 1990. Sin embargo si los residuales $\hat{\epsilo
 
 
 ```r
-uspop=ts(scan("data/USPOP.txt"),frequency=1/10,start=1790)
-pop=window(uspop,start=1790)
-x=time(pop)
-reg=lm(pop~x+I(x^2),na.action=NULL)
-summary(reg)
+# uspop=ts(scan("data/USPOP.txt"),frequency=1/10,start=1790) 
+# pop=window(uspop,start=1790) 
+# x=time(pop)
+# reg=lm(pop~x+I(x^2),na.action=NULL)
+# summary(reg)
+# plot(pop,type="o",ylab="Poblacion (millones)")
+# curve(reg$coefficient[1]+reg$coefficient[2]*x+reg$coefficient[3]*x^2,
+#       add=T,col= "red")
 ```
 
-```
-## 
-## Call:
-## lm(formula = pop ~ x + I(x^2), na.action = NULL)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -6947521  -358167   436285  1481410  3391761 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.10e+10   6.59e+08    31.9   <2e-16 ***
-## x           -2.34e+07   6.98e+05   -33.5   <2e-16 ***
-## I(x^2)       6.51e+03   1.85e+02    35.2   <2e-16 ***
-## ---
-## Signif. codes:  
-## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 2770000 on 18 degrees of freedom
-## Multiple R-squared:  0.999,	Adjusted R-squared:  0.999 
-## F-statistic: 8.05e+03 on 2 and 18 DF,  p-value: <2e-16
-```
-
-```r
-plot(pop,type="o",ylab="Poblacion (millones)")
-curve(reg$coefficient[1]+reg$coefficient[2]*x+reg$coefficient[3]*x^2,
-      add=T,col= "red")
-```
-
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-14-1.svg)<!-- -->
 
 2. **Método T2: Suavizado por medio de un promedio móvil**. Sea $q$ un entero no negativo y consideremos un promedio móvil de la forma
 \begin{equation}
@@ -527,25 +441,15 @@ Las instrucciones en R para el suavizado y los gráficos son los siguientes:</di
 
 
 ```r
-H=read.table("data/Huelgas.txt")
-plot(H,xlab="anos",ylab="Huelgas",type='b')
+# H=read.table("data/Huelgas.txt")
+# plot(H,xlab="anos",ylab="Huelgas",type='b')
+# W=filter(H[,2],sides=2,rep(1/5,5))
+# plot(H[,1],W,xlab="anos",ylab="Huelgas",type='b')
+# y=H[,2]-W 
+# plot(H[,1],y,xlab="anos",ylab="Residuales",type='b')
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-15-1.svg)<!-- -->
 
-```r
-W=filter(H[,2],sides=2,rep(1/5,5))
-plot(H[,1],W,xlab="anos",ylab="Huelgas",type='b')
-```
-
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-15-2.svg)<!-- -->
-
-```r
-y=H[,2]-W
-plot(H[,1],y,xlab="anos",ylab="Residuales",type='b')
-```
-
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-15-3.svg)<!-- -->
 
 Para cada valor fijo $a\in[0,1]$, el promedio móvil de un lado $\hat{T}_t, t=1,\ldots,n$, definido por la recursión
 \begin{equation}
@@ -553,7 +457,6 @@ Para cada valor fijo $a\in[0,1]$, el promedio móvil de un lado $\hat{T}_t, t=1,
  (\#eq:eq-promedio-movil-1-lado-peso)
 \end{equation}
 y
-
 $$\hat{T}_1=X_1,$$
 se puede calcular usando la opción *sides=1* en la función *filter* de R.
 
@@ -579,7 +482,6 @@ Las potencias de los operadores $B$ y $\nabla$ se definen de manera obvia, esto 
       Si el operador $\nabla$ se aplica a una función con tendencia lineal $T_t=at+b$, entonces obtenemos la función constante $\nabla T_t=a$. De la misma manera cada tendencia polinomial de grado $k$ se puede reducir a una constante por aplicación del operador $\nabla^k$.
 
 Iniciando entonces con el modelo $X_t=T_t+\epsilon_t$, donde $T_t=\sum_{j=0}^ka_jt^j$ y $\epsilon_t$ es estacionario con media cero, obtenemos
-
 $$\nabla^kX_t = k!a_k+\nabla^k\epsilon_t,$$
 un proceso estacionario con media $k!a_k$. Esta consideración sugiere la posibilidad, dada una sucesión $\{X_t\}$ de datos, de aplicar el operador $\nabla$ repetidamente hasta conseguir una sucesión $\{\nabla^kX_t\}$ la cual puede ser apropiadamente modelada como una realización de un proceso estacionario. Se encuentra a menudo en la práctica que el orden $k$ de diferenciación es bastante pequeño, frecuentemente uno o dos.\footnote{Esto depende del hecho de que muchas funciones pueden ser aproximadas bastante bien, en un intervalo de longitud finita, por un polinomio de grado razonablemente bajo.}
 
@@ -589,7 +491,7 @@ Las instrucciones en R son las siguientes
 
 
 ```r
-Dx=diff(uspop,difference=2)
+#Dx=diff(uspop,difference=2)
 ```
 
 <!--
@@ -602,11 +504,11 @@ Los métodos descritos para remover la tendencia pueden ser adaptados de manera 
 \begin{equation}
 X_t = T_t + E_t + \epsilon_t
 \end{equation}
-donde $E\epsilon_t=0, E_{t+d}=E_t$ y $\sum_{j=1}^dE_t=0$. Ilustraremos estos métodos con referencia al siguiente ejemplo de accidentes.  En la Tabla~\ref{tabla-accidentes-USA} se muestran los datos, y en la Figura~\ref{Grafico-tema3-accidentes-USA} podemos observar que en los mismos se ve claramente una componente estacional con periodo $d=12$.
+donde $\E\epsilon_t=0, E_{t+d}=E_t$ y $\sum_{j=1}^dE_t=0$. Ilustraremos estos métodos con referencia al siguiente ejemplo de accidentes.  En la Tabla~\ref{tabla-accidentes-USA} se muestran los datos, y en la Figura~\ref{Grafico-tema3-accidentes-USA} podemos observar que en los mismos se ve claramente una componente estacional con periodo $d=12$.
 
 
 mes/año |  1973 |  1974 |  1975 |  1976 |  1977 |  1978 
-:--------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:
+--------|-------|-------|-------|-------|-------|-------
 Ene     |	 9007 |	 7750 |	 8162 |	 7717 |	 7792 |	 7836 
 Feb     |	 8106 |	 6981 |	 7306 |	 7461 |	 6957 |	 6892 
 Mar     |	 8928 |	 8038 |	 8124 |	 7776 |	 7726 |	 7791 
@@ -621,6 +523,7 @@ Nov     |	 9161 |	 8710 |	 8160 |	 7874 |	 8265 |	 8633
 Dic     |	 8927 |	 8680 |	 8034 |	 8647 |	 8796 |	 9240 
 
 Accidentes mortales mensuales en EE.UU., años 1973-1978.
+
 
 Será conveniente para el primer método indexar los datos por año y mes. Entonces $X_{j,k}, j=1,\ldots,6, k=1,\ldots,12$ denotará el número de muertes accidentales reportados para el $k$-ésimo mes del $j$-ésimo año, (1972+j). En otras palabras, definimos
 $$X_{j,k}=X_{k+12(j-1)}, j=1,\ldots,6, k=1,\ldots,12.$$
@@ -668,7 +571,6 @@ d_t = X_t-\hat{E}_t,\quad t=1,\ldots,n.
 (\#eq:eq-serie-destacionalizada)
 \end{equation}
 Finalmente, reestimamos la tendencia de $\{d_t\}$ aplicando un filtro de promedio móvil como se describió para los datos no estacionales o fijando un polinomio a la serie $\{d_t\}$. El término del ruido estimado llega a ser entonces
-
 $$\hat{\epsilon}_t = X_t - \hat{E}_t - \hat{E}_t, \quad t=1,\ldots,n.$$
 Los resultados de aplicar los Métodos S1 y S2 a los datos de accidentes mortales son casi iguales, dado que en este caso la constante a trozos y el promedio móvil de $T_t$ están razonablemente cercanos.
 
@@ -676,7 +578,7 @@ Una comparación de los valores estimados de $E_k, k=1,\ldots,12$, obtenido con 
 
 
 k     |   1 |   2 |  3 |  4 | 5 | 6 |  7 | 8 |  9 | 10|  11| 12 
-:------:|:-----:|:-----:|:----:|:----:|:---:|:---:|:----:|:---:|:----:|:---:|:----:|----:
+------|-----|-----|----|----|---|---|----|---|----|---|----|----
 $\hat{E}_t(S1)$|-7434|-1504|-724|-523|338|808|1665|961| -87|197|-321|-67 
 $\hat{E}_t(S2)$| -804|-1522|-737|-526|343|746|1680|987|-109|258|-259|-57 
 
@@ -696,128 +598,19 @@ $$\nabla_dX_t = T_t-T_{t-d} + \epsilon_t-\epsilon_{t-d},$$
 lo cual nos da una descomposición de la diferencia $\nabla_dX_t$ en una componente de tendencia $(T_t-T_{t-d})$ y un término de ruido $(\epsilon_t-\epsilon_{t-d})$. La tendencia $(T_t-T_{t-d})$ se puede eliminar usando los métodos ya descritos, por ejemplo, aplicando alguna potencia del operador $\nabla$. La Figura~\ref{Grafico-tema3-diferencia-paso-12} muestra el resultado de aplicar el operador $\nabla_{12}$ a los datos de accidentes mortales. La componente estacional evidente en la Figura~\ref{Grafico-tema3-accidentes-USA} está ausente en la Figura de $\nabla_{12}X_t,13\leq t\leq72$. Sin embargo todavía parece haber una tendencia decreciente. Si ahora aplicamos el operador $\nabla$ a $\nabla_{12}X_t$ y graficamos las diferencias $\nabla\nabla_{12}X_t,t=14,\ldots,72$ obtenemos el gráfico mostrado en la Figura~\ref{Grafico-tema3-diferencia-diferencia-paso-12}, los cuales no tienen una aparente tendencia o componente estacional.
 
 
-<!--chapter:end:010-introduccion.Rmd-->
+<!--chapter:end:020-introduction-Series-Tiempo.Rmd-->
 
-\cleardoublepage 
 
 # (APPENDIX) Apéndice {-}
-
 # Software Tools
-
-For those who are not familiar with software packages required for using R Markdown, we give a brief introduction to the installation and maintenance of these packages.
-
 ## R and R packages
-
-R can be downloaded and installed from any CRAN (the Comprehensive R Archive Network) mirrors, e.g., https://cran.rstudio.com. Please note that there will be a few new releases of R every year, and you may want to upgrade R occasionally.
-
-To install the **bookdown** package, you can type this in R:
-
-
-```r
-install.packages("bookdown")
-```
-
-This installs all required R packages. You can also choose to install all optional packages as well, if you do not care too much about whether these packages will actually be used to compile your book (such as **htmlwidgets**):
-
-
-```r
-install.packages("bookdown", dependencies = TRUE)
-```
-
-If you want to test the development version of **bookdown** on GitHub, you need to install **devtools** first:
-
-
-```r
-if (!requireNamespace('devtools')) install.packages('devtools')
-devtools::install_github('rstudio/bookdown')
-```
-
-R packages are also often constantly updated on CRAN or GitHub, so you may want to update them once in a while:
-
-
-```r
-update.packages(ask = FALSE)
-```
-
-Although it is not required, the RStudio IDE can make a lot of things much easier when you work on R-related projects. The RStudio IDE can be downloaded from https://www.rstudio.com.
-
 ## Pandoc
-
-An R Markdown document (`*.Rmd`) is first compiled to Markdown (`*.md`) through the **knitr** package, and then Markdown is compiled to other output formats (such as LaTeX or HTML) through Pandoc.\index{Pandoc} This process is automated by the **rmarkdown** package. You do not need to install **knitr** or **rmarkdown** separately, because they are the required packages of **bookdown** and will be automatically installed when you install **bookdown**. However, Pandoc is not an R package, so it will not be automatically installed when you install **bookdown**. You can follow the installation instructions on the Pandoc homepage (http://pandoc.org) to install Pandoc, but if you use the RStudio IDE, you do not really need to install Pandoc separately, because RStudio includes a copy of Pandoc. The Pandoc version number can be obtained via:
-
-
-```r
-rmarkdown::pandoc_version()
-## [1] '1.19.2.1'
-```
-
-If you find this version too low and there are Pandoc features only in a later version, you can install the later version of Pandoc, and **rmarkdown** will call the newer version instead of its built-in version.
-
 ## LaTeX
-
-LaTeX\index{LaTeX} is required only if you want to convert your book to PDF. The typical choice of the LaTeX distribution depends on your operating system. Windows users may consider MiKTeX (http://miktex.org), Mac OS X users can install MacTeX (http://www.tug.org/mactex/), and Linux users can install TeXLive (http://www.tug.org/texlive). See https://www.latex-project.org/get/ for more information about LaTeX and its installation.
-
-Most LaTeX distributions provide a minimal/basic package and a full package. You can install the basic package if you have limited disk space and know how to install LaTeX packages later. The full package is often significantly larger in size, since it contains all LaTeX packages, and you are unlikely to run into the problem of missing packages in LaTeX.
-
-LaTeX error messages may be obscure to beginners, but you may find solutions by searching for the error message online (you have good chances of ending up on [StackExchange](http://tex.stackexchange.com)). In fact, the LaTeX code converted from R Markdown should be safe enough and you should not frequently run into LaTeX problems unless you introduced raw LaTeX content in your Rmd documents. The most common LaTeX problem should be missing LaTeX packages, and the error may look like this:
-
-```latex
-! LaTeX Error: File `titling.sty' not found.
-
-Type X to quit or <RETURN> to proceed,
-or enter new name. (Default extension: sty)
-
-Enter file name: 
-! Emergency stop.
-<read *> 
-         
-l.107 ^^M
-
-pandoc: Error producing PDF
-Error: pandoc document conversion failed with error 43
-Execution halted
-```
-
-This means you used a package that contains `titling.sty`, but it was not installed. LaTeX package names are often the same as the `*.sty` filenames, so in this case, you can try to install the `titling` package. Both MiKTeX and MacTeX provide a graphical user interface to manage packages. You can find the MiKTeX package manager from the start menu, and MacTeX's package manager from the application "TeX Live Utility". Type the name of the package, or the filename to search for the package and install it. TeXLive may be a little trickier: if you use the pre-built TeXLive packages of your Linux distribution, you need to search in the package repository and your keywords may match other non-LaTeX packages. Personally, I find it frustrating to use the pre-built collections of packages on Linux, and much easier to install TeXLive from source, in which case you can manage packages using the `tlmgr` command. For example, you can search for `titling.sty` from the TeXLive package repository:
-
-```bash
-tlmgr search --global --file titling.sty
-# titling:
-#	 texmf-dist/tex/latex/titling/titling.sty
-```
-
-Once you have figured out the package name, you can install it by:
-
-```bash
-tlmgr install titling  # may require sudo
-```
-
-LaTeX distributions and packages are also updated from time to time, and you may consider updating them especially when you run into LaTeX problems. You can find out the version of your LaTeX distribution by:
-
-
-
-```r
-system('pdflatex --version')
-## pdfTeX 3.14159265-2.6-1.40.18 (TeX Live 2017)
-## kpathsea version 6.2.3
-## Copyright 2017 Han The Thanh (pdfTeX) et al.
-## There is NO warranty.  Redistribution of this software is
-## covered by the terms of both the pdfTeX copyright and
-## the Lesser GNU General Public License.
-## For more information about these matters, see the file
-## named COPYING and the pdfTeX source.
-## Primary author of pdfTeX: Han The Thanh (pdfTeX) et al.
-## Compiled with libpng 1.6.29; using libpng 1.6.29
-## Compiled with zlib 1.2.11; using zlib 1.2.11
-## Compiled with xpdf version 3.04
-```
 
 <!--chapter:end:400-apendice.Rmd-->
 
-# Referencias {-}
 
-
-
+# Placeholder
 
 <!--chapter:end:500-references.Rmd-->
 

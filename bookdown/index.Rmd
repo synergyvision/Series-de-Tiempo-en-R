@@ -36,6 +36,7 @@ library(modeest)
 library(ggplot2)
 library(grid)
 library(gridExtra)
+library(readxl)
 ```
 
 ```{r include=FALSE}
