@@ -283,7 +283,7 @@ En la tendencia cuadrática podemos observar:
 - Si $\beta_1<0$ y $\beta_2>0$, $T_t$ es convexa.
 
 
-```{definition, defi-modelo-log-lineal}
+```{definition, defi-modelo-log-lineal_1}
 El modelo **Logarítmico Lineal** o **Log-Lineal** se define como
 \begin{equation}
 \ln X_t = \beta_0+\beta_1t + \epsilon_t

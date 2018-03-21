@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Series de Tiempo en R</title>
+  <meta name="description" content="Series de Tiempo en R">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Series de Tiempo en R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://synergy.vision/Series-de-Tiempo-en-R/" />
+  <meta property="og:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+  
+  <meta name="github-repo" content="synergyvision/Series-de-Tiempo-en-R/" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Series de Tiempo en R" />
+  
+  
+  <meta name="twitter:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+
+<meta name="author" content="Synergy Vision">
+
+
+<meta name="date" content="2018-03-21">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="introduccion.html">
+<link rel="next" href="referencias.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="https://cdn.datacamp.com/datacamp-light-latest.min.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="images/logovision-black.png" width="160"></img></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#por-que-leer-este-libro"><i class="fa fa-check"></i>¿Por qué leer este libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-libro"><i class="fa fa-check"></i>Estructura del libro</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#informacion-sobre-los-programas-y-convenciones"><i class="fa fa-check"></i>Información sobre los programas y convenciones</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#practicas-interactivas-con-r"><i class="fa fa-check"></i>Prácticas interactivas con R</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="acerca-del-autor.html"><a href="acerca-del-autor.html"><i class="fa fa-check"></i>Acerca del Autor</a></li>
+<li class="chapter" data-level="1" data-path="introduccion.html"><a href="introduccion.html"><i class="fa fa-check"></i><b>1</b> Introducción</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduccion.html"><a href="introduccion.html#conceptos-basicos"><i class="fa fa-check"></i><b>1.1</b> Conceptos básicos</a></li>
+<li class="chapter" data-level="1.2" data-path="introduccion.html"><a href="introduccion.html#ejemplos"><i class="fa fa-check"></i><b>1.2</b> Ejemplos</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="introduccion.html"><a href="introduccion.html#clasificacion-de-las-series-de-tiempo"><i class="fa fa-check"></i><b>1.2.1</b> Clasificación de las series de tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduccion.html"><a href="introduccion.html#componentes-de-una-serie-de-tiempo"><i class="fa fa-check"></i><b>1.3</b> Componentes de una serie de tiempo</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduccion.html"><a href="introduccion.html#el-modelo-aditivo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.3.1</b> El Modelo Aditivo de Componentes de Series de Tiempo</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduccion.html"><a href="introduccion.html#el-modelo-multiplicativo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.3.2</b> El Modelo Multiplicativo de Componentes de Series de Tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduccion.html"><a href="introduccion.html#estimacion-de-la-tendencia"><i class="fa fa-check"></i><b>1.4</b> Estimación de la Tendencia</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduccion.html"><a href="introduccion.html#eliminacion-de-la-tendencia-en-ausencia-de-estacionalidad"><i class="fa fa-check"></i><b>1.4.1</b> Eliminación de la tendencia en ausencia de estacionalidad</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduccion.html"><a href="introduccion.html#eliminacion-de-la-tendencia-y-la-estacionalidad"><i class="fa fa-check"></i><b>1.5</b> Eliminación de la tendencia y la estacionalidad</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>2</b> Características de series de tiempo</a><ul>
+<li class="chapter" data-level="2.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#medidas-de-dependencia-para-series-de-tiempo"><i class="fa fa-check"></i><b>2.1</b> Medidas de dependencia para series de tiempo</a></li>
+<li class="chapter" data-level="2.2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-1"><i class="fa fa-check"></i><b>2.2</b> Estimación de la Tendencia</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-en-ausencia-de-estacionalidad"><i class="fa fa-check"></i><b>2.2.1</b> Estimación de la tendencia en ausencia de estacionalidad</a></li>
+<li class="chapter" data-level="2.2.2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-y-la-estacionalidad"><i class="fa fa-check"></i><b>2.2.2</b> Estimación de la tendencia y la estacionalidad</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>Apéndice</b></span></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Series de Tiempo en R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="caracteristicas-de-series-de-tiempo" class="section level1">
+<h1><span class="header-section-number">Capítulo 2</span> Características de series de tiempo</h1>
+<p>El objetivo primario en el análisis de Series de Tiempo es desarrollar modelos matemáticos que provean una descripción apropiada para los datos muestrales, como los vistos en los ejemplos del capítulo anterior. Así, lo primero que hacemos es utilizar la definición <a href="introduccion.html#def:defi-serie-tiempo">1.1</a>, para tener un soporte estadístico. En este capítulo daremos algunas definiciones que serán de uso general en todo el resto del libro, también sedescribiran algunos métodos para el análisis exploratorio de las series de tiempo</p>
+<div id="medidas-de-dependencia-para-series-de-tiempo" class="section level2">
+<h2><span class="header-section-number">2.1</span> Medidas de dependencia para series de tiempo</h2>
+
+<div class="definition">
+<span id="def:defi-proceso-estocastico" class="definition"><strong>Definición 2.1  </strong></span>Un <strong>proceso estocástico</strong> es una familia de variables aleatorias indexadas <span class="math inline">\(x(\omega,t)\)</span> ó <span class="math inline">\(x_t(\omega)\)</span> donde <span class="math inline">\(t\)</span> pertenece a un conjunto de índices <span class="math inline">\(T\)</span> y <span class="math inline">\(\omega\)</span> pertenece a un espacio muestral <span class="math inline">\(\Omega\)</span>. Si <span class="math inline">\(t=t^*\)</span> fijo, <span class="math inline">\(x(\omega,t^*)\)</span> es una variable aleatoria. Si <span class="math inline">\(\omega=\omega^*\)</span> fijo, <span class="math inline">\(x(\omega^*,t)\)</span> es una función de <span class="math inline">\(t\)</span>, y se llama una realización del proceso. Una <strong>serie de tiempo</strong> es la realización de un proceso estocástico.
+</div>
+
+<p>Una descripción completa de una serie de tiempo, observada como una colección de <span class="math inline">\(n\)</span> variables aleatorias en puntos de tiempo enteros arbitrarios <span class="math inline">\(t_1,t_2,\ldots,t_n\)</span>, para cada entero positivo <span class="math inline">\(n\)</span>, es proporcionada por la función de distribución conjunta, evaluada como la probabilidad de que los valores de la serie sean conjuntamente menor que <span class="math inline">\(n\)</span> constantes <span class="math inline">\(c_1,c_2,\ldots,c_n\)</span>, esto es</p>
+<span class="math display" id="eq:eq-distribucion-conjunta">\[\begin{equation}
+F(c_1,c_2,\ldots,c_n)=P(x_{t_1}\leq c_1,x_{t_2}\leq c_2,\ldots,x_{t_n}\leq c_n).
+\tag{2.1}
+\end{equation}\]</span>
+<p>Desafortunadamente, la función de distribución multidimensional usualmente no se puede escribir fácilmente a menos que las variables aleatorias tengan distribución normal conjunta, en cuyo caso, la ecuación <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-distribucion-conjunta">(2.1)</a> llega a ser la distribución normal multivariada usual.</p>
+<p>Un caso particular en la cual la función de distribución multidimensional es fácil de escribir, será en el caso de variables aleatorias normal estándar independientes e idénticamente distribuidas, para lo cual la función de distribución se puede expresar como el producto de las distribuciones marginales, es decir,</p>
+<span class="math display" id="eq:eq-distribucion-producto-marginal">\[\begin{equation}
+F(c_1,c_2,\ldots,c_n)=\prod_{t_1}^{n}\Phi(c_t)
+\tag{2.2}
+\end{equation}\]</span>
+<p>donde</p>
+<span class="math display" id="eq:eq-distribucion-normal">\[\begin{equation}
+\Phi(x)=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{x}\mathbb{E}xp\left\{-\frac{z^2}{2}\right\}dz\tag{2.3}
+\end{equation}\]</span>
+<p>es la función de distribución normal estándar acumulada.</p>
+<p>Aunque la función de distribución multidimensional describa los datos completamente, esto es un instrumento poco manejable para mostrar y analizar datos de series de tiempo. La función de distribución <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-distribucion-conjunta">(2.1)</a> debe ser evaluada como una función de <span class="math inline">\(n\)</span> argumentos, entonces cualquier graficación de las correspondientes funciones de densidad multivariante es prácticamente imposible. La función de distribución unidimensional</p>
+<p><span class="math display">\[F_t(x)=P\{x_t\leq x\}\]</span> o la correspondiente función de densidad unidimensional</p>
+<p><span class="math display">\[f_t(x)=\frac{\partial F_t(x)}{\partial x},\]</span> cuando existen, a menudo son más útiles para determinar si una coordenada en particular de la serie de tiempo tiene una función de densidad conocida, como la distribución normal (gaussiana), por ejemplo.</p>
+
+<div class="definition">
+<p><span id="def:defi-funcion-media" class="definition"><strong>Definición 2.2  </strong></span>La <strong>función de media</strong> es definida como</p>
+<span class="math display" id="eq:eq-funcion-media">\[\begin{equation}
+\mu_{xt}=\mathbb{E}(x_t)=\int_{-\infty}^{\infty}xf_t(x)dx,
+\tag{2.4}
+\end{equation}\]</span>
+en caso de que exista, donde <span class="math inline">\(\mathbb{E}\)</span> denota el operador usual de esperanza. Cuando no haya confusión sobre a que serie de tiempo nos referimos, escribiremos <span class="math inline">\(\mu_{xt}\)</span> como <span class="math inline">\(\mu_t\)</span>.
+</div>
+
+<p>Lo importante de comprender sobre <span class="math inline">\(\mu_t\)</span> consiste en que es una media teórica para la serie de tiempo en un punto particular, donde la media se asume o calcula sobre todos los posibles eventos que podrían haber producido <span class="math inline">\(x_t\)</span>.</p>
+
+<div class="definition">
+<p><span id="def:defi-funcion-autocovarianza" class="definition"><strong>Definición 2.3  </strong></span>La <strong>función de autocovarianza</strong> es definida como producto del segundo momento</p>
+<span class="math display" id="eq:eq-funcion-autocovarianza">\[\begin{equation}
+\gamma_x(s,t)=\mathbb{E}[(x_s-\mu_s)(x_t-\mu_t)],
+\tag{2.5}
+\end{equation}\]</span>
+para todo <span class="math inline">\(t\)</span> y <span class="math inline">\(s\)</span>. cuando no haya confusión en la existencia sobre a que serie nos referimos, escribiremos <span class="math inline">\(\gamma_x(s,t)=\gamma(s,t)\)</span>.
+</div>
+
+<p>Note que <span class="math inline">\(\gamma_x(s,t)=\gamma_x(t,s)\)</span> para todo los puntos <span class="math inline">\(s\)</span> y <span class="math inline">\(t\)</span>. La función de autocovarianza mide la dependencia lineal entre dos puntos de la misma serie en diferentes tiempos. La autocovarianza <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-funcion-autocovarianza">(2.5)</a> es el promedio de los productos cruzados relacionado con la densidad conjunta <span class="math inline">\(F(x_s,x_t)\)</span>. Es claro que, para <span class="math inline">\(s=t\)</span>, la autocovarianza se reduce a la varianza (en el caso finito), dado que</p>
+<span class="math display" id="eq:eq-funcion-autocovarianza-varianza">\[\begin{equation}
+\gamma_x(t,t)=\mathbb{E}[(x_t-\mu_t)^2]
+\tag{2.6}
+\end{equation}\]</span>
+<p>Otro función de medida de tendencia importante es la <em>función de autocorrelación</em>.</p>
+
+<div class="definition">
+<p><span id="def:defi-acf" class="definition"><strong>Definición 2.4  </strong></span>La <strong>función de autocorrelación (ACF)</strong> (ACF, siglas en ingles: Autocorrelation Function) se define como</p>
+<span class="math display" id="eq:eq-funcion-autocorrelacion">\[\begin{equation}
+\rho(s,t)=\frac{\gamma(s,t)}{\sqrt{\gamma(s,s)\gamma(t,t)}}
+\tag{2.7}
+\end{equation}\]</span>
+</div>
+
+<p>La <span class="math inline">\(ACF\)</span> mide la predictibilidad lineal de una serie de tiempo en tiempo <span class="math inline">\(t\)</span>, digamos <span class="math inline">\(x_t\)</span> usando solo el valor <span class="math inline">\(x_s\)</span>. Es fácil de demostrar que <span class="math inline">\(-1\leq\rho(s,t)\leq1\)</span> usando la desigualdad de Cauchy-Schwarz<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>Si podemos predecir <span class="math inline">\(x_t\)</span> exactamente de <span class="math inline">\(x_s\)</span> a través de la relación lineal <span class="math inline">\(x_t=\beta_0+\beta_1x_s\)</span> entonces la correlación será 1 cuando <span class="math inline">\(\beta_1&gt;0\)</span> y <span class="math inline">\(-1\)</span> cuando <span class="math inline">\(\beta_1&lt;0\)</span>.</p>
+
+<div class="definition">
+<p><span id="def:defi-covarianza-cruzada" class="definition"><strong>Definición 2.5  </strong></span>La <strong>función de covarianza cruzada</strong> entre dos series <span class="math inline">\(x_t\)</span> y <span class="math inline">\(y_t\)</span> se define como</p>
+<span class="math display" id="eq:eq-funcion-covarianza-cruzada">\[\begin{equation}
+\gamma_{xy}(s,t)=\mathbb{E}[(x_s-\mu_{xs})(y_t-\mu_{yt})]
+\tag{2.8}
+\end{equation}\]</span>
+</div>
+
+
+<div class="definition">
+<p><span id="def:defi-ccf" class="definition"><strong>Definición 2.6  </strong></span>La <strong>función de correlación cruzada (CCF)</strong> (CCF, siglas en ingles: Cross Correlation Function) es definida como</p>
+<span class="math display" id="eq:eq-funcion-correlacion-cruzada">\[\begin{equation}
+\rho_{xy}(s,t)=\frac{\gamma_{xy}(s,t)}{\sqrt{\gamma_x(s,s)\gamma_y(t,t)}}
+\tag{2.9}
+\end{equation}\]</span>
+</div>
+
+<p>Las definiciones anteriores de funciones de media y varianza son completamente generales. Aunque nosotros no hayamos hecho ninguna suposición especial sobre el comportamiento de las series de tiempo, muchos de los ejemplos precedentes han insinuado que puede existir una especie de regularidad en el comportamiento de las mismas. Introducimos la noción de regularidad que usa el concepto de <em>estacionaridad</em>, que ya hemos introducido empíricamente en el apartado 1.2.1 “Clasificación de las series de tiempo”</p>
+<p>Formalmente tenemos las siguientes definiciones de estacionaridad</p>
+
+<div class="definition">
+<p><span id="def:defi-estricta-estacionaridad" class="definition"><strong>Definición 2.7  </strong></span>Una serie de tiempo <strong>estrictamente estacionaria</strong> es una serie para la cual el comportamiento probabilístico de cada sucesión de valores</p>
+<p><span class="math display">\[\{x_{t_1},x_{t_2},\ldots,x_{t_k}\}\]</span></p>
+<p>es idéntico a la serie trasladada en el tiempo</p>
+<p><span class="math display">\[\{x_{t_1+h},x_{t_2+h},\ldots,x_{t_k+h}\}\]</span></p>
+<p>Esto es,</p>
+<span class="math display" id="eq:eq-estricta-estacionaridad">\[\begin{equation}
+P[X_{t_1}\leq c_1,\ldots,x_{t_k}\leq c_k] = P[X_{t_1+h}\leq c_1,\ldots,x_{t_k+h}\leq c_k]
+\tag{2.10}
+\end{equation}\]</span>
+para todo <span class="math inline">\(k=1,2,\ldots\)</span>, todo puntos de tiempos <span class="math inline">\(t_1,t_2,\ldots,t_k\)</span> y números <span class="math inline">\(c_1,c_2,\ldots,c_k\)</span> y todo salto <span class="math inline">\(h=\pm0,\pm1,\pm2,\ldots\)</span>.
+</div>
+
+<p>Esta definición de estacionaridad es muy fuerte para la mayoría de las aplicaciones prácticas. Por ello necesitamos una versión menos fuerte que imponga menos condiciones sobre las distribuciones de probabilidad, ya que si observamos bien la ecuación <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-estricta-estacionaridad">(2.10)</a>, lo que nos dice la misma es que todas las posibles distribuciones de probabilidad deben ser iguales, lo que como ya indicamos en la práctica es muy difícil de compriobar aún para conjuntos de datos sencillos. La siguiente versión de estacionaridad solo impone condiciones sobre los dos primeros momentos de la serie</p>
+
+<div class="definition">
+<p><span id="def:defi-debilmente-estacionaria" class="definition"><strong>Definición 2.8  </strong></span>Una serie de tiempo <strong>débilmente estacionaria</strong> <span class="math inline">\(x_t\)</span>, es un proceso de varianza finita tal que</p>
+<ol style="list-style-type: decimal">
+<li><p>la función de media <span class="math inline">\(\mu_t\)</span> es constante y no depende del tiempo <span class="math inline">\(t\)</span>,</p></li>
+<li><p>la función de covarianza <span class="math inline">\(\gamma(t,s)\)</span> depende solo de las diferencias de <span class="math inline">\(s\)</span> y <span class="math inline">\(t\)</span>, <span class="math inline">\(|t-s|\)</span>.</p></li>
+</ol>
+Por consiguiente, usaremos el término <strong>estacionaridad</strong> para referirnos a estcionaridad débil; si un proceso es estacinario en el sentido estricto usaremos el término <em>estrictamente estacionario</em>.
+</div>
+
+
+<div class="remark">
+<p> <span class="remark"><em>Nota. </em></span> 1) Si una serie de tiempo es estrictamente estacionaria, entonces todos las funciones de distribución multivariadas para subconjuntos de variables deben coincidir con sus contrapartes en el conjunto trasladado, para todos los valores del parámetro <span class="math inline">\(h\)</span>. Por ejemplo para <span class="math inline">\(k=1\)</span> La ecuación <a href="#eq-serie-estrictamente-estacionaria"><strong>??</strong></a> implica que</p>
+<span class="math display" id="eq:e1p20">\[\begin{equation}
+        P\{x_s\leq c\}=P\{x_t\leq c\}
+\tag{2.11}
+\end{equation}\]</span>
+<p>para cada puntos <span class="math inline">\(s\)</span> y <span class="math inline">\(t\)</span>.</p>
+<p>Esta declaración implica, por ejemplo, que si la probabilidad de un valor de una serie de tiempo muestreada cada hora es negativa a la 1:00a.m, la probabilidad a la 10:00a.m. es la misma. Además, si la función de media, <span class="math inline">\(\mu_t\)</span> de la serie <span class="math inline">\(x_t\)</span> existe, <a href="caracteristicas-de-series-de-tiempo.html#eq:e1p20">(2.11)</a> implica que <span class="math inline">\(\mu_s=\mu_t\)</span> para todo <span class="math inline">\(s\)</span> y <span class="math inline">\(t\)</span>, y por consiguiente <span class="math inline">\(\mu_t\)</span> debe ser constante.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Cuando <span class="math inline">\(k=2\)</span>, podemos escribir la ecuación <a href="#eq-serie-estrictamente-estacionaria"><strong>??</strong></a> como</li>
+</ol>
+<span class="math display" id="eq:e1p21">\[\begin{equation}
+  P\{x_s\leq c_1,x_t\leq c_2\}=P\{x_{s+h}\leq c_1,x_{t+h}\leq c_2\}
+\tag{2.12}
+\end{equation}\]</span>
+<p>para cada par de puntos <span class="math inline">\(s\)</span> y <span class="math inline">\(t\)</span> y salto <span class="math inline">\(h\)</span>. Entonces, si la función de varianza del proceso existe, <a href="caracteristicas-de-series-de-tiempo.html#eq:e1p21">(2.12)</a> implica que la función de autocovarianza de la serie <span class="math inline">\(x_t\)</span> satisface <span class="math inline">\(\gamma(s,t)=\gamma(s+h,t+h)\)</span> para todos <span class="math inline">\(s\)</span> y <span class="math inline">\(t\)</span> y salto <span class="math inline">\(h\)</span>.</p>
+Podemos interpretar este resultado diciendo que la función de autocovarianza del proceso depende sólo de las diferencias de tiempo entre <span class="math inline">\(s\)</span> y <span class="math inline">\(t\)</span>, y no del tiempo actual.
+</div>
+
+<p>Es claro de la definición <a href="caracteristicas-de-series-de-tiempo.html#def:defi-estricta-estacionaridad">2.7</a> de serie estrictamente estacionaria, que una serie de tiempo estrictamente estacionaria con varianza finita, también es una serie estacionaria. El recíproco no es cierto a menos que impongamos condicionaes adicionales. Un importante caso donde estacionaridad implica estricta estacionaridad es el caso de series de tiempo gaussianas.</p>
+<p>Ya que la función de media <span class="math inline">\(\mathbb{E}(x_t)=\mu_t\)</span> de una serie de tiempo estacionaria es independiente del tiempo <span class="math inline">\(t\)</span>, escribimos</p>
+<span class="math display" id="eq:e1p22">\[\begin{equation}
+\mu_t=\mu
+\tag{2.13}
+\end{equation}\]</span>
+<p>Debido a que la función de covarianza de una serie de tiempo estacionaria, <span class="math inline">\(\gamma(s,t)\)</span> en tiempos <span class="math inline">\(s\)</span> y <span class="math inline">\(t\)</span> depende sólo de la diferencia <span class="math inline">\(|s-t|\)</span>, podemos simplificar la notación. Sea <span class="math inline">\(s=t+h\)</span>, donde <span class="math inline">\(h\)</span> representa el tiempo de traslación o salto, entonces</p>
+<span class="math display" id="eq:eq-funcion-covarianza-estacionaria">\[\begin{eqnarray}
+\gamma(s,t)&amp;=&amp;\mathbb{E}[(x_{t+h}-\mu)(x_t-\mu)]\\ \nonumber
+    &amp;=&amp;\mathbb{E}[(x_h-\mu)(x_0-\mu)]\\
+    &amp;=&amp;\gamma(h,0) \nonumber
+    \tag{2.14}
+\end{eqnarray}\]</span>
+<p>no depende del argumento de tiempo <span class="math inline">\(t\)</span>; asumiendo que <span class="math inline">\(\text{Var}(x_t)=\gamma(0,0)&lt;\infty\)</span>. De ahora en adelante, por conveniencia, prescindiremos del segundo argumento de <span class="math inline">\(\gamma(h,0)\)</span>, es decir, la función de covarianza se denotará <span class="math inline">\(\gamma(h)\)</span>.</p>
+
+<div class="definition">
+<p><span id="def:defi-autocovarianza-serie-estacionaria" class="definition"><strong>Definición 2.9  </strong></span>La <strong>función de autocovarianza de una serie de tiempo estacionaria</strong> se escribirá como</p>
+<span class="math display" id="eq:eq-funcion-autocovarianza-estacionaria">\[\begin{equation}
+\gamma(h)=\mathbb{E}[(x_{t+h}-\mu)(x_t-\mu)]
+\tag{2.15}
+\end{equation}\]</span>
+</div>
+
+
+<div class="definition">
+<p><span id="def:defi-acf-estacionaria" class="definition"><strong>Definición 2.10  </strong></span>La <strong>función de autocorrelación (ACF) de una serie de tiempo estacionaria</strong> será escrita, usando <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-funcion-autocorrelacion">(2.7)</a> como</p>
+<span class="math display" id="eq:eq-funcion-autocorrelacion-estacionaria">\[\begin{equation}
+\rho(h)=\frac{\gamma(t+h,t)}{\sqrt{\gamma(t+h,t+h)\gamma(t,t)}}=\frac{\gamma(h)}{\gamma(0)}
+\tag{2.16}
+\end{equation}\]</span>
+</div>
+
+<p>La desigualdad de Cauchy-Schwartz muestra nuevamente que <span class="math inline">\(-1\leq\rho(h)\leq1\)</span> para todo <span class="math inline">\(h\)</span>.</p>
+<p>** Propiedades de la función de covarianza**</p>
+<ol style="list-style-type: decimal">
+<li>Para el valor en <span class="math inline">\(h=0\)</span>, la función de autocovarianza
+<span class="math display" id="eq:eq-funcion-autocovarianza-h0">\[\begin{equation}
+\gamma(0)=\mathbb{E}[(x_t-\mu)^2]
+\tag{2.17}
+\end{equation}\]</span>
+<p>es la varianza de la serie de tiempo; note que la desigualdad de Cauchy-Schwartz implica que <span class="math inline">\(|\gamma(h)|\leq\gamma(0)\)</span>.</p></li>
+<li>La autocovarianza de una serie estacionaria es simétrica respecto al origen, esto es
+<span class="math display" id="eq:eq-simetria-funcion-autocovarianza">\[\begin{equation}
+\gamma(h)=\gamma(-h)
+\tag{2.18}
+\end{equation}\]</span>
+para todo <span class="math inline">\(h\)</span>. Esta propiedad se debe a que trasladar la serie por <span class="math inline">\(h\)</span> significa que
+<span class="math display">\[\begin{eqnarray*}
+\gamma(h)&amp;=&amp;\gamma(t+h-t)\\
+    &amp;=&amp;\mathbb{E}[(x_{t+h}-\mu)(x_t-\mu)]\\
+    &amp;=&amp;\mathbb{E}[(x_t-\mu)(x_{t+h}-\mu)]\\
+    &amp;=&amp;\gamma(t-(t+h))\\
+    &amp;=&amp;\gamma(-h)
+\end{eqnarray*}\]</span>
+<p>lo cual muestra como usar la notación para demostrar el resultado.</p></li>
+</ol>
+
+<div class="definition">
+<p><span id="def:defi-conjuntamente-estacionarias" class="definition"><strong>Definición 2.11  </strong></span>Dos series de tiempo <span class="math inline">\(x_t\)</span> y <span class="math inline">\(x_s\)</span> se dice que son <strong>conjuntamente estacionarias</strong> si cada una de ellas es estacionaria y la función de correlación cruzada</p>
+<span class="math display" id="eq:eq-estacionaridad-conjunta">\[\begin{equation}
+\gamma_{xy}(h)=\mathbb{E}[(x_{t+h}-\mu_x)(y_t-\mu_y)]
+\tag{2.19}
+\end{equation}\]</span>
+es una función sólo del salto <span class="math inline">\(h\)</span>.
+</div>
+
+
+<div class="definition">
+<p><span id="def:defi-ccf-conjuntamente-estacionarias" class="definition"><strong>Definición 2.12  </strong></span>La <strong>función de correlación cruzada (CCF)</strong> de dos series conjuntamente estacionarias <span class="math inline">\(x_t\)</span> y <span class="math inline">\(y_t\)</span> se define como</p>
+<span class="math display" id="eq:eq-ccf-conjuntamente-estacionarias">\[\begin{equation}
+\rho_{xy}(h)=\frac{\gamma_{xy}(h)}{\sqrt{\gamma_x(0)\gamma_y(0)}}
+\tag{2.20}
+\end{equation}\]</span>
+</div>
+
+<p>De nuevo, tenemos el resultado <span class="math inline">\(-1\leq\rho_{xy}(h)\leq1\)</span> lo cual nos permite comparar los valores extremos -1 y 1 cuando vemos la relación entre <span class="math inline">\(x_{t+h}\)</span> y <span class="math inline">\(y_t\)</span>. La función de correlación cruzada satisface</p>
+<span class="math display" id="eq:eq-simetria-ccf-conjuntamente-estacionarias">\[\begin{equation}
+\rho_{xy}(h)=\rho_{yx}(-h)
+\tag{2.21}
+\end{equation}\]</span>
+<p>lo cual se puede demostrar de manera similar que para <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-simetria-funcion-autocovarianza">(2.18)</a>.</p>
+
+<div class="example">
+<p><span id="exm:ejem-estacionaridad-conjunta" class="example"><strong>Ejemplo 2.1  (Estacionaridad conjunta)  </strong></span>Considere las series <span class="math inline">\(x_t\)</span> y <span class="math inline">\(y_t\)</span> formadas por las sumas y diferencias de dos valores sucesivos de un ruido blanco respectivamente, esto es</p>
+<p><span class="math display">\[x_t=w_t+w_{t-1}\]</span></p>
+<p>y</p>
+<p><span class="math display">\[y_t=w_t-w_{t-1}\]</span></p>
+<p>donde <span class="math inline">\(w_t\)</span> son variables aleatorias independientes con media cero y varianza <span class="math inline">\(\sigma_w^2\)</span>. Es fácil demostrar que <span class="math inline">\(\gamma_x(0)=\gamma_y(0)=2\sigma_w^2\)</span> y <span class="math inline">\(\gamma_x(1)=\gamma_x(-1)=\sigma_w^2\)</span>, <span class="math inline">\(\gamma_y(1)=\gamma_y(-1)=-\sigma_w^2\)</span>. También</p>
+<span class="math display">\[\begin{eqnarray*}
+\gamma_{xy}(1)&amp;=&amp;\mathbb{E}[(x_{t+1}-0)(y_t-0)]\\
+    &amp;=&amp;\mathbb{E}[(w_{t+1}+w_t)(w_t-w_{t-1})]\\
+    &amp;=&amp;\sigma_w^2
+\end{eqnarray*}\]</span>
+<p>porque solo uno de los productos es distinto de cero.\ Similarmente, <span class="math inline">\(\gamma_{xy}(0)=0,\gamma_{xy}(-1)=-\sigma_w^2\)</span>. Usando (), obtenemos</p>
+<p><span class="math display">\[\rho_{xy}(h)=\begin{cases}0,&amp;h=0\\
+            1/2,&amp;h=1\\
+            -1/2,&amp;h=-1\\
+            0,&amp;|h|\geq2\end{cases}.\]</span></p>
+Claramente, las funciones de autocovarianza y correlación cruzada dependen solo del salto <span class="math inline">\(h\)</span>, por lo tanto las series son conjuntamente estacionarias.
+</div>
+
+<p>El concepto de estacionaridad débil forma la base para muchos de los análisis realizados con series de tiempo. Las propiedades fundamentales de la media <a href="caracteristicas-de-series-de-tiempo.html#eq:e1p22">(2.13)</a> y la función de covarianza <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-funcion-autocovarianza-estacionaria">(2.15)</a> son satisfechas por muchos modelos teóricos que aparecen para generar realizaciones muestrales apropiadas. En los ejemplos <a href="#exm:ejem-promedio-movil"><strong>??</strong></a> y <a href="#exm:ejem-autoregresion"><strong>??</strong></a>, las dos series fueron generadas de forma que fuesen realizaciones estacionarias, y en el ejemplo <a href="#exm:ejem-estacionaridad-promedio-movil"><strong>??</strong></a> demostramos que la serie en el ejemplo <a href="#ejem-promedio-movil"><strong>??</strong></a> fue de hecho, débilmente estacionaria. Ambos ejemplos son casos especiales de los llamados procesos lineales.</p>
+
+<div class="definition">
+<p><span id="def:defi-proceso-lineal" class="definition"><strong>Definición 2.13  </strong></span>Un <strong>proceso lineal</strong> <span class="math inline">\(x_t\)</span> se define como una combinación lineal de variables aleatorias de ruido blanco <span class="math inline">\(w_t\)</span>, y está dado por</p>
+<span class="math display" id="eq:eq-proceso-lineal">\[\begin{equation}
+x_t=\mu+\sum_{j=-\infty}^{\infty}\psi_jw_{t-j}
+\tag{2.22}
+\end{equation}\]</span>
+<p>donde los coeficientes satisfacen</p>
+<span class="math display" id="eq:eq-coeficientes-proceso-lineal">\[\begin{equation}
+\sum_{j=-\infty}^{\infty}|\psi_j|&lt;\infty
+\tag{2.23}
+\end{equation}\]</span>
+</div>
+
+<p>Para un proceso lineal, podemos demostrar que la función de autocovarianza está dada por</p>
+<span class="math display" id="eq:eq-funcion-autocovarianza-proceso-lineal">\[\begin{equation}
+\gamma(h)=\sigma_w^2\sum_{j=-\infty}^{\infty}\psi_{j+h}\psi_j
+\tag{2.24}
+\end{equation}\]</span>
+<p>para todo <span class="math inline">\(h\geq0\)</span>; recuerde que <span class="math inline">\(\gamma(-h)=\gamma(h)\)</span>. Finalmente como mencionamos anteriormente, un caso importante en el cual una serie débilmente estacionaria es también estrictamente estacionaria es la serie normal o gaussiana.</p>
+
+<div class="definition">
+<span id="def:defi-proceso-gaussiano" class="definition"><strong>Definición 2.14  </strong></span>Un proceso <span class="math inline">\(\{x_t\}\)</span>, se dice que es un <strong>proceso gaussiano</strong> si el <span class="math inline">\(k\)</span>-ésimo vector dimensional <span class="math inline">\(\hat{x}=(x_{t_1},x_{t_2},\ldots,x_{t_k})\)</span>, para cada conjunto de puntos <span class="math inline">\(t_1,t_2,\ldots,t_k\)</span> y cada entero positivo <span class="math inline">\(k\)</span> tiene distribución normal multivariada.
+</div>
+
+<p>Definiendo <span class="math inline">\(k\times1\)</span> vector de medias <span class="math inline">\(\hat{\mu}=(\mu_{t_1},\mu_{t_2},\ldots,\mu_{t_k})&#39;\)</span> y la <span class="math inline">\(k\times k\)</span> matriz de covarianza positiva como <span class="math inline">\(\Gamma=\{\gamma(t_i,t_j);i,j=1,\ldots,k\}\)</span>, la función de densidad normal multivariada se puede escribir como</p>
+<span class="math display" id="eq:eq-densidad-normal-multivariada">\[\begin{equation}
+f(\hat{x})=(2\pi)^{-k/2}|\Gamma|^{-1/2}\exp\left\{-\frac{1}{2}(\hat{x}-\hat{\mu})&#39;\Gamma^{-1}(\hat{x}-\hat{\mu})\right\}
+\tag{2.25}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(|\cdot|\)</span> denota el determinante. Esta distribución forma la base para resolver problemas que envuelven inferencia estadística para series de tiempo. Si una serie de tiempo gaussiana <span class="math inline">\(\{x_t\}\)</span> es débilmente estacionaria, entonces <span class="math inline">\(\mu_t=\mu\)</span> y <span class="math inline">\(\gamma(t_i,t_j)=\gamma(|t_i-t_j|)\)</span>, de modo que el vector <span class="math inline">\(\hat{\mu}\)</span> y la matriz <span class="math inline">\(\Gamma\)</span> son independientes del tiempo. Este hecho implica que todas las distribuciones finitas, <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-densidad-normal-multivariada">(2.25)</a> de la serie <span class="math inline">\(\{x_t\}\)</span> dependen sólo del salto de tiempo y no del tiempo actual, y por consiguiente la serie debe ser estrictamente estacionaria.</p>
+</div>
+<div id="estimacion-de-la-tendencia-1" class="section level2">
+<h2><span class="header-section-number">2.2</span> Estimación de la Tendencia</h2>
+<p>En esta sección introducimos la estimación de la tendencia. En esencia, existen dos métodos para estimar la tendencia y la componente estacional de una serie de tiempo:</p>
+<ul>
+<li><strong>Método paramétrico</strong>: Se basa en</li>
+<li>Proponer modelos paramétricos para expresar la relación que guardan la tendencia y la componente estacional con el tiempo.</li>
+<li>Ajustar dichos modelos a la serie de tiempo (por ejemplo, a través del método de mínimos cuadrados).</li>
+<li>Aislar la tendencia y la componente estacional por medio de los modelos ajustados.</li>
+<li><strong>Método no paramétrico</strong>: Se basa en</li>
+<li>Asumir “suavidad” en la relación que guardan la tendencia y la componente estacional con el tiempo.</li>
+<li>Aislar la tendencia y la componente estacional a través de la suavización del gráfico de la serie (aplicando, por ejemplo, filtros de promedios móviles).</li>
+</ul>
+<p>Hay otros métodos que no consideraremos en este libro, por ejemplo, <em>wavelets</em>. En ocasiones la expresión “suavizar una serie” es equivalente a “extracción de la tendencia de una serie”, y ambas equivalen a la estimación de la tendencia.</p>
+<p>A continuación presentamos una lista de posibles modelos para la tendencia <span class="math inline">\(T_t\)</span>:</p>
+<ul>
+<li>Lineal
+<span class="math display" id="eq:eq-modelo-lineal">\[\begin{equation}
+T_t=\beta_0+\beta_1t
+\tag{1.4}
+\end{equation}\]</span></li>
+<li>Cuadrático
+<span class="math display" id="eq:eq-modelo-cuadratico">\[\begin{equation}
+T_t=\beta_0+\beta_1t+\beta_2t^2
+\tag{1.5}
+\end{equation}\]</span></li>
+<li>Cúbico
+<span class="math display" id="eq:eq-modelo-cubico">\[\begin{equation}
+T_t=\beta_0+\beta_1t+\beta_2t^2+\beta_3t^3
+\tag{1.6}
+\end{equation}\]</span></li>
+<li>Exponencial
+<span class="math display" id="eq:eq-modelo-exponencial">\[\begin{equation}
+T_t=\exp(\beta_0+\beta_1t)
+\tag{1.7}
+\end{equation}\]</span></li>
+<li>Logístico
+<span class="math display" id="eq:eq-modelo-logistico">\[\begin{equation}
+T_t=\frac{\beta_2}{1+\beta_1\exp(-\beta_0t)}
+\tag{1.8}
+\end{equation}\]</span></li>
+</ul>
+<p>En la tendencia cuadrática podemos observar:</p>
+<ul>
+<li>Si <span class="math inline">\(\beta_1,\beta_2&gt;0\)</span>, <span class="math inline">\(T_t\)</span> es monótona creciente.</li>
+<li>Si <span class="math inline">\(\beta_1,\beta_2&lt;0\)</span>, <span class="math inline">\(T_t\)</span> es monótona decreciente.</li>
+<li>Si <span class="math inline">\(\beta_1&gt;0\)</span> y <span class="math inline">\(\beta_2&lt;0\)</span>, <span class="math inline">\(T_t\)</span> es cóncava.</li>
+<li>Si <span class="math inline">\(\beta_1&lt;0\)</span> y <span class="math inline">\(\beta_2&gt;0\)</span>, <span class="math inline">\(T_t\)</span> es convexa.</li>
+</ul>
+<p>Otro modelo propuesto para la tendencia es el dado por la siguiente definición.</p>
+
+<div class="definition">
+<span id="def:defi-modelo-log-lineal" class="definition"><strong>Definición 2.15  </strong></span>El modelo <strong>Logarítmico Lineal</strong> o <strong>Log-Lineal</strong> se define como
+<span class="math display" id="eq:eq-modelo-log-lineal">\[\begin{equation}
+\ln X_t = \beta_0+\beta_1t + \epsilon_t
+\tag{1.9}
+\end{equation}\]</span>
+</div>
+
+<p>El modelo anterior corresponde a un modelo con tendencia lineal para el logaritmo de <span class="math inline">\(X_t\)</span>. En <a href="introduccion.html#eq:eq-modelo-log-lineal">(1.9)</a> al tomar exponencial se tiene <span class="math inline">\(X_t = \exp(\beta_0+\beta_1t + \epsilon_t)\)</span>, que es similar al modelo con tendencia exponencial <a href="introduccion.html#eq:eq-modelo-exponencial">(1.7)</a>. Sin embargo, son modelos diferentes y se estiman por métodos diferentes.</p>
+<p>Para la estimación de los parámetros <span class="math inline">\(\beta_0,\beta_1,\beta_2\)</span> en los modelos lineales <a href="introduccion.html#eq:eq-modelo-lineal">(1.4)</a>, <a href="introduccion.html#eq:eq-modelo-cuadratico">(1.5)</a>, <a href="introduccion.html#eq:eq-modelo-cubico">(1.6)</a> y <a href="introduccion.html#eq:eq-modelo-log-lineal">(1.9)</a> utilizaremos el método de mínimos cuadrados clásico (MCC). En este método los parámetros estimados son aquellos que producen el valor mínimo de la suma de errores cuadrados. Para los modelos <a href="introduccion.html#eq:eq-modelo-exponencial">(1.7)</a> y <a href="introduccion.html#eq:eq-modelo-logistico">(1.8)</a> se usa el método de mínimos cuadrados no lineales, que también minimiza la suma de errores cuadrados.</p>
+<p>El modelo Log-Lineal <a href="introduccion.html#eq:eq-modelo-log-lineal">(1.9)</a> es equivalente, algebráicamente, a</p>
+<p><span class="math display">\[X_t = \exp(\beta_0 + \beta_1t + \epsilon_t).\]</span> Sin embargo, este último modelo es no lineal y no coincide con el modelo exponencial,<a href="introduccion.html#eq:eq-modelo-exponencial">(1.7)</a>, <span class="math inline">\(X_t = \exp(\beta_0+\beta_1t)+\epsilon_t\)</span>. Es posible estimar por mínimos cuadrados ordinarios el modelo Log-Lineal y utilizar los parámetros estimados <span class="math inline">\(\hat{\beta}_0,\hat{\beta}_1\)</span> como valores iniciales en la estimación del modelo exponencial por mínimos cuadrados no lineales. Pero los parámetros estimados en ambos modelos no necesariamente coinciden.</p>
+<p>Aunque la serie tenga una componente estacional <span class="math inline">\(E_t\)</span>, <span class="math inline">\(X_t = T_t + E_t + \epsilon_t\)</span>, solamente consideramos un modelo de regresión entre <span class="math inline">\(X_t\)</span> y <span class="math inline">\(T_t\)</span>, tal que <span class="math inline">\(X_t = T_t + \eta_t\)</span>, donde <span class="math inline">\(\eta_t\)</span> es el término de error, de forma que <span class="math inline">\(\eta_t=E_t+\epsilon_t\)</span>. Por ejemplo,</p>
+<ol style="list-style-type: decimal">
+<li><p>En el caso lineal <span class="math inline">\(T_t = \beta_0 + \beta_1t\)</span>, ajustamos el modelo de regresión lineal: <span class="math inline">\(X_t = \beta_0 + \beta_1t + \eta_t\)</span>.</p></li>
+<li><p>En el caso cuadrático <span class="math inline">\(T_t = \beta_0 +\beta_1t+\beta_2t^2\)</span>, ajustamos el modelo de regresión cuadrático <span class="math inline">\(X_t = \beta_0+\beta_1t+\beta_2t^2 +\eta_t\)</span>. Nótese que en este caso hay que definir una variable explicativa adicional <span class="math inline">\(t^2\)</span>.</p></li>
+</ol>
+<p>En general, para que datos de series de tiempo sean estacionarias, es necesario hacer un promedio de productos en el tiempo. Como para datos de serie de tiempo es importante medir la dependencia entre los valores de la serie; al menos, debemos ser capaces de estimar las autocorrelaciones con precisión. Será difícil medir la dependencia de estos valores si la estructura de dependencia no es regular o si cambia en el tiempo. De ahí, que para realizar cualquier análisis estadístico significativo de datos de series de tiempo, será crucial que las funciones de media y autocovarianza satisfagan las condiciones de estacionaridad dadas en la Definición <a href="#def:defi-debil-estacionaria"><strong>??</strong></a>. A menudo, este no es el caso, y en esta sección daremos algunos métodos para lidiar con los efectos de no-estacionaridad sobre las propiedades estacionarias de las series a estudiar.</p>
+<p>Quizás la forma más fácil de trabajar con series no-estacionarias es el modelo de tendencia estacionaria donde el proceso tiene comportamiento estacionario alrededor de una tendencia. Podemos escribir este tipo de modelos como</p>
+<span class="math display" id="eq:eq-modelo-tendencia-estacionaria">\[\begin{equation}
+X_t=T_t+Y_t
+\tag{1.10}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(X_t\)</span> son las observaciones, <span class="math inline">\(T_t\)</span> denota la tendencia y <span class="math inline">\(Y_t\)</span> es un proceso estacionario.</p>
+<p>Por lo general, una tendencia fuerte <span class="math inline">\(T_t\)</span> puede oscurecer el comportamiento del proceso estacionario <span class="math inline">\(Y_t\)</span>, como veremos en ejemplos posteriores.</p>
+<p>De aquí, será una ventaja el que podamos remover la tendencia como un primer paso para un análisis exploratorio de los datos. Los pasos envuelven obtener un estimador razonable del componente de tendencia, llamémoslo <span class="math inline">\(\hat{T}_t\)</span> y entonces trabajar con el residual</p>
+<span class="math display" id="eq:eq-estimacion-componente-tendencia">\[\begin{equation}
+\hat{Y}_t=X_t-\hat{T}_t.
+\tag{1.11}
+\end{equation}\]</span>
+<p>El primer paso en el análisis de cualquier tipo de serie es un gráfico de los datos.</p>
+<ul>
+<li><p>Si existe alguna aparente discontinuidad en la serie, tal como un cambio súbito en el nivel de la serie, esto puede darnos una idea para el análisis de la serie, un primer paso sería dividir la serie en segmentos homogéneos.</p></li>
+<li><p>Si existen observaciones o datos “<em>outliers</em>”, estos deben ser estudiados con cuidado para verificar si existe alguna justificación para descartar estas observaciones, como por ejemplo si una observación ha sido registrada de algún otro proceso por error.</p></li>
+<li><p>La inspección del gráfico también podría sugerir la representación de los datos como una realización de un proceso, como el modelo clásico de descomposición dado por <a href="introduccion.html#eq:eq-modelo-aditivo">(1.1)</a>.</p></li>
+</ul>
+<p>Si la componente estacional y la componente aleatoria o ruido parecen incrementarse con el nivel del proceso entonces una transformación preliminar de los datos es a menudo usada para hacer que los datos transformados sean compatibles con el modelo <a href="introduccion.html#eq:eq-modelo-aditivo">(1.1)</a>. En esta sección discutiremos algunas técnicas para identificar y eliminar las componentes en <a href="introduccion.html#eq:eq-modelo-aditivo">(1.1)</a>.</p>
+<p>Nuestro objetivo es estimar y extraer las componentes determinísticas <span class="math inline">\(T_t\)</span> y <span class="math inline">\(E_t\)</span> con la esperanza de que el residual o la componente aleatoria <span class="math inline">\(\epsilon_t\)</span> llegue a ser un proceso estacionario. Entonces podremos usar la teoría de tales procesos para hallar un modelo probabilístico satisfactorio para el proceso <span class="math inline">\(\epsilon_t\)</span>, analizar sus propiedades y usarlo en conjunto con <span class="math inline">\(T_t\)</span> y <span class="math inline">\(E_t\)</span> para hacer pronósticos y control de <span class="math inline">\(X_t\)</span>.</p>
+<p>Los dos enfoques para la eliminación de las componentes de tendencia y estacional son:</p>
+<ol style="list-style-type: decimal">
+<li>Estimación de <span class="math inline">\(T_t\)</span> y <span class="math inline">\(E_t\)</span> en el modelo <a href="introduccion.html#eq:eq-modelo-aditivo">(1.1)</a>,</li>
+<li>Diferencia de los datos <span class="math inline">\(X_t\)</span>.</li>
+</ol>
+<p>Ilustraremos ambos enfoque con varios ejemplos</p>
+<div id="estimacion-de-la-tendencia-en-ausencia-de-estacionalidad" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Estimación de la tendencia en ausencia de estacionalidad</h3>
+Si tenemos una serie de tiempo para la cual está ausente la componente estacional <span class="math inline">\(E_t\)</span> el modelo <a href="introduccion.html#eq:eq-modelo-aditivo">(1.1)</a> llega ser
+<span class="math display" id="eq:eq-modelo-tendencia">\[\begin{equation}
+X_t = T_t + \epsilon_t,\quad t=1,\ldots,n
+\tag{1.12}
+\end{equation}\]</span>
+<p>donde, sin perdida de generalidad, podemos suponer que <span class="math inline">\(\mathbb{E}(\epsilon_t)=0\)</span>. A continuación vamos a describir tres métodos para estimar la tendencia <span class="math inline">\(T_t\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Método T1: Estimación de <span class="math inline">\(T_t\)</span> por mínimos cuadrados</strong>. El objetivo de este método es intentar ajustar una familia paramétrica de funciones como las vistas en las ecuaciones <a href="introduccion.html#eq:eq-modelo-lineal">(1.4)</a> a <a href="#eq:">(<strong>??</strong>)</a>, a los datos eligiendo los parámetros que minimicen <span class="math inline">\(\sum_t(X_t-T_t)^2\)</span>. Esto es, asumiendo que $(_t)=0, se tiene <span class="math display">\[\mathbb{E}(X_t)=T_t=f(t)\]</span> Una suposición común es que la función <span class="math inline">\(f\)</span> depende de ciertos parámetros (desconocidos) <span class="math inline">\(\beta_1,\ldots,\beta_p\)</span>, es decir,</li>
+</ol>
+<span class="math display" id="eq:eq-funcion-parametros-metodo-T1">\[\begin{equation}
+f(t)=f(t;\beta_1,\ldots,\beta_p)
+\tag{2.26}
+\end{equation}\]</span>
+<p>Sin embargo, el <em>tipo</em> de función es conocida. Los parámetros <span class="math inline">\(\beta_1,\ldots,\beta_p\)</span> serán estimados a partir de una realización <span class="math inline">\(x_t\)</span> de la variable aleatoria <span class="math inline">\(X_t\)</span>. La aproximación por <em>estimación de mínimos cuadrados</em> <span class="math inline">\(\hat{\beta}_1,\ldots,\hat{\beta}_p\)</span> debe satisfacer</p>
+<span class="math display" id="eq:ecuacion-minimos-cuadrados-T1">\[\begin{equation}
+\sum_t(x_t-f(t;\hat{\beta}_1,\ldots,\hat{\beta}_p))^2 = \min_{\beta_1,\ldots,\beta_p}\sum_t(x_t-f(t;\beta_1,\ldots,\beta_p))^2
+\tag{2.27}
+\end{equation}\]</span>
+<p>cuya solución, si existe, es un problema numérico. El valor <span class="math inline">\(\hat{x}_t=f(t;\hat{\beta}_1,\ldots,\hat{\beta}_p)\)</span> servirá como una <em>predicción</em> de futuros valores <span class="math inline">\(x_t\)</span>. Las diferencias observadas <span class="math inline">\(x_t-\hat{x}_t\)</span> son llamadas <em>residuales</em>. Ellas contienen información sobre la bondad de ajuste del modelo a los datos.</p>
+
+<div class="example">
+<span id="exm:ejem-poblacion-usa-metodo-T1" class="example"><strong>Ejemplo 2.2  </strong></span>El archivo “USPOP.txt” contiene la información de la población de Estados Unidos de América desde 1780 hasta 1980 segun el censo poblacional cada 10 años. En el gráfico podemos observar que no existe estacionalidad, por lo que podemos aplicar el método descrito para ajustar la tendencia.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">uspop=<span class="kw">ts</span>(<span class="kw">scan</span>(<span class="st">&quot;data/USPOP.txt&quot;</span>),<span class="dt">frequency=</span><span class="dv">1</span><span class="op">/</span><span class="dv">10</span>,<span class="dt">start=</span><span class="dv">1790</span>) 
+pop=<span class="kw">window</span>(uspop,<span class="dt">start=</span><span class="dv">1790</span>)
+<span class="kw">plot</span>(pop,<span class="dt">type=</span><span class="st">&quot;o&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Poblacion (millones)&quot;</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-18-1.svg" /><!-- --></p>
+<p>Podemos notar del gráfico que la tendencia es creciente y parece tener un comportamiento cuadrático, por lo que ajustando una función de la forma <a href="introduccion.html#eq:eq-modelo-cuadratico">(1.5)</a> para la población de los datos USPOP para <span class="math inline">\(1790\leq t\leq1980\)</span> nos da los parámetros estimados</p>
+<p><span class="math display">\[\hat{a}_0=2.101\times10^{10};\quad \hat{a}_1=-2.338\times10^{7}; \hat{a}_2=6.506\times10^{3}\]</span></p>
+<p>En el gráfico siguiente se puede observar la curva ajustada y los datos originales. Los valores estimados del proceso de ruido <span class="math inline">\(\epsilon_t, 1790\leq t\leq1980\)</span>, son los residuales obtenidos por sustracción de <span class="math inline">\(\hat{T}_t=\hat{a}_0+\hat{a}_1t+\hat{a}_2t^2\)</span> de la serie <span class="math inline">\(X_t\)</span>. La componente de tendencia <span class="math inline">\(T_t\)</span> nos proporciona un predictor natural de los valores futuros de <span class="math inline">\(X_t\)</span>. Por ejemplo si deseamos estimar <span class="math inline">\(T_{1990}\)</span> por su valor medio, obtenemos</p>
+<p><span class="math display">\[T_{1990} = 2.4853\times10^8\]</span></p>
+<p>para la población de EE.UU en 1990. Sin embargo si los residuales <span class="math inline">\(\hat{\epsilon}_t\)</span> están altamente correlacionados podemos ser capaces de usar esos valores para dar una mejor estimación de <span class="math inline">\(T_{1990}\)</span> y por consiguiente de <span class="math inline">\(X_{1990}\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x=<span class="kw">time</span>(pop)
+reg=<span class="kw">lm</span>(pop<span class="op">~</span>x<span class="op">+</span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">2</span>),<span class="dt">na.action=</span><span class="ot">NULL</span>)
+<span class="kw">summary</span>(reg)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = pop ~ x + I(x^2), na.action = NULL)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -6947521  -358167   436285  1481410  3391761 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.10e+10   6.59e+08    31.9   &lt;2e-16 ***
+## x           -2.34e+07   6.98e+05   -33.5   &lt;2e-16 ***
+## I(x^2)       6.51e+03   1.85e+02    35.2   &lt;2e-16 ***
+## ---
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2770000 on 18 degrees of freedom
+## Multiple R-squared:  0.999,  Adjusted R-squared:  0.999 
+## F-statistic: 8.05e+03 on 2 and 18 DF,  p-value: &lt;2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(pop,<span class="dt">type=</span><span class="st">&quot;o&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;Años&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Poblacion (millones)&quot;</span>)
+<span class="kw">lines</span>(reg<span class="op">$</span>fitted.values,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-19-1.svg" /><!-- --></p>
+<hr />
+
+<div class="example">
+<span id="exm:ejemplo-poblacion-alemania-T1" class="example"><strong>Ejemplo 2.3  </strong></span>El archivo “Population-North-Rhine-Westphalia.txt” contiene la población de la región North-Rhine-Westphalia (Alemania) en millónes cada 5 años desde 1935 hasta 1980. Observando el gráfico podemos suponer que la tendencia se puede ajustar por el modelo cúbico <a href="introduccion.html#eq:eq-modelo-cubico">(1.6)</a>, esto es
+</div>
+
+<p><span class="math display">\[T_t=\beta_0+\beta_1t+\beta_2t^2+\beta_3t^3\]</span></p>
+<p>El código en R para el gráfico y el ajuste es</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">NRWpop=<span class="kw">read.table</span>(<span class="st">&quot;data/Population-North-Rhine-Westphalia.txt&quot;</span>,
+                     <span class="dt">header =</span> <span class="ot">TRUE</span>)
+knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(NRWpop,<span class="dt">booktabs=</span><span class="ot">TRUE</span>,
+                  <span class="dt">caption=</span><span class="st">&quot;Población (en millones) de North-Rhine-Westphalia, Alemania, 1935-1980&quot;</span>))</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Year</th>
+<th align="right">Population</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1935</td>
+<td align="right">11772</td>
+</tr>
+<tr class="even">
+<td align="right">1940</td>
+<td align="right">12059</td>
+</tr>
+<tr class="odd">
+<td align="right">1945</td>
+<td align="right">11200</td>
+</tr>
+<tr class="even">
+<td align="right">1950</td>
+<td align="right">12926</td>
+</tr>
+<tr class="odd">
+<td align="right">1955</td>
+<td align="right">14442</td>
+</tr>
+<tr class="even">
+<td align="right">1960</td>
+<td align="right">15694</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(NRWpop, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>,<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>,<span class="dt">xlab =</span> <span class="st">&quot;Años&quot;</span>,<span class="dt">ylab =</span> <span class="st">&quot;Población (millones)&quot;</span>)
+<span class="co"># Modelo cúbico</span>
+t=NRWpop[,<span class="dv">1</span>]
+pob=NRWpop[,<span class="dv">2</span>]
+modelo=<span class="kw">lm</span>(pob<span class="op">~</span>t<span class="op">+</span><span class="kw">I</span>(t<span class="op">^</span><span class="dv">2</span>)<span class="op">+</span><span class="kw">I</span>(t<span class="op">^</span><span class="dv">3</span>),<span class="dt">na.action =</span> <span class="ot">NULL</span>)
+<span class="kw">summary</span>(modelo)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = pob ~ t + I(t^2) + I(t^3), na.action = NULL)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -813.0 -199.2   67.1  275.6  493.8 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)  2.11e+09   5.10e+08    4.13   0.0061 **
+## t           -3.23e+06   7.81e+05   -4.14   0.0061 **
+## I(t^2)       1.65e+03   3.99e+02    4.14   0.0061 **
+## I(t^3)      -2.81e-01   6.79e-02   -4.14   0.0061 **
+## ---
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 472 on 6 degrees of freedom
+## Multiple R-squared:  0.974,  Adjusted R-squared:  0.962 
+## F-statistic: 76.2 on 3 and 6 DF,  p-value: 3.63e-05</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lines</span>(t,modelo<span class="op">$</span>fitted.values,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-20-1.svg" /><!-- --></p>
+<p>La curva punteada en azul corresponde a los datos originales, la curva en rojo corresponde al ajuste mediante el modelo cúbico.</p>
+<hr />
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Método T2: Suavizado por medio de un promedio móvil</strong>. Sea <span class="math inline">\(q\)</span> un entero no negativo y consideremos un promedio móvil de la forma</li>
+</ol>
+<span class="math display" id="eq:eq-promedio-movil-orden-q">\[\begin{equation}
+W_t = \frac{1}{2q+1}\sum_{j=-q}^{q}X_{t+j}
+\tag{1.13}
+\end{equation}\]</span>
+<p>de un proceso <span class="math inline">\(\{X_t\}\)</span> definido por <a href="introduccion.html#eq:eq-modelo-tendencia">(1.12)</a>. Entonces para <span class="math inline">\(q+1\leq t\leq n-q\)</span>,</p>
+<span class="math display" id="eq:eq-media-promedio-movil">\[\begin{eqnarray}
+W_t &amp;=&amp; \frac{1}{2q+1}\sum_{j=-q}^qT_{t+j}+\frac{1}{2q+1}\sum_{j=-q}^q\epsilon_{t+j}\\ \nonumber
+    &amp;\simeq&amp; T_t \tag{1.14}
+\end{eqnarray}\]</span>
+<p>suponiendo que <span class="math inline">\(T_t\)</span> es aproximadamente lineal sobre el intervalo <span class="math inline">\([t-q,t+q]\)</span> y que el promedio del término de error sobre este intervalo es cercano a cero.</p>
+<p>El promedio móvil entonces nos provee con el estimador</p>
+<span class="math display" id="eq:eq-estimador-promedio-movil">\[\begin{equation}
+\hat{T}_t = \frac{1}{2q+1}\sum_{j=-q}^qX_{t+j},\quad q+1\leq t\leq n-q.
+\tag{1.15}
+\end{equation}\]</span>
+<p>Dado que <span class="math inline">\(X_t\)</span> es no observado para <span class="math inline">\(t\leq0\)</span> o <span class="math inline">\(t\geq n\)</span> no podemos usar <a href="introduccion.html#eq:eq-estimador-promedio-movil">(1.15)</a> para <span class="math inline">\(t\leq q\)</span> o <span class="math inline">\(t&gt;n-q\)</span>. Una forma de resolver este problema es haciendo <span class="math inline">\(X_t=X_1\)</span> para <span class="math inline">\(t&lt;1\)</span> y <span class="math inline">\(X_t=X_n\)</span> para <span class="math inline">\(t&gt;n\)</span>. A continuación presentamos un ejemplo</p>
+<hr />
+
+<div class="example">
+<span id="exm:ejem-huelgas-USA-T2" class="example"><strong>Ejemplo 2.4  </strong></span>El gráfico siguiente muestra las huelgas ocurridas en EE.UU, de 1951 a 1980, según la Oficina de Estadísticas Laborales del Departamento de Trabajo de los EE.UU.
+</div>
+
+<p>A estos datos le aplicamos un promedio móvil de 5 puntos, la Figura muestra la serie suavizada y el término de error estimado <span class="math inline">\(\hat{\epsilon}_t = X_t - \hat{T}_t\)</span> se muestra en la Figura . Como era de esperarse ellos no presentan una tendencia clara.</p>
+<p>Las instrucciones en R para el suavizado y los gráficos son los siguientes:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">H=<span class="kw">read.table</span>(<span class="st">&quot;data/Huelgas.txt&quot;</span>)
+<span class="co"># Proemdio móvil por medio de la función &quot;filter&quot;</span>
+W=<span class="kw">filter</span>(H[,<span class="dv">2</span>],<span class="dt">sides=</span><span class="dv">2</span>,<span class="kw">rep</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">5</span>,<span class="dv">5</span>))
+<span class="co"># Residuales de X_t</span>
+y=H[,<span class="dv">2</span>]<span class="op">-</span>W 
+<span class="co"># Graficos</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))
+<span class="kw">plot</span>(H,<span class="dt">xlab=</span><span class="st">&quot;años&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Huelgas&quot;</span>,<span class="dt">type=</span><span class="st">&#39;b&#39;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Huelgas en EE.UU., años 1951-1980&quot;</span>)
+<span class="kw">plot</span>(H[,<span class="dv">1</span>],W,<span class="dt">xlab=</span><span class="st">&quot;años&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Huelgas&quot;</span>,<span class="dt">type=</span><span class="st">&#39;b&#39;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Promedio móvil de 5 puntos para los datos de Huelga&quot;</span>)
+<span class="kw">plot</span>(H[,<span class="dv">1</span>],y,<span class="dt">xlab=</span><span class="st">&quot;años&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Residuales&quot;</span>,<span class="dt">type=</span><span class="st">&#39;b&#39;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Residuales e_t=X_t-T_t&quot;</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-21-1.svg" /><!-- --></p>
+<hr />
+<p>Para cada valor fijo <span class="math inline">\(a\in[0,1]\)</span>, el promedio móvil de un lado <span class="math inline">\(\hat{T}_t, t=1,\ldots,n\)</span>, definido por la recursión</p>
+<span class="math display" id="eq:eq-promedio-movil-1-lado-peso">\[\begin{equation}
+  \hat{T}_t = aX_t+(1-a)\hat{T}_t,\quad t=2,\ldots,n
+ \tag{1.16}
+\end{equation}\]</span>
+<p>y</p>
+<p><span class="math display">\[\hat{T}_1=X_1,\]</span></p>
+<p>se puede calcular usando la opción <em>sides=1</em> en la función <em>filter</em> de R.</p>
+<p>Es usual pensar como aplicación de la ecuación <a href="introduccion.html#eq:eq-promedio-movil-1-lado-peso">(1.16)</a> como un suavizado exponencial, dado que se sigue de la recursión que para <span class="math inline">\(t\leq2, \hat{T}_t=\sum_{j=0}^{t-2}a(1-a)^jX_{t-j}+(1-a)^{t-1}X_1\)</span>, es un promedio móvil con peso de <span class="math inline">\(X_t,X_{t-1},\ldots\)</span>, con pesos decreciendo exponencialmente (excepto para el último término).</p>
+<p>Es útil pensar en <span class="math inline">\(\{\hat{T}_t\}\)</span> en (<em>filter</em>) como un proceso obtenido de <span class="math inline">\(\{X_t\}\)</span> por aplicación de un operador lineal o filtro lineal <span class="math inline">\(\hat{T}_t=\sum_{j=-\infty}^{\infty}a_jX_{t+j}\)</span> con pesos <span class="math inline">\(a_j=(2q+1)^{-1},-q\leq j\leq q\)</span>, y <span class="math inline">\(a_j=0,|j|&gt;q\)</span>. Este filtro particular es un filtro de “paso-bajo” ya que toma los datos <span class="math inline">\(\{X_t\}\)</span> y remueve la componente de rápida fluctuación (o de alta frecuencia) <span class="math inline">\(\{\hat{\epsilon}_t\}\)</span>, para dejar el término de la tendencia estimada de lenta variación <span class="math inline">\(\{\hat{T}_t\}\)</span>.</p>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>Método T3: Diferenciación para generar datos estacionarios</strong>. En lugar de intentar remover el ruido por suavizado como en el Método T2, ahora intentaremos eliminar la tendencia por diferenciación. Definamos primero el operador diferencia <span class="math inline">\(\nabla\)</span> por</li>
+</ol>
+<span class="math display" id="eq:eq-operador-diferencia">\[\begin{equation}
+  \nabla x_t = x_t-x_{t-1}=(1-B)x_t,
+\tag{1.17}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(B\)</span> es el operador de desplazamiento hacia atrás (<em>backward shift operator</em> en inglés),</p>
+<span class="math display" id="eq:eq-backward-shift-operator">\[\begin{equation}
+  Bx_t=x_{t-1}.
+\tag{1.18}
+\end{equation}\]</span>
+<p>Las potencias de los operadores <span class="math inline">\(B\)</span> y <span class="math inline">\(\nabla\)</span> se definen de manera obvia, esto es, <span class="math inline">\(B^j(x_t)=x_{t-j}\)</span> y <span class="math inline">\(\nabla^j(x_t)=\nabla(\nabla^{j-1}(x_t)),j\geq1\)</span> con <span class="math inline">\(\nabla^0(x_t)=x_t\)</span>. Los polinomios en <span class="math inline">\(B\)</span> y <span class="math inline">\(\nabla\)</span> se manipulan de la misma manera que las funciones polinómicas de variables reales. Por ejemplo</p>
+<span class="math display">\[\begin{eqnarray*}
+  \nabla^2x_t &amp;=&amp; \nabla(\nabla x_t) = (1-B)(1-B)x_t = (1-2B+B^2)x_t \\
+              &amp;=&amp; x_t-2x_{t-1}+x_{t-2}.
+\end{eqnarray*}\]</span>
+<p>Si el operador <span class="math inline">\(\nabla\)</span> se aplica a una función con tendencia lineal <span class="math inline">\(T_t=at+b\)</span>, entonces obtenemos la función constante <span class="math inline">\(\nabla T_t=a\)</span>. De la misma manera cada tendencia polinomial de grado <span class="math inline">\(k\)</span> se puede reducir a una constante por aplicación del operador <span class="math inline">\(\nabla^k\)</span>.</p>
+<p>Iniciando entonces con el modelo <span class="math inline">\(X_t=T_t+\epsilon_t\)</span>, donde <span class="math inline">\(T_t=\sum_{j=0}^ka_jt^j\)</span> y <span class="math inline">\(\epsilon_t\)</span> es estacionario con media cero, obtenemos</p>
+<p><span class="math display">\[\nabla^kX_t = k!a_k+\nabla^k\epsilon_t,\]</span></p>
+<p>un proceso estacionario con media <span class="math inline">\(k!a_k\)</span>. Esta consideración sugiere la posibilidad, dada una sucesión <span class="math inline">\(\{X_t\}\)</span> de datos, de aplicar el operador <span class="math inline">\(\nabla\)</span> repetidamente hasta conseguir una sucesión <span class="math inline">\(\{\nabla^kX_t\}\)</span> la cual puede ser apropiadamente modelada como una realización de un proceso estacionario. Se encuentra a menudo en la práctica que el orden <span class="math inline">\(k\)</span> de diferenciación es bastante pequeño, frecuentemente uno o dos.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+
+<div class="example">
+<span id="exm:ejem-diferenciacion-poblacion-usa-T2" class="example"><strong>Ejemplo 2.5  </strong></span>Aplicando esta técnica al ejemplo <a href="caracteristicas-de-series-de-tiempo.html#exm:ejem-poblacion-usa-metodo-T1">2.2</a> de población de los EE.UU, hallamos que dos operaciones de diferenciación son suficientes para producir una serie sin aparente tendencia. Los datos diferenciados se muestran en la Figura. Note que la magnitud de las fluctuaciones en <span class="math inline">\(\nabla^2X_n\)</span> se incrementa con el valor de <span class="math inline">\(n\)</span>. Este efecto se puede suprimir tomando primero logaritmo natural, <span class="math inline">\(y_n=\ln X_n\)</span> y entonces aplicando el operador <span class="math inline">\(\nabla^2\)</span> a la serie <span class="math inline">\(\{y_n\}\)</span>.
+</div>
+
+<p>Las instrucciones en R son las siguientes</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Dx=<span class="kw">diff</span>(uspop,<span class="dt">difference=</span><span class="dv">2</span>)
+<span class="kw">plot</span>(Dx,<span class="dt">type=</span><span class="st">&quot;b&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;Año&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Diferencias&quot;</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-22-1.svg" /><!-- --></p>
+</div>
+<div id="estimacion-de-la-tendencia-y-la-estacionalidad" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Estimación de la tendencia y la estacionalidad</h3>
+<p>Los métodos descritos para estimar y remover la tendencia pueden ser adaptados de manera natural para estimar tanto la tendencia como la estacionalidad en el modelo general</p>
+<span class="math display">\[\begin{equation}
+X_t = T_t + E_t + \epsilon_t
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(\mathbb{E}(\epsilon_t)=0, E_{t+d}=E_t\)</span> y <span class="math inline">\(\sum_{j=1}^dE_t=0\)</span>. Ilustraremos estos métodos con referencia al siguiente ejemplo de accidentes. El archivo “Accidentes3.txt” muestra el número de accidentes mortales de automóviles mensual ocurridos en EE.UU., entre los años 1973 y 1978. En la tabla siguiente se muestran los datos</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X&lt;-<span class="kw">read.table</span>(<span class="st">&quot;data/Accidentes3.txt&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Mes</th>
+<th align="right">X1973</th>
+<th align="right">X1974</th>
+<th align="right">X1975</th>
+<th align="right">X1976</th>
+<th align="right">X1977</th>
+<th align="right">X1978</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Ene</td>
+<td align="right">9007</td>
+<td align="right">7750</td>
+<td align="right">8162</td>
+<td align="right">7717</td>
+<td align="right">7792</td>
+<td align="right">7836</td>
+</tr>
+<tr class="even">
+<td align="left">Feb</td>
+<td align="right">8106</td>
+<td align="right">6981</td>
+<td align="right">7306</td>
+<td align="right">7461</td>
+<td align="right">6957</td>
+<td align="right">6892</td>
+</tr>
+<tr class="odd">
+<td align="left">Mar</td>
+<td align="right">8928</td>
+<td align="right">8038</td>
+<td align="right">8124</td>
+<td align="right">7776</td>
+<td align="right">7726</td>
+<td align="right">7791</td>
+</tr>
+<tr class="even">
+<td align="left">Abr</td>
+<td align="right">9137</td>
+<td align="right">8422</td>
+<td align="right">7870</td>
+<td align="right">7925</td>
+<td align="right">8106</td>
+<td align="right">8129</td>
+</tr>
+<tr class="odd">
+<td align="left">May</td>
+<td align="right">10017</td>
+<td align="right">8714</td>
+<td align="right">9387</td>
+<td align="right">8634</td>
+<td align="right">8890</td>
+<td align="right">9115</td>
+</tr>
+<tr class="even">
+<td align="left">Jun</td>
+<td align="right">10826</td>
+<td align="right">9512</td>
+<td align="right">9556</td>
+<td align="right">8945</td>
+<td align="right">9299</td>
+<td align="right">9434</td>
+</tr>
+</tbody>
+</table>
+<p>En la figura podemos observar que los datos presentan claramente una componente estacional con periodo <span class="math inline">\(d=12\)</span>.</p>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-25-1.svg" /><!-- --></p>
+<p>Será conveniente para el primer método indexar los datos por mes y año. Entonces <span class="math inline">\(X_{j,k}, j=1,\ldots,12, k=1,\ldots,6\)</span> denotará el número de muertes accidentales reportados para el <span class="math inline">\(j\)</span>-ésimo mes del <span class="math inline">\(k\)</span>-ésimo año, <span class="math inline">\((1972+k)\)</span>. En otras palabras, definimos</p>
+<p><span class="math display">\[X_{j,k}=X_{j+12(k-1)},\quad j=1,\ldots,12; k=1,\ldots,6.\]</span></p>
+<ol style="list-style-type: decimal">
+<li><strong>Método E1: Método de la tendencia pequeña</strong>. Si la tendencia es pequeña (como en los datos de accidentes) no es irrazonable suponer que el término de la tendencia es constante, digamos <span class="math inline">\(T_k\)</span> para el año <span class="math inline">\(k\)</span>. Dado que <span class="math inline">\(\sum_{j=1}^{12}E_j=0\)</span>, nos lleva al estimador insesgado natural para la tendencia</li>
+</ol>
+<span class="math display" id="eq:eq-estimador-Tj-accidentes">\[\begin{equation}
+\hat{T}_k = \frac{1}{12}\sum_{j=1}^{12}X_{j,k},
+\tag{1.19}
+\end{equation}\]</span>
+<p>mientras que para la estacionalidad <span class="math inline">\(E_j, j=1,\ldots,12\)</span> tenemos el estimador</p>
+<span class="math display" id="eq:eq-estimador-Et-accidentes">\[\begin{equation}
+\hat{E}_j = \frac{1}{6}\sum_{k=1}^6(X_{j,k}-\hat{T}_k),
+\tag{1.20}
+\end{equation}\]</span>
+<p>el cual automáticamente satisface el requisito de que <span class="math inline">\(\sum_{j=1}^{12}\hat{E}_j=0\)</span>. El término de error estimado para el mes <span class="math inline">\(j\)</span> del año <span class="math inline">\(k\)</span> es por supuesto</p>
+<span class="math display" id="eq:eq-estimador-epsilon-t-accidentes">\[\begin{equation}
+\hat{\epsilon}_{j,k} = X_{j,k}-\hat{T}_k-\hat{E}_j, \quad j=1,\ldots,12; k=1,\ldots,6.
+\tag{1.21}
+\end{equation}\]</span>
+<p>La generalización de <a href="introduccion.html#eq:eq-estimador-Tj-accidentes">(1.19)</a> a <a href="introduccion.html#eq:eq-estimador-epsilon-t-accidentes">(1.21)</a> para datos con estacionalidad con un periodo distinto de 12 es bastante sencillo de realizar, simplemente cambiamos 12 por el correspondiente valor de <span class="math inline">\(d\)</span>. Así, en general, si tenemos <span class="math inline">\(n\)</span> años (meses, semanas, días, etc.) y estacionalidad con periodo <span class="math inline">\(d\)</span>, los estimadores seran:</p>
+<p>Para la tendencia <span class="math inline">\(T_k\)</span>:</p>
+<span class="math display" id="eq:eq-estimador-Tk-E1">\[\begin{equation}
+\hat{T}_k=\frac{1}{d}\sum_{j=1}^dX_{j,k}
+\tag{2.28}
+\end{equation}\]</span>
+<p>Para la estacionalidad <span class="math inline">\(E_j\)</span>:</p>
+<span class="math display" id="eq:eq-estimador-Ej-E1">\[\begin{equation}
+\hat{E}_j=\frac{1}{n}\sum_{k=1}^n(X_{j,k}-\hat{T}_k),\quad j=1,\ldots,d
+\tag{2.29}
+\end{equation}\]</span>
+<p>Para el error</p>
+<span class="math display" id="eq:eq-estimador-error-E1">\[\begin{equation}
+\hat{\epsilon}_{j,k}=X_{j,k}-\hat{T}_k-\hat{E}_j,\quad k=1,\ldots,n; j=1,\ldots,d.
+\tag{2.30}
+\end{equation}\]</span>
+<p>Las Figuras siguientes muestran respectivamente las observaciones con la tendencia removida <span class="math inline">\(X_{j,k}-\hat{T}_k\)</span>, la componente estacional estimada <span class="math inline">\(\hat{E}_j\)</span> y las observaciones con la tendencia y la estacionalidad removida <span class="math inline">\(\hat{\epsilon}_{j,k}=X_{j,k}-\hat{T}_k-\hat{E}_j\)</span>. En la última no se observa una aparente tendencia o estacionalidad.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Estimacion de la tendencia</span>
+Tk=<span class="kw">numeric</span>(n<span class="op">*</span>d)
+<span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n)
+{
+  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>d)
+  {
+    Tk[(k<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>d<span class="op">+</span>j]=Tk[(k<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>d<span class="op">+</span>j]<span class="op">+</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">12</span>)<span class="op">*</span>X[j,k<span class="op">+</span><span class="dv">1</span>]
+  }
+}
+<span class="co"># Grafico con la tendencia removida</span>
+<span class="kw">plot</span>(V<span class="op">-</span>Tk,<span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,<span class="dt">xlab =</span> <span class="st">&quot;Meses&quot;</span>,<span class="dt">ylab =</span> <span class="st">&quot;Num. de accidentes&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Accidentes mortales mensuales con la tendencia T_k removida&quot;</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-26-1.svg" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Estimacion de la estacionalidad</span>
+Ej=<span class="kw">numeric</span>(n<span class="op">*</span>d)
+<span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>d)
+{
+  aux=<span class="dv">0</span>
+  <span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n)
+  {
+    aux=aux<span class="op">+</span>(X[j,k<span class="op">+</span><span class="dv">1</span>]<span class="op">-</span>Tk[(k<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>d<span class="op">+</span>j])
+  }
+  <span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n)
+  {
+    Ej[(k<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>d<span class="op">+</span>j]=(<span class="dv">1</span><span class="op">/</span>n)<span class="op">*</span>aux
+  }
+}
+<span class="co"># Grafico de la estacionalidad</span>
+<span class="kw">plot</span>(Ej,<span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,<span class="dt">xlab =</span> <span class="st">&quot;Meses&quot;</span>,<span class="dt">ylab =</span> <span class="st">&quot;Num. de accidentes&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Estacionalidad de los accidentes mortales mensuales&quot;</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-26-2.svg" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Estimacion del error</span>
+error=V<span class="op">-</span>Tk<span class="op">-</span>Ej
+<span class="co"># Grafico del error estimado</span>
+<span class="kw">plot</span>(error,<span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,<span class="dt">xlab =</span> <span class="st">&quot;Meses&quot;</span>,<span class="dt">ylab =</span> <span class="st">&quot;Error estimado&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Error estimado de los accidentes mortales&quot;</span>)
+<span class="kw">grid</span>(<span class="dt">col =</span> <span class="st">&quot;darkgray&quot;</span>)     </code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-26-3.svg" /><!-- --></p>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Método E2: Estimación por promedio móvil</strong>. La siguiente técnica es preferible al Método E1 ya que no se basa en la suposición de que <span class="math inline">\(T_t\)</span> es casi constante sobre cada ciclo estacional.</li>
+</ol>
+<p>Suponga que tenemos las observaciones <span class="math inline">\(\{x_1,\ldots,x_n\}\)</span>. Se estima primero la tendencia aplicando un filtro de promedio móvil especialmente elegido para eliminar la componente estacional y para amortiguar el ruido. Si el periodo <span class="math inline">\(d\)</span> es par, digamos <span class="math inline">\(d=2q\)</span>, entonces usamos</p>
+<span class="math display" id="eq:eq-filtro-especial-metodo-S2">\[\begin{equation}
+\hat{T}_t = (0.5x_{t-q} + x_{t-q+1} + \cdots + x_{t+q-1} + 0.5x_{t+q})/d, q&lt;t\leq n-q.
+\tag{1.22}
+\end{equation}\]</span>
+<p>Si el periodo es impar, digamos <span class="math inline">\(d=2q+1\)</span>, entonces usamos el promedio móvil simple <a href="introduccion.html#eq:eq-estimador-promedio-movil">(1.15)</a>. La Figura~ muestra la tendencia estimada <span class="math inline">\(\hat{T}_t\)</span> para los datos de accidentes mortales obtenido de <a href="introduccion.html#eq:eq-filtro-especial-metodo-S2">(1.22)</a>. También muestra la tendencia constante a trozos obtenida por el Método S1.</p>
+<p>El segundo paso, es estimar la componente estacional. Para cada <span class="math inline">\(k=1,\ldots,d\)</span>, calculamos el promedio <span class="math inline">\(w_k\)</span> de las desviaciones <span class="math inline">\(\{(X_{k+jd}-\hat{T}_{k+jd}):q&lt;k+jd\leq n-q\}\)</span>. Dado que este promedio de desviaciones no necesariamente suma cero, estimamos la componente estacional <span class="math inline">\(E_k\)</span> como</p>
+<span class="math display" id="eq:eq-estimador-Et-metodo-S2">\[\begin{equation}
+\hat{E}_k = w_k -\frac{1}{d}\sum_{i=1}^dw_i,\quad i=1,\ldots,d,
+\tag{1.23}
+\end{equation}\]</span>
+<p>y <span class="math inline">\(\hat{E}_k=\hat{E}_{k-d},k&gt;d\)</span>.</p>
+<p>Los datos sin la componente estacional se definen entonces como la serie original con la componente estacional removida, es decir,</p>
+<span class="math display" id="eq:eq-serie-destacionalizada">\[\begin{equation}
+d_t = X_t-\hat{E}_t,\quad t=1,\ldots,n.
+\tag{1.24}
+\end{equation}\]</span>
+<p>Finalmente, reestimamos la tendencia de <span class="math inline">\(\{d_t\}\)</span> aplicando un filtro de promedio móvil como se describió para los datos no estacionales o fijando un polinomio a la serie <span class="math inline">\(\{d_t\}\)</span>. El término del ruido estimado llega a ser entonces</p>
+<p><span class="math display">\[\hat{\epsilon}_t = X_t - \hat{E}_t - \hat{E}_t, \quad t=1,\ldots,n.\]</span></p>
+<p>Los resultados de aplicar los Métodos S1 y S2 a los datos de accidentes mortales son casi iguales, dado que en este caso la constante a trozos y el promedio móvil de <span class="math inline">\(T_t\)</span> están razonablemente cercanos.</p>
+<p>Una comparación de los valores estimados de <span class="math inline">\(E_k, k=1,\ldots,12\)</span>, obtenido con ambos métodos se muestra en la Tabla~</p>
+<table>
+<thead>
+<tr class="header">
+<th>k</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\hat{E}_t(S1)\)</span></td>
+<td>-7434</td>
+<td>-1504</td>
+<td>-724</td>
+<td>-523</td>
+<td>338</td>
+<td>808</td>
+<td>1665</td>
+<td>961</td>
+<td>-87</td>
+<td>197</td>
+<td>-321</td>
+<td>-67</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\hat{E}_t(S2)\)</span></td>
+<td>-804</td>
+<td>-1522</td>
+<td>-737</td>
+<td>-526</td>
+<td>343</td>
+<td>746</td>
+<td>1680</td>
+<td>987</td>
+<td>-109</td>
+<td>258</td>
+<td>-259</td>
+<td>-57</td>
+</tr>
+</tbody>
+</table>
+<p>Componentes estacional estimadas para los datos de accidentes mortales</p>
+<ul>
+<li><strong>Método E3: Diferenciación a paso <span class="math inline">\(\mathbf{d}\)</span></strong>. La técnica de diferenciación la cual aplicamos antes a datos no estacionales se pueden adaptar para lidiar con el caso estacional de periodo <span class="math inline">\(d\)</span> introduciendo el operador de diferencia de paso <span class="math inline">\(d\)</span> <span class="math inline">\(\nabla_d\)</span> definido por</li>
+</ul>
+<span class="math display" id="eq:eq-operador-diferencia-paso-d">\[\begin{equation}
+\nabla_dX_t = X_t-X_{t-d} = (1-B^d)X_t.
+\tag{1.25}
+\end{equation}\]</span>
+<p>Este operador no debe confundirse con el operador <span class="math inline">\(\nabla^d = (1-B)^d\)</span> definido por ().</p>
+<p>Aplicando el operador <span class="math inline">\(\nabla_d\)</span> al modelo</p>
+<p><span class="math display">\[X_t = T_t + E_t + \epsilon_t,\]</span> donde <span class="math inline">\(\{E_t\}\)</span> tiene periodo <span class="math inline">\(d\)</span>, obtenemos</p>
+<p><span class="math display">\[\nabla_dX_t = T_t-T_{t-d} + \epsilon_t-\epsilon_{t-d},\]</span></p>
+<p>lo cual nos da una descomposición de la diferencia <span class="math inline">\(\nabla_dX_t\)</span> en una componente de tendencia <span class="math inline">\((T_t-T_{t-d})\)</span> y un término de ruido <span class="math inline">\((\epsilon_t-\epsilon_{t-d})\)</span>. La tendencia <span class="math inline">\((T_t-T_{t-d})\)</span> se puede eliminar usando los métodos ya descritos, por ejemplo, aplicando alguna potencia del operador <span class="math inline">\(\nabla\)</span>. La Figura~ muestra el resultado de aplicar el operador <span class="math inline">\(\nabla_{12}\)</span> a los datos de accidentes mortales. La componente estacional evidente en la Figura~ está ausente en la Figura de <span class="math inline">\(\nabla_{12}X_t,13\leq t\leq72\)</span>. Sin embargo todavía parece haber una tendencia decreciente. Si ahora aplicamos el operador <span class="math inline">\(\nabla\)</span> a <span class="math inline">\(\nabla_{12}X_t\)</span> y graficamos las diferencias <span class="math inline">\(\nabla\nabla_{12}X_t,t=14,\ldots,72\)</span> obtenemos el gráfico mostrado en la Figura~, los cuales no tienen una aparente tendencia o componente estacional.</p>
+
+
+</div>
+</div>
+</div>
+
+
+
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Note que la desigualdad de Cauchy-Schwartz implica <span class="math inline">\(|\gamma(s,t)|^2\leq\gamma(s,s)\gamma(t,t)\)</span>.}.<a href="caracteristicas-de-series-de-tiempo.html#fnref1">↩</a></p></li>
+<li id="fn2"><p>Esto depende del hecho de que muchas funciones pueden ser aproximadas bastante bien, en un intervalo de longitud finita, por un polinomio de grado razonablemente bajo.<a href="caracteristicas-de-series-de-tiempo.html#fnref2">↩</a></p></li>
+</ol>
+</div>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-78759535-1', 'auto');
+ga('send', 'pageview');  
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduccion.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="referencias.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/synergyvision/Teoria-de-Portafolio/edit/master/bookdown/011-caracterisitcas-series-tiempo.Rmd",
+"text": "Edit"
+},
+"download": ["Serie-de-Tiempo-en-R.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
