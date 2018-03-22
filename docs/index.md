@@ -4,7 +4,7 @@
 title: "Series de Tiempo en R"
 subtitle: "Ciencia de los Datos Financieros"
 author: "Synergy Vision"
-date: "2018-03-21"
+date: "2018-03-22"
 knit: "bookdown::render_book"
 documentclass: krantz
 bibliography: [book.bib, packages.bib]
@@ -688,7 +688,7 @@ $$\nabla_dX_t = T_t-T_{t-d} + \epsilon_t-\epsilon_{t-d},$$
 lo cual nos da una descomposición de la diferencia $\nabla_dX_t$ en una componente de tendencia $(T_t-T_{t-d})$ y un término de ruido $(\epsilon_t-\epsilon_{t-d})$. La tendencia $(T_t-T_{t-d})$ se puede eliminar usando los métodos ya descritos, por ejemplo, aplicando alguna potencia del operador $\nabla$. La Figura~\ref{Grafico-tema3-diferencia-paso-12} muestra el resultado de aplicar el operador $\nabla_{12}$ a los datos de accidentes mortales. La componente estacional evidente en la Figura~\ref{Grafico-tema3-accidentes-USA} está ausente en la Figura de $\nabla_{12}X_t,13\leq t\leq72$. Sin embargo todavía parece haber una tendencia decreciente. Si ahora aplicamos el operador $\nabla$ a $\nabla_{12}X_t$ y graficamos las diferencias $\nabla\nabla_{12}X_t,t=14,\ldots,72$ obtenemos el gráfico mostrado en la Figura~\ref{Grafico-tema3-diferencia-diferencia-paso-12}, los cuales no tienen una aparente tendencia o componente estacional.
 
 
-<!--chapter:end:010-introduccion.Rmd-->
+<!--chapter:end:100-introduccion.Rmd-->
 
 # Características de series de tiempo
 
@@ -819,7 +819,7 @@ Esta definición de estacionaridad es muy fuerte para la mayoría de las aplicac
 
 Por consiguiente, usaremos el término **estacionaridad** para referirnos a estcionaridad débil; si un proceso es estacinario en el sentido estricto usaremos el término *estrictamente estacionario*.</div>\EndKnitrBlock{definition}
 
-\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota. </em></span>  \fi{}1)  Si una serie de tiempo es estrictamente estacionaria, entonces todos las funciones de distribución multivariadas para subconjuntos de variables deben coincidir con sus contrapartes en el conjunto trasladado, para todos los valores del parámetro $h$. Por ejemplo para $k=1$ La ecuación \@ref(eq-serie-estrictamente-estacionaria) implica que
+\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota. </em></span>  \fi{}1)  Si una serie de tiempo es estrictamente estacionaria, entonces todos las funciones de distribución multivariadas para subconjuntos de variables deben coincidir con sus contrapartes en el conjunto trasladado, para todos los valores del parámetro $h$. Por ejemplo para $k=1$ La ecuación \@ref(eq:eq-estricta-estacionaridad) implica que
 
 \begin{equation}
         P\{x_s\leq c\}=P\{x_t\leq c\}
@@ -830,7 +830,7 @@ para cada puntos $s$ y $t$.
 
 Esta declaración implica, por ejemplo, que si la probabilidad de un valor de una serie de tiempo muestreada cada hora es negativa a la 1:00a.m, la probabilidad a la 10:00a.m. es la misma. Además, si la función de media, $\mu_t$ de la serie $x_t$ existe, \@ref(eq:e1p20) implica que $\mu_s=\mu_t$ para todo $s$ y $t$, y por consiguiente $\mu_t$ debe ser constante. 
 
-2) Cuando $k=2$, podemos escribir la ecuación \@ref(eq-serie-estrictamente-estacionaria) como
+2) Cuando $k=2$, podemos escribir la ecuación \@ref(eq:eq-estricta-estacionaridad) como
         
 \begin{equation}
   P\{x_s\leq c_1,x_t\leq c_2\}=P\{x_{s+h}\leq c_1,x_{t+h}\leq c_2\}
@@ -957,7 +957,7 @@ $$\rho_{xy}(h)=\begin{cases}0,&h=0\\
   
 Claramente, las funciones de autocovarianza y correlación cruzada dependen solo del salto $h$, por lo tanto las series son conjuntamente estacionarias.</div>\EndKnitrBlock{example}
 
-El concepto de estacionaridad débil forma la base para muchos de los análisis realizados con series de tiempo. Las propiedades fundamentales de la media \@ref(eq:e1p22) y la función de covarianza \@ref(eq:eq-funcion-autocovarianza-estacionaria) son satisfechas por muchos modelos teóricos que aparecen para generar realizaciones muestrales apropiadas. En los ejemplos \@ref(exm:ejem-promedio-movil) y \@ref(exm:ejem-autoregresion), las dos series fueron generadas de forma que fuesen realizaciones estacionarias, y en el ejemplo \@ref(exm:ejem-estacionaridad-promedio-movil) demostramos que la serie en el ejemplo \@ref(ejem-promedio-movil) fue de hecho, débilmente estacionaria. Ambos ejemplos son casos especiales de los llamados procesos lineales.
+El concepto de estacionaridad débil forma la base para muchos de los análisis realizados con series de tiempo. Las propiedades fundamentales de la media \@ref(eq:e1p22) y la función de covarianza \@ref(eq:eq-funcion-autocovarianza-estacionaria) son satisfechas por muchos modelos teóricos que aparecen para generar realizaciones muestrales apropiadas. En los ejemplos \@ref(exm:ejem-promedio-movil) y \@ref(exm:ejem-autoregresion), las dos series fueron generadas de forma que fuesen realizaciones estacionarias, y en el ejemplo \@ref(exm:ejem-estacionaridad-promedio-movil) demostramos que la serie en el ejemplo \@ref(exm:ejem-promedio-movil) fue de hecho, débilmente estacionaria. Ambos ejemplos son casos especiales de los llamados procesos lineales.
 
 \BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-proceso-lineal"><strong>(\#def:defi-proceso-lineal) </strong></span>Un **proceso lineal** $x_t$ se define como una combinación lineal de variables aleatorias de ruido blanco $w_t$, y está dado por
 
@@ -1120,7 +1120,7 @@ X_t = T_t + \epsilon_t,\quad t=1,\ldots,n
 \end{equation}
 donde, sin perdida de generalidad, podemos suponer que $\mathbb{E}(\epsilon_t)=0$. A continuación vamos a describir tres métodos para estimar la tendencia $T_t$.
 
-1. **Método T1: Estimación de $T_t$ por mínimos cuadrados**. El objetivo de este método es intentar ajustar una familia paramétrica de funciones como las vistas en las ecuaciones \@ref(eq:eq-modelo-lineal) a \@ref(eq:), a los datos eligiendo los parámetros que minimicen $\sum_t(X_t-T_t)^2$. Esto es, asumiendo que $\mathbb{E}(\epsilon_t)=0, se tiene
+1. **Método T1: Estimación de $T_t$ por mínimos cuadrados**. El objetivo de este método es intentar ajustar una familia paramétrica de funciones como las vistas en las ecuaciones \@ref(eq:eq-modelo-lineal) a \@ref(eq:), a los datos eligiendo los parámetros que minimicen $\sum_t(X_t-T_t)^2$. Esto es, asumiendo que $\mathbb{E}(\epsilon_t)=0$, se tiene
 $$\mathbb{E}(X_t)=T_t=f(t)$$
 Una suposición común es que la función $f$ depende de ciertos parámetros (desconocidos) $\beta_1,\ldots,\beta_p$, es decir,
 
@@ -1573,7 +1573,7 @@ lo cual nos da una descomposición de la diferencia $\nabla_dX_t$ en una compone
 
 
 
-<!--chapter:end:011-caracterisitcas-series-tiempo.Rmd-->
+<!--chapter:end:200-caracterisitcas-series-tiempo.Rmd-->
 
 \cleardoublepage 
 

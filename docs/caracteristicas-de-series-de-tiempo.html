@@ -25,7 +25,7 @@
 <meta name="author" content="Synergy Vision">
 
 
-<meta name="date" content="2018-03-21">
+<meta name="date" content="2018-03-22">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -269,7 +269,7 @@ Por consiguiente, usaremos el término <strong>estacionaridad</strong> para refe
 
 
 <div class="remark">
-<p> <span class="remark"><em>Nota. </em></span> 1) Si una serie de tiempo es estrictamente estacionaria, entonces todos las funciones de distribución multivariadas para subconjuntos de variables deben coincidir con sus contrapartes en el conjunto trasladado, para todos los valores del parámetro <span class="math inline">\(h\)</span>. Por ejemplo para <span class="math inline">\(k=1\)</span> La ecuación <a href="#eq-serie-estrictamente-estacionaria"><strong>??</strong></a> implica que</p>
+<p> <span class="remark"><em>Nota. </em></span> 1) Si una serie de tiempo es estrictamente estacionaria, entonces todos las funciones de distribución multivariadas para subconjuntos de variables deben coincidir con sus contrapartes en el conjunto trasladado, para todos los valores del parámetro <span class="math inline">\(h\)</span>. Por ejemplo para <span class="math inline">\(k=1\)</span> La ecuación <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-estricta-estacionaridad">(2.10)</a> implica que</p>
 <span class="math display" id="eq:e1p20">\[\begin{equation}
         P\{x_s\leq c\}=P\{x_t\leq c\}
 \tag{2.11}
@@ -277,7 +277,7 @@ Por consiguiente, usaremos el término <strong>estacionaridad</strong> para refe
 <p>para cada puntos <span class="math inline">\(s\)</span> y <span class="math inline">\(t\)</span>.</p>
 <p>Esta declaración implica, por ejemplo, que si la probabilidad de un valor de una serie de tiempo muestreada cada hora es negativa a la 1:00a.m, la probabilidad a la 10:00a.m. es la misma. Además, si la función de media, <span class="math inline">\(\mu_t\)</span> de la serie <span class="math inline">\(x_t\)</span> existe, <a href="caracteristicas-de-series-de-tiempo.html#eq:e1p20">(2.11)</a> implica que <span class="math inline">\(\mu_s=\mu_t\)</span> para todo <span class="math inline">\(s\)</span> y <span class="math inline">\(t\)</span>, y por consiguiente <span class="math inline">\(\mu_t\)</span> debe ser constante.</p>
 <ol start="2" style="list-style-type: decimal">
-<li>Cuando <span class="math inline">\(k=2\)</span>, podemos escribir la ecuación <a href="#eq-serie-estrictamente-estacionaria"><strong>??</strong></a> como</li>
+<li>Cuando <span class="math inline">\(k=2\)</span>, podemos escribir la ecuación <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-estricta-estacionaridad">(2.10)</a> como</li>
 </ol>
 <span class="math display" id="eq:e1p21">\[\begin{equation}
   P\{x_s\leq c_1,x_t\leq c_2\}=P\{x_{s+h}\leq c_1,x_{t+h}\leq c_2\}
@@ -388,7 +388,7 @@ es una función sólo del salto <span class="math inline">\(h\)</span>.
 Claramente, las funciones de autocovarianza y correlación cruzada dependen solo del salto <span class="math inline">\(h\)</span>, por lo tanto las series son conjuntamente estacionarias.
 </div>
 
-<p>El concepto de estacionaridad débil forma la base para muchos de los análisis realizados con series de tiempo. Las propiedades fundamentales de la media <a href="caracteristicas-de-series-de-tiempo.html#eq:e1p22">(2.13)</a> y la función de covarianza <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-funcion-autocovarianza-estacionaria">(2.15)</a> son satisfechas por muchos modelos teóricos que aparecen para generar realizaciones muestrales apropiadas. En los ejemplos <a href="#exm:ejem-promedio-movil"><strong>??</strong></a> y <a href="#exm:ejem-autoregresion"><strong>??</strong></a>, las dos series fueron generadas de forma que fuesen realizaciones estacionarias, y en el ejemplo <a href="#exm:ejem-estacionaridad-promedio-movil"><strong>??</strong></a> demostramos que la serie en el ejemplo <a href="#ejem-promedio-movil"><strong>??</strong></a> fue de hecho, débilmente estacionaria. Ambos ejemplos son casos especiales de los llamados procesos lineales.</p>
+<p>El concepto de estacionaridad débil forma la base para muchos de los análisis realizados con series de tiempo. Las propiedades fundamentales de la media <a href="caracteristicas-de-series-de-tiempo.html#eq:e1p22">(2.13)</a> y la función de covarianza <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-funcion-autocovarianza-estacionaria">(2.15)</a> son satisfechas por muchos modelos teóricos que aparecen para generar realizaciones muestrales apropiadas. En los ejemplos <a href="#exm:ejem-promedio-movil"><strong>??</strong></a> y <a href="#exm:ejem-autoregresion"><strong>??</strong></a>, las dos series fueron generadas de forma que fuesen realizaciones estacionarias, y en el ejemplo <a href="#exm:ejem-estacionaridad-promedio-movil"><strong>??</strong></a> demostramos que la serie en el ejemplo <a href="#exm:ejem-promedio-movil"><strong>??</strong></a> fue de hecho, débilmente estacionaria. Ambos ejemplos son casos especiales de los llamados procesos lineales.</p>
 
 <div class="definition">
 <p><span id="def:defi-proceso-lineal" class="definition"><strong>Definición 2.13  </strong></span>Un <strong>proceso lineal</strong> <span class="math inline">\(x_t\)</span> se define como una combinación lineal de variables aleatorias de ruido blanco <span class="math inline">\(w_t\)</span>, y está dado por</p>
@@ -524,7 +524,7 @@ X_t = T_t + \epsilon_t,\quad t=1,\ldots,n
 \end{equation}\]</span>
 <p>donde, sin perdida de generalidad, podemos suponer que <span class="math inline">\(\mathbb{E}(\epsilon_t)=0\)</span>. A continuación vamos a describir tres métodos para estimar la tendencia <span class="math inline">\(T_t\)</span>.</p>
 <ol style="list-style-type: decimal">
-<li><strong>Método T1: Estimación de <span class="math inline">\(T_t\)</span> por mínimos cuadrados</strong>. El objetivo de este método es intentar ajustar una familia paramétrica de funciones como las vistas en las ecuaciones <a href="introduccion.html#eq:eq-modelo-lineal">(1.4)</a> a <a href="#eq:">(<strong>??</strong>)</a>, a los datos eligiendo los parámetros que minimicen <span class="math inline">\(\sum_t(X_t-T_t)^2\)</span>. Esto es, asumiendo que $(_t)=0, se tiene <span class="math display">\[\mathbb{E}(X_t)=T_t=f(t)\]</span> Una suposición común es que la función <span class="math inline">\(f\)</span> depende de ciertos parámetros (desconocidos) <span class="math inline">\(\beta_1,\ldots,\beta_p\)</span>, es decir,</li>
+<li><strong>Método T1: Estimación de <span class="math inline">\(T_t\)</span> por mínimos cuadrados</strong>. El objetivo de este método es intentar ajustar una familia paramétrica de funciones como las vistas en las ecuaciones <a href="introduccion.html#eq:eq-modelo-lineal">(1.4)</a> a <a href="#eq:">(<strong>??</strong>)</a>, a los datos eligiendo los parámetros que minimicen <span class="math inline">\(\sum_t(X_t-T_t)^2\)</span>. Esto es, asumiendo que <span class="math inline">\(\mathbb{E}(\epsilon_t)=0\)</span>, se tiene <span class="math display">\[\mathbb{E}(X_t)=T_t=f(t)\]</span> Una suposición común es que la función <span class="math inline">\(f\)</span> depende de ciertos parámetros (desconocidos) <span class="math inline">\(\beta_1,\ldots,\beta_p\)</span>, es decir,</li>
 </ol>
 <span class="math display" id="eq:eq-funcion-parametros-metodo-T1">\[\begin{equation}
 f(t)=f(t;\beta_1,\ldots,\beta_p)
@@ -1035,7 +1035,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/synergyvision/Teoria-de-Portafolio/edit/master/bookdown/011-caracterisitcas-series-tiempo.Rmd",
+"link": "https://github.com/synergyvision/Teoria-de-Portafolio/edit/master/bookdown/200-caracterisitcas-series-tiempo.Rmd",
 "text": "Edit"
 },
 "download": ["Serie-de-Tiempo-en-R.pdf"],
