@@ -144,7 +144,7 @@ Por consiguiente, usaremos el término **estacionaridad** para referirnos a estc
 ```
 
 ```{remark}
-1)  Si una serie de tiempo es estrictamente estacionaria, entonces todos las funciones de distribución multivariadas para subconjuntos de variables deben coincidir con sus contrapartes en el conjunto trasladado, para todos los valores del parámetro $h$. Por ejemplo para $k=1$ La ecuación \@ref(eq-serie-estrictamente-estacionaria) implica que
+1)  Si una serie de tiempo es estrictamente estacionaria, entonces todos las funciones de distribución multivariadas para subconjuntos de variables deben coincidir con sus contrapartes en el conjunto trasladado, para todos los valores del parámetro $h$. Por ejemplo para $k=1$ La ecuación \@ref(eq:eq-estricta-estacionaridad) implica que
 
 \begin{equation}
         P\{x_s\leq c\}=P\{x_t\leq c\}
@@ -155,7 +155,7 @@ para cada puntos $s$ y $t$.
 
 Esta declaración implica, por ejemplo, que si la probabilidad de un valor de una serie de tiempo muestreada cada hora es negativa a la 1:00a.m, la probabilidad a la 10:00a.m. es la misma. Además, si la función de media, $\mu_t$ de la serie $x_t$ existe, \@ref(eq:e1p20) implica que $\mu_s=\mu_t$ para todo $s$ y $t$, y por consiguiente $\mu_t$ debe ser constante. 
 
-2) Cuando $k=2$, podemos escribir la ecuación \@ref(eq-serie-estrictamente-estacionaria) como
+2) Cuando $k=2$, podemos escribir la ecuación \@ref(eq:eq-estricta-estacionaridad) como
         
 \begin{equation}
   P\{x_s\leq c_1,x_t\leq c_2\}=P\{x_{s+h}\leq c_1,x_{t+h}\leq c_2\}
@@ -293,7 +293,7 @@ $$\rho_{xy}(h)=\begin{cases}0,&h=0\\
 Claramente, las funciones de autocovarianza y correlación cruzada dependen solo del salto $h$, por lo tanto las series son conjuntamente estacionarias.
 ```
 
-El concepto de estacionaridad débil forma la base para muchos de los análisis realizados con series de tiempo. Las propiedades fundamentales de la media \@ref(eq:e1p22) y la función de covarianza \@ref(eq:eq-funcion-autocovarianza-estacionaria) son satisfechas por muchos modelos teóricos que aparecen para generar realizaciones muestrales apropiadas. En los ejemplos \@ref(exm:ejem-promedio-movil) y \@ref(exm:ejem-autoregresion), las dos series fueron generadas de forma que fuesen realizaciones estacionarias, y en el ejemplo \@ref(exm:ejem-estacionaridad-promedio-movil) demostramos que la serie en el ejemplo \@ref(ejem-promedio-movil) fue de hecho, débilmente estacionaria. Ambos ejemplos son casos especiales de los llamados procesos lineales.
+El concepto de estacionaridad débil forma la base para muchos de los análisis realizados con series de tiempo. Las propiedades fundamentales de la media \@ref(eq:e1p22) y la función de covarianza \@ref(eq:eq-funcion-autocovarianza-estacionaria) son satisfechas por muchos modelos teóricos que aparecen para generar realizaciones muestrales apropiadas. En los ejemplos \@ref(exm:ejem-promedio-movil) y \@ref(exm:ejem-autoregresion), las dos series fueron generadas de forma que fuesen realizaciones estacionarias, y en el ejemplo \@ref(exm:ejem-estacionaridad-promedio-movil) demostramos que la serie en el ejemplo \@ref(exm:ejem-promedio-movil) fue de hecho, débilmente estacionaria. Ambos ejemplos son casos especiales de los llamados procesos lineales.
 
 ```{definition, defi-proceso-lineal}
 Un **proceso lineal** $x_t$ se define como una combinación lineal de variables aleatorias de ruido blanco $w_t$, y está dado por
@@ -462,7 +462,7 @@ X_t = T_t + \epsilon_t,\quad t=1,\ldots,n
 \end{equation}
 donde, sin perdida de generalidad, podemos suponer que $\mathbb{E}(\epsilon_t)=0$. A continuación vamos a describir tres métodos para estimar la tendencia $T_t$.
 
-1. **Método T1: Estimación de $T_t$ por mínimos cuadrados**. El objetivo de este método es intentar ajustar una familia paramétrica de funciones como las vistas en las ecuaciones \@ref(eq:eq-modelo-lineal) a \@ref(eq:), a los datos eligiendo los parámetros que minimicen $\sum_t(X_t-T_t)^2$. Esto es, asumiendo que $\mathbb{E}(\epsilon_t)=0, se tiene
+1. **Método T1: Estimación de $T_t$ por mínimos cuadrados**. El objetivo de este método es intentar ajustar una familia paramétrica de funciones como las vistas en las ecuaciones \@ref(eq:eq-modelo-lineal) a \@ref(eq:), a los datos eligiendo los parámetros que minimicen $\sum_t(X_t-T_t)^2$. Esto es, asumiendo que $\mathbb{E}(\epsilon_t)=0$, se tiene
 $$\mathbb{E}(X_t)=T_t=f(t)$$
 Una suposición común es que la función $f$ depende de ciertos parámetros (desconocidos) $\beta_1,\ldots,\beta_p$, es decir,
 
