@@ -1,0 +1,369 @@
+# Modelos de series de tiempo
+
+Como indicamos en el capítulo anterior el objetivo principal en el análisis de series de tiempo es desarrollar modelos matemáticos que provean una descripción apropiada para los datos muestrales. Recordando las definiciones \@ref(def:defi-serie-tiempo) y \@ref(def:defi-proceso-estocastico) podemos describir los modelos generales útiles para la descripción de series de tiempo
+
+## Modelos Estocásticos
+
+### Procesos Estocásticos
+
+De la definición de procesos estocásticos (Definición  \@ref(def:defi-proceso-estocastico)), las variables aleatorias de la familia (medibles para todo $t\in T$) son funciones de la forma
+$$x(\omega,t):\Omega\times T\to\mathbb{R}$$
+Para $T=\mathbb{N}$, tenemos un proceso en *tiempo discreto* y para $T\subset\mathbb{R}$ tenemos un proceso en *tiempo continuo*. En lo que respecta a este libro, consideraremos como subconjunto de índices $T=(0,\infty)$.
+
+Como ya indicamos, usaremos la notación $X_t$ para denotar la realización de un proceso estocástico $x_t(\omega*)$ cuando no haya lugar a confución. De esta forma, adoptaremos sin pérdida de generalidad, el conjunto de índices habitual de las series de tiempo en el ámbito de las finanzas y economía $I=(1,T)$.
+
+De lo anterior, se tiene que los procesos estocásticos suelen ser descritos mediante su distribución conjunta de probabilidades, de manera que la relación que existe entre  una realización y un proceso estocástico es análoga a la existente entre la muestra y la población en el análisis estadístico clásico.
+
+### Momentos, Varianza, Covarianza y Correlación
+
+```{definition, defi-esperanza-varianza-procesos}
+El **valor esperado** y **varianza** de un proceso estocástico están dados por
+\begin{equation}
+\mathbb{E}(x_t)=\int_{\Omega}x(\omega,t)dP(\omega),\quad t\in[0,T]
+(\#eq:eq-esperanza-proceso)
+\end{equation}
+y
+\begin{equation}
+Var(x_t)=\mathbb{E}(x_t-\mathbb{E}(x_t))^2,\quad t\in[0,T]
+(\#eq:eq-varianza-proceso)
+\end{equation}
+siempre que las integrales existan y sean finitas.
+```
+
+```{definition, defi-k-esimo-momento-proceso}
+El **$k$-ésimo momento** de $x_t$, con $k\geq1$, se define como $\mathbb{E}(x_t^k)$ para todo $t\in[0,t]$.
+```
+
+```{definition, defi-funcion-covarianza-proceso}
+La **función de covarianza** del proceso para dos instantes de tiempo $t$ y $s$ está dada por
+$$\gamma(t,s)=Cov(x_t,x_s)=\mathbb{E}[(x_t-\mathbb{E}(x_t))(x_s-\mathbb{E}(x_s))]$$
+La cantidad $x_t-x_s$ es llamada el proceso de *incrementos* desde $s$ a $t$, con $s<t$.
+```
+
+### Variación de un proceso
+
+Sea $P_n=\{0=t_0<t_1<\cdots<t_i<\cdots<t_n=t\}$ una partición cualquiera del intervalos $[0,t]$ en $n$ subintervalos y denotemos por
+$$||P_n||=\max\{j=0,1,\ldots,n-1(t_{j+1}-t_j)\}$$
+el tamaño de paso máximo de discretización de la partición $P_n$.
+
+```{definition, defi-variacion-proceso}
+La **variación** del proceso $x$ se define como
+\begin{equation}
+V_t(x)=p-\lim_{||P_n||}\sum_{k=0}^{n-1}|x_{t_{k+1}}-x_{t_k}|
+(\#eq:eq-variacion-proceso)
+\end{equation}
+Si $x$ es diferenciable, entonces $V_t(x)=\int_0^t|x'(u)|du$. Si $V_t(X)<\infty$, entonces decimos que $x$ es de *variación acotada* en $[0,t]$. Si es cierto para todo $t\geq0$, entonces decimos que $x$ tiene *variación acotada*.
+```
+
+```{definition, defi-variacion-acotada}
+La **variación cuadrática** de un proceso estocástico $x$, denotada por $[x,x]_t$, se define como
+\begin{equation}
+[x,x]_t = p-\lim_{||P_n||}\sum_{k=0}^{n-1}|x_{t_{k+1}}-x_{t_k}|^2
+(\#eq:eq-variacion-acotada-proceso)
+\end{equation}
+```
+
+Para procesos estocásticos con trayectorias continua, el límite existe, y en dicho caso usamos la notación $\langle x,x\rangle_t$ y podemos definirla alternativamente como 
+\begin{equation}
+$\langle x,x\rangle_t$ = p-\lim_{n\to\infty}\sum_{k=1}^{2^n}\left(x_{\min(t,k/2^n)} - x_{\min(t,(k-1)/2^n)}\right)^2
+(\#eq:eq-variacion-acotada-proceso-2)
+\end{equation}
+
+Si $x$ es continuo y tiene variación acotada cuadrática finita, entonces su variación total es infinita. Note que $V_t(x)$ y $[x,x]_t$ son también procesos estocásticos.
+
+### Martingalas
+
+En teoría de probabilidad, un proceso estocástico de tipo **martingala** (galicismo de *martingale*) es todo proceso caracterizado por no tener deriva. Este tipo de procesos estocásticos reciben su nombre de la estrategia de la martingala, un método de apuestas que tuvo cierta fama en el siglo XVIII. La estrategia de la martingala consiste en volver a apostar por el total perdido al momento de incurrir en una pérdida en un juego de azar,. En la nueva apuesta, el jugador tiene la posibilidad de recobrar todas sus pérdidas, por lo que podría parecer que a largo plazo la esperanza de ganancia con esta estrategia se mantienen constantes y a favor del jugador. De hecho, estadísticamente es así: el capital medio del jugador (esto es, el dinero que el jugador tiene a su disposición para jugar) se mantiene constante. El problema reside en que, al incurrir en sucesivas pérdidas, el jugador que siga la estrategia de la martingala se ve obligado a apostar de nuevo cantidades cada vez mayores (las pérdidas acumuladas), que tienden a crecer exponencialmente. Al cabo de unos pocos ciclos de apuestas, el jugador, cuyos recursos son habitualmente muy inferiores a los de la banca, se ve arruinado al ser incapaz de apostar de nuevo por el total de sus pérdidas. Evitar jugadores que intenten seguir la estratega de la martingala es de todos modos una de las razones por las que los casinos actuales establecen límites máximos de apuesta.
+
+La estrategia de la martingala se popularizó en el siglo XVIII con fama de ser una estrategia ingenua y propia de mentes simples, puesto que aunque en apariencia es infalible, sin embargo, está abocada a arruinar al jugador. Recibe el nombre de los habitantes de la localidad francesa de *Martigues* (martingales en francés), situada en las cercanías de Marsella, que por aquel entonces tenían fama de ser ingenuos y simplones.
+
+El concepto de la martingala en la teoría de probabilidades fue introducido por *Paul Pierre Lévy*, y una gran parte del desarrollo original de la teoría la realizó *Joseph Leo Doob*. Parte de la motivación para ese esfuerzo era demostrar la inexistencia de estrategias de juego infalibles.
+
+El concepto fue inmediatamente aplicado al análisis de procesos bursátiles. Uno de los resultados más importantes de la matemática financiera es, precisamente, que un mercado perfecto sin posibilidades de arbitraje es una martingala.
+
+```{definition, defi-filtracion}
+Sea $(\omega,\mathcal{F},P)$ un espacio de probabilidad. Una **filtración** $\{\mathcal{F}_t,t\geq0\}$ es una familia creciente de sub-$\sigma$-álgebras de $\mathcal{F}$ indexadas por $t\geq0$; es decir, para cada $s,t>0$ tal que $s<t$, se tiene $\mathcal{F}_s\subset\mathcal{F}_t$ con $\mathcal{F}_0=\{\Omega,\emptyset\}$.
+```
+
+Para cada proceso estocástico $\{x_t\}_{t\geq0}$ y para cada $t$, podemos asociar una $\sigma$-álgebra denotada por $\mathcal{F}_t=\sigma\{x_s:0\leq s\leq t\}$, y que además es la $\sigma$-álgebra generada por $x$; es decir, la $\sigma$-álgebra más pequeña (minimal) de $\mathcal{F}$ que hace a $x(s,\omega)$ medible para cada $0\leq s\leq t$.
+
+```{definition, defi-proceso-adaptado}
+Dado un proceso estocástico $\{X_t\}_{t\geq0}$ y una filtración $\{\mathcal{F}_t, t\geq0\}$ (no necesariamente la que genera $X$), el proceso $X$ se denomina **adaptado** a $\{\mathcal{F}_t, t\geq0\}$ ($\mathcal{F}_t$-adaptado) si para cada $t\geq0$, $X(t)$ es $\mathcal{F}_t$-medible.
+```
+
+En otras palabras $X=\{X_t\}_{t\geq0}$ es $\mathcal{F}_t$-adaptado cuando el valor de $X_t$ en el tiempo $t$ solo depende de la información contenida en la realización hasta el instante $t$.
+
+Dado un espacio de probabilidad $(\Omega,\mathcal{F},P)$ y una filtración $\{\mathcal{F}_t,t\geq0\}$, entonces definimos el **espacio de probabilidad filtrado** a la cuaterna $(\Omega,\mathcal{F},\{\mathcal{F}_t\}_{t\geq0},P)$.
+
+```{definition, defi-martingala}
+Sea $(\Omega,\mathcal{F},\{\mathcal{F}_t\}_{t\geq0},P)$ un espacio de probabilidad filtrado. Un proceso $X_t$ con $t\in T$, $T\subseteq\mathcal{R}$ un conjunto de índices, es una **martingala** relativo a la filtración $\{\mathcal{F}_t,t\geq0\}$, si
+
+1) $X_t$ es adaptado a la filtración $\{\mathcal{F}_t,t\geq0\}$
+  
+2) $X_t$ es integrable, es decir, $\mathbb{E}|X_t|<\infty$,
+
+3) Para cualesquieras $s$ y $t$ con $s<t$, $\mathbb{E}(X_t|\mathcal{F}_s)=X_s$ c.s.
+
+Decimos que el proceso es una **submartingala** si 
+$$\mathbb{E}(X_t|\mathcal{F}_s)\geq X_s \text{ c.s.}$$
+Decimos que es una **supermartingala** si 
+$$\mathbb{E}(X_t|\mathcal{F}_s)\leq X_s \text{ c.s.}$$
+```
+
+```{example}
+Sean $X_0,X_1,\ldots,X_n$ variables aleatorias iid tal que $\mathbb{E}(X_1)=\mu$ y sean 
+\begin{eqnarray*}
+M_0 &=& X_0 \\
+M_1 &=& X_0+X_1 \\
+\vdots & & \vdots \\
+M_n &=& X_0+X_1+\cdots+X_n
+\end{eqnarray*}
+La sucesión de variables aleatorias $M_n$ se llama **paseo aleatorio** y es una supermartingala si $\mu\leq0$, una martingala si $\mu=0$ y una submartingala si $\mu\geq0$.
+
+Es fácil demostrarlo, sencillamente usamos el hecho de que 
+$$M_{n+1}=M_n+X_{n+1}$$
+y que $M_n$ y $X_{n+1}$ son independientes. Podemos generar tal proceso en **R**.
+```
+
+```{R}
+n=100
+mu=0
+sigma=1
+X=rnorm(n,mu,sigma)
+M=cumsum(X)
+plot(M,type = "l",xlab = "t",ylab = "M_n")
+```
+```{example, name="Precio de acciones"}
+Sean $Y_0,Y_1,\ldots,Y_n$ variables aleatorias independientes y positivas. Supongamos que una acción tiene precio $M_0$ a tiempo $t=0$. 
+
+Un modelo común para modelar el precio de la acción en tiempo $t=n$ es
+$$M_{n+1}=M_nY_n$$
+donde $(Y_n-1)\times100$ representa (en porcentaje) la variabilidad de la acción. Usando las propiedades de esperanza condicional (Apéndice), es muy sencillo demostrar que 
+$$\mathbb{E}(M_{n+1}|M_0,\ldots,M_n)=M_n\mathbb{E}(Y_n)$$
+En particular, si $Y_1,\ldots,Y_n$ son idénticamente distribuidas con $\mathbb{E}(Y_1)=\mu$ tenemos que $M_n$ es
+
+ - Una **martingala** si $\mu=1$
+ - Una **submartingala** si $\mu>1$
+ - Una **supermartingala** si $\mu<1$.
+
+Dos modelos bien conocidos de lo anterior son
+
+1) Modelo **Black-Scholes discreto**. 
+   Sean $Y_1,\ldots,Y_n$ definidas por 
+   $$Y_n=e^{Z_n}$$
+   donde $Z_1,\ldots,Z_n$ son variables aleatorias independientes normales $N(\mu,\sigma^2)$.
+   
+2) **Modelo Binomial**. 
+   Sean $Y_1,\ldots,Y_n$ definidas por
+   $$P(Y_i=(1+t)e^{-r})=p\quad\text{ y }\quadP(Y_i=(1+t)^{-1}e^{-r})=1-p$$
+   La constante $r$ es la tasa de interés y los factores $(1+t)$ y $(1+t)^{-1}$ modelan las variaciones del mercado y garantizan que el precio tiene la forma $M_0(1+t)^ye^{-nr}$, con $|y|\leq n$. La volatilidad del precio está asociada a $p$.  
+```
+
+```{definition, defi-proceso-cuadrado-integrable}
+Una variable aleatoria $X$ es **cuadrado integrable** si $\mathbb{E}(X^2)<\infty$. Un proceso estocástico $X_t$ en el intervalo $[0,T]$, donde $T$ puede ser infinito, es **cuadrado integrable** si 
+\begin{equation}
+\sup_{t\in[0,T]}\mathbb{E}(X_t^2)<\infty
+(\#eq:eq-proceso-cuadrado-integrable)
+\end{equation}
+es decir, si sus segundos momentos son acotados.
+```
+
+```{definition, defi-proceso-uniforme-integrable}
+Un proceso estocástico $X_t, 0\leq t\leq T$ se dice que es **uniformemente integrable** si 
+$$\mathbb{E}(|X_t|\mathbf{1}_{\{|X_t|>n\}})$$
+converge a 0 cuando $n\to\infty$ uniformemente en $t$.
+```
+
+### Propiedad de Markov
+
+La propiedad de Markov establece que si conocemos el estado actual  de un proceso estocástico, entonces el comportamiento futuro de dicho proceso es independiente de su pasado. Un proceso $X_t$ tiene la *propiedad de Markov* si la distribución condicional del proceso $X_t$ dado el proceos en el instante $X_t=x$, no depende de los valores pasados.
+
+```{definition, defi-proceso-markov}
+$X$ es un **proceso de Markov** si para cualquier $t$ y $s>0$,
+$$P(X_{t+s}\leq y|\mathcal{F}_t) = P(X_{t+s}\leq y|X_t) \text{ c.s.}$$
+donde $\mathcal{F}_t$ es la $\sigma$-álgebra generada por el proceso hasta el tiempo $t$.
+```
+
+```{definition, defi-funcion-transicion-probabilidad}
+La **función de transición de probabilidad** de un proceso $X$ se define como 
+$$P(y,t,x,s) = P(X_y\leq y|X_s\leq x)$$
+la función de distribución condicional del proceso en el instante $t$, dado que éste está en el punto $x$ en el instante $s<t$.
+```
+
+La propiedad de Markov implica una expresión que resulta muy útil en términos de la esperanza condicional por la $\sigma$-álgebra de eventos, la cual es válida tanto para procesos en tiempo discreto como en tiempo continuo.
+
+Las definiciones y propiedades anteriores son temas de estudio de gran importancia y con una amplia teoría matemática que está fuera del alcance de este libro, pero lo que hemos descrito es suficiente para el objetivo del mismo.
+
+## Modelos lineales
+
+Los modelos lineales proporcionan un enfoque natural que permite analizar el comportamiento de los procesos estocásticos o series de tiempo y en especial a lo referente a finanzas y economía. En esta sección discutiremos la estructura de dependencia, autocorrelación, modelización y predicción de los modelos lineales teóricos, con los correspondientes comandos en **R** para generar y nalaizar dichos procesos.
+
+### Proceso de Ruido Blanco
+
+```{definition, defi-ruido-blanco}
+Un proceso $\{w_t\}$ se denomina **ruido blanco** (white noise) de media 0 y varianza $\sigma^2$ si satisface
+\begin{eqnarray*}
+\mathbb{E}(w_t) &=& 0,\quad Var(w_t)=\sigma_w^2<\infty \\
+Cov(w_t,w_{t-k}) &=& 0, \forall k\neq0
+\end{eqnarray*}
+```
+
+Las series de tiempo generadas de esta manera son muy usadas como modelos para ruido en aplicaciones de ingeniería. La designación *"blanco"* se origina de la analogía con la luz blanca e indica que todos los posibles períodos de oscilación están presentes con igual intensidad.
+
+En particular, una sucesión de variables aleatorias iid con media 0 y varianza $\sigma_w^2$ representa un caso especial de un proceso de ruido blanco. Este proceso lo denotaremos por $w_t\sim WN(0,\sigma_w^2)$. Un muy usado ruido blanco es el **ruido blanco gaussiano**, donde las $w_t$ son variables aleatorias normales o gaussianas con media 0 y varianza $\sigma_w^2$ y denotadas como $w_t\sim iidN(0,\sigma_w^2)$.
+
+La función de media de un ruido blanco es trivial, es decir
+$$\mu_w=\mathbb{E}(w_t)=0.$$
+Calculemos la función de autocovarianza de $w_t$
+\begin{eqnarray*}
+\gamma_w(s,t) &=& \mathbb{E}[(w_s-\mu_s)(w_t-\mu_t)] \\
+      &=& \mathbb{E}[w_sw_t] \\
+      &=& \begin{cases}
+            \sigma_w^2, &\text{ si }s=t \\
+            0, &\text{ si }s\neq t
+          \end{cases}
+\end{eqnarray*}
+La última igualdad se sigue del hecho de que $w_s$ y $w_t$ son no-correlacionados para $s\neq t$ por lo que $\mathbb{E}(w_sw_t) = \mathbb{E}(w_s)\mathbb{E}(w_t)=0$.
+
+```{example, name="Estacionaridad de un ruido blanco"}
+La función de autocovarianza de un ruido blanco es fácil de evaluar como 
+$$\gamma_w(h) = \mathbb{E}(w_{t+h}w_t) = \begin{cases}
+                                          \sigma_w^2,&\text{ si }h=0\\
+                                          0,&\text{ si }h\neq0
+                                         \end{cases}$$
+donde $\sigma_w^2$ es la varianza del ruido blanco. Esto significa que la serie es *débilmente estacionaria* o *estacionaria*. Si las variables de ruido blanco también son gaussianas, el proceso es *estrictamente estacionario*, como se pueder ver evaluando (2.10) usando la relación (2.2).
+```
+
+```{R}
+#-----------------------------------------
+# Ruidos blancos
+#-----------------------------------------
+# Uniforme [0,1]
+wu=runif(500,0,1)
+# Gaussiano
+wn=rnorm(500,0,1)
+# Graficos
+par(mfrow=c(2,1))
+plot(wu,type = "l",xlab = "Num. de observaciones",
+     main = "Ruido blanco uniforme en [0,1]")
+plot(wn,type = "l",xlab = "Num. de observaciones",
+     main = "Ruido blanco gaussiano")
+# Funciones de autocovarianza (ACF)
+acf(wu)
+acf(wn)
+```
+
+```{example, ejem-promedio-movil-ruido-blanco}
+Podemos reemplazar las series de ruido blanco $w_t$ por un promedio móvil que suavice la serie. Por ejemplo, consideremos la serie $w_t$ en la ecuación ( ) y reemplacémosla por un promedio móvil de 3 puntos, dado por 
+\begin{equation}
+v_t = \frac{1}{3}(w_{t-1}+w_t+w_{t+1})
+(\#eq:eq-promedio-movil-ruido-blanco)
+\end{equation}
+lo cual nos da una serie suavizada. Tomando la serie del ejemplo anterior y usando la función 'filter' de **R** se obtienen los gráficos siguientes:
+```
+
+```{R}
+#------------------------------------------
+# Promedio movil
+#------------------------------------------
+# Uniforme
+vu=filter(wu,sides = 2,rep(1/3,3))
+par(mfrow=c(2,1),mar=c(3,4,3,2))#
+plot.ts(wu,xlab=" ",ylab="Ruido blanco unif.")
+plot.ts(vu,ylim=c(0,1),ylab="Promedio móvil")
+# Gaussiano
+vn=filter(wn,sides = 2,rep(1/3,3))
+par(mfrow=c(2,1),mar=c(3,4,3,2))
+plot.ts(wn,xlab=" ",ylab="Ruido blanco gauss.")
+plot.ts(vn,ylim=c(-3,3),ylab="Promedio móvil")
+```
+En la parte superior de cada uno se observan los ruidos blancos y en la parte inferior los respectivos promedios móviles. Podemos notar que las series de promedio móvil suavizan el comportamiento de las series originales, si tomamos más puntos en el promedio mayor será el suavizado.
+
+```{example, ejem-funcion-media-MA, name="Función de media de un promedio móvil"}
+Si $w_t$ denota una serie de ruido blanco, entonces $\mu_{wt}=\mathbb{E}(w_t)=0$ para todo $t$. Luego para el promedio móvil de 3 puntos se tiene
+$$\mu_{wt} = \mathbb{E}(v_t) = \frac{1}{3}\mathbb{E}(w_{t-1}+w_t+w_{t+1}) = \frac{1}{3}(\mathbb{E}(w_{t-1})+\mathbb{E}(w_t)+\mathbb{E}(w_{t+1}))=0.$$
+```
+
+```{example, ejem-ACF-MA, name="Autocovarianza de un promedio móvil"}
+Consideremos el promedio móvil de 3 puntos del ejemplo anterior y calculemos su función de autocovarianza
+\begin{eqnarray*}
+\gamma_v(s,t) &=& \mathbb{E}[(v_s-\mu_s)(v_t-\mu_t)] \\
+      &=& \mathbb{E}[(v_s-o)(v_t-0)] \\
+      &=& \frac{1}{9}\mathbb{E}[(w_{s-1}+w_s+w_{s+1})(w_{t-1}+w_t+w_{t+1})]
+\end{eqnarray*}
+Consideremos $s-t=h$, para $h=0,\pm1,\pm2,\ldots$. Entonces, tenemos para $h=0$
+\begin{eqnarray*}
+\gamma_v(t,t) &=& \frac{1}{9}\mathbb{E}[(w_{t-1}+w_t+w_{t+1})(w_{t-1}+w_t+w_{t+1})] \\
+      &=& \frac{1}{9}[\mathbb{E}(w_{t-1}w_{t-1})+\mathbb{E}(w_tw_t)+\mathbb{E}(w_{t+1}w_{t+1})] \\
+      &=& \frac{3}{9}
+\end{eqnarray*}
+Para $h=1$, tenemos
+\begin{eqnarray*}
+\gamma_v(t+1,t) &=& \frac{1}{9}\mathbb{E}[(w_t+w_{t+1}+w_{t+2})(w_{t-1}+w_t+w_{t+1})] \\
+      &=& \frac{1}{9}[\mathbb{E}(w_tw_t)+\mathbb{E}(w_{t+1}w_{t+1})] \\
+      &=& \frac{2}{9}
+\end{eqnarray*}
+Usando el hecho de que $\mathbb{E}(w_tw_s)=0$ si $s\neq t$. Cálculos similares nos dan $\gamma_v(t-1,t)=2/9, \gamma_v(t+2,t)=\gamma_v(t-2,t)=1/9$ y 0 para $h\geq3$. Resumiendo se tiene
+\begin{equation}
+\gamma_v(s,t) = \begin{cases}
+                3/9, &\text{ si }s=t\\
+                2/9, &\text{ si }|s-t|=1\\
+                1/9, &\text{ si }|s-t|=2\\
+                0, &\text{ si }|s-t|\geq3
+                \end{cases}
+(\#eq:eq-autocovarianza-promedio-movil)
+\end{equation}
+```
+
+```{example, ejem-estacionaridad-MA, name="Estacionaridad de un promedio móvil"}
+El proceso de promedio móvil usado en los ejemplos \@ref(exm:ejem-promedio-movil-ruido-blanco) y \@ref(exm:ejem-funcion-media-MA) es estacionario ya que podemos escribir la función de autocovarianza obtenida en \@ref(eq:eq-autocovarianza-promedio-movil) como
+$$\gamma_v(h) = \begin{cases}
+                  3/9, &\text{ si }h=0\\
+                  2/9, &\text{ si }h=\pm1\\
+                  1/9, &\text{ si }h=\pm2\\
+                  0, &\text{ si }|h|\geq3
+                  \end{cases}$$
+        
+```
+
+```{example, ejem-camino-aleatorio}
+Un modelo para analizar tendencias es el camino aleatorio con tendencia dado por 
+\begin{equation}
+X_t = \delta+X_{t-1}+w_t
+(\#eq:eq-camino-aleatorio-tendencia)
+\end{equation}
+para $t=1,2,\ldots,$ con condición inicial $X_0=0$, y donde $w_t$ es un ruido blanco. La constante $\delta$ es llamada *tendencia*, y cuando $\delta=0$, \@ref(eq:eq-camino-aleatorio-tendencia) es llamado simplemente *camino aleatorio*. El término camino aleatorio viene del hecho de que cuando $\delta=0$ el valor de la serie de tiempo en tiempo $t$ es el valor de la serie de tiempo al tiempo $t-1$ más un movimiento completamente aleatorio determinado por $w_t$. La expresión \@ref(eq:eq-camino-aleatorio-tendencia) la podemos reescribir como una suma de variables de ruido blanco, esto es,
+\begin{equation}
+X_t = \delta t+\sum_{j=1}^Nw_j
+(\#eq:eq-camino-aleatorio-suma)
+\end{equation}
+para $t=1,2,\ldots.$
+A continuación generaremos un camino aleatorio usando **R**
+```
+
+```{R}
+set.seed(154)
+w=rnorm(500,0,1)
+X=cumsum(w)
+wd=w+0.2; Xd=cumsum(wd)
+plot.ts(Xd,ylim=c(-40,80))
+lines(X,col="red")
+lines(0.2*(1:500),lty="dashed",col="blue")
+```
+
+## Modelos Lineales Estacionarios
+
+### Modelos de Memoria Larga
+
+### Modelos de Regresión
+
+## Modelos No Estacionarios
+
+### No Estacionarios en Varianza
+
+### No Estacionarios en Media
+
+### Test de Raíz Unitaria
+
+
+
