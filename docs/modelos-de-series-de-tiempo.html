@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Series de Tiempo en R</title>
+  <meta name="description" content="Series de Tiempo en R">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Series de Tiempo en R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://synergy.vision/Series-de-Tiempo-en-R/" />
+  <meta property="og:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+  
+  <meta name="github-repo" content="synergyvision/Series-de-Tiempo-en-R/" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Series de Tiempo en R" />
+  
+  
+  <meta name="twitter:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+
+<meta name="author" content="Synergy Vision">
+
+
+<meta name="date" content="2018-04-18">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="caracteristicas-de-series-de-tiempo.html">
+<link rel="next" href="referencias.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="https://cdn.datacamp.com/datacamp-light-latest.min.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="images/logovision-black.png" width="160"></img></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#por-que-leer-este-libro"><i class="fa fa-check"></i>¿Por qué leer este libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-libro"><i class="fa fa-check"></i>Estructura del libro</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#informacion-sobre-los-programas-y-convenciones"><i class="fa fa-check"></i>Información sobre los programas y convenciones</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#practicas-interactivas-con-r"><i class="fa fa-check"></i>Prácticas interactivas con R</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="acerca-del-autor.html"><a href="acerca-del-autor.html"><i class="fa fa-check"></i>Acerca del Autor</a></li>
+<li class="chapter" data-level="1" data-path="introduccion.html"><a href="introduccion.html"><i class="fa fa-check"></i><b>1</b> Introducción</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduccion.html"><a href="introduccion.html#concepto-financieros-basicos"><i class="fa fa-check"></i><b>1.1</b> Concepto financieros básicos</a></li>
+<li class="chapter" data-level="1.2" data-path="introduccion.html"><a href="introduccion.html#conceptos-basicos"><i class="fa fa-check"></i><b>1.2</b> Conceptos básicos</a></li>
+<li class="chapter" data-level="1.3" data-path="introduccion.html"><a href="introduccion.html#ejemplos"><i class="fa fa-check"></i><b>1.3</b> Ejemplos</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduccion.html"><a href="introduccion.html#clasificacion-de-las-series-de-tiempo"><i class="fa fa-check"></i><b>1.3.1</b> Clasificación de las series de tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduccion.html"><a href="introduccion.html#componentes-de-una-serie-de-tiempo"><i class="fa fa-check"></i><b>1.4</b> Componentes de una serie de tiempo</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduccion.html"><a href="introduccion.html#el-modelo-aditivo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.1</b> El Modelo Aditivo de Componentes de Series de Tiempo</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduccion.html"><a href="introduccion.html#el-modelo-multiplicativo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.2</b> El Modelo Multiplicativo de Componentes de Series de Tiempo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>2</b> Características de series de tiempo</a><ul>
+<li class="chapter" data-level="2.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#medidas-de-dependencia-para-series-de-tiempo"><i class="fa fa-check"></i><b>2.1</b> Medidas de dependencia para series de tiempo</a></li>
+<li class="chapter" data-level="2.2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia"><i class="fa fa-check"></i><b>2.2</b> Estimación de la Tendencia</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-en-ausencia-de-estacionalidad"><i class="fa fa-check"></i><b>2.2.1</b> Estimación de la tendencia en ausencia de estacionalidad</a></li>
+<li class="chapter" data-level="2.2.2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-y-la-estacionalidad"><i class="fa fa-check"></i><b>2.2.2</b> Estimación de la tendencia y la estacionalidad</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>3</b> Modelos de series de tiempo</a><ul>
+<li class="chapter" data-level="3.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-estocasticos"><i class="fa fa-check"></i><b>3.1</b> Modelos Estocásticos</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#procesos-estocasticos"><i class="fa fa-check"></i><b>3.1.1</b> Procesos Estocásticos</a></li>
+<li class="chapter" data-level="3.1.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#momentos-varianza-covarianza-y-correlacion"><i class="fa fa-check"></i><b>3.1.2</b> Momentos, Varianza, Covarianza y Correlación</a></li>
+<li class="chapter" data-level="3.1.3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#variacion-de-un-proceso"><i class="fa fa-check"></i><b>3.1.3</b> Variación de un proceso</a></li>
+<li class="chapter" data-level="3.1.4" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#martingalas"><i class="fa fa-check"></i><b>3.1.4</b> Martingalas</a></li>
+<li class="chapter" data-level="3.1.5" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#propiedad-de-markov"><i class="fa fa-check"></i><b>3.1.5</b> Propiedad de Markov</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-lineales"><i class="fa fa-check"></i><b>3.2</b> Modelos lineales</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#proceso-de-ruido-blanco"><i class="fa fa-check"></i><b>3.2.1</b> Proceso de Ruido Blanco</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-lineales-estacionarios"><i class="fa fa-check"></i><b>3.3</b> Modelos Lineales Estacionarios</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-de-memoria-larga"><i class="fa fa-check"></i><b>3.3.1</b> Modelos de Memoria Larga</a></li>
+<li class="chapter" data-level="3.3.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-de-regresion"><i class="fa fa-check"></i><b>3.3.2</b> Modelos de Regresión</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-no-estacionarios"><i class="fa fa-check"></i><b>3.4</b> Modelos No Estacionarios</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#no-estacionarios-en-varianza"><i class="fa fa-check"></i><b>3.4.1</b> No Estacionarios en Varianza</a></li>
+<li class="chapter" data-level="3.4.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#no-estacionarios-en-media"><i class="fa fa-check"></i><b>3.4.2</b> No Estacionarios en Media</a></li>
+<li class="chapter" data-level="3.4.3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#test-de-raiz-unitaria"><i class="fa fa-check"></i><b>3.4.3</b> Test de Raíz Unitaria</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>Apéndice</b></span></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Series de Tiempo en R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="modelos-de-series-de-tiempo" class="section level1">
+<h1><span class="header-section-number">Capítulo 3</span> Modelos de series de tiempo</h1>
+<p>Como indicamos en el capítulo anterior el objetivo principal en el análisis de series de tiempo es desarrollar modelos matemáticos que provean una descripción apropiada para los datos muestrales. Recordando las definiciones <a href="introduccion.html#def:defi-serie-tiempo">1.7</a> y <a href="caracteristicas-de-series-de-tiempo.html#def:defi-proceso-estocastico">2.1</a> podemos describir los modelos generales útiles para la descripción de series de tiempo</p>
+<div id="modelos-estocasticos" class="section level2">
+<h2><span class="header-section-number">3.1</span> Modelos Estocásticos</h2>
+<div id="procesos-estocasticos" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Procesos Estocásticos</h3>
+<p>De la definición de procesos estocásticos (Definición <a href="caracteristicas-de-series-de-tiempo.html#def:defi-proceso-estocastico">2.1</a>), las variables aleatorias de la familia (medibles para todo <span class="math inline">\(t\in T\)</span>) son funciones de la forma <span class="math display">\[x(\omega,t):\Omega\times T\to\mathbb{R}\]</span> Para <span class="math inline">\(T=\mathbb{N}\)</span>, tenemos un proceso en <em>tiempo discreto</em> y para <span class="math inline">\(T\subset\mathbb{R}\)</span> tenemos un proceso en <em>tiempo continuo</em>. En lo que respecta a este libro, consideraremos como subconjunto de índices <span class="math inline">\(T=(0,\infty)\)</span>.</p>
+<p>Como ya indicamos, usaremos la notación <span class="math inline">\(X_t\)</span> para denotar la realización de un proceso estocástico <span class="math inline">\(x_t(\omega*)\)</span> cuando no haya lugar a confución. De esta forma, adoptaremos sin pérdida de generalidad, el conjunto de índices habitual de las series de tiempo en el ámbito de las finanzas y economía <span class="math inline">\(I=(1,T)\)</span>.</p>
+<p>De lo anterior, se tiene que los procesos estocásticos suelen ser descritos mediante su distribución conjunta de probabilidades, de manera que la relación que existe entre una realización y un proceso estocástico es análoga a la existente entre la muestra y la población en el análisis estadístico clásico.</p>
+</div>
+<div id="momentos-varianza-covarianza-y-correlacion" class="section level3">
+<h3><span class="header-section-number">3.1.2</span> Momentos, Varianza, Covarianza y Correlación</h3>
+
+<div class="definition">
+<span id="def:defi-esperanza-varianza-procesos" class="definition"><strong>Definición 3.1  </strong></span>El <strong>valor esperado</strong> y <strong>varianza</strong> de un proceso estocástico están dados por
+<span class="math display" id="eq:eq-esperanza-proceso">\[\begin{equation}
+\mathbb{E}(x_t)=\int_{\Omega}x(\omega,t)dP(\omega),\quad t\in[0,T]
+\tag{3.1}
+\end{equation}\]</span>
+y
+<span class="math display" id="eq:eq-varianza-proceso">\[\begin{equation}
+Var(x_t)=\mathbb{E}(x_t-\mathbb{E}(x_t))^2,\quad t\in[0,T]
+\tag{3.2}
+\end{equation}\]</span>
+siempre que las integrales existan y sean finitas.
+</div>
+
+
+<div class="definition">
+<span id="def:defi-k-esimo-momento-proceso" class="definition"><strong>Definición 3.2  </strong></span>El <strong><span class="math inline">\(k\)</span>-ésimo momento</strong> de <span class="math inline">\(x_t\)</span>, con <span class="math inline">\(k\geq1\)</span>, se define como <span class="math inline">\(\mathbb{E}(x_t^k)\)</span> para todo <span class="math inline">\(t\in[0,t]\)</span>.
+</div>
+
+
+<div class="definition">
+<span id="def:defi-funcion-covarianza-proceso" class="definition"><strong>Definición 3.3  </strong></span>La <strong>función de covarianza</strong> del proceso para dos instantes de tiempo <span class="math inline">\(t\)</span> y <span class="math inline">\(s\)</span> está dada por <span class="math display">\[\gamma(t,s)=Cov(x_t,x_s)=\mathbb{E}[(x_t-\mathbb{E}(x_t))(x_s-\mathbb{E}(x_s))]\]</span> La cantidad <span class="math inline">\(x_t-x_s\)</span> es llamada el proceso de <em>incrementos</em> desde <span class="math inline">\(s\)</span> a <span class="math inline">\(t\)</span>, con <span class="math inline">\(s&lt;t\)</span>.
+</div>
+
+</div>
+<div id="variacion-de-un-proceso" class="section level3">
+<h3><span class="header-section-number">3.1.3</span> Variación de un proceso</h3>
+<p>Sea <span class="math inline">\(P_n=\{0=t_0&lt;t_1&lt;\cdots&lt;t_i&lt;\cdots&lt;t_n=t\}\)</span> una partición cualquiera del intervalos <span class="math inline">\([0,t]\)</span> en <span class="math inline">\(n\)</span> subintervalos y denotemos por <span class="math display">\[||P_n||=\max\{j=0,1,\ldots,n-1(t_{j+1}-t_j)\}\]</span> el tamaño de paso máximo de discretización de la partición <span class="math inline">\(P_n\)</span>.</p>
+
+<div class="definition">
+<span id="def:defi-variacion-proceso" class="definition"><strong>Definición 3.4  </strong></span>La <strong>variación</strong> del proceso <span class="math inline">\(x\)</span> se define como
+<span class="math display" id="eq:eq-variacion-proceso">\[\begin{equation}
+V_t(x)=p-\lim_{||P_n||}\sum_{k=0}^{n-1}|x_{t_{k+1}}-x_{t_k}|
+\tag{3.3}
+\end{equation}\]</span>
+Si <span class="math inline">\(x\)</span> es diferenciable, entonces <span class="math inline">\(V_t(x)=\int_0^t|x&#39;(u)|du\)</span>. Si <span class="math inline">\(V_t(X)&lt;\infty\)</span>, entonces decimos que <span class="math inline">\(x\)</span> es de <em>variación acotada</em> en <span class="math inline">\([0,t]\)</span>. Si es cierto para todo <span class="math inline">\(t\geq0\)</span>, entonces decimos que <span class="math inline">\(x\)</span> tiene <em>variación acotada</em>.
+</div>
+
+
+<div class="definition">
+<span id="def:defi-variacion-acotada" class="definition"><strong>Definición 3.5  </strong></span>La <strong>variación cuadrática</strong> de un proceso estocástico <span class="math inline">\(x\)</span>, denotada por <span class="math inline">\([x,x]_t\)</span>, se define como
+<span class="math display" id="eq:eq-variacion-acotada-proceso">\[\begin{equation}
+[x,x]_t = p-\lim_{||P_n||}\sum_{k=0}^{n-1}|x_{t_{k+1}}-x_{t_k}|^2
+\tag{3.4}
+\end{equation}\]</span>
+</div>
+
+Para procesos estocásticos con trayectorias continua, el límite existe, y en dicho caso usamos la notación <span class="math inline">\(\langle x,x\rangle_t\)</span> y podemos definirla alternativamente como
+<span class="math display" id="eq:eq-variacion-acotada-proceso-2">\[\begin{equation}
+$\langle x,x\rangle_t$ = p-\lim_{n\to\infty}\sum_{k=1}^{2^n}\left(x_{\min(t,k/2^n)} - x_{\min(t,(k-1)/2^n)}\right)^2
+\tag{3.5}
+\end{equation}\]</span>
+<p>Si <span class="math inline">\(x\)</span> es continuo y tiene variación acotada cuadrática finita, entonces su variación total es infinita. Note que <span class="math inline">\(V_t(x)\)</span> y <span class="math inline">\([x,x]_t\)</span> son también procesos estocásticos.</p>
+</div>
+<div id="martingalas" class="section level3">
+<h3><span class="header-section-number">3.1.4</span> Martingalas</h3>
+<p>En teoría de probabilidad, un proceso estocástico de tipo <strong>martingala</strong> (galicismo de <em>martingale</em>) es todo proceso caracterizado por no tener deriva. Este tipo de procesos estocásticos reciben su nombre de la estrategia de la martingala, un método de apuestas que tuvo cierta fama en el siglo XVIII. La estrategia de la martingala consiste en volver a apostar por el total perdido al momento de incurrir en una pérdida en un juego de azar,. En la nueva apuesta, el jugador tiene la posibilidad de recobrar todas sus pérdidas, por lo que podría parecer que a largo plazo la esperanza de ganancia con esta estrategia se mantienen constantes y a favor del jugador. De hecho, estadísticamente es así: el capital medio del jugador (esto es, el dinero que el jugador tiene a su disposición para jugar) se mantiene constante. El problema reside en que, al incurrir en sucesivas pérdidas, el jugador que siga la estrategia de la martingala se ve obligado a apostar de nuevo cantidades cada vez mayores (las pérdidas acumuladas), que tienden a crecer exponencialmente. Al cabo de unos pocos ciclos de apuestas, el jugador, cuyos recursos son habitualmente muy inferiores a los de la banca, se ve arruinado al ser incapaz de apostar de nuevo por el total de sus pérdidas. Evitar jugadores que intenten seguir la estratega de la martingala es de todos modos una de las razones por las que los casinos actuales establecen límites máximos de apuesta.</p>
+<p>La estrategia de la martingala se popularizó en el siglo XVIII con fama de ser una estrategia ingenua y propia de mentes simples, puesto que aunque en apariencia es infalible, sin embargo, está abocada a arruinar al jugador. Recibe el nombre de los habitantes de la localidad francesa de <em>Martigues</em> (martingales en francés), situada en las cercanías de Marsella, que por aquel entonces tenían fama de ser ingenuos y simplones.</p>
+<p>El concepto de la martingala en la teoría de probabilidades fue introducido por <em>Paul Pierre Lévy</em>, y una gran parte del desarrollo original de la teoría la realizó <em>Joseph Leo Doob</em>. Parte de la motivación para ese esfuerzo era demostrar la inexistencia de estrategias de juego infalibles.</p>
+<p>El concepto fue inmediatamente aplicado al análisis de procesos bursátiles. Uno de los resultados más importantes de la matemática financiera es, precisamente, que un mercado perfecto sin posibilidades de arbitraje es una martingala.</p>
+
+<div class="definition">
+<span id="def:defi-filtracion" class="definition"><strong>Definición 3.6  </strong></span>Sea <span class="math inline">\((\omega,\mathcal{F},P)\)</span> un espacio de probabilidad. Una <strong>filtración</strong> <span class="math inline">\(\{\mathcal{F}_t,t\geq0\}\)</span> es una familia creciente de sub-<span class="math inline">\(\sigma\)</span>-álgebras de <span class="math inline">\(\mathcal{F}\)</span> indexadas por <span class="math inline">\(t\geq0\)</span>; es decir, para cada <span class="math inline">\(s,t&gt;0\)</span> tal que <span class="math inline">\(s&lt;t\)</span>, se tiene <span class="math inline">\(\mathcal{F}_s\subset\mathcal{F}_t\)</span> con <span class="math inline">\(\mathcal{F}_0=\{\Omega,\emptyset\}\)</span>.
+</div>
+
+<p>Para cada proceso estocástico <span class="math inline">\(\{x_t\}_{t\geq0}\)</span> y para cada <span class="math inline">\(t\)</span>, podemos asociar una <span class="math inline">\(\sigma\)</span>-álgebra denotada por <span class="math inline">\(\mathcal{F}_t=\sigma\{x_s:0\leq s\leq t\}\)</span>, y que además es la <span class="math inline">\(\sigma\)</span>-álgebra generada por <span class="math inline">\(x\)</span>; es decir, la <span class="math inline">\(\sigma\)</span>-álgebra más pequeña (minimal) de <span class="math inline">\(\mathcal{F}\)</span> que hace a <span class="math inline">\(x(s,\omega)\)</span> medible para cada <span class="math inline">\(0\leq s\leq t\)</span>.</p>
+
+<div class="definition">
+<span id="def:defi-proceso-adaptado" class="definition"><strong>Definición 3.7  </strong></span>Dado un proceso estocástico <span class="math inline">\(\{X_t\}_{t\geq0}\)</span> y una filtración <span class="math inline">\(\{\mathcal{F}_t, t\geq0\}\)</span> (no necesariamente la que genera <span class="math inline">\(X\)</span>), el proceso <span class="math inline">\(X\)</span> se denomina <strong>adaptado</strong> a <span class="math inline">\(\{\mathcal{F}_t, t\geq0\}\)</span> (<span class="math inline">\(\mathcal{F}_t\)</span>-adaptado) si para cada <span class="math inline">\(t\geq0\)</span>, <span class="math inline">\(X(t)\)</span> es <span class="math inline">\(\mathcal{F}_t\)</span>-medible.
+</div>
+
+<p>En otras palabras <span class="math inline">\(X=\{X_t\}_{t\geq0}\)</span> es <span class="math inline">\(\mathcal{F}_t\)</span>-adaptado cuando el valor de <span class="math inline">\(X_t\)</span> en el tiempo <span class="math inline">\(t\)</span> solo depende de la información contenida en la realización hasta el instante <span class="math inline">\(t\)</span>.</p>
+<p>Dado un espacio de probabilidad <span class="math inline">\((\Omega,\mathcal{F},P)\)</span> y una filtración <span class="math inline">\(\{\mathcal{F}_t,t\geq0\}\)</span>, entonces definimos el <strong>espacio de probabilidad filtrado</strong> a la cuaterna <span class="math inline">\((\Omega,\mathcal{F},\{\mathcal{F}_t\}_{t\geq0},P)\)</span>.</p>
+
+<div class="definition">
+<p><span id="def:defi-martingala" class="definition"><strong>Definición 3.8  </strong></span>Sea <span class="math inline">\((\Omega,\mathcal{F},\{\mathcal{F}_t\}_{t\geq0},P)\)</span> un espacio de probabilidad filtrado. Un proceso <span class="math inline">\(X_t\)</span> con <span class="math inline">\(t\in T\)</span>, <span class="math inline">\(T\subseteq\mathcal{R}\)</span> un conjunto de índices, es una <strong>martingala</strong> relativo a la filtración <span class="math inline">\(\{\mathcal{F}_t,t\geq0\}\)</span>, si</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(X_t\)</span> es adaptado a la filtración <span class="math inline">\(\{\mathcal{F}_t,t\geq0\}\)</span></p></li>
+<li><p><span class="math inline">\(X_t\)</span> es integrable, es decir, <span class="math inline">\(\mathbb{E}|X_t|&lt;\infty\)</span>,</p></li>
+<li><p>Para cualesquieras <span class="math inline">\(s\)</span> y <span class="math inline">\(t\)</span> con <span class="math inline">\(s&lt;t\)</span>, <span class="math inline">\(\mathbb{E}(X_t|\mathcal{F}_s)=X_s\)</span> c.s.</p></li>
+</ol>
+Decimos que el proceso es una <strong>submartingala</strong> si <span class="math display">\[\mathbb{E}(X_t|\mathcal{F}_s)\geq X_s \text{ c.s.}\]</span> Decimos que es una <strong>supermartingala</strong> si <span class="math display">\[\mathbb{E}(X_t|\mathcal{F}_s)\leq X_s \text{ c.s.}\]</span>
+</div>
+
+
+<div class="example">
+<span id="exm:unnamed-chunk-24" class="example"><strong>Ejemplo 3.1  </strong></span>Sean <span class="math inline">\(X_0,X_1,\ldots,X_n\)</span> variables aleatorias iid tal que <span class="math inline">\(\mathbb{E}(X_1)=\mu\)</span> y sean
+<span class="math display">\[\begin{eqnarray*}
+M_0 &amp;=&amp; X_0 \\
+M_1 &amp;=&amp; X_0+X_1 \\
+\vdots &amp; &amp; \vdots \\
+M_n &amp;=&amp; X_0+X_1+\cdots+X_n
+\end{eqnarray*}\]</span>
+<p>La sucesión de variables aleatorias <span class="math inline">\(M_n\)</span> se llama <strong>paseo aleatorio</strong> y es una supermartingala si <span class="math inline">\(\mu\leq0\)</span>, una martingala si <span class="math inline">\(\mu=0\)</span> y una submartingala si <span class="math inline">\(\mu\geq0\)</span>.</p>
+Es fácil demostrarlo, sencillamente usamos el hecho de que <span class="math display">\[M_{n+1}=M_n+X_{n+1}\]</span> y que <span class="math inline">\(M_n\)</span> y <span class="math inline">\(X_{n+1}\)</span> son independientes. Podemos generar tal proceso en <strong>R</strong>.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n=<span class="dv">100</span>
+mu=<span class="dv">0</span>
+sigma=<span class="dv">1</span>
+X=<span class="kw">rnorm</span>(n,mu,sigma)
+M=<span class="kw">cumsum</span>(X)
+<span class="kw">plot</span>(M,<span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,<span class="dt">xlab =</span> <span class="st">&quot;t&quot;</span>,<span class="dt">ylab =</span> <span class="st">&quot;M_n&quot;</span>)</code></pre></div>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-25-1.svg" /><!-- --> 
+<div class="example">
+<p><span id="exm:unnamed-chunk-26" class="example"><strong>Ejemplo 3.2  (Precio de acciones)  </strong></span>Sean <span class="math inline">\(Y_0,Y_1,\ldots,Y_n\)</span> variables aleatorias independientes y positivas. Supongamos que una acción tiene precio <span class="math inline">\(M_0\)</span> a tiempo <span class="math inline">\(t=0\)</span>.</p>
+<p>Un modelo común para modelar el precio de la acción en tiempo <span class="math inline">\(t=n\)</span> es <span class="math display">\[M_{n+1}=M_nY_n\]</span> donde <span class="math inline">\((Y_n-1)\times100\)</span> representa (en porcentaje) la variabilidad de la acción. Usando las propiedades de esperanza condicional (Apéndice), es muy sencillo demostrar que <span class="math display">\[\mathbb{E}(M_{n+1}|M_0,\ldots,M_n)=M_n\mathbb{E}(Y_n)\]</span> En particular, si <span class="math inline">\(Y_1,\ldots,Y_n\)</span> son idénticamente distribuidas con <span class="math inline">\(\mathbb{E}(Y_1)=\mu\)</span> tenemos que <span class="math inline">\(M_n\)</span> es</p>
+<ul>
+<li>Una <strong>martingala</strong> si <span class="math inline">\(\mu=1\)</span></li>
+<li>Una <strong>submartingala</strong> si <span class="math inline">\(\mu&gt;1\)</span></li>
+<li>Una <strong>supermartingala</strong> si <span class="math inline">\(\mu&lt;1\)</span>.</li>
+</ul>
+<p>Dos modelos bien conocidos de lo anterior son</p>
+<ol style="list-style-type: decimal">
+<li><p>Modelo <strong>Black-Scholes discreto</strong>. Sean <span class="math inline">\(Y_1,\ldots,Y_n\)</span> definidas por <span class="math display">\[Y_n=e^{Z_n}\]</span> donde <span class="math inline">\(Z_1,\ldots,Z_n\)</span> son variables aleatorias independientes normales <span class="math inline">\(N(\mu,\sigma^2)\)</span>.</p></li>
+<li><strong>Modelo Binomial</strong>. Sean <span class="math inline">\(Y_1,\ldots,Y_n\)</span> definidas por <span class="math display">\[P(Y_i=(1+t)e^{-r})=p\quad\text{ y }\quadP(Y_i=(1+t)^{-1}e^{-r})=1-p\]</span> La constante <span class="math inline">\(r\)</span> es la tasa de interés y los factores <span class="math inline">\((1+t)\)</span> y <span class="math inline">\((1+t)^{-1}\)</span> modelan las variaciones del mercado y garantizan que el precio tiene la forma <span class="math inline">\(M_0(1+t)^ye^{-nr}\)</span>, con <span class="math inline">\(|y|\leq n\)</span>. La volatilidad del precio está asociada a <span class="math inline">\(p\)</span>.
+</div>
+</li>
+</ol>
+
+<div class="definition">
+<span id="def:defi-proceso-cuadrado-integrable" class="definition"><strong>Definición 3.9  </strong></span>Una variable aleatoria <span class="math inline">\(X\)</span> es <strong>cuadrado integrable</strong> si <span class="math inline">\(\mathbb{E}(X^2)&lt;\infty\)</span>. Un proceso estocástico <span class="math inline">\(X_t\)</span> en el intervalo <span class="math inline">\([0,T]\)</span>, donde <span class="math inline">\(T\)</span> puede ser infinito, es <strong>cuadrado integrable</strong> si
+<span class="math display" id="eq:eq-proceso-cuadrado-integrable">\[\begin{equation}
+\sup_{t\in[0,T]}\mathbb{E}(X_t^2)&lt;\infty
+\tag{3.6}
+\end{equation}\]</span>
+es decir, si sus segundos momentos son acotados.
+</div>
+
+
+<div class="definition">
+<span id="def:defi-proceso-uniforme-integrable" class="definition"><strong>Definición 3.10  </strong></span>Un proceso estocástico <span class="math inline">\(X_t, 0\leq t\leq T\)</span> se dice que es <strong>uniformemente integrable</strong> si <span class="math display">\[\mathbb{E}(|X_t|\mathbf{1}_{\{|X_t|&gt;n\}})\]</span> converge a 0 cuando <span class="math inline">\(n\to\infty\)</span> uniformemente en <span class="math inline">\(t\)</span>.
+</div>
+
+</div>
+<div id="propiedad-de-markov" class="section level3">
+<h3><span class="header-section-number">3.1.5</span> Propiedad de Markov</h3>
+<p>La propiedad de Markov establece que si conocemos el estado actual de un proceso estocástico, entonces el comportamiento futuro de dicho proceso es independiente de su pasado. Un proceso <span class="math inline">\(X_t\)</span> tiene la <em>propiedad de Markov</em> si la distribución condicional del proceso <span class="math inline">\(X_t\)</span> dado el proceos en el instante <span class="math inline">\(X_t=x\)</span>, no depende de los valores pasados.</p>
+
+<div class="definition">
+<span id="def:defi-proceso-markov" class="definition"><strong>Definición 3.11  </strong></span><span class="math inline">\(X\)</span> es un <strong>proceso de Markov</strong> si para cualquier <span class="math inline">\(t\)</span> y <span class="math inline">\(s&gt;0\)</span>, <span class="math display">\[P(X_{t+s}\leq y|\mathcal{F}_t) = P(X_{t+s}\leq y|X_t) \text{ c.s.}\]</span> donde <span class="math inline">\(\mathcal{F}_t\)</span> es la <span class="math inline">\(\sigma\)</span>-álgebra generada por el proceso hasta el tiempo <span class="math inline">\(t\)</span>.
+</div>
+
+
+<div class="definition">
+<span id="def:defi-funcion-transicion-probabilidad" class="definition"><strong>Definición 3.12  </strong></span>La <strong>función de transición de probabilidad</strong> de un proceso <span class="math inline">\(X\)</span> se define como <span class="math display">\[P(y,t,x,s) = P(X_y\leq y|X_s\leq x)\]</span> la función de distribución condicional del proceso en el instante <span class="math inline">\(t\)</span>, dado que éste está en el punto <span class="math inline">\(x\)</span> en el instante <span class="math inline">\(s&lt;t\)</span>.
+</div>
+
+<p>La propiedad de Markov implica una expresión que resulta muy útil en términos de la esperanza condicional por la <span class="math inline">\(\sigma\)</span>-álgebra de eventos, la cual es válida tanto para procesos en tiempo discreto como en tiempo continuo.</p>
+<p>Las definiciones y propiedades anteriores son temas de estudio de gran importancia y con una amplia teoría matemática que está fuera del alcance de este libro, pero lo que hemos descrito es suficiente para el objetivo del mismo.</p>
+</div>
+</div>
+<div id="modelos-lineales" class="section level2">
+<h2><span class="header-section-number">3.2</span> Modelos lineales</h2>
+<p>Los modelos lineales proporcionan un enfoque natural que permite analizar el comportamiento de los procesos estocásticos o series de tiempo y en especial a lo referente a finanzas y economía. En esta sección discutiremos la estructura de dependencia, autocorrelación, modelización y predicción de los modelos lineales teóricos, con los correspondientes comandos en <strong>R</strong> para generar y nalaizar dichos procesos.</p>
+<div id="proceso-de-ruido-blanco" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Proceso de Ruido Blanco</h3>
+
+<div class="definition">
+<span id="def:defi-ruido-blanco" class="definition"><strong>Definición 3.13  </strong></span>Un proceso <span class="math inline">\(\{w_t\}\)</span> se denomina <strong>ruido blanco</strong> (white noise) de media 0 y varianza <span class="math inline">\(\sigma^2\)</span> si satisface
+<span class="math display">\[\begin{eqnarray*}
+\mathbb{E}(w_t) &amp;=&amp; 0,\quad Var(w_t)=\sigma_w^2&lt;\infty \\
+Cov(w_t,w_{t-k}) &amp;=&amp; 0, \forall k\neq0
+\end{eqnarray*}\]</span>
+</div>
+
+<p>Las series de tiempo generadas de esta manera son muy usadas como modelos para ruido en aplicaciones de ingeniería. La designación <em>“blanco”</em> se origina de la analogía con la luz blanca e indica que todos los posibles períodos de oscilación están presentes con igual intensidad.</p>
+<p>En particular, una sucesión de variables aleatorias iid con media 0 y varianza <span class="math inline">\(\sigma_w^2\)</span> representa un caso especial de un proceso de ruido blanco. Este proceso lo denotaremos por <span class="math inline">\(w_t\sim WN(0,\sigma_w^2)\)</span>. Un muy usado ruido blanco es el <strong>ruido blanco gaussiano</strong>, donde las <span class="math inline">\(w_t\)</span> son variables aleatorias normales o gaussianas con media 0 y varianza <span class="math inline">\(\sigma_w^2\)</span> y denotadas como <span class="math inline">\(w_t\sim iidN(0,\sigma_w^2)\)</span>.</p>
+La función de media de un ruido blanco es trivial, es decir <span class="math display">\[\mu_w=\mathbb{E}(w_t)=0.\]</span> Calculemos la función de autocovarianza de <span class="math inline">\(w_t\)</span>
+<span class="math display">\[\begin{eqnarray*}
+\gamma_w(s,t) &amp;=&amp; \mathbb{E}[(w_s-\mu_s)(w_t-\mu_t)] \\
+      &amp;=&amp; \mathbb{E}[w_sw_t] \\
+      &amp;=&amp; \begin{cases}
+            \sigma_w^2, &amp;\text{ si }s=t \\
+            0, &amp;\text{ si }s\neq t
+          \end{cases}
+\end{eqnarray*}\]</span>
+<p>La última igualdad se sigue del hecho de que <span class="math inline">\(w_s\)</span> y <span class="math inline">\(w_t\)</span> son no-correlacionados para <span class="math inline">\(s\neq t\)</span> por lo que <span class="math inline">\(\mathbb{E}(w_sw_t) = \mathbb{E}(w_s)\mathbb{E}(w_t)=0\)</span>.</p>
+
+<div class="example">
+<span id="exm:unnamed-chunk-27" class="example"><strong>Ejemplo 3.3  (Estacionaridad de un ruido blanco)  </strong></span>La función de autocovarianza de un ruido blanco es fácil de evaluar como <span class="math display">\[\gamma_w(h) = \mathbb{E}(w_{t+h}w_t) = \begin{cases}
+                                          \sigma_w^2,&amp;\text{ si }h=0\\
+                                          0,&amp;\text{ si }h\neq0
+                                         \end{cases}\]</span> donde <span class="math inline">\(\sigma_w^2\)</span> es la varianza del ruido blanco. Esto significa que la serie es <em>débilmente estacionaria</em> o <em>estacionaria</em>. Si las variables de ruido blanco también son gaussianas, el proceso es <em>estrictamente estacionario</em>, como se pueder ver evaluando (2.10) usando la relación (2.2).
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#-----------------------------------------</span>
+<span class="co"># Ruidos blancos</span>
+<span class="co">#-----------------------------------------</span>
+<span class="co"># Uniforme [0,1]</span>
+wu=<span class="kw">runif</span>(<span class="dv">500</span>,<span class="dv">0</span>,<span class="dv">1</span>)
+<span class="co"># Gaussiano</span>
+wn=<span class="kw">rnorm</span>(<span class="dv">500</span>,<span class="dv">0</span>,<span class="dv">1</span>)
+<span class="co"># Graficos</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))
+<span class="kw">plot</span>(wu,<span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,<span class="dt">xlab =</span> <span class="st">&quot;Num. de observaciones&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Ruido blanco uniforme en [0,1]&quot;</span>)
+<span class="kw">plot</span>(wn,<span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,<span class="dt">xlab =</span> <span class="st">&quot;Num. de observaciones&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Ruido blanco gaussiano&quot;</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-28-1.svg" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Funciones de autocovarianza (ACF)</span>
+<span class="kw">acf</span>(wu)
+<span class="kw">acf</span>(wn)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-28-2.svg" /><!-- --></p>
+
+<div class="example">
+<span id="exm:ejem-promedio-movil-ruido-blanco" class="example"><strong>Ejemplo 3.4  </strong></span>Podemos reemplazar las series de ruido blanco <span class="math inline">\(w_t\)</span> por un promedio móvil que suavice la serie. Por ejemplo, consideremos la serie <span class="math inline">\(w_t\)</span> en la ecuación ( ) y reemplacémosla por un promedio móvil de 3 puntos, dado por
+<span class="math display" id="eq:eq-promedio-movil-ruido-blanco">\[\begin{equation}
+v_t = \frac{1}{3}(w_{t-1}+w_t+w_{t+1})
+\tag{3.7}
+\end{equation}\]</span>
+lo cual nos da una serie suavizada. Tomando la serie del ejemplo anterior y usando la función ‘filter’ de <strong>R</strong> se obtienen los gráficos siguientes:
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#------------------------------------------</span>
+<span class="co"># Promedio movil</span>
+<span class="co">#------------------------------------------</span>
+<span class="co"># Uniforme</span>
+vu=<span class="kw">filter</span>(wu,<span class="dt">sides =</span> <span class="dv">2</span>,<span class="kw">rep</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">3</span>,<span class="dv">3</span>))
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>),<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>))<span class="co">#</span>
+<span class="kw">plot.ts</span>(wu,<span class="dt">xlab=</span><span class="st">&quot; &quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Ruido blanco unif.&quot;</span>)
+<span class="kw">plot.ts</span>(vu,<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="dt">ylab=</span><span class="st">&quot;Promedio móvil&quot;)</span></code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-29-1.svg" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Gaussiano</span>
+vn=<span class="kw">filter</span>(wn,<span class="dt">sides =</span> <span class="dv">2</span>,<span class="kw">rep</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">3</span>,<span class="dv">3</span>))
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>),<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>))
+<span class="kw">plot.ts</span>(wn,<span class="dt">xlab=</span><span class="st">&quot; &quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Ruido blanco gauss.&quot;</span>)
+<span class="kw">plot.ts</span>(vn,<span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>,<span class="dv">3</span>),<span class="dt">ylab=</span><span class="st">&quot;Promedio móvil&quot;)</span></code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-29-2.svg" /><!-- --> En la parte superior de cada uno se observan los ruidos blancos y en la parte inferior los respectivos promedios móviles. Podemos notar que las series de promedio móvil suavizan el comportamiento de las series originales, si tomamos más puntos en el promedio mayor será el suavizado.</p>
+
+<div class="example">
+<span id="exm:ejem-funcion-media-MA" class="example"><strong>Ejemplo 3.5  (Función de media de un promedio móvil)  </strong></span>Si <span class="math inline">\(w_t\)</span> denota una serie de ruido blanco, entonces <span class="math inline">\(\mu_{wt}=\mathbb{E}(w_t)=0\)</span> para todo <span class="math inline">\(t\)</span>. Luego para el promedio móvil de 3 puntos se tiene <span class="math display">\[\mu_{wt} = \mathbb{E}(v_t) = \frac{1}{3}\mathbb{E}(w_{t-1}+w_t+w_{t+1}) = \frac{1}{3}(\mathbb{E}(w_{t-1})+\mathbb{E}(w_t)+\mathbb{E}(w_{t+1}))=0.\]</span>
+</div>
+
+
+<div class="example">
+<span id="exm:ejem-ACF-MA" class="example"><strong>Ejemplo 3.6  (Autocovarianza de un promedio móvil)  </strong></span>Consideremos el promedio móvil de 3 puntos del ejemplo anterior y calculemos su función de autocovarianza
+<span class="math display">\[\begin{eqnarray*}
+\gamma_v(s,t) &amp;=&amp; \mathbb{E}[(v_s-\mu_s)(v_t-\mu_t)] \\
+      &amp;=&amp; \mathbb{E}[(v_s-o)(v_t-0)] \\
+      &amp;=&amp; \frac{1}{9}\mathbb{E}[(w_{s-1}+w_s+w_{s+1})(w_{t-1}+w_t+w_{t+1})]
+\end{eqnarray*}\]</span>
+Consideremos <span class="math inline">\(s-t=h\)</span>, para <span class="math inline">\(h=0,\pm1,\pm2,\ldots\)</span>. Entonces, tenemos para <span class="math inline">\(h=0\)</span>
+<span class="math display">\[\begin{eqnarray*}
+\gamma_v(t,t) &amp;=&amp; \frac{1}{9}\mathbb{E}[(w_{t-1}+w_t+w_{t+1})(w_{t-1}+w_t+w_{t+1})] \\
+      &amp;=&amp; \frac{1}{9}[\mathbb{E}(w_{t-1}w_{t-1})+\mathbb{E}(w_tw_t)+\mathbb{E}(w_{t+1}w_{t+1})] \\
+      &amp;=&amp; \frac{3}{9}
+\end{eqnarray*}\]</span>
+Para <span class="math inline">\(h=1\)</span>, tenemos
+<span class="math display">\[\begin{eqnarray*}
+\gamma_v(t+1,t) &amp;=&amp; \frac{1}{9}\mathbb{E}[(w_t+w_{t+1}+w_{t+2})(w_{t-1}+w_t+w_{t+1})] \\
+      &amp;=&amp; \frac{1}{9}[\mathbb{E}(w_tw_t)+\mathbb{E}(w_{t+1}w_{t+1})] \\
+      &amp;=&amp; \frac{2}{9}
+\end{eqnarray*}\]</span>
+Usando el hecho de que <span class="math inline">\(\mathbb{E}(w_tw_s)=0\)</span> si <span class="math inline">\(s\neq t\)</span>. Cálculos similares nos dan <span class="math inline">\(\gamma_v(t-1,t)=2/9, \gamma_v(t+2,t)=\gamma_v(t-2,t)=1/9\)</span> y 0 para <span class="math inline">\(h\geq3\)</span>. Resumiendo se tiene
+<span class="math display" id="eq:eq-autocovarianza-promedio-movil">\[\begin{equation}
+\gamma_v(s,t) = \begin{cases}
+                3/9, &amp;\text{ si }s=t\\
+                2/9, &amp;\text{ si }|s-t|=1\\
+                1/9, &amp;\text{ si }|s-t|=2\\
+                0, &amp;\text{ si }|s-t|\geq3
+                \end{cases}
+\tag{3.8}
+\end{equation}\]</span>
+</div>
+
+
+<div class="example">
+<span id="exm:ejem-estacionaridad-MA" class="example"><strong>Ejemplo 3.7  (Estacionaridad de un promedio móvil)  </strong></span>El proceso de promedio móvil usado en los ejemplos <a href="modelos-de-series-de-tiempo.html#exm:ejem-promedio-movil-ruido-blanco">3.4</a> y <a href="modelos-de-series-de-tiempo.html#exm:ejem-funcion-media-MA">3.5</a> es estacionario ya que podemos escribir la función de autocovarianza obtenida en <a href="modelos-de-series-de-tiempo.html#eq:eq-autocovarianza-promedio-movil">(3.8)</a> como <span class="math display">\[\gamma_v(h) = \begin{cases}
+                  3/9, &amp;\text{ si }h=0\\
+                  2/9, &amp;\text{ si }h=\pm1\\
+                  1/9, &amp;\text{ si }h=\pm2\\
+                  0, &amp;\text{ si }|h|\geq3
+                  \end{cases}\]</span>
+</div>
+
+
+<div class="example">
+<span id="exm:ejem-camino-aleatorio" class="example"><strong>Ejemplo 3.8  </strong></span>Un modelo para analizar tendencias es el camino aleatorio con tendencia dado por
+<span class="math display" id="eq:eq-camino-aleatorio-tendencia">\[\begin{equation}
+X_t = \delta+X_{t-1}+w_t
+\tag{3.9}
+\end{equation}\]</span>
+para <span class="math inline">\(t=1,2,\ldots,\)</span> con condición inicial <span class="math inline">\(X_0=0\)</span>, y donde <span class="math inline">\(w_t\)</span> es un ruido blanco. La constante <span class="math inline">\(\delta\)</span> es llamada <em>tendencia</em>, y cuando <span class="math inline">\(\delta=0\)</span>, <a href="modelos-de-series-de-tiempo.html#eq:eq-camino-aleatorio-tendencia">(3.9)</a> es llamado simplemente <em>camino aleatorio</em>. El término camino aleatorio viene del hecho de que cuando <span class="math inline">\(\delta=0\)</span> el valor de la serie de tiempo en tiempo <span class="math inline">\(t\)</span> es el valor de la serie de tiempo al tiempo <span class="math inline">\(t-1\)</span> más un movimiento completamente aleatorio determinado por <span class="math inline">\(w_t\)</span>. La expresión <a href="modelos-de-series-de-tiempo.html#eq:eq-camino-aleatorio-tendencia">(3.9)</a> la podemos reescribir como una suma de variables de ruido blanco, esto es,
+<span class="math display" id="eq:eq-camino-aleatorio-suma">\[\begin{equation}
+X_t = \delta t+\sum_{j=1}^Nw_j
+\tag{3.10}
+\end{equation}\]</span>
+para <span class="math inline">\(t=1,2,\ldots.\)</span> A continuación generaremos un camino aleatorio usando <strong>R</strong>
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">154</span>)
+w=<span class="kw">rnorm</span>(<span class="dv">500</span>,<span class="dv">0</span>,<span class="dv">1</span>)
+X=<span class="kw">cumsum</span>(w)
+wd=w<span class="op">+</span><span class="fl">0.2</span>; Xd=<span class="kw">cumsum</span>(wd)
+<span class="kw">plot.ts</span>(Xd,<span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">40</span>,<span class="dv">80</span>))
+<span class="kw">lines</span>(X,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)
+<span class="kw">lines</span>(<span class="fl">0.2</span><span class="op">*</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">500</span>),<span class="dt">lty=</span><span class="st">&quot;dashed&quot;</span>,<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-30-1.svg" /><!-- --></p>
+</div>
+</div>
+<div id="modelos-lineales-estacionarios" class="section level2">
+<h2><span class="header-section-number">3.3</span> Modelos Lineales Estacionarios</h2>
+<div id="modelos-de-memoria-larga" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Modelos de Memoria Larga</h3>
+</div>
+<div id="modelos-de-regresion" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> Modelos de Regresión</h3>
+</div>
+</div>
+<div id="modelos-no-estacionarios" class="section level2">
+<h2><span class="header-section-number">3.4</span> Modelos No Estacionarios</h2>
+<div id="no-estacionarios-en-varianza" class="section level3">
+<h3><span class="header-section-number">3.4.1</span> No Estacionarios en Varianza</h3>
+</div>
+<div id="no-estacionarios-en-media" class="section level3">
+<h3><span class="header-section-number">3.4.2</span> No Estacionarios en Media</h3>
+</div>
+<div id="test-de-raiz-unitaria" class="section level3">
+<h3><span class="header-section-number">3.4.3</span> Test de Raíz Unitaria</h3>
+
+
+</div>
+</div>
+</div>
+
+
+
+</div>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-78759535-1', 'auto');
+ga('send', 'pageview');  
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="caracteristicas-de-series-de-tiempo.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="referencias.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/synergyvision/Teoria-de-Portafolio/edit/master/bookdown/300-modelos-series-tiempo.Rmd",
+"text": "Edit"
+},
+"download": ["Serie-de-Tiempo-en-R.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
