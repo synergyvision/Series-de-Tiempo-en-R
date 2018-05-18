@@ -293,7 +293,7 @@ $$\rho_{xy}(h)=\begin{cases}0,&h=0\\
 Claramente, las funciones de autocovarianza y correlación cruzada dependen solo del salto $h$, por lo tanto las series son conjuntamente estacionarias.
 ```
 
-El concepto de estacionaridad débil forma la base para muchos de los análisis realizados con series de tiempo. Las propiedades fundamentales de la media \@ref(eq:e1p22) y la función de covarianza \@ref(eq:eq-funcion-autocovarianza-estacionaria) son satisfechas por muchos modelos teóricos que aparecen para generar realizaciones muestrales apropiadas. En los ejemplos \@ref(exm:ejem-promedio-movil) y \@ref(exm:ejem-autoregresion), las dos series fueron generadas de forma que fuesen realizaciones estacionarias, y en el ejemplo \@ref(exm:ejem-estacionaridad-promedio-movil) demostramos que la serie en el ejemplo \@ref(exm:ejem-promedio-movil) fue de hecho, débilmente estacionaria. Ambos ejemplos son casos especiales de los llamados procesos lineales.
+El concepto de estacionaridad débil forma la base para muchos de los análisis realizados con series de tiempo. Las propiedades fundamentales de la media \@ref(eq:e1p22) y la función de covarianza \@ref(eq:eq-funcion-autocovarianza-estacionaria) son satisfechas por muchos modelos teóricos que aparecen para generar realizaciones muestrales apropiadas. 
 
 ```{definition, defi-proceso-lineal}
 Un **proceso lineal** $x_t$ se define como una combinación lineal de variables aleatorias de ruido blanco $w_t$, y está dado por
@@ -414,7 +414,7 @@ Aunque la serie tenga una componente estacional $E_t$, $X_t = T_t + E_t + \epsil
 
 2. En el caso cuadrático $T_t = \beta_0 +\beta_1t+\beta_2t^2$, ajustamos el modelo de regresión cuadrático $X_t = \beta_0+\beta_1t+\beta_2t^2 +\eta_t$. Nótese que en este caso hay que definir una variable explicativa adicional $t^2$.
 
-En general, para que datos de series de tiempo sean estacionarias, es necesario hacer un promedio de productos en el tiempo. Como para datos de serie de tiempo es importante medir la dependencia entre los valores de la serie; al menos, debemos ser capaces de estimar las  autocorrelaciones con precisión. Será difícil medir la dependencia de estos valores si la estructura de dependencia no es regular o si cambia en el tiempo. De ahí, que para realizar cualquier análisis estadístico significativo de datos de series de tiempo, será crucial que las funciones de media y  autocovarianza satisfagan las condiciones de estacionaridad dadas en la Definición \@ref(def:defi-debil-estacionaria). A menudo, este no es el caso, y en esta sección daremos algunos métodos para lidiar con los efectos de no-estacionaridad sobre las propiedades estacionarias de las series a estudiar.
+En general, para que datos de series de tiempo sean estacionarias, es necesario hacer un promedio de productos en el tiempo. Como para datos de serie de tiempo es importante medir la dependencia entre los valores de la serie; al menos, debemos ser capaces de estimar las  autocorrelaciones con precisión. Será difícil medir la dependencia de estos valores si la estructura de dependencia no es regular o si cambia en el tiempo. De ahí, que para realizar cualquier análisis estadístico significativo de datos de series de tiempo, será crucial que las funciones de media y  autocovarianza satisfagan las condiciones de estacionaridad dadas en la Definición \@ref(def:defi-debilmente-estacionaria). A menudo, este no es el caso, y en esta sección daremos algunos métodos para lidiar con los efectos de no-estacionaridad sobre las propiedades estacionarias de las series a estudiar.
 
 Quizás la forma más fácil de trabajar con series no-estacionarias es el modelo de tendencia estacionaria donde el proceso tiene comportamiento estacionario alrededor de una tendencia. Podemos escribir este tipo de modelos como
 
@@ -831,6 +831,184 @@ donde $\{E_t\}$ tiene periodo $d$, obtenemos
 
 $$\nabla_dX_t = T_t-T_{t-d} + \epsilon_t-\epsilon_{t-d},$$
 
-lo cual nos da una descomposición de la diferencia $\nabla_dX_t$ en una componente de tendencia $(T_t-T_{t-d})$ y un término de ruido $(\epsilon_t-\epsilon_{t-d})$. La tendencia $(T_t-T_{t-d})$ se puede eliminar usando los métodos ya descritos, por ejemplo, aplicando alguna potencia del operador $\nabla$. La Figura~\ref{Grafico-tema3-diferencia-paso-12} muestra el resultado de aplicar el operador $\nabla_{12}$ a los datos de accidentes mortales. La componente estacional evidente en la Figura~\ref{Grafico-tema3-accidentes-USA} está ausente en la Figura de $\nabla_{12}X_t,13\leq t\leq72$. Sin embargo todavía parece haber una tendencia decreciente. Si ahora aplicamos el operador $\nabla$ a $\nabla_{12}X_t$ y graficamos las diferencias $\nabla\nabla_{12}X_t,t=14,\ldots,72$ obtenemos el gráfico mostrado en la Figura~\ref{Grafico-tema3-diferencia-diferencia-paso-12}, los cuales no tienen una aparente tendencia o componente estacional.
+lo cual nos da una descomposición de la diferencia $\nabla_dX_t$ en una componente de tendencia $(T_t-T_{t-d})$ y un término de ruido $(\epsilon_t-\epsilon_{t-d})$. La tendencia $(T_t-T_{t-d})$ se puede eliminar usando los métodos ya descritos, por ejemplo, aplicando alguna potencia del operador $\nabla$. La figura siguiente muestra el resultado de aplicar el operador $\nabla_{12}$ a los datos de accidentes mortales.
 
+```{R}
+# Operador Nabla_d, usamos la funcion diff con lag=12
+NdX=diff(V,lag=12)
+plot(NdX,type = "l")
+```
+
+
+La componente estacional evidente en la Figura~\ref{Grafico-tema3-accidentes-USA} está ausente en la Figura de $\nabla_{12}X_t,13\leq t\leq72$. Sin embargo todavía parece haber una tendencia decreciente. Si ahora aplicamos el operador $\nabla$ a $\nabla_{12}X_t$ y graficamos las diferencias $\nabla\nabla_{12}X_t,t=14,\ldots,72$ obtenemos el gráfico mostrado en la Figura~\ref{Grafico-tema3-diferencia-diferencia-paso-12}, los cuales no tienen una aparente tendencia o componente estacional.
+
+```{R}
+DNdX=diff(NdX)
+plot(DNdX,type = "l")
+```
+
+## Estimación de la tendencia por regresión clásica
+
+Los modelos de regresión son importantes para modelos en el dominio de tiempo y de frecuencia que discutiremos posteriormente. La idea principal depende de poder expresar una serie respuesta $X_t$ como una combinación lineal de entradas $z_{t_1},z_{t_2},\ldots,z_{t_q}$. La estimación de los coeficientes $\beta_1,\beta_2,\ldots,\beta_q$ de la combinación por mínimos cuadrados proporciona un método para modelar $X_t$ en términos de las entradas.
+
+### Regresión Clásica
+
+Supongamos que tenemos $X_t$, para $t=1,2,\ldots,n$ influenciada por una colección de series independientes $z_{t_1},z_{t_2},\ldots,z_{t_q}$, donde consideraremos primero que las entradas son fijas y conocidas. Podemos expresar esta relación como
+
+\begin{equation}
+X_t=\beta_1z_{t_1}+\beta_2z_{t_2}+\cdots+\beta_qz_{t_q}+w_t
+(\#eq:eq-regresion-lineal)
+\end{equation}
+
+donde $\beta_1,\beta_2,\ldots,\beta_q$ son los coeficientes de regresión fijos y desconocidos, $\{w_t\}$ es un error aleatorio o un proceso de ruido consistente de variables normales iid con media cero y varianza $\sigma_w^2$.
+
+El modelo lineal descrito en \@ref(eq:eq-regresion-lineal) se puede escribir de forma más general por medio de definir los vectores columna $\mathbf{z}_t=(z_{t_1},z_{t_2},\ldots,z_{t_q})^t$ y $\mathbf{\beta}=(\beta_1,\beta_2,\ldots,\beta_q)^t$ donde $t$ denota la traspuesta, así \@ref(eq:eq-regresion-lineal) será
+
+\begin{equation}
+X_t=\mathbf{\beta}^t\mathbf{z}_t+w_t
+(\#eq:eq-regresion-lineal-2)
+\end{equation}
+
+donde $w_t\sim iid(0,\sigma_w^2)$. Es natural considerar la estimación de los coeficientes del vector $\mathbf{\beta}$ minimizando la suma residual de cuadrados
+
+\begin{equation}
+RSS=\sum_{t=1}^{n}(X_t-\mathbf{\beta}^t\mathbf{z}_t)^2
+(\#eq:eq-suma-residual-cuadrados)
+\end{equation}
+
+con respecto a $\beta_1,\beta_2,\ldots,\beta_q$. Minimizando RSS obtenemos el estimador común de mínimos cuadrados. Esta minimización se puede hacer por diferenciación de \@ref(eq:eq-suma-residual-cuadrados) con respecto al vector $\mathbf{\beta}$ o usando las propiedades de proyección. En la notación anterior, obtenemos la ecuación normal
+
+\begin{equation}
+\left(\sum_{t=1}^{n}\mathbf{z}_t\mathbf{z}_t^t\right)\hat{\mathbf{\beta}}=\sum_{t=1}^{n}\mathbf{z}_tX_t
+(\#eq:eq-regresion-lineal-normal)
+\end{equation}
+
+Definiendo la matriz $Z=(\mathbf{z}_1,\mathbf{z}_2,\ldots,\mathbf{z}_n)^t$ como una matriz $n\times q$ compuesta de $n$ muestras de las variables de entradas y el vector observado $\mathbf{x}=(x_1,x_2,\ldots,x_n)^t$ se puede hacer una simplificación de la notación. Esta identificación nos lleva a
+
+\begin{equation}
+(Z^tZ)\hat{\mathbf{\beta}}=Z^t\mathbf{x}
+(\#eq:eq-regresion-matriz)
+\end{equation}
+
+y la solución es
+
+\begin{equation}
+\hat{\mathbf{\beta}}=(Z^tZ)^{-1}Z^t\mathbf{x},
+(\#eq:eq-solucion-regresion-matriz)
+\end{equation}
+
+cuando la matriz $Z^tZ$ es de rango $q$. El residual minimizado de suma de cuadrados \@ref(eq:eq-suma-residual-cuadrados) tiene la forma matricial equivalente
+
+\begin{eqnarray}
+RSS&=&(\mathbf{x}-Z\hat{\mathbf{\beta}})^t(\mathbf{x}-Z\hat{\mathbf{\beta}})\\ \nonumber
+&=&\mathbf{x}^t\mathbf{x}-\hat{\mathbf{\beta}}^tZ^t\mathbf{x}\\ \nonumber
+&=&\mathbf{x}^t\mathbf{x}-\mathbf{x}^tZ(Z^tZ)^{-1}Z^t\mathbf{x}.
+(\#eq:eq-suma-residual-cuadrados-matricial)
+\end{eqnarray}
+
+El estimador común de mínimos cuadrados es insesgado, esto es, $\mathbb{E}(\hat{\mathbf{\beta}})=\mathbf{\beta}$, y tiene la menor varianza de todos los estimadores insesgados lineales.
+
+Si los errores $w_t$ son normalmente distribuidos (Gaussianos), $\hat{\mathbf{\beta}}$ es también el estimador de máxima verosimilitud para $\mathbf{\beta}$ y es normalmente distribuido con
+
+\begin{eqnarray}
+\text{cov}(\hat{\mathbf{\beta}})&=&\sigma_w^2\left(\sum_{t=1}^{n}\mathbf{z}_t\mathbf{z}_t^t\right)^{-1}\\ \nonumber
+&=&\sigma_w^2(Z^tZ)^{-1}\\ \nonumber
+&=&\sigma_w^2C,
+(\#eq:eq-covarianza-beta-estimado)
+\end{eqnarray}
+
+donde
+
+\begin{equation}
+C=(Z^tZ)^{-1}.
+(\#eq:eq-matriz-C)
+\end{equation}
+
+Un estimador insesgado para la varianza $\sigma_w^2$ es
+
+\begin{equation}
+s_w^2=\frac{RSS}{n-q}
+(\#eq:eq-estimador-insesgado-varianza)
+\end{equation}
+
+contrastado con el estimador de máxima verosimilitud $\hat{\sigma}_w^2=RSS/n$ el cual tiene divisor $n$. Bajo la suposición de que $s_w^2$ tiene distribución proporcional a una variable aleatoria chi-cuadrado con $n-q$ grados de libertad, $\chi_{n-q}^2$, e independiente de $\hat{\beta}$, se sigue que
+
+\begin{equation}
+t_{n-q}=\frac{(\hat{\beta}_i-\beta_i)}{s_w\sqrt{c_{ii}}}
+(\#eq:eq-estadistico-t)
+\end{equation}
+
+tiene distribución $t$-de Student con $n-q$ grados de libertad; $c_{ii}$ denota el $i$-ésimo elemento de la diagonal de $C$, como se definió en \@ref(eq:eq-matriz-C).
+
+Hay varios modelos que podemos utilizar de manera de seleccionar el mejor subconjunto de variables independientes. Suponga que tenemos un modelo que sólo considera un subconjunto $q_1<q$ de variables independientes $\mathbf{z}_{1t}=(z_{t_1},z_{t_2},\ldots,z_{t_q1})^t$ que influencian a la variable $X_t$, así el modelo
+
+\begin{equation}
+X_t=\mathbf{\beta}_1^t\mathbf{z}_{1t}+w_t
+(\#eq:eq-modelo-regresion-reducido)
+\end{equation}
+
+llega a ser la hipótesis nula, donde $\mathbf{\beta}_1=(\beta_1,\beta_2,\ldots,\beta_{q1})^t$ es un subconjunto de los coeficientes de las $q$ variables originales. Podemos contrastar el modelo reducido \@ref(eq:eq-modelo-regresion-reducido) contra el modelo completo \@ref(eq:eq-regresion-lineal-2) comparando el residual de la suma de cuadrados bajo los dos modelos usando el estadístico $F$
+
+\begin{equation}
+F_{q-q1,n-q}=\frac{RSS_1-RSS}{RSS}\frac{n-q}{q-q1}
+(\#eq:eq-estadistico-F-residuales)
+\end{equation}
+
+el cual tiene distribución $F$ con $q-q1$ y $n-q$ grados de libertad cuando \@ref(eq:eq-estadistico-F-residuales) es el modelo correcto. La información envuelta en la prueba se resume en una tabla de Análisis de Varianza (ANOVA) como la mostrada en la Tabla siguiente para este caso particular. La diferencia en el numerador es llamada regresión de la suma de cuadrados.
+
+
+Fuente | g.l | Suma de cuadrados | Medias Cuadrados 
+-------|-----|-------------------|------------------
+$z_{t,q_1+1},\ldots,z_{t,q}$ | $q-q_1$ | $SS_{reg}=RSS_1-RSS$ | $MS_{reg}=SS_{reg}/(q-q_1)$ 
+Error	| $n-q$	| $RSS$	| $s_e^2=RSS/(n-q)$ 
+Total	| $n-q_1$	| $RSS_1$		|	
+
+En términos de la Tabla, por convención escribimos el estadístico $F$ dado en \@ref(eq:eq-estadistico-F-residuales) como el radio de dos medias cuadrados, obteniéndose
+
+\begin{equation}
+F_{q-q1,n-q}=\frac{M S_{reg}}{s_w^2}.
+(\#eq:eq-estadistico-F-radio-medias)
+\end{equation}
+
+Un caso de especial interés es para $q_1=1$ y $z_{1t}=1$, así el modelo en \@ref(eq:eq-modelo-regresion-reducido) es
+$$X_t=\beta_1+w_t$$
+y la proporción de variación explicada por las otras variables es
+
+\begin{equation}
+R_{xz}^2=\frac{RSS_0-RSS}{RSS_0},
+(\#eq:eq-proporcion-variacion-explicada)
+\end{equation}
+
+donde la suma residual de cuadrados bajo el modelo reducido dada por
+
+\begin{equation}
+RSS_0=\sum_{t=1}^{n}(X_t-\bar{X})^2
+(\#eq:eq-suma-residual-reducido)
+\end{equation}
+
+es precisamente la suma de desviaciones al cuadrado de la media $\bar{X}$. La medida $R_{xz}^2$ es la correlación múltiple cuadrado entre $X_t$ y $z_{t2},z_{t3},\ldots,z_{tq}$.
+
+Las técnicas discutidas se pueden usar para hacer comparación entre varios modelos. Estas pruebas han sido usadas en el pasado en una manera gradual, donde las variables son añadidas o suprimidas cuando los valores de la prueba $F$ exceden o fallan en exceder algunos niveles predeterminados. El procedimiento, llamado regresión múltiple por pasos, es útil para conseguir un conjunto de variables que sea de utilidad. Una manera alternativa es enfocándose en un procedimiento para selección del modelo que no sea secuencial, sino simplemente evaluar cada modelo en base a sus propios méritos.
+
+Suponga que consideramos un modelo de regresión con $k$ coeficientes y denotemos el estimador de máxima verosimilitud para la varianza como
+
+\begin{equation}
+\hat{\sigma}_k^2=\frac{RSS_k}{n}
+(\#eq:eq-estimador-emv-varianza)
+\end{equation}
+
+donde $RSS_k$ denota la suma residual de cuadrados bajo el modelo con $k$ coeficientes de regresión. Entonces, Akaike (1969, 1973, 1974) sugirió medir la bondad del ajuste para este modelo en particular equilibrando el error del ajuste contra el número de parámetros en el modelo; definiendo lo siguiente
+
+```{definition, defi-AIC, name="Criterio de Información de Akaike (AIC)"}
+El Criterio de Información de Akaike se define como
+\begin{equation}
+AIC=\ln\hat{\sigma}_k^2+\frac{n+2k}{n}
+(\#eq:eq-AIC)
+\end{equation}
+donde $\hat{\sigma}_k^2$ está dado por \@ref(eq:eq-estimador-emv-varianza) y $k$ es el número de parámetros en el modelo
+```
+
+----
+
+El *criterio de información de Akaike* (AIC) es una medida de la calidad relativa de un modelo estadístico, para un conjunto dado de datos. Como tal, el AIC proporciona un medio para la selección del modelo. El valor de $k$ que minimiza $AIC$ especifica el mejor modelo. La idea es que la minimización de $\hat{\sigma}_k^2$ sea razonablemente objetiva, excepto que decrezca monótonamente cuando $k$ crece. Por lo tanto, debemos penalizar la variación del error por un término proporcional al número de parámetros. La elección del término de penalización dado por \@ref(eq:eq-AIC) no es único.
 

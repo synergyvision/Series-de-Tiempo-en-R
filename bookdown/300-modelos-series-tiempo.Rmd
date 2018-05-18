@@ -155,7 +155,7 @@ Dos modelos bien conocidos de lo anterior son
    
 2) **Modelo Binomial**. 
    Sean $Y_1,\ldots,Y_n$ definidas por
-   $$P(Y_i=(1+t)e^{-r})=p\quad\text{ y }\quadP(Y_i=(1+t)^{-1}e^{-r})=1-p$$
+   $$P(Y_i=(1+t)e^{-r})=p\quad\text{ y }\quad P(Y_i=(1+t)^{-1}e^{-r})=1-p$$
    La constante $r$ es la tasa de interés y los factores $(1+t)$ y $(1+t)^{-1}$ modelan las variaciones del mercado y garantizan que el precio tiene la forma $M_0(1+t)^ye^{-nr}$, con $|y|\leq n$. La volatilidad del precio está asociada a $p$.  
 ```
 
@@ -341,7 +341,7 @@ para $t=1,2,\ldots.$
 A continuación generaremos un camino aleatorio usando **R**
 ```
 
-```{R}
+```{R, fig.align = "center", fig.cap="Gráficos de caminos aleatorios: con tendencia (negro), sin tendencia (rojo)"}
 set.seed(154)
 w=rnorm(500,0,1)
 X=cumsum(w)
@@ -351,19 +351,6 @@ lines(X,col="red")
 lines(0.2*(1:500),lty="dashed",col="blue")
 ```
 
-## Modelos Lineales Estacionarios
-
-### Modelos de Memoria Larga
-
-### Modelos de Regresión
-
-## Modelos No Estacionarios
-
-### No Estacionarios en Varianza
-
-### No Estacionarios en Media
-
-### Test de Raíz Unitaria
 
 
 

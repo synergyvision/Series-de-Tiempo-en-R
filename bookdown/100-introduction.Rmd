@@ -68,7 +68,7 @@ Algunos ejemplos donde se puede utilizar y hacer precciones con series de tiempo
 6) **Demografía**. Las previsiones de población por país y región se realizan de manera rutinaria, a menudo estratificadas por variables como el género, la edad y la raza. Los demógrafos también pronostican nacimientos, muertes y patrones migratorios de las poblaciones. Los gobiernos utilizan estas previsiones para planificar políticas y acciones de servicio social, como el gasto en atención médica, programas de jubilación y programas de lucha contra la pobreza. Muchas empresas utilizan pronósticos de poblaciones por grupos de edad para hacer planes estratégicos en relación con el desarrollo de nuevas líneas de productos o tipos de servicios que será ofrecido.
 
 
-## Concepto financieros básicos
+## Conceptos financieros básicos
 
 La mayoría de los estudios financieros y econ?micos implican rendimiento, en lugar de precios de los activos. Existen dos buenas razones para ello. Primero, para los inversores medios, el rendimiento de un activo es un resumen completo y libre de escala de la oportunidad de inversión. Segundo, las series de rendimiento son más fáciles de manejar que las series de precios porque las primeras tienen propiedades estadísticas más atractivas. Sin embargo, existen varias definiciones de rendimiento de activos. Sea $P_t$ el precio de un activo en tiempo $t$. Discutiremos algunas definiciones de rendimiento que utilizaremos a lo largo del libro. Supongamos por el momento que el activo no paga dividendos.
 
@@ -128,7 +128,7 @@ Continuo      Inf.                                        $1.10517
 Tabla. Ilustración de los efectos de la combinación. El intervalo de tiempo es de 1 año y la tasa de interés es del 10% anual.
 
 
-En general, el valor liquidatuivo $A$ de la capitalización continua es
+En general, el valor liquidativo $A$ de la capitalización continua es
 \begin{equation}
 A=C\exp(r\times n)
 (\#eq:eq-valor-capitalizacion-continua)
@@ -279,6 +279,55 @@ NYSE=ts(scan("data/nyse.txt"))
 plot(NYSE,xlab="Tiempo",ylab="Porcentaje de cambio, NYSE")
 ```
 
+```{example, euribor}
+La evolución del EURIBOR es algo que fluctúa a diario. Se entiende por EURIBOR (Euro Interbank Offered Rate) el tipo de interés, promovido por el Instituto Europeo de Mercados Monetarios (EMMI), consistente en la media aritmética simple de los valores diarios con días de mercado para operaciones de depósitos en euros a plazo de uno/tres/seis/doce meses y referido al día quince del mes anterior al comienzo de cada período de interés o al día siguiente hábil si aquel no lo fuese, calculado a partir del ofertado por una muestra de Bancos para operaciones entre entidades de similar calificación.
+
+A continuación mostramos dos series del EURIBOR. La primera es la evolución histórica anual del EURIBOR desde su implantación en 1999 hasta 2018, los datos se corresponden al mes de enero de cada año. La segunda es la evolución mensual desde enero de 2007 hasta marzo de 2018.
+```
+
+```{r,fig.align = "center",fig.cap="Evolución anual del EURIBOR (1999-2018)"}
+EURIBORa<-read_excel("data/EURIBOR-anual.xlsx")
+plot(EURIBORa,type="l", col = "blue", xlab = "Periodo", 
+     main="Serie EURIBOR anual (1999-2018)")
+grid(col = "gray")
+```
+
+```{r,fig.align = "center",fig.cap="Evolución mensual del EURIBOR (2007-2018)"}
+EURIBORm<-read_excel("data/EURIBOR-mensual.xlsx")
+EURIts<-ts(EURIBORm[,2],start = 2007, frequency = 12)
+plot.ts(EURIts,xlab = "Periodo", col = "blue", 
+        main="Serie EURIBOR mensual (enero 2007- marzo 2018)")
+grid(col = "gray")
+```
+
+```{example, cambio-dolar-euro}
+El archivo *Cambio-EUR-USD.xlsx* contiene el histórico de la cotización dolar estadounidense versus el euro desde el 01/05/2017 hasta el 26/04/2018. En la primera columna se muestra la fecha, la segunda columna el precio de apertura, la tercera el precio de cierre, la cuarta la diferencia en %, la quinta el precio máximo del día, la sexta el precio mínimo y la utlima el volumen de transacciones. A continuación presentamos los gráficos de apertura, cierre, máximo y mínimo.
+```
+
+```{r,fig.align = "center",fig.cap="Histórico de cambio del USD vs. EUR (01/05/2017 al 26/04/2018)"}
+Cambio<-read_excel("data/Cambio-EUR-USD.xlsx")
+par(mfrow=c(3,2))
+plot(Cambio$Fecha,Cambio$Apertura, col="blue", type = "l",
+     xlab = "Periodo", ylab = "Cotizacion",
+     main = "Apertura")
+plot(Cambio$Fecha,Cambio$Cierre, col="blue", type = "l",
+     xlab = "Periodo", ylab = "Cotizacion",
+     main = "Cierre")
+plot(Cambio$Fecha,Cambio$Máximo, col="blue", type = "l",
+     xlab = "Periodo", ylab = "Cotizacion",
+     main = "Máximo")
+plot(Cambio$Fecha,Cambio$Mínimo, col="blue", type = "l",
+     xlab = "Periodo", ylab = "Cotizacion",
+     main = "Mínimo")
+plot(Cambio$Fecha,Cambio$`Dif.%`, col="blue", type = "l",
+     xlab = "Periodo", ylab = "Porcentaje",
+     main = "Diferencia (apetura-cierre) %")
+plot(Cambio$Fecha,Cambio$Volumen, col="blue", type = "l",
+     xlab = "Periodo", ylab = "Monto",
+     main = "Volumen")
+```
+
+
 ### Clasificación de las series de tiempo
 
 Como se ha mostrado en los ejemplos anteriores, hay una amplia variedad de series de tiempo que pueden clasificarse en varias categorías desde varios puntos de vista. 
@@ -355,6 +404,19 @@ knitr::include_graphics("images/Grafica-tema3-modelo-aditivo.png")
 
 Asumiendo el modelo aditivo, el análisis de series de tiempo consiste en modelar y estimar $T_t$ y $E_t$ y luego extraerlas de $X_t$ para obtener $\hat{\epsilon}_t = X_t - \hat{T}_t - \hat{E}_t$. La serie $\hat{\epsilon}_t$ se modela y estima para finalmente reconstruir $X_t$, $\hat{X}_t = \hat{T}_t+\hat{E}_t+\hat{\epsilon}_t$, y poder realizar el pronóstico $\hat{X}_{t+h}=\hat{T}_{t+h}+\hat{E}_{t+h}+\hat{\epsilon}_{t+h}$, utilizando la información disponible $X_t,\ldots,X_n$ con $h=1,2,\ldots,m$. Sin embargo, puede suceder que la serie $\hat{\epsilon}_t$ sea incorrelacionada, es decir, $Corr(\hat{\epsilon}_t,\hat{\epsilon}_{t+s}) = 0$, para $s\neq0$. En este caso $\hat{\epsilon}_{t+h}=0$ para todo $h>0$.
 
+En **R** podemos descomponer una serie de tiempo usando la función *stl()* o la función *decompose()*. Retomando la serie de beneficios trimestrales de las acciones de Johnson & Johnson (Ejemplo \@ref(exm:ejem-beneficios-acciones)) podemos observar la descomposición de la misma. En la parte superior de la gráfica se observa la serie original, en el gráfico siguiente la estacionalidad, en el tercero la tendencia y en el gráfico inferior los residuales.
+
+```{R, fig.align = "center",fig.cap="Descomposición aditiva de la serie Johnson & Johnson"}
+plot(decompose(jj, type = "additive", filter = NULL))
+```
+
+La función *stl()* es más sofisticada que *decompose()*, la misma usa la descomposición de estacionalidad y tendencia de Loess (Seasonal and Trend decomposition using Loess) el cual es un método robusto y versátil para la descomposición de series de tiempo. El método STL fue desarrollado por Cleveland et al. (1990). A continuación mostramos la misma serie de beneficios de acciones de Johnson & Johnson usando esta función.
+
+```{R, fig.align = "center",fig.cap="Descomposición de la serie Johnson & Johnson usando la descomposición de Loess (STL)"}
+plot(stl(jj,s.window="periodic"), col="blue",
+     main="Descomposicion de la serie Johnson & Johnson")
+```
+
 ### El Modelo Multiplicativo de Componentes de Series de Tiempo
 
 Dada una serie de tiempo $X_t,t=1,\ldots,n$, el *Modelo Multiplicativo de Componentes* consiste en asumir que $X_t$ se puede descomponer de una de las siguientes maneras:
@@ -372,4 +434,10 @@ X_t = T_t\times E_t+\epsilon_t
 \end{equation}
 
 donde $T_t$ es la componente de tendencia, $E_t$ es la componente estacional y $\epsilon_t$ es la componente aleatoria o de errores. Estos modelos son apropiados cuando la magnitud de las fluctuaciones estacionales de la serie crece y decrece proporcionalmente con los crecimientos y decrecimientos de la tendencia respectivamente.
+
+Usamos la misma función *decompose()* para realizar la descomposición multiplicativa de la serie de tiempo, para ello en 'type' cambiamos "additive" por "multiplicative"
+
+```{R, fig.align = "center",fig.cap="Descomposición multiplicativa de la serie Johnson & Johnson"}
+plot(decompose(jj, type = "multiplicative", filter = NULL))
+```
 

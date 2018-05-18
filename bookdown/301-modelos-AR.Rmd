@@ -1,0 +1,325 @@
+# Modelos AR
+
+Los modelos autoregresivos están basados en la idea de que el valor actual de la serie $x_t$ se puede explicar como una función de $p$ valores pasados $x_{t-1},x_{t-2},\ldots,x_{t-p}$ donde $p$ determina el número de pasos en necesarios para predecir el valor actual. Una parte de las series de tiempo económicas y financieras suelen ser caracterizadas por los modelos autorregresivos. Entre los principales ejemplos de las finanzas tenemos valoración de precios y de dividendos, las tasas reales de cambio, tasas de interés y los diferenciales de tipos de interés (spreads).
+
+```{definition, defi-modelo-ARp}
+Un *modelo autoregresivo de orden $p$*, abreviado $AR(p)$ es de la forma 
+
+\begin{equation}
+x_t=\phi_1x_{t-1}+\phi_2x_{t-2}+\cdots+\phi_px_{t-p}+w_t,
+(\#eq:eq-ARp)
+\end{equation}
+
+donde $x_t$ es estacionario, $\phi_1\phi_2,\ldots,\phi_p$ son constantes ($\phi_p\neq0$). A menos que se declare lo contrario, se asume que $w_t$ es un ruido blanco gaussiano de media cero y varianza $\sigma_w^2$. La media de $x_t$ en \@ref(eq:eq-ARp) es cero. Si la media $\mu$ de $x_t$ no es cero, reemplazamos $x_t$ por $x_t-\mu$ en \@ref(eq:eq-ARp), es decir
+
+$$x_t-\mu=\phi_1(x_{t-1}-\mu)+\phi_2(x_{t-2}-\mu)+\cdots+\phi_p(x_{t-p}-\mu)+w_t$$
+
+o escribimos
+
+\begin{equation}
+x_t=\alpha+\phi_1x_{t-1}+\phi_2x_{t-2}+\cdots+\phi_px_{t-p}+w_t,
+(\#eq:eq-ARp-mu)
+\end{equation}
+
+donde $\alpha=\mu(1-\phi_1-\phi_2-\cdots-\phi_p)$.
+```
+
+----
+
+Note que \@ref(eq:eq-ARp-mu) es similar al modelo de regresión dado en \@ref(eq:eq-regresion-lineal) y por consiguiente el término *autoregresión*. Sin embargo, se presentan algunas dificultades técnicas para la aplicación de este modelo, porque los regresores $x_{t-1},x_{t-2},\ldots,x_{t-p}$ son aleatorios, mientras que $x_t$ se asume fijo. Una forma más útil se deriva de usar el siguiente operador de cambio dado por \@ref(eq:eq-backward-shift-operator). Para escribir el modelo $AR(p)$ como
+
+\begin{equation}
+(1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p)x_t=w_t
+(\#eq:eqARp-operador-B)
+\end{equation}
+
+o más conciso como
+
+\begin{equation}
+\phi(B)x_t=w_t.
+(\#eq:eq-ARp-B-conciso)
+\end{equation}
+
+Las propiedades de $\phi(B)$ son importantes para resolver \@ref(eq:eq-ARp-B-conciso). Esto nos lleva a la siguiente definición.
+
+```{definition, defi-operador-autoregresivo}
+El *operador autoregresivo* de orden $p$ se define como
+
+\begin{equation}
+\phi(B) = 1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p
+(\#eq:eq-operador-Bp)
+\end{equation}
+```
+
+----
+
+## Modelo AR(1)
+
+Iniciaremos el estudio de los modelos $AR$ considerando el modelo de primer orden $AR(1)$, dado por $x_t=\phi x_{t-1}+w_t$. Iterando el operador de cambio $k$ veces, obtenemos
+
+\begin{eqnarray*}
+x_t &=& \phi x_{t-1}+w_t = \phi(\phi x_{t-2}+w_{t-1})+w_t \\
+    &=& \phi^2x_{t-2}+\phi w_{t-1}+w_t \\
+    &\vdots& \\
+    &=& \phi^kx_{t-k}+\sum_{j=0}^{k-1}\phi^jw_{t-j}.
+\end{eqnarray*}
+
+Este método sugiere que por iteración continua del operador de cambio, siempre que $|\phi|<1$ y $x_t$ sea estacionario, podemos representar un modelo $AR(1)$ como un proceso lineal dado por [^nota3]
+
+[^nota3]: Note que $\lim_{k\to\infty}\mathbb{E}(x_t-\sum_{j=0}^{\infty}\phi^jw_{t-j})^2 = \lim_{k\to\infty}\phi^{2k}\mathbb{E}(x_{t-k}^2)=0$, de modo que \@ref(eq:eq-AR1-serie-lineal) existe en el sentido de media cuadrado. 
+
+\begin{equation}
+x_t \sum_{j=0}^{\infty}\phi^jw_{t-j}
+(\#eq:eq-AR1-serie-lineal)
+\end{equation}
+
+El proceso $AR(1)$ definido en \@ref(eq:eq-AR1-serie-lineal) es estacionario con media
+
+$$\mathbb{E}(x_t) = \sum_{j=0}^{\infty}\phi^j\mathbb{E}(w_{t-j})=0,$$
+
+y la función de autocovarianza es
+
+\begin{eqnarray}
+\gamma(h) &=& Cov(x_{t+h},x_t) \nonumber \\
+    &=& \mathbb{E}\left[\left(\sum_{j=0}^{\infty}\phi^jw_{t+h-j}\right) \left(\sum_{k=0}^{\infty}\phi^kw_{t-k}\right)\right] \nonumber \\
+    &=& \sigma_w^2\sum_{j=0}^{\infty}\phi^j\phi^{j+h} = \sigma_w^2\phi^h\sum_{j=0}^{\infty}\phi^{2j} \nonumber \\
+    &=& \frac{\sigma_w^2\phi^h}{1-\phi^2}, h>0
+(\#eq:eq-ACV-AR1)
+\end{eqnarray}
+
+Recuerde que $\gamma(h)=\gamma(-h)$ de modo que basta presentar la función de autocovarianza para $h\geq0$. 
+
+Si en \@ref(eq:eq-ACV-AR1), hacemos $h=0$, obtenemos la varianza del proceso $AR(1)$, siendo esta
+
+$$Var(x_t)=\frac{\sigma_w^2}{1-\phi^2},$$
+
+asumiendo que $\phi_1^2<1$. El requisito de que $\phi_1^2<1$ resulta del hecho de que la varianza de una variable aleatoria es acotada y no negativa. Por consiguiente, la estacionaridad de un modelo $AR(1)$ implica que $-1<\phi_1<1$. Pero si $-1<\phi_1<1$, entonces por \@ref(eq:eq-AR1-serie-lineal) y la independencia de $\{w_t\}$ se puede demostrar que la media y la varianza de $x_t$ son finitas. Además, por la desigualdad de Cauchy-Schwartz todas las autocovarianzas de $x_t$ son finitas. Por lo tanto, el modelo $AR(1)$ es estacionario. En resumen, una condición necesaria y suficiente para que un proceos $AR(1)$ sea estacionario es $|\phi_1|<1$.
+
+De \@ref(eq:eq-ACV-AR1) la ACF de un modelo $AR(1)$ es
+
+\begin{equation}
+\rho(h) = \frac{\gamma(h)}{\gamma(0)} = \phi^h, \quad h>0
+(\#eq:eq-ACF-AR1)
+\end{equation}
+
+y $\rho(h)$ satisface la recursión
+
+\begin{equation}
+\rho(h) = \phi\rho(h-1)\text{, para }h=1,2,\ldots.
+(\#eq:eq-ACF-AR1-recursiva)
+\end{equation}
+
+Las ecuaciones \@ref(eq:eq-ACF-AR1) y \@ref(eq:eq-ACF-AR1-recursiva) indican que la ACF de un modelo $AR(1)$ estacionario tiene un decaimiento exponencial con tasa igual a $\phi_1$. Si $\phi_1>0$ el decaimiento es constante. Si por el contrario, $\phi_1<0$ entonces el decaimiento es compuesto y se presenta de forma alternante con tasa $\phi_1^2$. Para tener una idea de esto, consideremos los modelos autoregresivos
+de orden 1 simulados, para distintos valores de $\phi_1$.
+
+```{R, fig.align = "center",fig.cap="Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de phi_1"}
+# Coeficientes phi
+phi1=0.9
+phi2=-0.8
+phi3=0.4
+phi4=-0.5
+# Ruido blanco gaussiano
+w=rnorm(100,0,1)
+# Series AR(1)
+ar1_1=filter(w,filter = phi1,method = "recursive")
+ar1_2=filter(w,filter = phi2,method = "recursive")
+ar1_3=filter(w,filter = phi3,method = "recursive")
+ar1_4=filter(w,filter = phi4,method = "recursive")
+# Graficos
+par(mfrow=c(2,2))
+plot.ts(ar1_1, col="blue",type = "l",
+     main = "AR(1) con phi=0.9",xlab="t",ylab="x_t")
+plot.ts(ar1_2, col="blue",type = "l",
+        main = "AR(1) con phi=-0.8",xlab="t",ylab="x_t")
+plot.ts(ar1_3, col="blue",type = "l",
+        main = "AR(1) con phi=0.4",xlab="t",ylab="x_t")
+plot.ts(ar1_4, col="blue",type = "l",
+        main = "AR(1) con phi=-0.5",xlab="t",ylab="x_t")
+```
+
+A continuación mostramos las funciones de autocovarianzas de las series AR(1) simuladas anteriormente
+
+```{R, fig.align = "center",fig.cap="Funciones de autocovarianzas para las series AR(1) simuladas"}
+par(mfrow=c(2,2))
+acf(ar1_1,type = "covariance", main="ACF de la Serie AR(1) con phi=0.9")
+acf(ar1_2,type = "covariance", main="ACF de la Serie AR(1) con phi=-0.8")
+acf(ar1_3,type = "covariance", main="ACF de la Serie AR(1) con phi=0.4")
+acf(ar1_4,type = "covariance", main="ACF de la Serie AR(1) con phi=-0.5")
+```
+
+## Modelo AR(2)
+
+Un proceso $AR(2)$ tiene la forma general
+
+\begin{equation}
+x_t = \alpha + \phi_1 x_{t-1} + \phi_2 x_{t-2} + w_t
+(\#eq:eq-AR2)
+\end{equation}
+
+siendo $\alpha = \mu(1-\phi_1-\phi_2)$, con $\phi_2\neq 0$. Podemos calcular su función de media
+
+\begin{eqnarray*}
+\mathbb{E}(x_t) &=& \mathbb{E}(\alpha + \phi_1 x_{t-1} + \phi_2 x_{t-2} + w_t) \\
+    &=& \alpha+\phi_1\mathbb{E}(x_{t-1})+\phi_2\mathbb{E}(x_{t-2})
+\end{eqnarray*}
+
+Por estacionalidad, se tiene que $\mathbb{E}(x_t)=\mathbb{E}(x_{t-1})=\mathbb{E}(x_{t-2})$, luego
+
+$$\mathbb{E}(x_t)(1-\phi_1-\phi_2) = \alpha$$
+Así, $\mathbb{E}(x_t) = \frac{\alpha}{1-\phi_1-\phi_2}$, siempre que $\phi_1+\phi_2\neq1$. Usando $\alpha=(1-\phi_1-\phi_2)\mu$ podemos reescribir el proceso $AR(2)$ como
+
+$$x_t-\mu = \phi_1(x_{t-1}-\mu)+\phi_2(x_{t-2}-\mu)+w_t.$$
+
+Multiplicando por $x_{t-h}-\mu$, tenemos
+
+$$(x_{t-h}-\mu)(x_t-\mu) = \phi_1(x_{t-h}-\mu)(x_{t-1}-\mu) + \phi_2(x_{t-h}-\mu)(x_{t-2}-\mu) + (x_{t-h}-\mu)w_t.$$
+
+Tomando valor esperado y usando el hecho de que $\mathbb{E}[(x_{t-h}-\mu)w_t]=0$, para $h>0$, obtenemos
+
+\begin{equation}
+\gamma(h) = \phi_1\gamma(h-1)+\phi_2\gamma(h-2) \text{, para }h>0.
+(\#eq:eq-ecuacion-momento-AR2)
+\end{equation}
+
+Este último resultado se conoce como la **ecuación de momentos** de un proceso estacionario $AR(2)$. Dividiendo \@ref(eq:eq-ecuacion-momento-AR2) por $\gamma(0)$, tenemos la propiedad
+
+\begin{equation}
+\rho(h) = \phi_1\rho(h-1)+\phi_2\rho(h-2)\text{, para }h>0
+(\#eq:eq-ACF-AR2-recursiva)
+\end{equation}
+
+para la ACF de $x_t$. En particular, para paso 1 ($h=1$) la ACF satisface
+
+$$\rho(1) = \phi_1\rho(0)+\phi_2\rho(-1) = \phi_1+\phi_2\rho(1)$$
+
+Por lo tanto, para un proceso $AR(2)$ estacionario $x_t$, tenemos
+
+\begin{eqnarray*}
+\rho(0) &=& 1 \\
+\rho(1) &=& \frac{\phi_1}{1-\phi_2} \\
+\rho(h) &=& \phi_1\rho(h-1)+\phi_2\rho(h-2),\quad h\geq2
+\end{eqnarray*}
+
+El resultado de la ecuación \@ref(eq:eq-ACF-AR2-recursiva) nos dice que la ACF de un proceso estacionario $AR(2)$ satisface la ecuación en diferencias de segundo orden
+
+\begin{equation}
+(1-\phi_1B-\phi_2B^2)\rho(h) = 0
+(\#eq:eq-diferencia-ACF)
+\end{equation}
+
+donde $B$ es el operador definido en \@ref(eq:eq-backward-shift-operator). La ecuación \@ref(eq:eq-diferencia-ACF) determina las propiedades de la ACF de un proceso $AR(2)$ estacionario. También determina el comportamiento de los pronósticos de $x_t$. Correspondiendo a la ecuación en diferencias anterior, existe una ecuación polinómica de segundo orden
+
+\begin{equation}
+x^2-\phi_1x-\phi_2=0
+(\#eq:eq-polinomio-2do-orden-AR2)
+\end{equation}
+
+Las soluciones de esta ecuación son las raíces características de un proceso $AR(2)$ y estas son
+
+$$x=\frac{\phi_1\pm\sqrt{\phi_1^2+4\phi_2}}{2}$$
+
+Denotamos las dos raíces por $r_1$ y $r_2$. Si ambos son reales, entonces la ecuación en diferencias de segundo orden la podemos factorizar como
+
+$$(1-r_1B)(1-r_2B)$$
+
+y el proceso $AR(2)$ lo podemos considerar como un proceso $AR(1)$ operando sobre otro proceso $AR(1)$.
+
+La ACF de $x_t$ es entonces una mezcla de dos decaimientos exponenciales. Pero si $\phi_1^2+4\phi_2<0$, entonces $r_1$ y $r_2$ son raíces complejas conjugadas, y el gráfico de la ACF de $x_t$ mostrará un amortiguamiento de senos y cosenos.
+
+En aplicaciones financieras y económicas, las raíces caracteríticas complejas son importantes. Dan lugar al comportamiento de los ciclos económicos. Por lo tanto, es común que los modelos económicos de series de tiempo tengan raíces características de valor complejo. Para un proceso $AR(2)$ dado por \@ref(eq:eq-AR2) con raíces características complejas, la longitud *promedio* de un ciclo estocástico es
+
+$$k=\frac{360°}{\arccos(\phi_1/2\sqrt{-\phi_2})},$$
+
+donde el arcocoseno está expresado en grados.
+
+La figura siguiente muestra la ACF de 4 procesos estacionarios $AR(2)$. Los procesos $AR(2)$ mostrados son:
+
+a) $x_t=1.2x_{t-1}-0.35x_{t-2}+w_t$
+
+b) $x_t=0.6x_{t-1}-0.4x_{t-2}+w_t$
+
+c) $x_t=0.2x_{t-1}+0.35x_{t-2}+w_t$
+
+d) $x_t=-0.2x_{t-1}+0.35x_{t-2}+w_t$
+
+```{R, fig.align = "center", echo=FALSE, fig.cap="Cuatro procesos estacionarios AR(2) con distintos valores de phi1 y phi2"}
+# Series AR(2)
+xt1<-arima.sim(list(order=c(2,0,0),ar=c(1.2,-0.35)),n=100)
+xt2<-arima.sim(list(order=c(2,0,0),ar=c(0.6,-0.4)),n=100)
+xt3<-arima.sim(list(order=c(2,0,0),ar=c(0.2,0.35)),n=100)
+xt4<-arima.sim(list(order=c(2,0,0),ar=c(-0.2,0.35)),n=100)
+# Graficos de las series
+par(mfrow=c(2,2))
+plot(xt1,type="l", main = "AR(2) con phi1=1.2, phi2=-0.35")
+plot(xt2,type="l", main = "AR(2) con phi1=0.6, phi2=-0.4")
+plot(xt3,type="l", main = "AR(2) con phi1=0.2, phi2=0.35")
+plot(xt4,type="l", main = "AR(2) con phi1=-0.2, phi2=0.35")
+```
+
+```{R, fig.align = "center", echo=FALSE, fig.cap="ACF de 4 procesos estacionarios AR(2) con distintos valores de phi1 y phi2"}
+# Funciones de autocovarianzas
+par(mfrow=c(2,2))
+acf(xt1, main = "AR(2) con phi1=1.2, phi2=-0.35")
+acf(xt2, main = "AR(2) con phi1=0.6, phi2=-0.4")
+acf(xt3, main = "AR(2) con phi1=0.2, phi2=0.35")
+acf(xt4, main = "AR(2) con phi1=-0.2, phi2=0.35")
+```
+
+La serie (b) tiene raíces características complejas, en efecto 
+
+$$\phi_1^2+4\phi_2=(0.6)^2+4\times(-0.4)-1.24<0$$
+
+Se puede notar que n el gráfico de la ACF que este exhibe un comportamiento de ondas de senos y cosenos. Los otros 3 procesos $AR(2)$ tienen raíces características reales, por lo que las ACF decaen exponencialmente. La condición de estacionaridad de un proceso $AR(2)$ es que los valores absolutos de sus raíces características sean menor que uno, esto es $|\phi_1|<1, |\phi_2|<1$. Bajo esta condición, la ecuación recursiva \@ref(eq:eq-ACF-AR2-recursiva) asegura que la ACF del proceso converge a cero cuando el salto $h$ crece. Esta propiedad de convergencia es una condición necesaria para una serie de tiempo estacionaria. De hecho, la condición también aplica para un proceso $AR(1)$ donde la ecuación polinómica es $x-\phi_1=0$. La raíz característica es $x=\phi_1$, la cual debe ser menor que uno en módulo para que $x_t$ sea estacionario. Como mostramos antes, para un proceso estacionario $AR(1)$ la ACF es $\rho(h)=\phi^h$, \@ref(eq:eq-ACF-AR1).
+
+Así, la condición $|\phi|<1$, asegura que $\rho(h)=\phi^h\to0$, cuando $h\to\infty$. 
+
+## Procesos AR(p)
+
+Los resultados de los procesos $AR(1)$ y $AR(2)$, los podemos generalizar a procesos $AR(p)$. Así, la función de media del proceso $AR(p)$ estacionario será
+
+\begin{equation}
+\mathbb{E}(x_t) = \frac{\alpha}{1-\phi_1-\cdots-\phi_p}
+(\#eq:eq-funcion-media-ARp)
+\end{equation}
+
+siempre que el denominador sea distinto de cero. La ecuación polinómica asociada al modelo es
+
+\begin{equation}
+x^p-\phi_1x^{p-1}-\phi_2x^{p-2}-\cdots-\phi_p=0
+(\#eq:eq-polinomio-ARp)
+\end{equation}
+
+la cual nos referimos como la *ecuación característica* del modelo. Si todas las *raíces caractarísticas* de esta ecuación son menores qye uno en módulo, esto es $|r_j|<1$, con $j=1,\ldots,p$, entonces la serie $x_t$ es estacionaria. Para un proceso $AR(p)$ estacionario, la ACF satisface la ecuación en diferencias
+
+$$(1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p)\rho(h)=0\text{, para }h>0.$$
+
+El gráfico de la ACF de un proceso $AR(p)$ estacionario mostrará una mezcla de ondas de senos y cosenos con decaimientos exponenciales dependiendo de la naturaleza de sus raíces características.
+
+```{example}
+Consideremos el modelo $AR(3)$ de la forma 
+
+$$x_t=0.0047+0.35x_{t-1}+0.18x_{t-2}-0.14x_{t-3}+w_t.$$
+  
+Reescribiendo el proceso como 
+
+$$x_t-0.35x_{t-1}-0.18x_{t-2}+0.14x_{t-3}=0.0047+w_t$$
+  
+obtenemos la correspondiente ecuación en diferencias de orden 3,
+
+$$(1-0.35B-0.18B^2+0.14B^3)=0$$
+  
+la cual podemos factorizar como   
+
+$$(1+0.52B)(1-0.87B+0.27B^2)=0$$
+
+El primer factor $(1+0.52B)=0$, muestra u ndecaimiento exponencial en la ACF. Veamos ahora el segundo factor $(1-0.87B-(-0.27)B^2)=0$, tenemos que $\phi_1^2+4\phi_2=(0.87)^2+4(-0.27)=-0.3231<0$. Por consiguiente la ACF mostrará un comportamiento en ondas de senos y cosenos.
+```
+
+```{R, fig.align = "center"}
+xt<-arima.sim(list(order=c(3,0,0),ar=c(0.35,0.18,-0.14)),n=100)
+par(mfrow=c(2,1))
+plot(xt,type="l",main="Proceso AR(3)")
+acf(xt, main="ACF para el proceso AR(3)")
+```
+
+
