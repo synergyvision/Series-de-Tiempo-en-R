@@ -37,6 +37,11 @@ library(ggplot2)
 library(grid)
 library(gridExtra)
 library(readxl)
+library(tutorial)
+library(stats)
+library(png)
+library(jpeg)
+library(kableExtra)
 ```
 
 ```{r include=FALSE}
