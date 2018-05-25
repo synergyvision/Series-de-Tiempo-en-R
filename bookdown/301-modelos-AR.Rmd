@@ -112,7 +112,7 @@ y $\rho(h)$ satisface la recursión
 Las ecuaciones \@ref(eq:eq-ACF-AR1) y \@ref(eq:eq-ACF-AR1-recursiva) indican que la ACF de un modelo $AR(1)$ estacionario tiene un decaimiento exponencial con tasa igual a $\phi_1$. Si $\phi_1>0$ el decaimiento es constante. Si por el contrario, $\phi_1<0$ entonces el decaimiento es compuesto y se presenta de forma alternante con tasa $\phi_1^2$. Para tener una idea de esto, consideremos los modelos autoregresivos
 de orden 1 simulados, para distintos valores de $\phi_1$.
 
-```{R, fig.align = "center",fig.cap="Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de phi_1"}
+```{R, fig.align = "center",fig.cap="Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de $phi_1$"}
 # Coeficientes phi
 phi1=0.9
 phi2=-0.8

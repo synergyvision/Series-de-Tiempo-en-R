@@ -220,14 +220,13 @@ Un **modelo de series de tiempo** para los datos observados $\{x_t\}$ es una esp
 A continuación presentaremos una serie de ejemplos que demuestran la utilidad y lo cotidiano de las series de tiempo, también se mostrarán los códigos en **R** para cargar los archivos de datos y graficar las respectivas series de tiempo.
 
 ## Ejemplos 
-```{example, ejem-beneficios-acciones}
-**Beneficios de acciones.**
-Beneficios por acción trimestrales para la compañía Johnson & Johnson. Se tienen 84 trimestres iniciando el primer trimestre de 1960 hasta el último trimestre de 1980. Los métodos para analizar tales datos se verán en el Tema 3 usando técnicas de regresión. El archivo es *"jj.txt"*.
+```{example, ejem-beneficios-acciones, name="Beneficios de acciones"}
+Beneficios por acción trimestrales para la compañía Johnson y Johnson. Se tienen 84 trimestres iniciando el primer trimestre de 1960 hasta el último trimestre de 1980. Los métodos para analizar tales datos se verán en el Tema 3 usando técnicas de regresión. El archivo es *"jj.txt"*.
 
 Los comandos en R para cargar el archivo y graficar la serie de tiempo son los siguientes:
 ```
 
-```{r,fig.align = "center",fig.cap="Beneficios por acción trimestrales para la compañía Johnson & Johnson"}
+```{r,fig.align = "center",fig.cap="Beneficios por acción trimestrales para la compañía Johnson y Johnson"}
 jj=ts(scan("data/jj.txt"),start=1960,freq=4) 
 plot(jj, type="l",ylab="Beneficios por acción trimestrales")
 ``` 
@@ -404,17 +403,17 @@ knitr::include_graphics("images/Grafica-tema3-modelo-aditivo.png")
 
 Asumiendo el modelo aditivo, el análisis de series de tiempo consiste en modelar y estimar $T_t$ y $E_t$ y luego extraerlas de $X_t$ para obtener $\hat{\epsilon}_t = X_t - \hat{T}_t - \hat{E}_t$. La serie $\hat{\epsilon}_t$ se modela y estima para finalmente reconstruir $X_t$, $\hat{X}_t = \hat{T}_t+\hat{E}_t+\hat{\epsilon}_t$, y poder realizar el pronóstico $\hat{X}_{t+h}=\hat{T}_{t+h}+\hat{E}_{t+h}+\hat{\epsilon}_{t+h}$, utilizando la información disponible $X_t,\ldots,X_n$ con $h=1,2,\ldots,m$. Sin embargo, puede suceder que la serie $\hat{\epsilon}_t$ sea incorrelacionada, es decir, $Corr(\hat{\epsilon}_t,\hat{\epsilon}_{t+s}) = 0$, para $s\neq0$. En este caso $\hat{\epsilon}_{t+h}=0$ para todo $h>0$.
 
-En **R** podemos descomponer una serie de tiempo usando la función *stl()* o la función *decompose()*. Retomando la serie de beneficios trimestrales de las acciones de Johnson & Johnson (Ejemplo \@ref(exm:ejem-beneficios-acciones)) podemos observar la descomposición de la misma. En la parte superior de la gráfica se observa la serie original, en el gráfico siguiente la estacionalidad, en el tercero la tendencia y en el gráfico inferior los residuales.
+En **R** podemos descomponer una serie de tiempo usando la función *stl()* o la función *decompose()*. Retomando la serie de beneficios trimestrales de las acciones de Johnson y Johnson (Ejemplo \@ref(exm:ejem-beneficios-acciones)) podemos observar la descomposición de la misma. En la parte superior de la gráfica se observa la serie original, en el gráfico siguiente la estacionalidad, en el tercero la tendencia y en el gráfico inferior los residuales.
 
-```{R, fig.align = "center",fig.cap="Descomposición aditiva de la serie Johnson & Johnson"}
+```{R, fig.align = "center",fig.cap="Descomposición aditiva de la serie Johnson y Johnson"}
 plot(decompose(jj, type = "additive", filter = NULL))
 ```
 
-La función *stl()* es más sofisticada que *decompose()*, la misma usa la descomposición de estacionalidad y tendencia de Loess (Seasonal and Trend decomposition using Loess) el cual es un método robusto y versátil para la descomposición de series de tiempo. El método STL fue desarrollado por Cleveland et al. (1990). A continuación mostramos la misma serie de beneficios de acciones de Johnson & Johnson usando esta función.
+La función *stl()* es más sofisticada que *decompose()*, la misma usa la descomposición de estacionalidad y tendencia de Loess (Seasonal and Trend decomposition using Loess) el cual es un método robusto y versátil para la descomposición de series de tiempo. El método STL fue desarrollado por Cleveland et al. (1990). A continuación mostramos la misma serie de beneficios de acciones de Johnson y Johnson usando esta función.
 
-```{R, fig.align = "center",fig.cap="Descomposición de la serie Johnson & Johnson usando la descomposición de Loess (STL)"}
+```{R, fig.align = "center",fig.cap="Descomposición de la serie Johnson y Johnson usando la descomposición de Loess (STL)"}
 plot(stl(jj,s.window="periodic"), col="blue",
-     main="Descomposicion de la serie Johnson & Johnson")
+     main="Descomposicion de la serie Johnson y Johnson")
 ```
 
 ### El Modelo Multiplicativo de Componentes de Series de Tiempo
@@ -437,7 +436,7 @@ donde $T_t$ es la componente de tendencia, $E_t$ es la componente estacional y $
 
 Usamos la misma función *decompose()* para realizar la descomposición multiplicativa de la serie de tiempo, para ello en 'type' cambiamos "additive" por "multiplicative"
 
-```{R, fig.align = "center",fig.cap="Descomposición multiplicativa de la serie Johnson & Johnson"}
+```{R, fig.align = "center",fig.cap="Descomposición multiplicativa de la serie Johnson y Johnson"}
 plot(decompose(jj, type = "multiplicative", filter = NULL))
 ```
 

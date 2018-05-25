@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Series de Tiempo en R</title>
+  <meta name="description" content="Series de Tiempo en R">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Series de Tiempo en R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://synergy.vision/Series-de-Tiempo-en-R/" />
+  <meta property="og:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+  
+  <meta name="github-repo" content="synergyvision/Series-de-Tiempo-en-R/" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Series de Tiempo en R" />
+  
+  
+  <meta name="twitter:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+
+<meta name="author" content="Synergy Vision">
+
+
+<meta name="date" content="2018-05-25">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="modelos-de-series-de-tiempo.html">
+<link rel="next" href="referencias.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="https://cdn.datacamp.com/datacamp-light-latest.min.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="images/logovision-black.png" width="160"></img></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#por-que-leer-este-libro"><i class="fa fa-check"></i>¿Por qué leer este libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-libro"><i class="fa fa-check"></i>Estructura del libro</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#informacion-sobre-los-programas-y-convenciones"><i class="fa fa-check"></i>Información sobre los programas y convenciones</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#practicas-interactivas-con-r"><i class="fa fa-check"></i>Prácticas interactivas con R</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="acerca-del-autor.html"><a href="acerca-del-autor.html"><i class="fa fa-check"></i>Acerca del Autor</a></li>
+<li class="chapter" data-level="1" data-path="introduccion.html"><a href="introduccion.html"><i class="fa fa-check"></i><b>1</b> Introducción</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduccion.html"><a href="introduccion.html#conceptos-financieros-basicos"><i class="fa fa-check"></i><b>1.1</b> Conceptos financieros básicos</a></li>
+<li class="chapter" data-level="1.2" data-path="introduccion.html"><a href="introduccion.html#conceptos-basicos"><i class="fa fa-check"></i><b>1.2</b> Conceptos básicos</a></li>
+<li class="chapter" data-level="1.3" data-path="introduccion.html"><a href="introduccion.html#ejemplos"><i class="fa fa-check"></i><b>1.3</b> Ejemplos</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduccion.html"><a href="introduccion.html#clasificacion-de-las-series-de-tiempo"><i class="fa fa-check"></i><b>1.3.1</b> Clasificación de las series de tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduccion.html"><a href="introduccion.html#componentes-de-una-serie-de-tiempo"><i class="fa fa-check"></i><b>1.4</b> Componentes de una serie de tiempo</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduccion.html"><a href="introduccion.html#el-modelo-aditivo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.1</b> El Modelo Aditivo de Componentes de Series de Tiempo</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduccion.html"><a href="introduccion.html#el-modelo-multiplicativo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.2</b> El Modelo Multiplicativo de Componentes de Series de Tiempo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>2</b> Características de series de tiempo</a><ul>
+<li class="chapter" data-level="2.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#medidas-de-dependencia-para-series-de-tiempo"><i class="fa fa-check"></i><b>2.1</b> Medidas de dependencia para series de tiempo</a></li>
+<li class="chapter" data-level="2.2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia"><i class="fa fa-check"></i><b>2.2</b> Estimación de la Tendencia</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-en-ausencia-de-estacionalidad"><i class="fa fa-check"></i><b>2.2.1</b> Estimación de la tendencia en ausencia de estacionalidad</a></li>
+<li class="chapter" data-level="2.2.2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-y-la-estacionalidad"><i class="fa fa-check"></i><b>2.2.2</b> Estimación de la tendencia y la estacionalidad</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-por-regresion-clasica"><i class="fa fa-check"></i><b>2.3</b> Estimación de la tendencia por regresión clásica</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#regresion-clasica"><i class="fa fa-check"></i><b>2.3.1</b> Regresión Clásica</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>3</b> Modelos de series de tiempo</a><ul>
+<li class="chapter" data-level="3.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-estocasticos"><i class="fa fa-check"></i><b>3.1</b> Modelos Estocásticos</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#procesos-estocasticos"><i class="fa fa-check"></i><b>3.1.1</b> Procesos Estocásticos</a></li>
+<li class="chapter" data-level="3.1.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#momentos-varianza-covarianza-y-correlacion"><i class="fa fa-check"></i><b>3.1.2</b> Momentos, Varianza, Covarianza y Correlación</a></li>
+<li class="chapter" data-level="3.1.3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#variacion-de-un-proceso"><i class="fa fa-check"></i><b>3.1.3</b> Variación de un proceso</a></li>
+<li class="chapter" data-level="3.1.4" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#martingalas"><i class="fa fa-check"></i><b>3.1.4</b> Martingalas</a></li>
+<li class="chapter" data-level="3.1.5" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#propiedad-de-markov"><i class="fa fa-check"></i><b>3.1.5</b> Propiedad de Markov</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-lineales"><i class="fa fa-check"></i><b>3.2</b> Modelos lineales</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#proceso-de-ruido-blanco"><i class="fa fa-check"></i><b>3.2.1</b> Proceso de Ruido Blanco</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="modelos-ar.html"><a href="modelos-ar.html"><i class="fa fa-check"></i><b>4</b> Modelos AR</a><ul>
+<li class="chapter" data-level="4.1" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar1"><i class="fa fa-check"></i><b>4.1</b> Modelo AR(1)</a></li>
+<li class="chapter" data-level="4.2" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar2"><i class="fa fa-check"></i><b>4.2</b> Modelo AR(2)</a></li>
+<li class="chapter" data-level="4.3" data-path="modelos-ar.html"><a href="modelos-ar.html#procesos-arp"><i class="fa fa-check"></i><b>4.3</b> Procesos AR(p)</a></li>
+</ul></li>
+<li class="appendix"><span><b>Apéndice</b></span></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Series de Tiempo en R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="modelos-ar" class="section level1">
+<h1><span class="header-section-number">Capítulo 4</span> Modelos AR</h1>
+<p>Los modelos autoregresivos están basados en la idea de que el valor actual de la serie <span class="math inline">\(x_t\)</span> se puede explicar como una función de <span class="math inline">\(p\)</span> valores pasados <span class="math inline">\(x_{t-1},x_{t-2},\ldots,x_{t-p}\)</span> donde <span class="math inline">\(p\)</span> determina el número de pasos en necesarios para predecir el valor actual. Una parte de las series de tiempo económicas y financieras suelen ser caracterizadas por los modelos autorregresivos. Entre los principales ejemplos de las finanzas tenemos valoración de precios y de dividendos, las tasas reales de cambio, tasas de interés y los diferenciales de tipos de interés (spreads).</p>
+
+<div class="definition">
+<p><span id="def:defi-modelo-ARp" class="definition"><strong>Definición 4.1  </strong></span>Un <em>modelo autoregresivo de orden <span class="math inline">\(p\)</span></em>, abreviado <span class="math inline">\(AR(p)\)</span> es de la forma</p>
+<span class="math display" id="eq:eq-ARp">\[\begin{equation}
+x_t=\phi_1x_{t-1}+\phi_2x_{t-2}+\cdots+\phi_px_{t-p}+w_t,
+\tag{4.1}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(x_t\)</span> es estacionario, <span class="math inline">\(\phi_1\phi_2,\ldots,\phi_p\)</span> son constantes (<span class="math inline">\(\phi_p\neq0\)</span>). A menos que se declare lo contrario, se asume que <span class="math inline">\(w_t\)</span> es un ruido blanco gaussiano de media cero y varianza <span class="math inline">\(\sigma_w^2\)</span>. La media de <span class="math inline">\(x_t\)</span> en <a href="modelos-ar.html#eq:eq-ARp">(4.1)</a> es cero. Si la media <span class="math inline">\(\mu\)</span> de <span class="math inline">\(x_t\)</span> no es cero, reemplazamos <span class="math inline">\(x_t\)</span> por <span class="math inline">\(x_t-\mu\)</span> en <a href="modelos-ar.html#eq:eq-ARp">(4.1)</a>, es decir</p>
+<p><span class="math display">\[x_t-\mu=\phi_1(x_{t-1}-\mu)+\phi_2(x_{t-2}-\mu)+\cdots+\phi_p(x_{t-p}-\mu)+w_t\]</span></p>
+<p>o escribimos</p>
+<span class="math display" id="eq:eq-ARp-mu">\[\begin{equation}
+x_t=\alpha+\phi_1x_{t-1}+\phi_2x_{t-2}+\cdots+\phi_px_{t-p}+w_t,
+\tag{4.2}
+\end{equation}\]</span>
+donde <span class="math inline">\(\alpha=\mu(1-\phi_1-\phi_2-\cdots-\phi_p)\)</span>.
+</div>
+
+<hr />
+<p>Note que <a href="modelos-ar.html#eq:eq-ARp-mu">(4.2)</a> es similar al modelo de regresión dado en <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-regresion-lineal">(2.53)</a> y por consiguiente el término <em>autoregresión</em>. Sin embargo, se presentan algunas dificultades técnicas para la aplicación de este modelo, porque los regresores <span class="math inline">\(x_{t-1},x_{t-2},\ldots,x_{t-p}\)</span> son aleatorios, mientras que <span class="math inline">\(x_t\)</span> se asume fijo. Una forma más útil se deriva de usar el siguiente operador de cambio dado por <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-backward-shift-operator">(2.42)</a>. Para escribir el modelo <span class="math inline">\(AR(p)\)</span> como</p>
+<span class="math display" id="eq:eqARp-operador-B">\[\begin{equation}
+(1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p)x_t=w_t
+\tag{4.3}
+\end{equation}\]</span>
+<p>o más conciso como</p>
+<span class="math display" id="eq:eq-ARp-B-conciso">\[\begin{equation}
+\phi(B)x_t=w_t.
+\tag{4.4}
+\end{equation}\]</span>
+<p>Las propiedades de <span class="math inline">\(\phi(B)\)</span> son importantes para resolver <a href="modelos-ar.html#eq:eq-ARp-B-conciso">(4.4)</a>. Esto nos lleva a la siguiente definición.</p>
+
+<div class="definition">
+<p><span id="def:defi-operador-autoregresivo" class="definition"><strong>Definición 4.2  </strong></span>El <em>operador autoregresivo</em> de orden <span class="math inline">\(p\)</span> se define como</p>
+<span class="math display" id="eq:eq-operador-Bp">\[\begin{equation}
+\phi(B) = 1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p
+\tag{4.5}
+\end{equation}\]</span>
+</div>
+
+<hr />
+<div id="modelo-ar1" class="section level2">
+<h2><span class="header-section-number">4.1</span> Modelo AR(1)</h2>
+<p>Iniciaremos el estudio de los modelos <span class="math inline">\(AR\)</span> considerando el modelo de primer orden <span class="math inline">\(AR(1)\)</span>, dado por <span class="math inline">\(x_t=\phi x_{t-1}+w_t\)</span>. Iterando el operador de cambio <span class="math inline">\(k\)</span> veces, obtenemos</p>
+<span class="math display">\[\begin{eqnarray*}
+x_t &amp;=&amp; \phi x_{t-1}+w_t = \phi(\phi x_{t-2}+w_{t-1})+w_t \\
+    &amp;=&amp; \phi^2x_{t-2}+\phi w_{t-1}+w_t \\
+    &amp;\vdots&amp; \\
+    &amp;=&amp; \phi^kx_{t-k}+\sum_{j=0}^{k-1}\phi^jw_{t-j}.
+\end{eqnarray*}\]</span>
+<p>Este método sugiere que por iteración continua del operador de cambio, siempre que <span class="math inline">\(|\phi|&lt;1\)</span> y <span class="math inline">\(x_t\)</span> sea estacionario, podemos representar un modelo <span class="math inline">\(AR(1)\)</span> como un proceso lineal dado por<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<span class="math display" id="eq:eq-AR1-serie-lineal">\[\begin{equation}
+x_t \sum_{j=0}^{\infty}\phi^jw_{t-j}
+\tag{4.6}
+\end{equation}\]</span>
+<p>El proceso <span class="math inline">\(AR(1)\)</span> definido en <a href="modelos-ar.html#eq:eq-AR1-serie-lineal">(4.6)</a> es estacionario con media</p>
+<p><span class="math display">\[\mathbb{E}(x_t) = \sum_{j=0}^{\infty}\phi^j\mathbb{E}(w_{t-j})=0,\]</span></p>
+<p>y la función de autocovarianza es</p>
+<span class="math display" id="eq:eq-ACV-AR1">\[\begin{eqnarray}
+\gamma(h) &amp;=&amp; Cov(x_{t+h},x_t) \nonumber \\
+    &amp;=&amp; \mathbb{E}\left[\left(\sum_{j=0}^{\infty}\phi^jw_{t+h-j}\right) \left(\sum_{k=0}^{\infty}\phi^kw_{t-k}\right)\right] \nonumber \\
+    &amp;=&amp; \sigma_w^2\sum_{j=0}^{\infty}\phi^j\phi^{j+h} = \sigma_w^2\phi^h\sum_{j=0}^{\infty}\phi^{2j} \nonumber \\
+    &amp;=&amp; \frac{\sigma_w^2\phi^h}{1-\phi^2}, h&gt;0
+\tag{4.7}
+\end{eqnarray}\]</span>
+<p>Recuerde que <span class="math inline">\(\gamma(h)=\gamma(-h)\)</span> de modo que basta presentar la función de autocovarianza para <span class="math inline">\(h\geq0\)</span>.</p>
+<p>Si en <a href="modelos-ar.html#eq:eq-ACV-AR1">(4.7)</a>, hacemos <span class="math inline">\(h=0\)</span>, obtenemos la varianza del proceso <span class="math inline">\(AR(1)\)</span>, siendo esta</p>
+<p><span class="math display">\[Var(x_t)=\frac{\sigma_w^2}{1-\phi^2},\]</span></p>
+<p>asumiendo que <span class="math inline">\(\phi_1^2&lt;1\)</span>. El requisito de que <span class="math inline">\(\phi_1^2&lt;1\)</span> resulta del hecho de que la varianza de una variable aleatoria es acotada y no negativa. Por consiguiente, la estacionaridad de un modelo <span class="math inline">\(AR(1)\)</span> implica que <span class="math inline">\(-1&lt;\phi_1&lt;1\)</span>. Pero si <span class="math inline">\(-1&lt;\phi_1&lt;1\)</span>, entonces por <a href="modelos-ar.html#eq:eq-AR1-serie-lineal">(4.6)</a> y la independencia de <span class="math inline">\(\{w_t\}\)</span> se puede demostrar que la media y la varianza de <span class="math inline">\(x_t\)</span> son finitas. Además, por la desigualdad de Cauchy-Schwartz todas las autocovarianzas de <span class="math inline">\(x_t\)</span> son finitas. Por lo tanto, el modelo <span class="math inline">\(AR(1)\)</span> es estacionario. En resumen, una condición necesaria y suficiente para que un proceos <span class="math inline">\(AR(1)\)</span> sea estacionario es <span class="math inline">\(|\phi_1|&lt;1\)</span>.</p>
+<p>De <a href="modelos-ar.html#eq:eq-ACV-AR1">(4.7)</a> la ACF de un modelo <span class="math inline">\(AR(1)\)</span> es</p>
+<span class="math display" id="eq:eq-ACF-AR1">\[\begin{equation}
+\rho(h) = \frac{\gamma(h)}{\gamma(0)} = \phi^h, \quad h&gt;0
+\tag{4.8}
+\end{equation}\]</span>
+<p>y <span class="math inline">\(\rho(h)\)</span> satisface la recursión</p>
+<span class="math display" id="eq:eq-ACF-AR1-recursiva">\[\begin{equation}
+\rho(h) = \phi\rho(h-1)\text{, para }h=1,2,\ldots.
+\tag{4.9}
+\end{equation}\]</span>
+<p>Las ecuaciones <a href="modelos-ar.html#eq:eq-ACF-AR1">(4.8)</a> y <a href="modelos-ar.html#eq:eq-ACF-AR1-recursiva">(4.9)</a> indican que la ACF de un modelo <span class="math inline">\(AR(1)\)</span> estacionario tiene un decaimiento exponencial con tasa igual a <span class="math inline">\(\phi_1\)</span>. Si <span class="math inline">\(\phi_1&gt;0\)</span> el decaimiento es constante. Si por el contrario, <span class="math inline">\(\phi_1&lt;0\)</span> entonces el decaimiento es compuesto y se presenta de forma alternante con tasa <span class="math inline">\(\phi_1^2\)</span>. Para tener una idea de esto, consideremos los modelos autoregresivos de orden 1 simulados, para distintos valores de <span class="math inline">\(\phi_1\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Coeficientes phi</span>
+phi1=<span class="fl">0.9</span>
+phi2=<span class="op">-</span><span class="fl">0.8</span>
+phi3=<span class="fl">0.4</span>
+phi4=<span class="op">-</span><span class="fl">0.5</span>
+<span class="co"># Ruido blanco gaussiano</span>
+w=<span class="kw">rnorm</span>(<span class="dv">100</span>,<span class="dv">0</span>,<span class="dv">1</span>)
+<span class="co"># Series AR(1)</span>
+ar1_<span class="dv">1</span>=<span class="kw">filter</span>(w,<span class="dt">filter =</span> phi1,<span class="dt">method =</span> <span class="st">&quot;recursive&quot;</span>)
+ar1_<span class="dv">2</span>=<span class="kw">filter</span>(w,<span class="dt">filter =</span> phi2,<span class="dt">method =</span> <span class="st">&quot;recursive&quot;</span>)
+ar1_<span class="dv">3</span>=<span class="kw">filter</span>(w,<span class="dt">filter =</span> phi3,<span class="dt">method =</span> <span class="st">&quot;recursive&quot;</span>)
+ar1_<span class="dv">4</span>=<span class="kw">filter</span>(w,<span class="dt">filter =</span> phi4,<span class="dt">method =</span> <span class="st">&quot;recursive&quot;</span>)
+<span class="co"># Graficos</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+<span class="kw">plot.ts</span>(ar1_<span class="dv">1</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>,<span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;AR(1) con phi=0.9&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;t&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;x_t&quot;</span>)
+<span class="kw">plot.ts</span>(ar1_<span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>,<span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,
+        <span class="dt">main =</span> <span class="st">&quot;AR(1) con phi=-0.8&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;t&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;x_t&quot;</span>)
+<span class="kw">plot.ts</span>(ar1_<span class="dv">3</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>,<span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,
+        <span class="dt">main =</span> <span class="st">&quot;AR(1) con phi=0.4&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;t&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;x_t&quot;</span>)
+<span class="kw">plot.ts</span>(ar1_<span class="dv">4</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>,<span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,
+        <span class="dt">main =</span> <span class="st">&quot;AR(1) con phi=-0.5&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;t&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;x_t&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-39"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-39-1.svg" alt="Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de $phi_1$"  />
+<p class="caption">
+Figura 4.1: Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de <span class="math inline">\(phi_1\)</span>
+</p>
+</div>
+<p>A continuación mostramos las funciones de autocovarianzas de las series AR(1) simuladas anteriormente</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+<span class="kw">acf</span>(ar1_<span class="dv">1</span>,<span class="dt">type =</span> <span class="st">&quot;covariance&quot;</span>, <span class="dt">main=</span><span class="st">&quot;ACF de la Serie AR(1) con phi=0.9&quot;</span>)
+<span class="kw">acf</span>(ar1_<span class="dv">2</span>,<span class="dt">type =</span> <span class="st">&quot;covariance&quot;</span>, <span class="dt">main=</span><span class="st">&quot;ACF de la Serie AR(1) con phi=-0.8&quot;</span>)
+<span class="kw">acf</span>(ar1_<span class="dv">3</span>,<span class="dt">type =</span> <span class="st">&quot;covariance&quot;</span>, <span class="dt">main=</span><span class="st">&quot;ACF de la Serie AR(1) con phi=0.4&quot;</span>)
+<span class="kw">acf</span>(ar1_<span class="dv">4</span>,<span class="dt">type =</span> <span class="st">&quot;covariance&quot;</span>, <span class="dt">main=</span><span class="st">&quot;ACF de la Serie AR(1) con phi=-0.5&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-40"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-40-1.svg" alt="Funciones de autocovarianzas para las series AR(1) simuladas"  />
+<p class="caption">
+Figura 4.2: Funciones de autocovarianzas para las series AR(1) simuladas
+</p>
+</div>
+</div>
+<div id="modelo-ar2" class="section level2">
+<h2><span class="header-section-number">4.2</span> Modelo AR(2)</h2>
+<p>Un proceso <span class="math inline">\(AR(2)\)</span> tiene la forma general</p>
+<span class="math display" id="eq:eq-AR2">\[\begin{equation}
+x_t = \alpha + \phi_1 x_{t-1} + \phi_2 x_{t-2} + w_t
+\tag{4.10}
+\end{equation}\]</span>
+<p>siendo <span class="math inline">\(\alpha = \mu(1-\phi_1-\phi_2)\)</span>, con <span class="math inline">\(\phi_2\neq 0\)</span>. Podemos calcular su función de media</p>
+<span class="math display">\[\begin{eqnarray*}
+\mathbb{E}(x_t) &amp;=&amp; \mathbb{E}(\alpha + \phi_1 x_{t-1} + \phi_2 x_{t-2} + w_t) \\
+    &amp;=&amp; \alpha+\phi_1\mathbb{E}(x_{t-1})+\phi_2\mathbb{E}(x_{t-2})
+\end{eqnarray*}\]</span>
+<p>Por estacionalidad, se tiene que <span class="math inline">\(\mathbb{E}(x_t)=\mathbb{E}(x_{t-1})=\mathbb{E}(x_{t-2})\)</span>, luego</p>
+<p><span class="math display">\[\mathbb{E}(x_t)(1-\phi_1-\phi_2) = \alpha\]</span> Así, <span class="math inline">\(\mathbb{E}(x_t) = \frac{\alpha}{1-\phi_1-\phi_2}\)</span>, siempre que <span class="math inline">\(\phi_1+\phi_2\neq1\)</span>. Usando <span class="math inline">\(\alpha=(1-\phi_1-\phi_2)\mu\)</span> podemos reescribir el proceso <span class="math inline">\(AR(2)\)</span> como</p>
+<p><span class="math display">\[x_t-\mu = \phi_1(x_{t-1}-\mu)+\phi_2(x_{t-2}-\mu)+w_t.\]</span></p>
+<p>Multiplicando por <span class="math inline">\(x_{t-h}-\mu\)</span>, tenemos</p>
+<p><span class="math display">\[(x_{t-h}-\mu)(x_t-\mu) = \phi_1(x_{t-h}-\mu)(x_{t-1}-\mu) + \phi_2(x_{t-h}-\mu)(x_{t-2}-\mu) + (x_{t-h}-\mu)w_t.\]</span></p>
+<p>Tomando valor esperado y usando el hecho de que <span class="math inline">\(\mathbb{E}[(x_{t-h}-\mu)w_t]=0\)</span>, para <span class="math inline">\(h&gt;0\)</span>, obtenemos</p>
+<span class="math display" id="eq:eq-ecuacion-momento-AR2">\[\begin{equation}
+\gamma(h) = \phi_1\gamma(h-1)+\phi_2\gamma(h-2) \text{, para }h&gt;0.
+\tag{4.11}
+\end{equation}\]</span>
+<p>Este último resultado se conoce como la <strong>ecuación de momentos</strong> de un proceso estacionario <span class="math inline">\(AR(2)\)</span>. Dividiendo <a href="modelos-ar.html#eq:eq-ecuacion-momento-AR2">(4.11)</a> por <span class="math inline">\(\gamma(0)\)</span>, tenemos la propiedad</p>
+<span class="math display" id="eq:eq-ACF-AR2-recursiva">\[\begin{equation}
+\rho(h) = \phi_1\rho(h-1)+\phi_2\rho(h-2)\text{, para }h&gt;0
+\tag{4.12}
+\end{equation}\]</span>
+<p>para la ACF de <span class="math inline">\(x_t\)</span>. En particular, para paso 1 (<span class="math inline">\(h=1\)</span>) la ACF satisface</p>
+<p><span class="math display">\[\rho(1) = \phi_1\rho(0)+\phi_2\rho(-1) = \phi_1+\phi_2\rho(1)\]</span></p>
+<p>Por lo tanto, para un proceso <span class="math inline">\(AR(2)\)</span> estacionario <span class="math inline">\(x_t\)</span>, tenemos</p>
+<span class="math display">\[\begin{eqnarray*}
+\rho(0) &amp;=&amp; 1 \\
+\rho(1) &amp;=&amp; \frac{\phi_1}{1-\phi_2} \\
+\rho(h) &amp;=&amp; \phi_1\rho(h-1)+\phi_2\rho(h-2),\quad h\geq2
+\end{eqnarray*}\]</span>
+<p>El resultado de la ecuación <a href="modelos-ar.html#eq:eq-ACF-AR2-recursiva">(4.12)</a> nos dice que la ACF de un proceso estacionario <span class="math inline">\(AR(2)\)</span> satisface la ecuación en diferencias de segundo orden</p>
+<span class="math display" id="eq:eq-diferencia-ACF">\[\begin{equation}
+(1-\phi_1B-\phi_2B^2)\rho(h) = 0
+\tag{4.13}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(B\)</span> es el operador definido en <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-backward-shift-operator">(2.42)</a>. La ecuación <a href="modelos-ar.html#eq:eq-diferencia-ACF">(4.13)</a> determina las propiedades de la ACF de un proceso <span class="math inline">\(AR(2)\)</span> estacionario. También determina el comportamiento de los pronósticos de <span class="math inline">\(x_t\)</span>. Correspondiendo a la ecuación en diferencias anterior, existe una ecuación polinómica de segundo orden</p>
+<span class="math display" id="eq:eq-polinomio-2do-orden-AR2">\[\begin{equation}
+x^2-\phi_1x-\phi_2=0
+\tag{4.14}
+\end{equation}\]</span>
+<p>Las soluciones de esta ecuación son las raíces características de un proceso <span class="math inline">\(AR(2)\)</span> y estas son</p>
+<p><span class="math display">\[x=\frac{\phi_1\pm\sqrt{\phi_1^2+4\phi_2}}{2}\]</span></p>
+<p>Denotamos las dos raíces por <span class="math inline">\(r_1\)</span> y <span class="math inline">\(r_2\)</span>. Si ambos son reales, entonces la ecuación en diferencias de segundo orden la podemos factorizar como</p>
+<p><span class="math display">\[(1-r_1B)(1-r_2B)\]</span></p>
+<p>y el proceso <span class="math inline">\(AR(2)\)</span> lo podemos considerar como un proceso <span class="math inline">\(AR(1)\)</span> operando sobre otro proceso <span class="math inline">\(AR(1)\)</span>.</p>
+<p>La ACF de <span class="math inline">\(x_t\)</span> es entonces una mezcla de dos decaimientos exponenciales. Pero si <span class="math inline">\(\phi_1^2+4\phi_2&lt;0\)</span>, entonces <span class="math inline">\(r_1\)</span> y <span class="math inline">\(r_2\)</span> son raíces complejas conjugadas, y el gráfico de la ACF de <span class="math inline">\(x_t\)</span> mostrará un amortiguamiento de senos y cosenos.</p>
+<p>En aplicaciones financieras y económicas, las raíces caracteríticas complejas son importantes. Dan lugar al comportamiento de los ciclos económicos. Por lo tanto, es común que los modelos económicos de series de tiempo tengan raíces características de valor complejo. Para un proceso <span class="math inline">\(AR(2)\)</span> dado por <a href="modelos-ar.html#eq:eq-AR2">(4.10)</a> con raíces características complejas, la longitud <em>promedio</em> de un ciclo estocástico es</p>
+<p><span class="math display">\[k=\frac{360°}{\arccos(\phi_1/2\sqrt{-\phi_2})},\]</span></p>
+<p>donde el arcocoseno está expresado en grados.</p>
+<p>La figura siguiente muestra la ACF de 4 procesos estacionarios <span class="math inline">\(AR(2)\)</span>. Los procesos <span class="math inline">\(AR(2)\)</span> mostrados son:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(x_t=1.2x_{t-1}-0.35x_{t-2}+w_t\)</span></p></li>
+<li><p><span class="math inline">\(x_t=0.6x_{t-1}-0.4x_{t-2}+w_t\)</span></p></li>
+<li><p><span class="math inline">\(x_t=0.2x_{t-1}+0.35x_{t-2}+w_t\)</span></p></li>
+<li><p><span class="math inline">\(x_t=-0.2x_{t-1}+0.35x_{t-2}+w_t\)</span></p></li>
+</ol>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-41"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-41-1.svg" alt="Cuatro procesos estacionarios AR(2) con distintos valores de phi1 y phi2"  />
+<p class="caption">
+Figura 4.3: Cuatro procesos estacionarios AR(2) con distintos valores de phi1 y phi2
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-42"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-42-1.svg" alt="ACF de 4 procesos estacionarios AR(2) con distintos valores de phi1 y phi2"  />
+<p class="caption">
+Figura 4.4: ACF de 4 procesos estacionarios AR(2) con distintos valores de phi1 y phi2
+</p>
+</div>
+<p>La serie (b) tiene raíces características complejas, en efecto</p>
+<p><span class="math display">\[\phi_1^2+4\phi_2=(0.6)^2+4\times(-0.4)-1.24&lt;0\]</span></p>
+<p>Se puede notar que n el gráfico de la ACF que este exhibe un comportamiento de ondas de senos y cosenos. Los otros 3 procesos <span class="math inline">\(AR(2)\)</span> tienen raíces características reales, por lo que las ACF decaen exponencialmente. La condición de estacionaridad de un proceso <span class="math inline">\(AR(2)\)</span> es que los valores absolutos de sus raíces características sean menor que uno, esto es <span class="math inline">\(|\phi_1|&lt;1, |\phi_2|&lt;1\)</span>. Bajo esta condición, la ecuación recursiva <a href="modelos-ar.html#eq:eq-ACF-AR2-recursiva">(4.12)</a> asegura que la ACF del proceso converge a cero cuando el salto <span class="math inline">\(h\)</span> crece. Esta propiedad de convergencia es una condición necesaria para una serie de tiempo estacionaria. De hecho, la condición también aplica para un proceso <span class="math inline">\(AR(1)\)</span> donde la ecuación polinómica es <span class="math inline">\(x-\phi_1=0\)</span>. La raíz característica es <span class="math inline">\(x=\phi_1\)</span>, la cual debe ser menor que uno en módulo para que <span class="math inline">\(x_t\)</span> sea estacionario. Como mostramos antes, para un proceso estacionario <span class="math inline">\(AR(1)\)</span> la ACF es <span class="math inline">\(\rho(h)=\phi^h\)</span>, <a href="modelos-ar.html#eq:eq-ACF-AR1">(4.8)</a>.</p>
+<p>Así, la condición <span class="math inline">\(|\phi|&lt;1\)</span>, asegura que <span class="math inline">\(\rho(h)=\phi^h\to0\)</span>, cuando <span class="math inline">\(h\to\infty\)</span>.</p>
+</div>
+<div id="procesos-arp" class="section level2">
+<h2><span class="header-section-number">4.3</span> Procesos AR(p)</h2>
+<p>Los resultados de los procesos <span class="math inline">\(AR(1)\)</span> y <span class="math inline">\(AR(2)\)</span>, los podemos generalizar a procesos <span class="math inline">\(AR(p)\)</span>. Así, la función de media del proceso <span class="math inline">\(AR(p)\)</span> estacionario será</p>
+<span class="math display" id="eq:eq-funcion-media-ARp">\[\begin{equation}
+\mathbb{E}(x_t) = \frac{\alpha}{1-\phi_1-\cdots-\phi_p}
+\tag{4.15}
+\end{equation}\]</span>
+<p>siempre que el denominador sea distinto de cero. La ecuación polinómica asociada al modelo es</p>
+<span class="math display" id="eq:eq-polinomio-ARp">\[\begin{equation}
+x^p-\phi_1x^{p-1}-\phi_2x^{p-2}-\cdots-\phi_p=0
+\tag{4.16}
+\end{equation}\]</span>
+<p>la cual nos referimos como la <em>ecuación característica</em> del modelo. Si todas las <em>raíces caractarísticas</em> de esta ecuación son menores qye uno en módulo, esto es <span class="math inline">\(|r_j|&lt;1\)</span>, con <span class="math inline">\(j=1,\ldots,p\)</span>, entonces la serie <span class="math inline">\(x_t\)</span> es estacionaria. Para un proceso <span class="math inline">\(AR(p)\)</span> estacionario, la ACF satisface la ecuación en diferencias</p>
+<p><span class="math display">\[(1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p)\rho(h)=0\text{, para }h&gt;0.\]</span></p>
+<p>El gráfico de la ACF de un proceso <span class="math inline">\(AR(p)\)</span> estacionario mostrará una mezcla de ondas de senos y cosenos con decaimientos exponenciales dependiendo de la naturaleza de sus raíces características.</p>
+
+<div class="example">
+<p><span id="exm:unnamed-chunk-43" class="example"><strong>Ejemplo 4.1  </strong></span>Consideremos el modelo <span class="math inline">\(AR(3)\)</span> de la forma</p>
+<p><span class="math display">\[x_t=0.0047+0.35x_{t-1}+0.18x_{t-2}-0.14x_{t-3}+w_t.\]</span></p>
+<p>Reescribiendo el proceso como</p>
+<p><span class="math display">\[x_t-0.35x_{t-1}-0.18x_{t-2}+0.14x_{t-3}=0.0047+w_t\]</span></p>
+<p>obtenemos la correspondiente ecuación en diferencias de orden 3,</p>
+<p><span class="math display">\[(1-0.35B-0.18B^2+0.14B^3)=0\]</span></p>
+<p>la cual podemos factorizar como</p>
+<p><span class="math display">\[(1+0.52B)(1-0.87B+0.27B^2)=0\]</span></p>
+El primer factor <span class="math inline">\((1+0.52B)=0\)</span>, muestra u ndecaimiento exponencial en la ACF. Veamos ahora el segundo factor <span class="math inline">\((1-0.87B-(-0.27)B^2)=0\)</span>, tenemos que <span class="math inline">\(\phi_1^2+4\phi_2=(0.87)^2+4(-0.27)=-0.3231&lt;0\)</span>. Por consiguiente la ACF mostrará un comportamiento en ondas de senos y cosenos.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xt&lt;-<span class="kw">arima.sim</span>(<span class="kw">list</span>(<span class="dt">order=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="dt">ar=</span><span class="kw">c</span>(<span class="fl">0.35</span>,<span class="fl">0.18</span>,<span class="op">-</span><span class="fl">0.14</span>)),<span class="dt">n=</span><span class="dv">100</span>)
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))
+<span class="kw">plot</span>(xt,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">main=</span><span class="st">&quot;Proceso AR(3)&quot;</span>)
+<span class="kw">acf</span>(xt, <span class="dt">main=</span><span class="st">&quot;ACF para el proceso AR(3)&quot;</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-44-1.svg" style="display: block; margin: auto;" /></p>
+
+
+</div>
+</div>
+
+
+
+</div>
+<div class="footnotes">
+<hr />
+<ol start="3">
+<li id="fn3"><p>Note que <span class="math inline">\(\lim_{k\to\infty}\mathbb{E}(x_t-\sum_{j=0}^{\infty}\phi^jw_{t-j})^2 = \lim_{k\to\infty}\phi^{2k}\mathbb{E}(x_{t-k}^2)=0\)</span>, de modo que <a href="modelos-ar.html#eq:eq-AR1-serie-lineal">(4.6)</a> existe en el sentido de media cuadrado.<a href="modelos-ar.html#fnref3">↩</a></p></li>
+</ol>
+</div>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-78759535-1', 'auto');
+ga('send', 'pageview');  
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="modelos-de-series-de-tiempo.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="referencias.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/synergyvision/Teoria-de-Portafolio/edit/master/bookdown/301-modelos-AR.Rmd",
+"text": "Edit"
+},
+"download": ["Serie-de-Tiempo-en-R.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

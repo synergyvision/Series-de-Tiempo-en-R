@@ -65,7 +65,7 @@ La **variación cuadrática** de un proceso estocástico $x$, denotada por $[x,x
 
 Para procesos estocásticos con trayectorias continua, el límite existe, y en dicho caso usamos la notación $\langle x,x\rangle_t$ y podemos definirla alternativamente como 
 \begin{equation}
-$\langle x,x\rangle_t$ = p-\lim_{n\to\infty}\sum_{k=1}^{2^n}\left(x_{\min(t,k/2^n)} - x_{\min(t,(k-1)/2^n)}\right)^2
+\langle x,x\rangle_t = p-\lim_{n\to\infty}\sum_{k=1}^{2^n}\left(x_{\min(t,k/2^n)} - x_{\min(t,(k-1)/2^n)}\right)^2
 (\#eq:eq-variacion-acotada-proceso-2)
 \end{equation}
 
@@ -135,29 +135,41 @@ plot(M,type = "l",xlab = "t",ylab = "M_n")
 ```
 ```{example, name="Precio de acciones"}
 Sean $Y_0,Y_1,\ldots,Y_n$ variables aleatorias independientes y positivas. Supongamos que una acción tiene precio $M_0$ a tiempo $t=0$. 
+```
 
 Un modelo común para modelar el precio de la acción en tiempo $t=n$ es
+
 $$M_{n+1}=M_nY_n$$
+
 donde $(Y_n-1)\times100$ representa (en porcentaje) la variabilidad de la acción. Usando las propiedades de esperanza condicional (Apéndice), es muy sencillo demostrar que 
+
 $$\mathbb{E}(M_{n+1}|M_0,\ldots,M_n)=M_n\mathbb{E}(Y_n)$$
+
 En particular, si $Y_1,\ldots,Y_n$ son idénticamente distribuidas con $\mathbb{E}(Y_1)=\mu$ tenemos que $M_n$ es
 
  - Una **martingala** si $\mu=1$
+ 
  - Una **submartingala** si $\mu>1$
+ 
  - Una **supermartingala** si $\mu<1$.
-
+ 
 Dos modelos bien conocidos de lo anterior son
 
 1) Modelo **Black-Scholes discreto**. 
-   Sean $Y_1,\ldots,Y_n$ definidas por 
-   $$Y_n=e^{Z_n}$$
-   donde $Z_1,\ldots,Z_n$ son variables aleatorias independientes normales $N(\mu,\sigma^2)$.
+
+Sean $Y_1,\ldots,Y_n$ definidas por 
+
+$$Y_n=e^{Z_n}$$
+
+donde $Z_1,\ldots,Z_n$ son variables aleatorias independientes normales $N(\mu,\sigma^2)$.
    
 2) **Modelo Binomial**. 
-   Sean $Y_1,\ldots,Y_n$ definidas por
-   $$P(Y_i=(1+t)e^{-r})=p\quad\text{ y }\quad P(Y_i=(1+t)^{-1}e^{-r})=1-p$$
-   La constante $r$ es la tasa de interés y los factores $(1+t)$ y $(1+t)^{-1}$ modelan las variaciones del mercado y garantizan que el precio tiene la forma $M_0(1+t)^ye^{-nr}$, con $|y|\leq n$. La volatilidad del precio está asociada a $p$.  
-```
+
+Sean $Y_1,\ldots,Y_n$ definidas por
+
+$$P(Y_i=(1+t)e^{-r})=p\quad\text{ y }\quad P(Y_i=(1+t)^{-1}e^{-r})=1-p$$
+
+La constante $r$ es la tasa de interés y los factores $(1+t)$ y $(1+t)^{-1}$ modelan las variaciones del mercado y garantizan que el precio tiene la forma $M_0(1+t)^ye^{-nr}$, con $|y|\leq n$. La volatilidad del precio está asociada a $p$. 
 
 ```{definition, defi-proceso-cuadrado-integrable}
 Una variable aleatoria $X$ es **cuadrado integrable** si $\mathbb{E}(X^2)<\infty$. Un proceso estocástico $X_t$ en el intervalo $[0,T]$, donde $T$ puede ser infinito, es **cuadrado integrable** si 

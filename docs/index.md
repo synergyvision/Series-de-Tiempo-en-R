@@ -4,7 +4,7 @@
 title: "Series de Tiempo en R"
 subtitle: "Ciencia de los Datos Financieros"
 author: "Synergy Vision"
-date: "2018-04-18"
+date: "2018-05-25"
 knit: "bookdown::render_book"
 documentclass: krantz
 bibliography: [book.bib, packages.bib]
@@ -160,7 +160,7 @@ Algunos ejemplos donde se puede utilizar y hacer precciones con series de tiempo
 6) **Demografía**. Las previsiones de población por país y región se realizan de manera rutinaria, a menudo estratificadas por variables como el género, la edad y la raza. Los demógrafos también pronostican nacimientos, muertes y patrones migratorios de las poblaciones. Los gobiernos utilizan estas previsiones para planificar políticas y acciones de servicio social, como el gasto en atención médica, programas de jubilación y programas de lucha contra la pobreza. Muchas empresas utilizan pronósticos de poblaciones por grupos de edad para hacer planes estratégicos en relación con el desarrollo de nuevas líneas de productos o tipos de servicios que será ofrecido.
 
 
-## Concepto financieros básicos
+## Conceptos financieros básicos
 
 La mayoría de los estudios financieros y econ?micos implican rendimiento, en lugar de precios de los activos. Existen dos buenas razones para ello. Primero, para los inversores medios, el rendimiento de un activo es un resumen completo y libre de escala de la oportunidad de inversión. Segundo, las series de rendimiento son más fáciles de manejar que las series de precios porque las primeras tienen propiedades estadísticas más atractivas. Sin embargo, existen varias definiciones de rendimiento de activos. Sea $P_t$ el precio de un activo en tiempo $t$. Discutiremos algunas definiciones de rendimiento que utilizaremos a lo largo del libro. Supongamos por el momento que el activo no paga dividendos.
 
@@ -216,7 +216,7 @@ Continuo      Inf.                                        $1.10517
 Tabla. Ilustración de los efectos de la combinación. El intervalo de tiempo es de 1 año y la tasa de interés es del 10% anual.
 
 
-En general, el valor liquidatuivo $A$ de la capitalización continua es
+En general, el valor liquidativo $A$ de la capitalización continua es
 \begin{equation}
 A=C\exp(r\times n)
 (\#eq:eq-valor-capitalizacion-continua)
@@ -296,8 +296,7 @@ Una serie tiempo es una secuencia de observaciones, medidos en determinados mome
 A continuación presentaremos una serie de ejemplos que demuestran la utilidad y lo cotidiano de las series de tiempo, también se mostrarán los códigos en **R** para cargar los archivos de datos y graficar las respectivas series de tiempo.
 
 ## Ejemplos 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejem-beneficios-acciones"><strong>(\#exm:ejem-beneficios-acciones) </strong></span>**Beneficios de acciones.**
-Beneficios por acción trimestrales para la compañía Johnson & Johnson. Se tienen 84 trimestres iniciando el primer trimestre de 1960 hasta el último trimestre de 1980. Los métodos para analizar tales datos se verán en el Tema 3 usando técnicas de regresión. El archivo es *"jj.txt"*.
+\BeginKnitrBlock{example}\iffalse{-91-66-101-110-101-102-105-99-105-111-115-32-100-101-32-97-99-99-105-111-110-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-beneficios-acciones"><strong>(\#exm:ejem-beneficios-acciones)  \iffalse (Beneficios de acciones) \fi{} </strong></span>Beneficios por acción trimestrales para la compañía Johnson y Johnson. Se tienen 84 trimestres iniciando el primer trimestre de 1960 hasta el último trimestre de 1980. Los métodos para analizar tales datos se verán en el Tema 3 usando técnicas de regresión. El archivo es *"jj.txt"*.
 
 Los comandos en R para cargar el archivo y graficar la serie de tiempo son los siguientes:</div>\EndKnitrBlock{example}
 
@@ -308,8 +307,8 @@ plot(jj, type="l",ylab="Beneficios por acción trimestrales")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-8-1.svg" alt="Beneficios por acción trimestrales para la compañía Johnson &amp; Johnson"  />
-<p class="caption">(\#fig:unnamed-chunk-8)Beneficios por acción trimestrales para la compañía Johnson & Johnson</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-8-1.svg" alt="Beneficios por acción trimestrales para la compañía Johnson y Johnson"  />
+<p class="caption">(\#fig:unnamed-chunk-8)Beneficios por acción trimestrales para la compañía Johnson y Johnson</p>
 </div>
 
 \BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:reservas-internacionales"><strong>(\#exm:reservas-internacionales) </strong></span>El archivo *"ReservasInternacionales.xlsx"*, contiene el registro mensual de Reservas Internacionales Venezolanas en millones de dólares ($), iniciando en el mes de enero de 1996 hasta el mes de diciembre de 2017</div>\EndKnitrBlock{example}
@@ -374,6 +373,69 @@ plot(NYSE,xlab="Tiempo",ylab="Porcentaje de cambio, NYSE")
 <img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-12-1.svg" alt="Porcentaje de cambio de la bolsa de New York"  />
 <p class="caption">(\#fig:unnamed-chunk-12)Porcentaje de cambio de la bolsa de New York</p>
 </div>
+
+\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:euribor"><strong>(\#exm:euribor) </strong></span>La evolución del EURIBOR es algo que fluctúa a diario. Se entiende por EURIBOR (Euro Interbank Offered Rate) el tipo de interés, promovido por el Instituto Europeo de Mercados Monetarios (EMMI), consistente en la media aritmética simple de los valores diarios con días de mercado para operaciones de depósitos en euros a plazo de uno/tres/seis/doce meses y referido al día quince del mes anterior al comienzo de cada período de interés o al día siguiente hábil si aquel no lo fuese, calculado a partir del ofertado por una muestra de Bancos para operaciones entre entidades de similar calificación.
+
+A continuación mostramos dos series del EURIBOR. La primera es la evolución histórica anual del EURIBOR desde su implantación en 1999 hasta 2018, los datos se corresponden al mes de enero de cada año. La segunda es la evolución mensual desde enero de 2007 hasta marzo de 2018.</div>\EndKnitrBlock{example}
+
+
+```r
+EURIBORa<-read_excel("data/EURIBOR-anual.xlsx")
+plot(EURIBORa,type="l", col = "blue", xlab = "Periodo", 
+     main="Serie EURIBOR anual (1999-2018)")
+grid(col = "gray")
+```
+
+<div class="figure" style="text-align: center">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-13-1.svg" alt="Evolución anual del EURIBOR (1999-2018)"  />
+<p class="caption">(\#fig:unnamed-chunk-13)Evolución anual del EURIBOR (1999-2018)</p>
+</div>
+
+
+```r
+EURIBORm<-read_excel("data/EURIBOR-mensual.xlsx")
+EURIts<-ts(EURIBORm[,2],start = 2007, frequency = 12)
+plot.ts(EURIts,xlab = "Periodo", col = "blue", 
+        main="Serie EURIBOR mensual (enero 2007- marzo 2018)")
+grid(col = "gray")
+```
+
+<div class="figure" style="text-align: center">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-14-1.svg" alt="Evolución mensual del EURIBOR (2007-2018)"  />
+<p class="caption">(\#fig:unnamed-chunk-14)Evolución mensual del EURIBOR (2007-2018)</p>
+</div>
+
+\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:cambio-dolar-euro"><strong>(\#exm:cambio-dolar-euro) </strong></span>El archivo *Cambio-EUR-USD.xlsx* contiene el histórico de la cotización dolar estadounidense versus el euro desde el 01/05/2017 hasta el 26/04/2018. En la primera columna se muestra la fecha, la segunda columna el precio de apertura, la tercera el precio de cierre, la cuarta la diferencia en %, la quinta el precio máximo del día, la sexta el precio mínimo y la utlima el volumen de transacciones. A continuación presentamos los gráficos de apertura, cierre, máximo y mínimo.</div>\EndKnitrBlock{example}
+
+
+```r
+Cambio<-read_excel("data/Cambio-EUR-USD.xlsx")
+par(mfrow=c(3,2))
+plot(Cambio$Fecha,Cambio$Apertura, col="blue", type = "l",
+     xlab = "Periodo", ylab = "Cotizacion",
+     main = "Apertura")
+plot(Cambio$Fecha,Cambio$Cierre, col="blue", type = "l",
+     xlab = "Periodo", ylab = "Cotizacion",
+     main = "Cierre")
+plot(Cambio$Fecha,Cambio$Máximo, col="blue", type = "l",
+     xlab = "Periodo", ylab = "Cotizacion",
+     main = "Máximo")
+plot(Cambio$Fecha,Cambio$Mínimo, col="blue", type = "l",
+     xlab = "Periodo", ylab = "Cotizacion",
+     main = "Mínimo")
+plot(Cambio$Fecha,Cambio$`Dif.%`, col="blue", type = "l",
+     xlab = "Periodo", ylab = "Porcentaje",
+     main = "Diferencia (apetura-cierre) %")
+plot(Cambio$Fecha,Cambio$Volumen, col="blue", type = "l",
+     xlab = "Periodo", ylab = "Monto",
+     main = "Volumen")
+```
+
+<div class="figure" style="text-align: center">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-15-1.svg" alt="Histórico de cambio del USD vs. EUR (01/05/2017 al 26/04/2018)"  />
+<p class="caption">(\#fig:unnamed-chunk-15)Histórico de cambio del USD vs. EUR (01/05/2017 al 26/04/2018)</p>
+</div>
+
 
 ### Clasificación de las series de tiempo
 
@@ -446,11 +508,36 @@ En la Figura \ref{grafica-tema3-modelo-aditivo} se muestra la idea de la descomp
 
 
 <div class="figure" style="text-align: center">
-<img src="images/Grafica-tema3-modelo-aditivo.png" alt="Modelo aditivo de series de tiempo"  />
-<p class="caption">(\#fig:unnamed-chunk-13)Modelo aditivo de series de tiempo</p>
+<img src="images/Grafica-tema3-modelo-aditivo.png" alt="Modelo aditivo de series de tiempo" width="585" />
+<p class="caption">(\#fig:unnamed-chunk-16)Modelo aditivo de series de tiempo</p>
 </div>
 
 Asumiendo el modelo aditivo, el análisis de series de tiempo consiste en modelar y estimar $T_t$ y $E_t$ y luego extraerlas de $X_t$ para obtener $\hat{\epsilon}_t = X_t - \hat{T}_t - \hat{E}_t$. La serie $\hat{\epsilon}_t$ se modela y estima para finalmente reconstruir $X_t$, $\hat{X}_t = \hat{T}_t+\hat{E}_t+\hat{\epsilon}_t$, y poder realizar el pronóstico $\hat{X}_{t+h}=\hat{T}_{t+h}+\hat{E}_{t+h}+\hat{\epsilon}_{t+h}$, utilizando la información disponible $X_t,\ldots,X_n$ con $h=1,2,\ldots,m$. Sin embargo, puede suceder que la serie $\hat{\epsilon}_t$ sea incorrelacionada, es decir, $Corr(\hat{\epsilon}_t,\hat{\epsilon}_{t+s}) = 0$, para $s\neq0$. En este caso $\hat{\epsilon}_{t+h}=0$ para todo $h>0$.
+
+En **R** podemos descomponer una serie de tiempo usando la función *stl()* o la función *decompose()*. Retomando la serie de beneficios trimestrales de las acciones de Johnson y Johnson (Ejemplo \@ref(exm:ejem-beneficios-acciones)) podemos observar la descomposición de la misma. En la parte superior de la gráfica se observa la serie original, en el gráfico siguiente la estacionalidad, en el tercero la tendencia y en el gráfico inferior los residuales.
+
+
+```r
+plot(decompose(jj, type = "additive", filter = NULL))
+```
+
+<div class="figure" style="text-align: center">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-17-1.svg" alt="Descomposición aditiva de la serie Johnson y Johnson"  />
+<p class="caption">(\#fig:unnamed-chunk-17)Descomposición aditiva de la serie Johnson y Johnson</p>
+</div>
+
+La función *stl()* es más sofisticada que *decompose()*, la misma usa la descomposición de estacionalidad y tendencia de Loess (Seasonal and Trend decomposition using Loess) el cual es un método robusto y versátil para la descomposición de series de tiempo. El método STL fue desarrollado por Cleveland et al. (1990). A continuación mostramos la misma serie de beneficios de acciones de Johnson y Johnson usando esta función.
+
+
+```r
+plot(stl(jj,s.window="periodic"), col="blue",
+     main="Descomposicion de la serie Johnson y Johnson")
+```
+
+<div class="figure" style="text-align: center">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-18-1.svg" alt="Descomposición de la serie Johnson y Johnson usando la descomposición de Loess (STL)"  />
+<p class="caption">(\#fig:unnamed-chunk-18)Descomposición de la serie Johnson y Johnson usando la descomposición de Loess (STL)</p>
+</div>
 
 ### El Modelo Multiplicativo de Componentes de Series de Tiempo
 
@@ -469,6 +556,18 @@ X_t = T_t\times E_t+\epsilon_t
 \end{equation}
 
 donde $T_t$ es la componente de tendencia, $E_t$ es la componente estacional y $\epsilon_t$ es la componente aleatoria o de errores. Estos modelos son apropiados cuando la magnitud de las fluctuaciones estacionales de la serie crece y decrece proporcionalmente con los crecimientos y decrecimientos de la tendencia respectivamente.
+
+Usamos la misma función *decompose()* para realizar la descomposición multiplicativa de la serie de tiempo, para ello en 'type' cambiamos "additive" por "multiplicative"
+
+
+```r
+plot(decompose(jj, type = "multiplicative", filter = NULL))
+```
+
+<div class="figure" style="text-align: center">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-19-1.svg" alt="Descomposición multiplicativa de la serie Johnson y Johnson"  />
+<p class="caption">(\#fig:unnamed-chunk-19)Descomposición multiplicativa de la serie Johnson y Johnson</p>
+</div>
 
 
 <!--chapter:end:100-introduction.Rmd-->
@@ -740,7 +839,7 @@ $$\rho_{xy}(h)=\begin{cases}0,&h=0\\
   
 Claramente, las funciones de autocovarianza y correlación cruzada dependen solo del salto $h$, por lo tanto las series son conjuntamente estacionarias.</div>\EndKnitrBlock{example}
 
-El concepto de estacionaridad débil forma la base para muchos de los análisis realizados con series de tiempo. Las propiedades fundamentales de la media \@ref(eq:e1p22) y la función de covarianza \@ref(eq:eq-funcion-autocovarianza-estacionaria) son satisfechas por muchos modelos teóricos que aparecen para generar realizaciones muestrales apropiadas. En los ejemplos \@ref(exm:ejem-promedio-movil) y \@ref(exm:ejem-autoregresion), las dos series fueron generadas de forma que fuesen realizaciones estacionarias, y en el ejemplo \@ref(exm:ejem-estacionaridad-promedio-movil) demostramos que la serie en el ejemplo \@ref(exm:ejem-promedio-movil) fue de hecho, débilmente estacionaria. Ambos ejemplos son casos especiales de los llamados procesos lineales.
+El concepto de estacionaridad débil forma la base para muchos de los análisis realizados con series de tiempo. Las propiedades fundamentales de la media \@ref(eq:e1p22) y la función de covarianza \@ref(eq:eq-funcion-autocovarianza-estacionaria) son satisfechas por muchos modelos teóricos que aparecen para generar realizaciones muestrales apropiadas. 
 
 \BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-proceso-lineal"><strong>(\#def:defi-proceso-lineal) </strong></span>Un **proceso lineal** $x_t$ se define como una combinación lineal de variables aleatorias de ruido blanco $w_t$, y está dado por
 
@@ -855,7 +954,7 @@ Aunque la serie tenga una componente estacional $E_t$, $X_t = T_t + E_t + \epsil
 
 2. En el caso cuadrático $T_t = \beta_0 +\beta_1t+\beta_2t^2$, ajustamos el modelo de regresión cuadrático $X_t = \beta_0+\beta_1t+\beta_2t^2 +\eta_t$. Nótese que en este caso hay que definir una variable explicativa adicional $t^2$.
 
-En general, para que datos de series de tiempo sean estacionarias, es necesario hacer un promedio de productos en el tiempo. Como para datos de serie de tiempo es importante medir la dependencia entre los valores de la serie; al menos, debemos ser capaces de estimar las  autocorrelaciones con precisión. Será difícil medir la dependencia de estos valores si la estructura de dependencia no es regular o si cambia en el tiempo. De ahí, que para realizar cualquier análisis estadístico significativo de datos de series de tiempo, será crucial que las funciones de media y  autocovarianza satisfagan las condiciones de estacionaridad dadas en la Definición \@ref(def:defi-debil-estacionaria). A menudo, este no es el caso, y en esta sección daremos algunos métodos para lidiar con los efectos de no-estacionaridad sobre las propiedades estacionarias de las series a estudiar.
+En general, para que datos de series de tiempo sean estacionarias, es necesario hacer un promedio de productos en el tiempo. Como para datos de serie de tiempo es importante medir la dependencia entre los valores de la serie; al menos, debemos ser capaces de estimar las  autocorrelaciones con precisión. Será difícil medir la dependencia de estos valores si la estructura de dependencia no es regular o si cambia en el tiempo. De ahí, que para realizar cualquier análisis estadístico significativo de datos de series de tiempo, será crucial que las funciones de media y  autocovarianza satisfagan las condiciones de estacionaridad dadas en la Definición \@ref(def:defi-debilmente-estacionaria). A menudo, este no es el caso, y en esta sección daremos algunos métodos para lidiar con los efectos de no-estacionaridad sobre las propiedades estacionarias de las series a estudiar.
 
 Quizás la forma más fácil de trabajar con series no-estacionarias es el modelo de tendencia estacionaria donde el proceso tiene comportamiento estacionario alrededor de una tendencia. Podemos escribir este tipo de modelos como
 
@@ -930,7 +1029,7 @@ pop=window(uspop,start=1790)
 plot(pop,type="o",ylab="Poblacion (millones)")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-15-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-21-1.svg)<!-- -->
 
 Podemos notar del gráfico que la tendencia es creciente y parece tener un comportamiento cuadrático, por lo que ajustando una función de la forma \@ref(eq:eq-modelo-cuadratico) para la población de los datos USPOP para $1790\leq t\leq1980$ nos da los parámetros estimados
 
@@ -977,7 +1076,7 @@ plot(pop,type="o",xlab="Años",ylab="Poblacion (millones)")
 lines(reg$fitted.values,col="red")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-16-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-22-1.svg)<!-- -->
 
 ----
 
@@ -1043,7 +1142,7 @@ summary(modelo)
 lines(t,modelo$fitted.values,col="red")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-17-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-23-1.svg)<!-- -->
 
 La curva punteada en azul corresponde a los datos originales, la curva en rojo corresponde al ajuste mediante el modelo cúbico.
 
@@ -1099,7 +1198,7 @@ plot(H[,1],y,xlab="años",ylab="Residuales",type='b',
      main = "Residuales e_t=X_t-T_t")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-18-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-24-1.svg)<!-- -->
 
 ----
 
@@ -1161,7 +1260,7 @@ Dx=diff(uspop,difference=2)
 plot(Dx,type="b",xlab="Año", ylab="Diferencias")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-19-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-25-1.svg)<!-- -->
 
 ### Estimación de la tendencia y la estacionalidad
 
@@ -1190,7 +1289,7 @@ Jun    10826    9512    9556    8945    9299    9434
 
 En la figura podemos observar que los datos presentan claramente una componente estacional con periodo $d=12$.
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-22-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-28-1.svg)<!-- -->
 
 Será conveniente para el primer método indexar los datos por mes y año. Entonces $X_{j,k}, j=1,\ldots,12, k=1,\ldots,6$ denotará el número de muertes accidentales reportados para el $j$-ésimo mes del $k$-ésimo año, $(1972+k)$. En otras palabras, definimos
 
@@ -1258,7 +1357,7 @@ plot(V-Tk,type = "l",xlab = "Meses",ylab = "Num. de accidentes",
      main = "Accidentes mortales mensuales con la tendencia T_k removida")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-23-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-29-1.svg)<!-- -->
 
 ```r
 # Estimacion de la estacionalidad
@@ -1280,7 +1379,7 @@ plot(Ej,type = "l",xlab = "Meses",ylab = "Num. de accidentes",
      main = "Estacionalidad de los accidentes mortales mensuales")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-23-2.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-29-2.svg)<!-- -->
 
 ```r
 # Estimacion del error
@@ -1291,7 +1390,7 @@ plot(error,type = "l",xlab = "Meses",ylab = "Error estimado",
 grid(col = "darkgray")     
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-23-3.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-29-3.svg)<!-- -->
 
 2) **Método E2: Estimación por promedio móvil**. La siguiente técnica es preferible al Método E1 ya que no se basa en la suposición de que $T_t$ es casi constante sobre cada ciclo estacional.
 
@@ -1352,8 +1451,190 @@ donde $\{E_t\}$ tiene periodo $d$, obtenemos
 
 $$\nabla_dX_t = T_t-T_{t-d} + \epsilon_t-\epsilon_{t-d},$$
 
-lo cual nos da una descomposición de la diferencia $\nabla_dX_t$ en una componente de tendencia $(T_t-T_{t-d})$ y un término de ruido $(\epsilon_t-\epsilon_{t-d})$. La tendencia $(T_t-T_{t-d})$ se puede eliminar usando los métodos ya descritos, por ejemplo, aplicando alguna potencia del operador $\nabla$. La Figura~\ref{Grafico-tema3-diferencia-paso-12} muestra el resultado de aplicar el operador $\nabla_{12}$ a los datos de accidentes mortales. La componente estacional evidente en la Figura~\ref{Grafico-tema3-accidentes-USA} está ausente en la Figura de $\nabla_{12}X_t,13\leq t\leq72$. Sin embargo todavía parece haber una tendencia decreciente. Si ahora aplicamos el operador $\nabla$ a $\nabla_{12}X_t$ y graficamos las diferencias $\nabla\nabla_{12}X_t,t=14,\ldots,72$ obtenemos el gráfico mostrado en la Figura~\ref{Grafico-tema3-diferencia-diferencia-paso-12}, los cuales no tienen una aparente tendencia o componente estacional.
+lo cual nos da una descomposición de la diferencia $\nabla_dX_t$ en una componente de tendencia $(T_t-T_{t-d})$ y un término de ruido $(\epsilon_t-\epsilon_{t-d})$. La tendencia $(T_t-T_{t-d})$ se puede eliminar usando los métodos ya descritos, por ejemplo, aplicando alguna potencia del operador $\nabla$. La figura siguiente muestra el resultado de aplicar el operador $\nabla_{12}$ a los datos de accidentes mortales.
 
+
+```r
+# Operador Nabla_d, usamos la funcion diff con lag=12
+NdX=diff(V,lag=12)
+plot(NdX,type = "l")
+```
+
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-30-1.svg)<!-- -->
+
+
+La componente estacional evidente en la Figura~\ref{Grafico-tema3-accidentes-USA} está ausente en la Figura de $\nabla_{12}X_t,13\leq t\leq72$. Sin embargo todavía parece haber una tendencia decreciente. Si ahora aplicamos el operador $\nabla$ a $\nabla_{12}X_t$ y graficamos las diferencias $\nabla\nabla_{12}X_t,t=14,\ldots,72$ obtenemos el gráfico mostrado en la Figura~\ref{Grafico-tema3-diferencia-diferencia-paso-12}, los cuales no tienen una aparente tendencia o componente estacional.
+
+
+```r
+DNdX=diff(NdX)
+plot(DNdX,type = "l")
+```
+
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-31-1.svg)<!-- -->
+
+## Estimación de la tendencia por regresión clásica
+
+Los modelos de regresión son importantes para modelos en el dominio de tiempo y de frecuencia que discutiremos posteriormente. La idea principal depende de poder expresar una serie respuesta $X_t$ como una combinación lineal de entradas $z_{t_1},z_{t_2},\ldots,z_{t_q}$. La estimación de los coeficientes $\beta_1,\beta_2,\ldots,\beta_q$ de la combinación por mínimos cuadrados proporciona un método para modelar $X_t$ en términos de las entradas.
+
+### Regresión Clásica
+
+Supongamos que tenemos $X_t$, para $t=1,2,\ldots,n$ influenciada por una colección de series independientes $z_{t_1},z_{t_2},\ldots,z_{t_q}$, donde consideraremos primero que las entradas son fijas y conocidas. Podemos expresar esta relación como
+
+\begin{equation}
+X_t=\beta_1z_{t_1}+\beta_2z_{t_2}+\cdots+\beta_qz_{t_q}+w_t
+(\#eq:eq-regresion-lineal)
+\end{equation}
+
+donde $\beta_1,\beta_2,\ldots,\beta_q$ son los coeficientes de regresión fijos y desconocidos, $\{w_t\}$ es un error aleatorio o un proceso de ruido consistente de variables normales iid con media cero y varianza $\sigma_w^2$.
+
+El modelo lineal descrito en \@ref(eq:eq-regresion-lineal) se puede escribir de forma más general por medio de definir los vectores columna $\mathbf{z}_t=(z_{t_1},z_{t_2},\ldots,z_{t_q})^t$ y $\mathbf{\beta}=(\beta_1,\beta_2,\ldots,\beta_q)^t$ donde $t$ denota la traspuesta, así \@ref(eq:eq-regresion-lineal) será
+
+\begin{equation}
+X_t=\mathbf{\beta}^t\mathbf{z}_t+w_t
+(\#eq:eq-regresion-lineal-2)
+\end{equation}
+
+donde $w_t\sim iid(0,\sigma_w^2)$. Es natural considerar la estimación de los coeficientes del vector $\mathbf{\beta}$ minimizando la suma residual de cuadrados
+
+\begin{equation}
+RSS=\sum_{t=1}^{n}(X_t-\mathbf{\beta}^t\mathbf{z}_t)^2
+(\#eq:eq-suma-residual-cuadrados)
+\end{equation}
+
+con respecto a $\beta_1,\beta_2,\ldots,\beta_q$. Minimizando RSS obtenemos el estimador común de mínimos cuadrados. Esta minimización se puede hacer por diferenciación de \@ref(eq:eq-suma-residual-cuadrados) con respecto al vector $\mathbf{\beta}$ o usando las propiedades de proyección. En la notación anterior, obtenemos la ecuación normal
+
+\begin{equation}
+\left(\sum_{t=1}^{n}\mathbf{z}_t\mathbf{z}_t^t\right)\hat{\mathbf{\beta}}=\sum_{t=1}^{n}\mathbf{z}_tX_t
+(\#eq:eq-regresion-lineal-normal)
+\end{equation}
+
+Definiendo la matriz $Z=(\mathbf{z}_1,\mathbf{z}_2,\ldots,\mathbf{z}_n)^t$ como una matriz $n\times q$ compuesta de $n$ muestras de las variables de entradas y el vector observado $\mathbf{x}=(x_1,x_2,\ldots,x_n)^t$ se puede hacer una simplificación de la notación. Esta identificación nos lleva a
+
+\begin{equation}
+(Z^tZ)\hat{\mathbf{\beta}}=Z^t\mathbf{x}
+(\#eq:eq-regresion-matriz)
+\end{equation}
+
+y la solución es
+
+\begin{equation}
+\hat{\mathbf{\beta}}=(Z^tZ)^{-1}Z^t\mathbf{x},
+(\#eq:eq-solucion-regresion-matriz)
+\end{equation}
+
+cuando la matriz $Z^tZ$ es de rango $q$. El residual minimizado de suma de cuadrados \@ref(eq:eq-suma-residual-cuadrados) tiene la forma matricial equivalente
+
+\begin{eqnarray}
+RSS&=&(\mathbf{x}-Z\hat{\mathbf{\beta}})^t(\mathbf{x}-Z\hat{\mathbf{\beta}})\\ \nonumber
+&=&\mathbf{x}^t\mathbf{x}-\hat{\mathbf{\beta}}^tZ^t\mathbf{x}\\ \nonumber
+&=&\mathbf{x}^t\mathbf{x}-\mathbf{x}^tZ(Z^tZ)^{-1}Z^t\mathbf{x}.
+(\#eq:eq-suma-residual-cuadrados-matricial)
+\end{eqnarray}
+
+El estimador común de mínimos cuadrados es insesgado, esto es, $\mathbb{E}(\hat{\mathbf{\beta}})=\mathbf{\beta}$, y tiene la menor varianza de todos los estimadores insesgados lineales.
+
+Si los errores $w_t$ son normalmente distribuidos (Gaussianos), $\hat{\mathbf{\beta}}$ es también el estimador de máxima verosimilitud para $\mathbf{\beta}$ y es normalmente distribuido con
+
+\begin{eqnarray}
+\text{cov}(\hat{\mathbf{\beta}})&=&\sigma_w^2\left(\sum_{t=1}^{n}\mathbf{z}_t\mathbf{z}_t^t\right)^{-1}\\ \nonumber
+&=&\sigma_w^2(Z^tZ)^{-1}\\ \nonumber
+&=&\sigma_w^2C,
+(\#eq:eq-covarianza-beta-estimado)
+\end{eqnarray}
+
+donde
+
+\begin{equation}
+C=(Z^tZ)^{-1}.
+(\#eq:eq-matriz-C)
+\end{equation}
+
+Un estimador insesgado para la varianza $\sigma_w^2$ es
+
+\begin{equation}
+s_w^2=\frac{RSS}{n-q}
+(\#eq:eq-estimador-insesgado-varianza)
+\end{equation}
+
+contrastado con el estimador de máxima verosimilitud $\hat{\sigma}_w^2=RSS/n$ el cual tiene divisor $n$. Bajo la suposición de que $s_w^2$ tiene distribución proporcional a una variable aleatoria chi-cuadrado con $n-q$ grados de libertad, $\chi_{n-q}^2$, e independiente de $\hat{\beta}$, se sigue que
+
+\begin{equation}
+t_{n-q}=\frac{(\hat{\beta}_i-\beta_i)}{s_w\sqrt{c_{ii}}}
+(\#eq:eq-estadistico-t)
+\end{equation}
+
+tiene distribución $t$-de Student con $n-q$ grados de libertad; $c_{ii}$ denota el $i$-ésimo elemento de la diagonal de $C$, como se definió en \@ref(eq:eq-matriz-C).
+
+Hay varios modelos que podemos utilizar de manera de seleccionar el mejor subconjunto de variables independientes. Suponga que tenemos un modelo que sólo considera un subconjunto $q_1<q$ de variables independientes $\mathbf{z}_{1t}=(z_{t_1},z_{t_2},\ldots,z_{t_q1})^t$ que influencian a la variable $X_t$, así el modelo
+
+\begin{equation}
+X_t=\mathbf{\beta}_1^t\mathbf{z}_{1t}+w_t
+(\#eq:eq-modelo-regresion-reducido)
+\end{equation}
+
+llega a ser la hipótesis nula, donde $\mathbf{\beta}_1=(\beta_1,\beta_2,\ldots,\beta_{q1})^t$ es un subconjunto de los coeficientes de las $q$ variables originales. Podemos contrastar el modelo reducido \@ref(eq:eq-modelo-regresion-reducido) contra el modelo completo \@ref(eq:eq-regresion-lineal-2) comparando el residual de la suma de cuadrados bajo los dos modelos usando el estadístico $F$
+
+\begin{equation}
+F_{q-q1,n-q}=\frac{RSS_1-RSS}{RSS}\frac{n-q}{q-q1}
+(\#eq:eq-estadistico-F-residuales)
+\end{equation}
+
+el cual tiene distribución $F$ con $q-q1$ y $n-q$ grados de libertad cuando \@ref(eq:eq-estadistico-F-residuales) es el modelo correcto. La información envuelta en la prueba se resume en una tabla de Análisis de Varianza (ANOVA) como la mostrada en la Tabla siguiente para este caso particular. La diferencia en el numerador es llamada regresión de la suma de cuadrados.
+
+
+Fuente | g.l | Suma de cuadrados | Medias Cuadrados 
+-------|-----|-------------------|------------------
+$z_{t,q_1+1},\ldots,z_{t,q}$ | $q-q_1$ | $SS_{reg}=RSS_1-RSS$ | $MS_{reg}=SS_{reg}/(q-q_1)$ 
+Error	| $n-q$	| $RSS$	| $s_e^2=RSS/(n-q)$ 
+Total	| $n-q_1$	| $RSS_1$		|	
+
+En términos de la Tabla, por convención escribimos el estadístico $F$ dado en \@ref(eq:eq-estadistico-F-residuales) como el radio de dos medias cuadrados, obteniéndose
+
+\begin{equation}
+F_{q-q1,n-q}=\frac{M S_{reg}}{s_w^2}.
+(\#eq:eq-estadistico-F-radio-medias)
+\end{equation}
+
+Un caso de especial interés es para $q_1=1$ y $z_{1t}=1$, así el modelo en \@ref(eq:eq-modelo-regresion-reducido) es
+$$X_t=\beta_1+w_t$$
+y la proporción de variación explicada por las otras variables es
+
+\begin{equation}
+R_{xz}^2=\frac{RSS_0-RSS}{RSS_0},
+(\#eq:eq-proporcion-variacion-explicada)
+\end{equation}
+
+donde la suma residual de cuadrados bajo el modelo reducido dada por
+
+\begin{equation}
+RSS_0=\sum_{t=1}^{n}(X_t-\bar{X})^2
+(\#eq:eq-suma-residual-reducido)
+\end{equation}
+
+es precisamente la suma de desviaciones al cuadrado de la media $\bar{X}$. La medida $R_{xz}^2$ es la correlación múltiple cuadrado entre $X_t$ y $z_{t2},z_{t3},\ldots,z_{tq}$.
+
+Las técnicas discutidas se pueden usar para hacer comparación entre varios modelos. Estas pruebas han sido usadas en el pasado en una manera gradual, donde las variables son añadidas o suprimidas cuando los valores de la prueba $F$ exceden o fallan en exceder algunos niveles predeterminados. El procedimiento, llamado regresión múltiple por pasos, es útil para conseguir un conjunto de variables que sea de utilidad. Una manera alternativa es enfocándose en un procedimiento para selección del modelo que no sea secuencial, sino simplemente evaluar cada modelo en base a sus propios méritos.
+
+Suponga que consideramos un modelo de regresión con $k$ coeficientes y denotemos el estimador de máxima verosimilitud para la varianza como
+
+\begin{equation}
+\hat{\sigma}_k^2=\frac{RSS_k}{n}
+(\#eq:eq-estimador-emv-varianza)
+\end{equation}
+
+donde $RSS_k$ denota la suma residual de cuadrados bajo el modelo con $k$ coeficientes de regresión. Entonces, Akaike (1969, 1973, 1974) sugirió medir la bondad del ajuste para este modelo en particular equilibrando el error del ajuste contra el número de parámetros en el modelo; definiendo lo siguiente
+
+\BeginKnitrBlock{definition}\iffalse{-91-67-114-105-116-101-114-105-111-32-100-101-32-73-110-102-111-114-109-97-99-105-243-110-32-100-101-32-65-107-97-105-107-101-32-40-65-73-67-41-93-}\fi{}<div class="definition"><span class="definition" id="def:defi-AIC"><strong>(\#def:defi-AIC)  \iffalse (Criterio de Información de Akaike (AIC)) \fi{} </strong></span>El Criterio de Información de Akaike se define como
+\begin{equation}
+AIC=\ln\hat{\sigma}_k^2+\frac{n+2k}{n}
+(\#eq:eq-AIC)
+\end{equation}
+donde $\hat{\sigma}_k^2$ está dado por \@ref(eq:eq-estimador-emv-varianza) y $k$ es el número de parámetros en el modelo</div>\EndKnitrBlock{definition}
+
+----
+
+El *criterio de información de Akaike* (AIC) es una medida de la calidad relativa de un modelo estadístico, para un conjunto dado de datos. Como tal, el AIC proporciona un medio para la selección del modelo. El valor de $k$ que minimiza $AIC$ especifica el mejor modelo. La idea es que la minimización de $\hat{\sigma}_k^2$ sea razonablemente objetiva, excepto que decrezca monótonamente cuando $k$ crece. Por lo tanto, debemos penalizar la variación del error por un término proporcional al número de parámetros. La elección del término de penalización dado por \@ref(eq:eq-AIC) no es único.
 
 
 <!--chapter:end:200-caracterisitcas-series-tiempo.Rmd-->
@@ -1415,7 +1696,7 @@ Si $x$ es diferenciable, entonces $V_t(x)=\int_0^t|x'(u)|du$. Si $V_t(X)<\infty$
 
 Para procesos estocásticos con trayectorias continua, el límite existe, y en dicho caso usamos la notación $\langle x,x\rangle_t$ y podemos definirla alternativamente como 
 \begin{equation}
-$\langle x,x\rangle_t$ = p-\lim_{n\to\infty}\sum_{k=1}^{2^n}\left(x_{\min(t,k/2^n)} - x_{\min(t,(k-1)/2^n)}\right)^2
+\langle x,x\rangle_t = p-\lim_{n\to\infty}\sum_{k=1}^{2^n}\left(x_{\min(t,k/2^n)} - x_{\min(t,(k-1)/2^n)}\right)^2
 (\#eq:eq-variacion-acotada-proceso-2)
 \end{equation}
 
@@ -1454,7 +1735,7 @@ $$\mathbb{E}(X_t|\mathcal{F}_s)\geq X_s \text{ c.s.}$$
 Decimos que es una **supermartingala** si 
 $$\mathbb{E}(X_t|\mathcal{F}_s)\leq X_s \text{ c.s.}$$</div>\EndKnitrBlock{definition}
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-24"><strong>(\#exm:unnamed-chunk-24) </strong></span>Sean $X_0,X_1,\ldots,X_n$ variables aleatorias iid tal que $\mathbb{E}(X_1)=\mu$ y sean 
+\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-32"><strong>(\#exm:unnamed-chunk-32) </strong></span>Sean $X_0,X_1,\ldots,X_n$ variables aleatorias iid tal que $\mathbb{E}(X_1)=\mu$ y sean 
 \begin{eqnarray*}
 M_0 &=& X_0 \\
 M_1 &=& X_0+X_1 \\
@@ -1477,30 +1758,42 @@ M=cumsum(X)
 plot(M,type = "l",xlab = "t",ylab = "M_n")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-25-1.svg)<!-- -->
-\BeginKnitrBlock{example}\iffalse{-91-80-114-101-99-105-111-32-100-101-32-97-99-99-105-111-110-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-26"><strong>(\#exm:unnamed-chunk-26)  \iffalse (Precio de acciones) \fi{} </strong></span>Sean $Y_0,Y_1,\ldots,Y_n$ variables aleatorias independientes y positivas. Supongamos que una acción tiene precio $M_0$ a tiempo $t=0$. 
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-33-1.svg)<!-- -->
+\BeginKnitrBlock{example}\iffalse{-91-80-114-101-99-105-111-32-100-101-32-97-99-99-105-111-110-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-34"><strong>(\#exm:unnamed-chunk-34)  \iffalse (Precio de acciones) \fi{} </strong></span>Sean $Y_0,Y_1,\ldots,Y_n$ variables aleatorias independientes y positivas. Supongamos que una acción tiene precio $M_0$ a tiempo $t=0$. </div>\EndKnitrBlock{example}
 
 Un modelo común para modelar el precio de la acción en tiempo $t=n$ es
+
 $$M_{n+1}=M_nY_n$$
+
 donde $(Y_n-1)\times100$ representa (en porcentaje) la variabilidad de la acción. Usando las propiedades de esperanza condicional (Apéndice), es muy sencillo demostrar que 
+
 $$\mathbb{E}(M_{n+1}|M_0,\ldots,M_n)=M_n\mathbb{E}(Y_n)$$
+
 En particular, si $Y_1,\ldots,Y_n$ son idénticamente distribuidas con $\mathbb{E}(Y_1)=\mu$ tenemos que $M_n$ es
 
  - Una **martingala** si $\mu=1$
+ 
  - Una **submartingala** si $\mu>1$
+ 
  - Una **supermartingala** si $\mu<1$.
-
+ 
 Dos modelos bien conocidos de lo anterior son
 
 1) Modelo **Black-Scholes discreto**. 
-   Sean $Y_1,\ldots,Y_n$ definidas por 
-   $$Y_n=e^{Z_n}$$
-   donde $Z_1,\ldots,Z_n$ son variables aleatorias independientes normales $N(\mu,\sigma^2)$.
+
+Sean $Y_1,\ldots,Y_n$ definidas por 
+
+$$Y_n=e^{Z_n}$$
+
+donde $Z_1,\ldots,Z_n$ son variables aleatorias independientes normales $N(\mu,\sigma^2)$.
    
 2) **Modelo Binomial**. 
-   Sean $Y_1,\ldots,Y_n$ definidas por
-   $$P(Y_i=(1+t)e^{-r})=p\quad\text{ y }\quadP(Y_i=(1+t)^{-1}e^{-r})=1-p$$
-   La constante $r$ es la tasa de interés y los factores $(1+t)$ y $(1+t)^{-1}$ modelan las variaciones del mercado y garantizan que el precio tiene la forma $M_0(1+t)^ye^{-nr}$, con $|y|\leq n$. La volatilidad del precio está asociada a $p$.  </div>\EndKnitrBlock{example}
+
+Sean $Y_1,\ldots,Y_n$ definidas por
+
+$$P(Y_i=(1+t)e^{-r})=p\quad\text{ y }\quad P(Y_i=(1+t)^{-1}e^{-r})=1-p$$
+
+La constante $r$ es la tasa de interés y los factores $(1+t)$ y $(1+t)^{-1}$ modelan las variaciones del mercado y garantizan que el precio tiene la forma $M_0(1+t)^ye^{-nr}$, con $|y|\leq n$. La volatilidad del precio está asociada a $p$. 
 
 \BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-proceso-cuadrado-integrable"><strong>(\#def:defi-proceso-cuadrado-integrable) </strong></span>Una variable aleatoria $X$ es **cuadrado integrable** si $\mathbb{E}(X^2)<\infty$. Un proceso estocástico $X_t$ en el intervalo $[0,T]$, donde $T$ puede ser infinito, es **cuadrado integrable** si 
 \begin{equation}
@@ -1558,7 +1851,7 @@ Calculemos la función de autocovarianza de $w_t$
 \end{eqnarray*}
 La última igualdad se sigue del hecho de que $w_s$ y $w_t$ son no-correlacionados para $s\neq t$ por lo que $\mathbb{E}(w_sw_t) = \mathbb{E}(w_s)\mathbb{E}(w_t)=0$.
 
-\BeginKnitrBlock{example}\iffalse{-91-69-115-116-97-99-105-111-110-97-114-105-100-97-100-32-100-101-32-117-110-32-114-117-105-100-111-32-98-108-97-110-99-111-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-27"><strong>(\#exm:unnamed-chunk-27)  \iffalse (Estacionaridad de un ruido blanco) \fi{} </strong></span>La función de autocovarianza de un ruido blanco es fácil de evaluar como 
+\BeginKnitrBlock{example}\iffalse{-91-69-115-116-97-99-105-111-110-97-114-105-100-97-100-32-100-101-32-117-110-32-114-117-105-100-111-32-98-108-97-110-99-111-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-35"><strong>(\#exm:unnamed-chunk-35)  \iffalse (Estacionaridad de un ruido blanco) \fi{} </strong></span>La función de autocovarianza de un ruido blanco es fácil de evaluar como 
 $$\gamma_w(h) = \mathbb{E}(w_{t+h}w_t) = \begin{cases}
                                           \sigma_w^2,&\text{ si }h=0\\
                                           0,&\text{ si }h\neq0
@@ -1582,7 +1875,7 @@ plot(wn,type = "l",xlab = "Num. de observaciones",
      main = "Ruido blanco gaussiano")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-28-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-36-1.svg)<!-- -->
 
 ```r
 # Funciones de autocovarianza (ACF)
@@ -1590,7 +1883,7 @@ acf(wu)
 acf(wn)
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-28-2.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-36-2.svg)<!-- -->
 
 \BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejem-promedio-movil-ruido-blanco"><strong>(\#exm:ejem-promedio-movil-ruido-blanco) </strong></span>Podemos reemplazar las series de ruido blanco $w_t$ por un promedio móvil que suavice la serie. Por ejemplo, consideremos la serie $w_t$ en la ecuación ( ) y reemplacémosla por un promedio móvil de 3 puntos, dado por 
 \begin{equation}
@@ -1611,7 +1904,7 @@ plot.ts(wu,xlab=" ",ylab="Ruido blanco unif.")
 plot.ts(vu,ylim=c(0,1),ylab="Promedio móvil")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-29-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-37-1.svg)<!-- -->
 
 ```r
 # Gaussiano
@@ -1621,7 +1914,7 @@ plot.ts(wn,xlab=" ",ylab="Ruido blanco gauss.")
 plot.ts(vn,ylim=c(-3,3),ylab="Promedio móvil")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-29-2.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-37-2.svg)<!-- -->
 En la parte superior de cada uno se observan los ruidos blancos y en la parte inferior los respectivos promedios móviles. Podemos notar que las series de promedio móvil suavizan el comportamiento de las series originales, si tomamos más puntos en el promedio mayor será el suavizado.
 
 \BeginKnitrBlock{example}\iffalse{-91-70-117-110-99-105-243-110-32-100-101-32-109-101-100-105-97-32-100-101-32-117-110-32-112-114-111-109-101-100-105-111-32-109-243-118-105-108-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-funcion-media-MA"><strong>(\#exm:ejem-funcion-media-MA)  \iffalse (Función de media de un promedio móvil) \fi{} </strong></span>Si $w_t$ denota una serie de ruido blanco, entonces $\mu_{wt}=\mathbb{E}(w_t)=0$ para todo $t$. Luego para el promedio móvil de 3 puntos se tiene
@@ -1689,26 +1982,340 @@ lines(X,col="red")
 lines(0.2*(1:500),lty="dashed",col="blue")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-30-1.svg)<!-- -->
+<div class="figure" style="text-align: center">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-38-1.svg" alt="Gráficos de caminos aleatorios: con tendencia (negro), sin tendencia (rojo)"  />
+<p class="caption">(\#fig:unnamed-chunk-38)Gráficos de caminos aleatorios: con tendencia (negro), sin tendencia (rojo)</p>
+</div>
 
-## Modelos Lineales Estacionarios
-
-### Modelos de Memoria Larga
-
-### Modelos de Regresión
-
-## Modelos No Estacionarios
-
-### No Estacionarios en Varianza
-
-### No Estacionarios en Media
-
-### Test de Raíz Unitaria
 
 
 
 
 <!--chapter:end:300-modelos-series-tiempo.Rmd-->
+
+# Modelos AR
+
+Los modelos autoregresivos están basados en la idea de que el valor actual de la serie $x_t$ se puede explicar como una función de $p$ valores pasados $x_{t-1},x_{t-2},\ldots,x_{t-p}$ donde $p$ determina el número de pasos en necesarios para predecir el valor actual. Una parte de las series de tiempo económicas y financieras suelen ser caracterizadas por los modelos autorregresivos. Entre los principales ejemplos de las finanzas tenemos valoración de precios y de dividendos, las tasas reales de cambio, tasas de interés y los diferenciales de tipos de interés (spreads).
+
+\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-modelo-ARp"><strong>(\#def:defi-modelo-ARp) </strong></span>Un *modelo autoregresivo de orden $p$*, abreviado $AR(p)$ es de la forma 
+
+\begin{equation}
+x_t=\phi_1x_{t-1}+\phi_2x_{t-2}+\cdots+\phi_px_{t-p}+w_t,
+(\#eq:eq-ARp)
+\end{equation}
+
+donde $x_t$ es estacionario, $\phi_1\phi_2,\ldots,\phi_p$ son constantes ($\phi_p\neq0$). A menos que se declare lo contrario, se asume que $w_t$ es un ruido blanco gaussiano de media cero y varianza $\sigma_w^2$. La media de $x_t$ en \@ref(eq:eq-ARp) es cero. Si la media $\mu$ de $x_t$ no es cero, reemplazamos $x_t$ por $x_t-\mu$ en \@ref(eq:eq-ARp), es decir
+
+$$x_t-\mu=\phi_1(x_{t-1}-\mu)+\phi_2(x_{t-2}-\mu)+\cdots+\phi_p(x_{t-p}-\mu)+w_t$$
+
+o escribimos
+
+\begin{equation}
+x_t=\alpha+\phi_1x_{t-1}+\phi_2x_{t-2}+\cdots+\phi_px_{t-p}+w_t,
+(\#eq:eq-ARp-mu)
+\end{equation}
+
+donde $\alpha=\mu(1-\phi_1-\phi_2-\cdots-\phi_p)$.</div>\EndKnitrBlock{definition}
+
+----
+
+Note que \@ref(eq:eq-ARp-mu) es similar al modelo de regresión dado en \@ref(eq:eq-regresion-lineal) y por consiguiente el término *autoregresión*. Sin embargo, se presentan algunas dificultades técnicas para la aplicación de este modelo, porque los regresores $x_{t-1},x_{t-2},\ldots,x_{t-p}$ son aleatorios, mientras que $x_t$ se asume fijo. Una forma más útil se deriva de usar el siguiente operador de cambio dado por \@ref(eq:eq-backward-shift-operator). Para escribir el modelo $AR(p)$ como
+
+\begin{equation}
+(1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p)x_t=w_t
+(\#eq:eqARp-operador-B)
+\end{equation}
+
+o más conciso como
+
+\begin{equation}
+\phi(B)x_t=w_t.
+(\#eq:eq-ARp-B-conciso)
+\end{equation}
+
+Las propiedades de $\phi(B)$ son importantes para resolver \@ref(eq:eq-ARp-B-conciso). Esto nos lleva a la siguiente definición.
+
+\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-operador-autoregresivo"><strong>(\#def:defi-operador-autoregresivo) </strong></span>El *operador autoregresivo* de orden $p$ se define como
+
+\begin{equation}
+\phi(B) = 1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p
+(\#eq:eq-operador-Bp)
+\end{equation}</div>\EndKnitrBlock{definition}
+
+----
+
+## Modelo AR(1)
+
+Iniciaremos el estudio de los modelos $AR$ considerando el modelo de primer orden $AR(1)$, dado por $x_t=\phi x_{t-1}+w_t$. Iterando el operador de cambio $k$ veces, obtenemos
+
+\begin{eqnarray*}
+x_t &=& \phi x_{t-1}+w_t = \phi(\phi x_{t-2}+w_{t-1})+w_t \\
+    &=& \phi^2x_{t-2}+\phi w_{t-1}+w_t \\
+    &\vdots& \\
+    &=& \phi^kx_{t-k}+\sum_{j=0}^{k-1}\phi^jw_{t-j}.
+\end{eqnarray*}
+
+Este método sugiere que por iteración continua del operador de cambio, siempre que $|\phi|<1$ y $x_t$ sea estacionario, podemos representar un modelo $AR(1)$ como un proceso lineal dado por [^nota3]
+
+[^nota3]: Note que $\lim_{k\to\infty}\mathbb{E}(x_t-\sum_{j=0}^{\infty}\phi^jw_{t-j})^2 = \lim_{k\to\infty}\phi^{2k}\mathbb{E}(x_{t-k}^2)=0$, de modo que \@ref(eq:eq-AR1-serie-lineal) existe en el sentido de media cuadrado. 
+
+\begin{equation}
+x_t \sum_{j=0}^{\infty}\phi^jw_{t-j}
+(\#eq:eq-AR1-serie-lineal)
+\end{equation}
+
+El proceso $AR(1)$ definido en \@ref(eq:eq-AR1-serie-lineal) es estacionario con media
+
+$$\mathbb{E}(x_t) = \sum_{j=0}^{\infty}\phi^j\mathbb{E}(w_{t-j})=0,$$
+
+y la función de autocovarianza es
+
+\begin{eqnarray}
+\gamma(h) &=& Cov(x_{t+h},x_t) \nonumber \\
+    &=& \mathbb{E}\left[\left(\sum_{j=0}^{\infty}\phi^jw_{t+h-j}\right) \left(\sum_{k=0}^{\infty}\phi^kw_{t-k}\right)\right] \nonumber \\
+    &=& \sigma_w^2\sum_{j=0}^{\infty}\phi^j\phi^{j+h} = \sigma_w^2\phi^h\sum_{j=0}^{\infty}\phi^{2j} \nonumber \\
+    &=& \frac{\sigma_w^2\phi^h}{1-\phi^2}, h>0
+(\#eq:eq-ACV-AR1)
+\end{eqnarray}
+
+Recuerde que $\gamma(h)=\gamma(-h)$ de modo que basta presentar la función de autocovarianza para $h\geq0$. 
+
+Si en \@ref(eq:eq-ACV-AR1), hacemos $h=0$, obtenemos la varianza del proceso $AR(1)$, siendo esta
+
+$$Var(x_t)=\frac{\sigma_w^2}{1-\phi^2},$$
+
+asumiendo que $\phi_1^2<1$. El requisito de que $\phi_1^2<1$ resulta del hecho de que la varianza de una variable aleatoria es acotada y no negativa. Por consiguiente, la estacionaridad de un modelo $AR(1)$ implica que $-1<\phi_1<1$. Pero si $-1<\phi_1<1$, entonces por \@ref(eq:eq-AR1-serie-lineal) y la independencia de $\{w_t\}$ se puede demostrar que la media y la varianza de $x_t$ son finitas. Además, por la desigualdad de Cauchy-Schwartz todas las autocovarianzas de $x_t$ son finitas. Por lo tanto, el modelo $AR(1)$ es estacionario. En resumen, una condición necesaria y suficiente para que un proceos $AR(1)$ sea estacionario es $|\phi_1|<1$.
+
+De \@ref(eq:eq-ACV-AR1) la ACF de un modelo $AR(1)$ es
+
+\begin{equation}
+\rho(h) = \frac{\gamma(h)}{\gamma(0)} = \phi^h, \quad h>0
+(\#eq:eq-ACF-AR1)
+\end{equation}
+
+y $\rho(h)$ satisface la recursión
+
+\begin{equation}
+\rho(h) = \phi\rho(h-1)\text{, para }h=1,2,\ldots.
+(\#eq:eq-ACF-AR1-recursiva)
+\end{equation}
+
+Las ecuaciones \@ref(eq:eq-ACF-AR1) y \@ref(eq:eq-ACF-AR1-recursiva) indican que la ACF de un modelo $AR(1)$ estacionario tiene un decaimiento exponencial con tasa igual a $\phi_1$. Si $\phi_1>0$ el decaimiento es constante. Si por el contrario, $\phi_1<0$ entonces el decaimiento es compuesto y se presenta de forma alternante con tasa $\phi_1^2$. Para tener una idea de esto, consideremos los modelos autoregresivos
+de orden 1 simulados, para distintos valores de $\phi_1$.
+
+
+```r
+# Coeficientes phi
+phi1=0.9
+phi2=-0.8
+phi3=0.4
+phi4=-0.5
+# Ruido blanco gaussiano
+w=rnorm(100,0,1)
+# Series AR(1)
+ar1_1=filter(w,filter = phi1,method = "recursive")
+ar1_2=filter(w,filter = phi2,method = "recursive")
+ar1_3=filter(w,filter = phi3,method = "recursive")
+ar1_4=filter(w,filter = phi4,method = "recursive")
+# Graficos
+par(mfrow=c(2,2))
+plot.ts(ar1_1, col="blue",type = "l",
+     main = "AR(1) con phi=0.9",xlab="t",ylab="x_t")
+plot.ts(ar1_2, col="blue",type = "l",
+        main = "AR(1) con phi=-0.8",xlab="t",ylab="x_t")
+plot.ts(ar1_3, col="blue",type = "l",
+        main = "AR(1) con phi=0.4",xlab="t",ylab="x_t")
+plot.ts(ar1_4, col="blue",type = "l",
+        main = "AR(1) con phi=-0.5",xlab="t",ylab="x_t")
+```
+
+<div class="figure" style="text-align: center">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-39-1.svg" alt="Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de $phi_1$"  />
+<p class="caption">(\#fig:unnamed-chunk-39)Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de $phi_1$</p>
+</div>
+
+A continuación mostramos las funciones de autocovarianzas de las series AR(1) simuladas anteriormente
+
+
+```r
+par(mfrow=c(2,2))
+acf(ar1_1,type = "covariance", main="ACF de la Serie AR(1) con phi=0.9")
+acf(ar1_2,type = "covariance", main="ACF de la Serie AR(1) con phi=-0.8")
+acf(ar1_3,type = "covariance", main="ACF de la Serie AR(1) con phi=0.4")
+acf(ar1_4,type = "covariance", main="ACF de la Serie AR(1) con phi=-0.5")
+```
+
+<div class="figure" style="text-align: center">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-40-1.svg" alt="Funciones de autocovarianzas para las series AR(1) simuladas"  />
+<p class="caption">(\#fig:unnamed-chunk-40)Funciones de autocovarianzas para las series AR(1) simuladas</p>
+</div>
+
+## Modelo AR(2)
+
+Un proceso $AR(2)$ tiene la forma general
+
+\begin{equation}
+x_t = \alpha + \phi_1 x_{t-1} + \phi_2 x_{t-2} + w_t
+(\#eq:eq-AR2)
+\end{equation}
+
+siendo $\alpha = \mu(1-\phi_1-\phi_2)$, con $\phi_2\neq 0$. Podemos calcular su función de media
+
+\begin{eqnarray*}
+\mathbb{E}(x_t) &=& \mathbb{E}(\alpha + \phi_1 x_{t-1} + \phi_2 x_{t-2} + w_t) \\
+    &=& \alpha+\phi_1\mathbb{E}(x_{t-1})+\phi_2\mathbb{E}(x_{t-2})
+\end{eqnarray*}
+
+Por estacionalidad, se tiene que $\mathbb{E}(x_t)=\mathbb{E}(x_{t-1})=\mathbb{E}(x_{t-2})$, luego
+
+$$\mathbb{E}(x_t)(1-\phi_1-\phi_2) = \alpha$$
+Así, $\mathbb{E}(x_t) = \frac{\alpha}{1-\phi_1-\phi_2}$, siempre que $\phi_1+\phi_2\neq1$. Usando $\alpha=(1-\phi_1-\phi_2)\mu$ podemos reescribir el proceso $AR(2)$ como
+
+$$x_t-\mu = \phi_1(x_{t-1}-\mu)+\phi_2(x_{t-2}-\mu)+w_t.$$
+
+Multiplicando por $x_{t-h}-\mu$, tenemos
+
+$$(x_{t-h}-\mu)(x_t-\mu) = \phi_1(x_{t-h}-\mu)(x_{t-1}-\mu) + \phi_2(x_{t-h}-\mu)(x_{t-2}-\mu) + (x_{t-h}-\mu)w_t.$$
+
+Tomando valor esperado y usando el hecho de que $\mathbb{E}[(x_{t-h}-\mu)w_t]=0$, para $h>0$, obtenemos
+
+\begin{equation}
+\gamma(h) = \phi_1\gamma(h-1)+\phi_2\gamma(h-2) \text{, para }h>0.
+(\#eq:eq-ecuacion-momento-AR2)
+\end{equation}
+
+Este último resultado se conoce como la **ecuación de momentos** de un proceso estacionario $AR(2)$. Dividiendo \@ref(eq:eq-ecuacion-momento-AR2) por $\gamma(0)$, tenemos la propiedad
+
+\begin{equation}
+\rho(h) = \phi_1\rho(h-1)+\phi_2\rho(h-2)\text{, para }h>0
+(\#eq:eq-ACF-AR2-recursiva)
+\end{equation}
+
+para la ACF de $x_t$. En particular, para paso 1 ($h=1$) la ACF satisface
+
+$$\rho(1) = \phi_1\rho(0)+\phi_2\rho(-1) = \phi_1+\phi_2\rho(1)$$
+
+Por lo tanto, para un proceso $AR(2)$ estacionario $x_t$, tenemos
+
+\begin{eqnarray*}
+\rho(0) &=& 1 \\
+\rho(1) &=& \frac{\phi_1}{1-\phi_2} \\
+\rho(h) &=& \phi_1\rho(h-1)+\phi_2\rho(h-2),\quad h\geq2
+\end{eqnarray*}
+
+El resultado de la ecuación \@ref(eq:eq-ACF-AR2-recursiva) nos dice que la ACF de un proceso estacionario $AR(2)$ satisface la ecuación en diferencias de segundo orden
+
+\begin{equation}
+(1-\phi_1B-\phi_2B^2)\rho(h) = 0
+(\#eq:eq-diferencia-ACF)
+\end{equation}
+
+donde $B$ es el operador definido en \@ref(eq:eq-backward-shift-operator). La ecuación \@ref(eq:eq-diferencia-ACF) determina las propiedades de la ACF de un proceso $AR(2)$ estacionario. También determina el comportamiento de los pronósticos de $x_t$. Correspondiendo a la ecuación en diferencias anterior, existe una ecuación polinómica de segundo orden
+
+\begin{equation}
+x^2-\phi_1x-\phi_2=0
+(\#eq:eq-polinomio-2do-orden-AR2)
+\end{equation}
+
+Las soluciones de esta ecuación son las raíces características de un proceso $AR(2)$ y estas son
+
+$$x=\frac{\phi_1\pm\sqrt{\phi_1^2+4\phi_2}}{2}$$
+
+Denotamos las dos raíces por $r_1$ y $r_2$. Si ambos son reales, entonces la ecuación en diferencias de segundo orden la podemos factorizar como
+
+$$(1-r_1B)(1-r_2B)$$
+
+y el proceso $AR(2)$ lo podemos considerar como un proceso $AR(1)$ operando sobre otro proceso $AR(1)$.
+
+La ACF de $x_t$ es entonces una mezcla de dos decaimientos exponenciales. Pero si $\phi_1^2+4\phi_2<0$, entonces $r_1$ y $r_2$ son raíces complejas conjugadas, y el gráfico de la ACF de $x_t$ mostrará un amortiguamiento de senos y cosenos.
+
+En aplicaciones financieras y económicas, las raíces caracteríticas complejas son importantes. Dan lugar al comportamiento de los ciclos económicos. Por lo tanto, es común que los modelos económicos de series de tiempo tengan raíces características de valor complejo. Para un proceso $AR(2)$ dado por \@ref(eq:eq-AR2) con raíces características complejas, la longitud *promedio* de un ciclo estocástico es
+
+$$k=\frac{360°}{\arccos(\phi_1/2\sqrt{-\phi_2})},$$
+
+donde el arcocoseno está expresado en grados.
+
+La figura siguiente muestra la ACF de 4 procesos estacionarios $AR(2)$. Los procesos $AR(2)$ mostrados son:
+
+a) $x_t=1.2x_{t-1}-0.35x_{t-2}+w_t$
+
+b) $x_t=0.6x_{t-1}-0.4x_{t-2}+w_t$
+
+c) $x_t=0.2x_{t-1}+0.35x_{t-2}+w_t$
+
+d) $x_t=-0.2x_{t-1}+0.35x_{t-2}+w_t$
+
+<div class="figure" style="text-align: center">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-41-1.svg" alt="Cuatro procesos estacionarios AR(2) con distintos valores de phi1 y phi2"  />
+<p class="caption">(\#fig:unnamed-chunk-41)Cuatro procesos estacionarios AR(2) con distintos valores de phi1 y phi2</p>
+</div>
+
+<div class="figure" style="text-align: center">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-42-1.svg" alt="ACF de 4 procesos estacionarios AR(2) con distintos valores de phi1 y phi2"  />
+<p class="caption">(\#fig:unnamed-chunk-42)ACF de 4 procesos estacionarios AR(2) con distintos valores de phi1 y phi2</p>
+</div>
+
+La serie (b) tiene raíces características complejas, en efecto 
+
+$$\phi_1^2+4\phi_2=(0.6)^2+4\times(-0.4)-1.24<0$$
+
+Se puede notar que n el gráfico de la ACF que este exhibe un comportamiento de ondas de senos y cosenos. Los otros 3 procesos $AR(2)$ tienen raíces características reales, por lo que las ACF decaen exponencialmente. La condición de estacionaridad de un proceso $AR(2)$ es que los valores absolutos de sus raíces características sean menor que uno, esto es $|\phi_1|<1, |\phi_2|<1$. Bajo esta condición, la ecuación recursiva \@ref(eq:eq-ACF-AR2-recursiva) asegura que la ACF del proceso converge a cero cuando el salto $h$ crece. Esta propiedad de convergencia es una condición necesaria para una serie de tiempo estacionaria. De hecho, la condición también aplica para un proceso $AR(1)$ donde la ecuación polinómica es $x-\phi_1=0$. La raíz característica es $x=\phi_1$, la cual debe ser menor que uno en módulo para que $x_t$ sea estacionario. Como mostramos antes, para un proceso estacionario $AR(1)$ la ACF es $\rho(h)=\phi^h$, \@ref(eq:eq-ACF-AR1).
+
+Así, la condición $|\phi|<1$, asegura que $\rho(h)=\phi^h\to0$, cuando $h\to\infty$. 
+
+## Procesos AR(p)
+
+Los resultados de los procesos $AR(1)$ y $AR(2)$, los podemos generalizar a procesos $AR(p)$. Así, la función de media del proceso $AR(p)$ estacionario será
+
+\begin{equation}
+\mathbb{E}(x_t) = \frac{\alpha}{1-\phi_1-\cdots-\phi_p}
+(\#eq:eq-funcion-media-ARp)
+\end{equation}
+
+siempre que el denominador sea distinto de cero. La ecuación polinómica asociada al modelo es
+
+\begin{equation}
+x^p-\phi_1x^{p-1}-\phi_2x^{p-2}-\cdots-\phi_p=0
+(\#eq:eq-polinomio-ARp)
+\end{equation}
+
+la cual nos referimos como la *ecuación característica* del modelo. Si todas las *raíces caractarísticas* de esta ecuación son menores qye uno en módulo, esto es $|r_j|<1$, con $j=1,\ldots,p$, entonces la serie $x_t$ es estacionaria. Para un proceso $AR(p)$ estacionario, la ACF satisface la ecuación en diferencias
+
+$$(1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p)\rho(h)=0\text{, para }h>0.$$
+
+El gráfico de la ACF de un proceso $AR(p)$ estacionario mostrará una mezcla de ondas de senos y cosenos con decaimientos exponenciales dependiendo de la naturaleza de sus raíces características.
+
+\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-43"><strong>(\#exm:unnamed-chunk-43) </strong></span>Consideremos el modelo $AR(3)$ de la forma 
+
+$$x_t=0.0047+0.35x_{t-1}+0.18x_{t-2}-0.14x_{t-3}+w_t.$$
+  
+Reescribiendo el proceso como 
+
+$$x_t-0.35x_{t-1}-0.18x_{t-2}+0.14x_{t-3}=0.0047+w_t$$
+  
+obtenemos la correspondiente ecuación en diferencias de orden 3,
+
+$$(1-0.35B-0.18B^2+0.14B^3)=0$$
+  
+la cual podemos factorizar como   
+
+$$(1+0.52B)(1-0.87B+0.27B^2)=0$$
+
+El primer factor $(1+0.52B)=0$, muestra u ndecaimiento exponencial en la ACF. Veamos ahora el segundo factor $(1-0.87B-(-0.27)B^2)=0$, tenemos que $\phi_1^2+4\phi_2=(0.87)^2+4(-0.27)=-0.3231<0$. Por consiguiente la ACF mostrará un comportamiento en ondas de senos y cosenos.</div>\EndKnitrBlock{example}
+
+
+```r
+xt<-arima.sim(list(order=c(3,0,0),ar=c(0.35,0.18,-0.14)),n=100)
+par(mfrow=c(2,1))
+plot(xt,type="l",main="Proceso AR(3)")
+acf(xt, main="ACF para el proceso AR(3)")
+```
+
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-44-1.svg" style="display: block; margin: auto;" />
+
+
+
+<!--chapter:end:301-modelos-AR.Rmd-->
 
 \cleardoublepage 
 
