@@ -25,7 +25,7 @@
 <meta name="author" content="Synergy Vision">
 
 
-<meta name="date" content="2018-05-25">
+<meta name="date" content="2018-06-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="modelos-de-series-de-tiempo.html">
-<link rel="next" href="referencias.html">
+<link rel="next" href="modelos-ma.html">
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
@@ -149,6 +149,23 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.1" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar1"><i class="fa fa-check"></i><b>4.1</b> Modelo AR(1)</a></li>
 <li class="chapter" data-level="4.2" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar2"><i class="fa fa-check"></i><b>4.2</b> Modelo AR(2)</a></li>
 <li class="chapter" data-level="4.3" data-path="modelos-ar.html"><a href="modelos-ar.html#procesos-arp"><i class="fa fa-check"></i><b>4.3</b> Procesos AR(p)</a></li>
+<li class="chapter" data-level="4.4" data-path="modelos-ar.html"><a href="modelos-ar.html#funcion-de-autocorrelacion-parcial"><i class="fa fa-check"></i><b>4.4</b> Función de Autocorrelación Parcial</a></li>
+<li class="chapter" data-level="4.5" data-path="modelos-ar.html"><a href="modelos-ar.html#criterios-de-informacion"><i class="fa fa-check"></i><b>4.5</b> Criterios de Información</a></li>
+<li class="chapter" data-level="4.6" data-path="modelos-ar.html"><a href="modelos-ar.html#estimacion-de-parametros."><i class="fa fa-check"></i><b>4.6</b> Estimación de Parámetros.</a></li>
+<li class="chapter" data-level="4.7" data-path="modelos-ar.html"><a href="modelos-ar.html#predicciones-con-modelos-ar"><i class="fa fa-check"></i><b>4.7</b> Predicciones con modelos AR</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-un-paso"><i class="fa fa-check"></i><b>4.7.1</b> Predicción de un paso</a></li>
+<li class="chapter" data-level="4.7.2" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-dos-pasos"><i class="fa fa-check"></i><b>4.7.2</b> Predicción de dos pasos</a></li>
+<li class="chapter" data-level="4.7.3" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-multiples-pasos"><i class="fa fa-check"></i><b>4.7.3</b> Predicción de múltiples pasos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="modelos-ma.html"><a href="modelos-ma.html"><i class="fa fa-check"></i><b>5</b> Modelos MA</a><ul>
+<li class="chapter" data-level="5.1" data-path="modelos-ma.html"><a href="modelos-ma.html#propiedades-de-los-modelos-ma"><i class="fa fa-check"></i><b>5.1</b> Propiedades de los modelos MA</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="modelos-ma.html"><a href="modelos-ma.html#estacionaridad"><i class="fa fa-check"></i><b>5.1.1</b> Estacionaridad</a></li>
+<li class="chapter" data-level="5.1.2" data-path="modelos-ma.html"><a href="modelos-ma.html#funcion-de-autocorrelacion-acf"><i class="fa fa-check"></i><b>5.1.2</b> Función de autocorrelación (ACF)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="modelos-ma.html"><a href="modelos-ma.html#identificacion-del-orden-de-un-ma"><i class="fa fa-check"></i><b>5.2</b> Identificación del orden de un MA</a></li>
+<li class="chapter" data-level="5.3" data-path="modelos-ma.html"><a href="modelos-ma.html#estimacion"><i class="fa fa-check"></i><b>5.3</b> Estimación</a></li>
+<li class="chapter" data-level="5.4" data-path="modelos-ma.html"><a href="modelos-ma.html#predicciones-usando-modelos-ma"><i class="fa fa-check"></i><b>5.4</b> Predicciones usando modelos MA</a></li>
 </ul></li>
 <li class="appendix"><span><b>Apéndice</b></span></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
@@ -182,7 +199,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 x_t=\phi_1x_{t-1}+\phi_2x_{t-2}+\cdots+\phi_px_{t-p}+w_t,
 \tag{4.1}
 \end{equation}\]</span>
-<p>donde <span class="math inline">\(x_t\)</span> es estacionario, <span class="math inline">\(\phi_1\phi_2,\ldots,\phi_p\)</span> son constantes (<span class="math inline">\(\phi_p\neq0\)</span>). A menos que se declare lo contrario, se asume que <span class="math inline">\(w_t\)</span> es un ruido blanco gaussiano de media cero y varianza <span class="math inline">\(\sigma_w^2\)</span>. La media de <span class="math inline">\(x_t\)</span> en <a href="modelos-ar.html#eq:eq-ARp">(4.1)</a> es cero. Si la media <span class="math inline">\(\mu\)</span> de <span class="math inline">\(x_t\)</span> no es cero, reemplazamos <span class="math inline">\(x_t\)</span> por <span class="math inline">\(x_t-\mu\)</span> en <a href="modelos-ar.html#eq:eq-ARp">(4.1)</a>, es decir</p>
+<p>donde <span class="math inline">\(x_t\)</span> es estacionario, <span class="math inline">\(\phi_1\phi_2,\ldots,\phi_p\)</span> son constantes (<span class="math inline">\(\phi_p\neq0\)</span>). A menos que se declare lo contrario, se asume que <span class="math inline">\(w_t\)</span> es un ruido blanco gaussiano de media cero y varianza <span class="math inline">\(\sigma_w^2\)</span>. La media de <span class="math inline">\(x_t\)</span> es <a href="modelos-ar.html#eq:eq-ARp">(4.1)</a> es cero. Si la media <span class="math inline">\(\mu\)</span> de <span class="math inline">\(x_t\)</span> no es cero, reemplazamos <span class="math inline">\(x_t\)</span> por <span class="math inline">\(x_t-\mu\)</span> en <a href="modelos-ar.html#eq:eq-ARp">(4.1)</a>, es decir</p>
 <p><span class="math display">\[x_t-\mu=\phi_1(x_{t-1}-\mu)+\phi_2(x_{t-2}-\mu)+\cdots+\phi_p(x_{t-p}-\mu)+w_t\]</span></p>
 <p>o escribimos</p>
 <span class="math display" id="eq:eq-ARp-mu">\[\begin{equation}
@@ -193,7 +210,7 @@ donde <span class="math inline">\(\alpha=\mu(1-\phi_1-\phi_2-\cdots-\phi_p)\)</s
 </div>
 
 <hr />
-<p>Note que <a href="modelos-ar.html#eq:eq-ARp-mu">(4.2)</a> es similar al modelo de regresión dado en <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-regresion-lineal">(2.53)</a> y por consiguiente el término <em>autoregresión</em>. Sin embargo, se presentan algunas dificultades técnicas para la aplicación de este modelo, porque los regresores <span class="math inline">\(x_{t-1},x_{t-2},\ldots,x_{t-p}\)</span> son aleatorios, mientras que <span class="math inline">\(x_t\)</span> se asume fijo. Una forma más útil se deriva de usar el siguiente operador de cambio dado por <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-backward-shift-operator">(2.42)</a>. Para escribir el modelo <span class="math inline">\(AR(p)\)</span> como</p>
+<p>Note que <a href="modelos-ar.html#eq:eq-ARp-mu">(4.2)</a> es similar al modelo de regresión dado en <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-regresion-lineal">(2.53)</a> y por consiguiente el término <em>autoregresión</em>. Sin embargo, se presentan algunas dificultades técnicas para la aplicación de este modelo, porque los regresores <span class="math inline">\(x_{t-1},x_{t-2},\ldots,x_{t-p}\)</span> son aleatorios, mientras que <span class="math inline">\(x_t\)</span> se asume fijo. Una forma más útil se deriva de usar el siguietne operador de cambio dado por <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-backward-shift-operator">(2.42)</a>. Para escribir el modelo <span class="math inline">\(AR(p)\)</span> como</p>
 <span class="math display" id="eq:eqARp-operador-B">\[\begin{equation}
 (1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p)x_t=w_t
 \tag{4.3}
@@ -206,14 +223,13 @@ donde <span class="math inline">\(\alpha=\mu(1-\phi_1-\phi_2-\cdots-\phi_p)\)</s
 <p>Las propiedades de <span class="math inline">\(\phi(B)\)</span> son importantes para resolver <a href="modelos-ar.html#eq:eq-ARp-B-conciso">(4.4)</a>. Esto nos lleva a la siguiente definición.</p>
 
 <div class="definition">
-<p><span id="def:defi-operador-autoregresivo" class="definition"><strong>Definición 4.2  </strong></span>El <em>operador autoregresivo</em> de orden <span class="math inline">\(p\)</span> se define como</p>
+<span id="def:defi-operador-autoregresivo" class="definition"><strong>Definición 4.2  </strong></span>El <em>operador autoregresivo</em> de orden <span class="math inline">\(p\)</span> se define como
 <span class="math display" id="eq:eq-operador-Bp">\[\begin{equation}
 \phi(B) = 1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p
 \tag{4.5}
 \end{equation}\]</span>
 </div>
 
-<hr />
 <div id="modelo-ar1" class="section level2">
 <h2><span class="header-section-number">4.1</span> Modelo AR(1)</h2>
 <p>Iniciaremos el estudio de los modelos <span class="math inline">\(AR\)</span> considerando el modelo de primer orden <span class="math inline">\(AR(1)\)</span>, dado por <span class="math inline">\(x_t=\phi x_{t-1}+w_t\)</span>. Iterando el operador de cambio <span class="math inline">\(k\)</span> veces, obtenemos</p>
@@ -276,9 +292,9 @@ ar1_<span class="dv">4</span>=<span class="kw">filter</span>(w,<span class="dt">
 <span class="kw">plot.ts</span>(ar1_<span class="dv">4</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>,<span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,
         <span class="dt">main =</span> <span class="st">&quot;AR(1) con phi=-0.5&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;t&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;x_t&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-39"></span>
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-39-1.svg" alt="Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de $phi_1$"  />
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-39-1.svg" alt="Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de phi"  />
 <p class="caption">
-Figura 4.1: Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de <span class="math inline">\(phi_1\)</span>
+Figura 4.1: Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de phi
 </p>
 </div>
 <p>A continuación mostramos las funciones de autocovarianzas de las series AR(1) simuladas anteriormente</p>
@@ -355,16 +371,16 @@ x^2-\phi_1x-\phi_2=0
 <li><p><span class="math inline">\(x_t=0.2x_{t-1}+0.35x_{t-2}+w_t\)</span></p></li>
 <li><p><span class="math inline">\(x_t=-0.2x_{t-1}+0.35x_{t-2}+w_t\)</span></p></li>
 </ol>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-41"></span>
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-41-1.svg" alt="Cuatro procesos estacionarios AR(2) con distintos valores de phi1 y phi2"  />
+<div class="figure"><span id="fig:unnamed-chunk-41"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-41-1.svg" alt="ACF de 4 procesos estacionarios AR(2)"  />
 <p class="caption">
-Figura 4.3: Cuatro procesos estacionarios AR(2) con distintos valores de phi1 y phi2
+Figura 4.3: ACF de 4 procesos estacionarios AR(2)
 </p>
 </div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-42"></span>
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-42-1.svg" alt="ACF de 4 procesos estacionarios AR(2) con distintos valores de phi1 y phi2"  />
+<div class="figure"><span id="fig:unnamed-chunk-41"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-41-2.svg" alt="ACF de 4 procesos estacionarios AR(2)"  />
 <p class="caption">
-Figura 4.4: ACF de 4 procesos estacionarios AR(2) con distintos valores de phi1 y phi2
+Figura 4.3: ACF de 4 procesos estacionarios AR(2)
 </p>
 </div>
 <p>La serie (b) tiene raíces características complejas, en efecto</p>
@@ -389,7 +405,7 @@ x^p-\phi_1x^{p-1}-\phi_2x^{p-2}-\cdots-\phi_p=0
 <p>El gráfico de la ACF de un proceso <span class="math inline">\(AR(p)\)</span> estacionario mostrará una mezcla de ondas de senos y cosenos con decaimientos exponenciales dependiendo de la naturaleza de sus raíces características.</p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-43" class="example"><strong>Ejemplo 4.1  </strong></span>Consideremos el modelo <span class="math inline">\(AR(3)\)</span> de la forma</p>
+<p><span id="exm:ejem-modelo-AR3" class="example"><strong>Ejemplo 4.1  </strong></span>Consideremos el modelo <span class="math inline">\(AR(3)\)</span> de la forma</p>
 <p><span class="math display">\[x_t=0.0047+0.35x_{t-1}+0.18x_{t-2}-0.14x_{t-3}+w_t.\]</span></p>
 <p>Reescribiendo el proceso como</p>
 <p><span class="math display">\[x_t-0.35x_{t-1}-0.18x_{t-2}+0.14x_{t-3}=0.0047+w_t\]</span></p>
@@ -397,26 +413,193 @@ x^p-\phi_1x^{p-1}-\phi_2x^{p-2}-\cdots-\phi_p=0
 <p><span class="math display">\[(1-0.35B-0.18B^2+0.14B^3)=0\]</span></p>
 <p>la cual podemos factorizar como</p>
 <p><span class="math display">\[(1+0.52B)(1-0.87B+0.27B^2)=0\]</span></p>
-El primer factor <span class="math inline">\((1+0.52B)=0\)</span>, muestra u ndecaimiento exponencial en la ACF. Veamos ahora el segundo factor <span class="math inline">\((1-0.87B-(-0.27)B^2)=0\)</span>, tenemos que <span class="math inline">\(\phi_1^2+4\phi_2=(0.87)^2+4(-0.27)=-0.3231&lt;0\)</span>. Por consiguiente la ACF mostrará un comportamiento en ondas de senos y cosenos.
+<p>El primer factor <span class="math inline">\((1+0.52B)=0\)</span>, muestra u ndecaimiento exponencial en la ACF. Veamos ahora el segundo factor <span class="math inline">\((1-0.87B-(-0.27)B^2)=0\)</span>, tenemos que <span class="math inline">\(\phi_1^2+4\phi_2=(0.87)^2+4(-0.27)=-0.3231&lt;0\)</span>. Por consiguiente la ACF mostrará un comportamiento en ondas de senos y cosenos.</p>
 </div>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xt&lt;-<span class="kw">arima.sim</span>(<span class="kw">list</span>(<span class="dt">order=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="dt">ar=</span><span class="kw">c</span>(<span class="fl">0.35</span>,<span class="fl">0.18</span>,<span class="op">-</span><span class="fl">0.14</span>)),<span class="dt">n=</span><span class="dv">100</span>)
 <span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))
 <span class="kw">plot</span>(xt,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">main=</span><span class="st">&quot;Proceso AR(3)&quot;</span>)
-<span class="kw">acf</span>(xt, <span class="dt">main=</span><span class="st">&quot;ACF para el proceso AR(3)&quot;</span>)</code></pre></div>
-<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-44-1.svg" style="display: block; margin: auto;" /></p>
+<span class="kw">acf</span>(xt)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-42-1.svg" /><!-- --></p>
+<hr />
+<p>En aplicaciones, se desconoce el orden <span class="math inline">\(p\)</span> de una serie de tiempo autoregresiva, por lo que debe especificarse empíricamente. Esto se conoce como la determinación del orden de los modelos <span class="math inline">\(AR\)</span>. Existen dos enfoques generales para determinar el valor de <span class="math inline">\(p\)</span>. El primero es utilizar la función de autocorrelación parcial, y el segundo utilizar alguna función de criterio de información. En <strong>R</strong> existe una función para determinar el orden <span class="math inline">\(p\)</span> de un proceso <span class="math inline">\(AR\)</span>, sin embargo vamos a estudiar primero los dos enfoques mencionados de manera de poder entender como funciona <strong>R</strong> al respecto.</p>
+</div>
+<div id="funcion-de-autocorrelacion-parcial" class="section level2">
+<h2><span class="header-section-number">4.4</span> Función de Autocorrelación Parcial</h2>
+<p>La función de autocorrelación parcial PACF (siglas en inglés: Partial Autocorrelation Function) de una serie de tiempo es una función de su ACF y es una herramienta útil para determinar el orden <span class="math inline">\(p\)</span> de un modelo autoregresivo. Una manera simple pero efectiva de introducir la PACF es considerando los siguientes modelos <span class="math inline">\(AR\)</span> en órdenes consecutivos:</p>
+<span class="math display">\[\begin{eqnarray*}
+x_t &amp;=&amp; \phi_{0,1}+\phi_{1,1}x_{t-1}+w_{1t} \\
+x_t &amp;=&amp; \phi_{0,2}+\phi_{1,2}x_{t-1}+\phi_{2,2}x_{t-2}+w_{2t} \\
+x_t &amp;=&amp; \phi_{0,3}+\phi_{1,3}x_{t-1}+\phi_{2,3}x_{t-2}+\phi_{3,3}x_{t-3}+w_{2t} \\
+\vdots &amp; &amp; \\
+\end{eqnarray*}\]</span>
+<p>donde <span class="math inline">\(\phi_{0,j}, \phi_{i,j}, \{w_{jt}\}\)</span> son respectivamente, el término constante, el coeficiente de <span class="math inline">\(x_{t-j}\)</span> y el término de error del modelo <span class="math inline">\(AR(j)\)</span>. Estos modelos están en la forma de regresión lineal múltiple y se pueden estimar por mínimos cuadrados.</p>
+<p>La estimación de <span class="math inline">\(\hat{\phi}_{1,1}\)</span> de la primera ecuación se llama <em>PACF muestral de paso 1</em> de <span class="math inline">\(x_t\)</span>. LA estimación de <span class="math inline">\(\hat{\phi}_{2,2}\)</span> de la segunda ecuación es la PACF muestral de paso 2 de <span class="math inline">\(x_t\)</span>. La estimación <span class="math inline">\(\hat{\phi}_{3,3}\)</span> de la tercera ecuación es la PACF muestral de paso 3 de <span class="math inline">\(x_t\)</span>, y así sucesivamente.</p>
+<p>De la definición, la PACF de paso 2 muestra la contribución añadida de <span class="math inline">\(x_{t-2}\)</span> a <span class="math inline">\(x_t\)</span> sobre el modelo <span class="math inline">\(AR(1)\)</span> <span class="math inline">\(x_t=\phi_0+\phi_1x_{t-1}+w_{1t}\)</span>. La PACF de paso 3 muestra la contribución añadida de <span class="math inline">\(x_{t-3}\)</span> a <span class="math inline">\(x_t\)</span> sobre un modelo <span class="math inline">\(AR(2)\)</span>, etc. Por lo tanto, para un modelo <span class="math inline">\(AR(p)\)</span>, la PACF de paso <span class="math inline">\(p\)</span> no debería ser cero, sino que <span class="math inline">\(\hat{\phi}_{j,j}\)</span> debería ser cercano a cero para todo <span class="math inline">\(j&gt;p\)</span>. Esta propiedad será útil para determinar el orden <span class="math inline">\(p\)</span>. De hecho, bajo ciertas condiciones de regularidad, se puede demostrar que la PACF muestral de un proceso <span class="math inline">\(AR(p)\)</span> tiene las siguientes propiedades:</p>
+<ul>
+<li><p><span class="math inline">\(\hat{\phi}_{p,p}\)</span> converge a <span class="math inline">\(\phi_p\)</span> cuando el tamaño <span class="math inline">\(N\)</span> de la muestra tiende a infinito.</p></li>
+<li><p><span class="math inline">\(\hat{\phi}_{l,l}\)</span> converge a cero para todo <span class="math inline">\(l&gt;p\)</span>.</p></li>
+<li><p>La varianza asintótica de <span class="math inline">\(\hat{\phi}_{l,l}\)</span> es <span class="math inline">\(1/N\)</span> para <span class="math inline">\(l&gt;p\)</span>.</p></li>
+</ul>
+<p>Estos resultados dicen que para una serie <span class="math inline">\(AR(p)\)</span> la PACF muestral se corta en paso o salto <span class="math inline">\(p\)</span>.</p>
+<p>Para concluir esta sección, destaquemos que tanto la función de autocorrelación (ACF) como la función de autocorrelación parcial (PACF) nos permiten determinar el orden de un modelo <span class="math inline">\(AR(p)\)</span>. El cuadro siguiente indica como usarlas</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>ACF</th>
+<th>PACF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AR(p)</td>
+<td>Disminución gradual</td>
+<td>Corte en paso p</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="criterios-de-informacion" class="section level2">
+<h2><span class="header-section-number">4.5</span> Criterios de Información</h2>
+<p>Existen diversos criterios de información disponibles para determinar el orden <span class="math inline">\(p\)</span> de un proceso autoregresivo. Todos ellos están basados en verosimilitud. El primer criterio ya lo definimos en <a href="caracteristicas-de-series-de-tiempo.html#def:defi-AIC">2.16</a></p>
 
+<div class="definition">
+<p><span id="def:defi-AIC-2" class="definition"><strong>Definición 4.3  </strong></span>El Criterio de Información de Akaike se define como</p>
+<span class="math display" id="eq:eq-AIC">\[\begin{equation}
+AIC = \ln\hat{\sigma}_k^2+\frac{n+2k}{n}
+\tag{2.70}
+\end{equation}\]</span>
+donde <span class="math inline">\(\hat{\sigma}_k^2\)</span> es el estimador de máxima verosimilitud para la varianza, <span class="math inline">\(k\)</span> es el número de parámetros en el modelo y <span class="math inline">\(n\)</span> es el tamaño de la muestra<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a>
+</div>
+
+<hr />
+<p>El <strong>Criterio de Información de Akaike</strong> (AIC) es una medida de la calidad relativa de un modelo estadístico, para un conjunto dado de datos. Como tal, el AIC proporciona un medio para la selección del modelo. El AIC maneja un trade-off<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> entre la bondad de ajuste del modelo y la complejidad del modelo. Se basa en la entropía de información: se ofrece una estimación relativa de la información perdida cuando se utiliza un modelo determinado para representar el proceso que genera los datos.</p>
+<p>El AIC no proporciona una prueba de un modelo en el sentido de probar una hipótesis nula, es decir el AIC puede decir nada acerca de la calidad del modelo en un sentido absoluto. Si todos los modelos candidatos encaja mal, el AIC nodará ningún aviso de ello. El valor de <span class="math inline">\(k\)</span> que minimiza el AIC especifica el mejor modelo. La idea es que la minimización de <span class="math inline">\(\hat{\sigma}_k^2\)</span> sea razonablemente objetiva, excepto que decrezca monótonamente cuando <span class="math inline">\(k\)</span> crece. Por lo tanto, debemos penalizar la variación del error por un término proporcional al número de parámetros. La elección del término de penalización dado por <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-AIC">(2.70)</a> no es único.</p>
+<p>En el criterio AIC definido en la ecuación <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-AIC">(2.70)</a>, el sesgo es aproximado por el número de parámetros los cuales son constantes y no tienen variabilidad. Para el modelo de regresión, la corrección del sesgo el logaritmo de la verosimilitud se define como</p>
+
+<div class="definition">
+<span id="def:defi-AICc" class="definition"><strong>Definición 4.4  </strong></span>
+<span class="math display" id="eq:eq-AICc">\[\begin{equation}
+AICc = \ln\hat{\sigma}_k^2+\frac{n+k}{n-k-2}
+\tag{4.17}
+\end{equation}\]</span>
+donde <span class="math inline">\(\hat{\sigma}_k^2\)</span> es el estimador de máxima verosimilitud de la varianza, <span class="math inline">\(k\)</span> es el número de parámetros en el modelo y <span class="math inline">\(n\)</span> es el tamaño de la muestra.
+</div>
+
+<hr />
+<p>Este modelo fue propuesto originalmente por <em>N. Sugiura</em> en el artículo <strong>“Further analysis of the data by Akaike’s information criterion and the finite corrections”</strong>. <em>Communications in Statistics, Theory and Methods</em>, Vol. 7, No. 1, pp. 13-26, 1978. Se tiene que el AICc es esencialmente el AIC con un término de penalización adicional para el número de parámetros. Nótese que cuando <span class="math inline">\(n\to\infty\)</span>, el término de penalización adicional converge a 0, y por lo tanto el AICc converge al AIC. De manera similar que en el AIC, se selecciona el modelo con el menor valor AICc.</p>
+
+<div class="definition">
+<span id="def:defi-SIC" class="definition"><strong>Definición 4.5  </strong></span>
+<span class="math display" id="eq:eq-SIC">\[\begin{equation}
+SIC = \ln\hat{\sigma}_k^2+\frac{k\ln n}{n}
+\tag{4.18}
+\end{equation}\]</span>
+usando la misma notación que en la definición <a href="modelos-ar.html#def:defi-AICc">4.4</a>.
+</div>
+
+<hr />
+<p>SIC también llamado <em>Criterio Bayesiano de Información</em> (BIC) es un criterio para la selección de modelos. Se basa, en parte, en la función de probabilidad y está estrechamente relacionado con el Criterio de Información de Akaike (AIC). Cuando se hace ajuste de modelos, es posible aumentar la probabilidad mediante la adición de parámetros, pero esto puede resultar en sobreajuste. Tanto BIC como AIc resuelven este problema mediante la introducción de un término de penalización para el núemro de parámetros en el modelo, el término de penalización es mayor en el BIC que en el AIC.</p>
+<p>El BIC fue desarrollado por <em>Gideon E. Schwarz</em>, quien dio un argumento bayesiano a favor de su adopción. Akaike también desarrolló su propio formalismo bayesiano, que ahora se conoce como la ABIC (siglas en inglés) por Criterio de Información Bayesiano de Akaike.</p>
+
+<div class="example">
+<span id="exm:ejem-serie-nuevos-peces-AR2" class="example"><strong>Ejemplo 4.2  </strong></span>Consideremos el archivo de datos “recruit.txt”, consistente del número de nuevos peces en el Pacífico Central relacionado con el Índice de Oscilación del Sur (SOI) que mide los cambios en la presión del aire relativo a la temperatura de la superficie del mar. Son 453 registros de 1950 a 1987 tomados mensualmente. La ACF y la PACF indican que el modelo que mejor se ajusta es un <span class="math inline">\(AR(2)\)</span>. La ACF tiene ciclos correspondientes a aproximadamente períodos de 12 meses y la PACF tiene valores grandes para <span class="math inline">\(h=1,2\)</span> y es esencialmente cero para paso de orden mayor.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rec=<span class="kw">ts</span>(<span class="kw">scan</span>(<span class="st">&quot;data/recruit.txt&quot;</span>),<span class="dt">start =</span> <span class="dv">1950</span>, <span class="dt">frequency =</span> <span class="dv">12</span>)
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))
+<span class="kw">plot</span>(rec,<span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;meses&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Número de nuevos peces en el Pacífico Central (1950-1987)&quot;</span>)
+<span class="kw">acf</span>(rec,<span class="dv">48</span>)
+<span class="kw">pacf</span>(rec,<span class="dv">48</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-43-1.svg" /><!-- --></p>
+</div>
+<div id="estimacion-de-parametros." class="section level2">
+<h2><span class="header-section-number">4.6</span> Estimación de Parámetros.</h2>
+<p>Para un modelo <span class="math inline">\(AR(p)\)</span> especificado por <a href="modelos-ar.html#eq:eq-ARp">(4.1)</a>, el método de mínimos cuadrados condicional, el cual inicia con <span class="math inline">\(p+1\)</span> observaciones, se usa a menudo para estimar los parámetros. Específicamente, condicionando sobre las primeras <span class="math inline">\(p\)</span> observaciones, tenemos</p>
+<p><span class="math display">\[x_t=\phi_0+\phi_1x_{t-1}+\cdots+\phi_px_{t-p}+w_t,\quad t=p+1,\ldots,N,\]</span></p>
+<p>el cual se puede estimar por mínimos cuadrados. Denotemos los estimadores de <span class="math inline">\(\phi_i\)</span> por <span class="math inline">\(\hat{\phi}_i\)</span>. El <em>modelo ajustado</em> será</p>
+<p><span class="math display">\[\hat{x}_t = \hat{\phi}_0+\hat{\phi}_1x_{t-1}+\cdots+\hat{\phi}_px_{t-p}\]</span></p>
+<p>y el residual asociado es</p>
+<p><span class="math display">\[\hat{w}_t=x_t-\hat{x}_t\]</span></p>
+<p>La serie <span class="math inline">\(\{\hat{w}_t\}\)</span> se llama <em>serie residual</em>, de la cual obtenemos</p>
+<p><span class="math display">\[\hat{\sigma}_w^2 = \frac{\sum_{t=p+1}^N\hat{w}_t^2}{N-2p-1}\]</span></p>
+<p>Debemos examinar con cuidado un modelo ajustado para verificar si es adecuado o no. Si el modelo es adecuado, entonces la serie residual debe comportarse como un ruido blanco. La ACF y el estadístico de Ljung-Box<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a> de los residuos son útiles para comprobar la cercanía de <span class="math inline">\(\hat{w}_t\)</span> a un ruido blanco. Para un modelo <span class="math inline">\(AR(p)\)</span>, el estadístico de Ljung-Box <span class="math inline">\(Q(m)\)</span> se distribuye asintóticamente como una Chi-Cuadrado con <span class="math inline">\(m-p\)</span> grados de libertad, para significar que los <span class="math inline">\(p\)</span> coeficientes del proceso AR son estimados. Si descubirmos que un modelo ajustado es inadecuado, debemos refinarlo.</p>
+</div>
+<div id="predicciones-con-modelos-ar" class="section level2">
+<h2><span class="header-section-number">4.7</span> Predicciones con modelos AR</h2>
+<p>La predicción es una aplicación importante del análisis de series de tiempo. Para el modelo <span class="math inline">\(AR(p)\)</span> en la ecuación <a href="modelos-ar.html#eq:eq-ARp">(4.1)</a>, supongamos que estamos en tiempo <span class="math inline">\(m\)</span> y estamos interesados en predecir <span class="math inline">\(x_{m+h}\)</span>, donde <span class="math inline">\(h\geq1\)</span>. El tiempo <span class="math inline">\(m\)</span> se llama el <em>origen de predicción</em> y el entero <span class="math inline">\(h\)</span> es el <em>horizonte de predicción</em>. Sea <span class="math inline">\(\hat{x}_m(h)\)</span> la predicción de <span class="math inline">\(x_{m+h}\)</span> usando la función de pérdida de error mínimo al cuadrado. En otras palabras, escogemos la predicción <span class="math inline">\(\hat{x}_k(h)\)</span> tal que</p>
+<p><span class="math display">\[\mathbb{E}(x_{m+h}-\hat{x}_m(h))\leq\min_g\mathbb{E}(x_{m+h}-g)^2\]</span></p>
+<p>donde <span class="math inline">\(g\)</span> es una función de información disponible pen tiempo <span class="math inline">\(m\)</span>. Nos referimos a <span class="math inline">\(\hat{x}_m(h)\)</span> como la predicción de <span class="math inline">\(h\)</span> pasos de <span class="math inline">\(x_t\)</span> con origen de predicción <span class="math inline">\(m\)</span>.</p>
+<div id="prediccion-de-un-paso" class="section level3">
+<h3><span class="header-section-number">4.7.1</span> Predicción de un paso</h3>
+<p>Del modelo <span class="math inline">\(AR(p)\)</span> tenemos</p>
+<p><span class="math display">\[x_{m+1}=\phi_0+\phi_1x_m+\cdots+\phi_px_{m+1-p}+w_{m+1}\]</span></p>
+<p>Bajo la función de pérdida de error mínimo al cuadrado, la predicción puntual <span class="math inline">\(x_{m+1}\)</span> dado el modelo y las observaciones hasta tiempo <span class="math inline">\(m\)</span>, es el valor esperado condicional</p>
+<p><span class="math display">\[\hat{x}_m(1) = \mathbb{E}(x_{m+1}|x_m,x_{m-1},\ldots) = \phi_0+\sum_{i=1}^p\phi_ix_{m+1-i}\]</span></p>
+<p>y el error de predicción asociado es</p>
+<p><span class="math display">\[e_m(1)=x_{m+1}-\hat{x}_m(1)=w_{m+1}\]</span></p>
+<p>Consecuentemente, la varianza del error de predicción de un paso es <span class="math inline">\(Var(e_m(1))=Var(w_{m+1})=\sigma_w^2\)</span>. Si <span class="math inline">\(w_t\)</span> se distribuye como una normal, entonces un intervalo de predicción de un paso del 95% de confianza está dado por</p>
+<p><span class="math display">\[\hat{x}_m(1)\pm1.96\sigma_w^2.\]</span></p>
+</div>
+<div id="prediccion-de-dos-pasos" class="section level3">
+<h3><span class="header-section-number">4.7.2</span> Predicción de dos pasos</h3>
+<p>Ahora consideremos la predicción de <span class="math inline">\(x_{m+2}\)</span> con origen de predicción <span class="math inline">\(m\)</span>. De un modelo <span class="math inline">\(AR(p)\)</span>, tenemos</p>
+<p><span class="math display">\[x_{m+2} = \phi_0+\phi_1x_{m+1}+\cdots+\phi_px_{m+2-p}+w_{m+2}\]</span></p>
+<p>Tomando valor esperado condicional, tenemos</p>
+<span class="math display">\[\begin{eqnarray*}
+\hat{x}_m(2) &amp;=&amp; \mathbb{E}(x_{m+2}|x_m,x_{m-1},\ldots) \\
+      &amp;=&amp; \phi_0+\phi_1\hat{x}_m(1)+\phi_2x_m+\cdots+\phi_px_{m+2-p}
+\end{eqnarray*}\]</span>
+<p>y el error de predicción asociado es</p>
+<span class="math display">\[\begin{eqnarray*}
+e_m(2) &amp;=&amp; x_{m+2}-\hat{x}_m(2) = \phi_1[x_{m+1}-\hat{x}_m(1)]+w_{m+2} \\
+       &amp;=&amp; w_{m+2}-\phi_1w_{m+1}
+\end{eqnarray*}\]</span>
+<p>La varianza del error de predicción es <span class="math inline">\(Var(e_m(2))=(1+\phi_1^2)\sigma_w^2\)</span>. Un intervalo de predicción para <span class="math inline">\(x_{m+2}\)</span> lo podemos calcular de la misma manera que para <span class="math inline">\(x_{m+1}\)</span>. Es interesante notar que <span class="math inline">\(Var(e_m(2))\geq Var(e_m(1))\)</span>, lo que indica que cuando el horizonte de predicción crece la incertidumbre de la predicción también crece.</p>
+</div>
+<div id="prediccion-de-multiples-pasos" class="section level3">
+<h3><span class="header-section-number">4.7.3</span> Predicción de múltiples pasos</h3>
+<p>En general, tenemos</p>
+<p><span class="math display">\[x_{m+h}=\phi_0+\phi_1x_{m+h-1}+\cdots+\phi_px_{m+h-p}+w_{m+h}\]</span></p>
+<p>La predicción de <span class="math inline">\(h\)</span> pasos basado en la función de pérdida de error mínimo al cuadrado es el valor epsrado condicional de <span class="math inline">\(x_{m+h}\)</span> dado <span class="math inline">\(\{x_{m-i}\}_{i=0}^{\infty}\)</span>, el cual podemos escribir como</p>
+<p><span class="math display">\[\hat{x}_m(h) = \phi_0+\sum_{i=1}^p\phi_1\hat{x}_m(h-i)\]</span></p>
+<p>donde se entiede que <span class="math inline">\(\hat{x}_m(i)=x_{m+i}\)</span> si <span class="math inline">\(i&lt;0\)</span>. Esta predicción se puede calcular recursivamente usando las predicciones <span class="math inline">\(\hat{x}_m(i)\)</span> para <span class="math inline">\(i=1,\ldots,h-1\)</span>. El error de predicción de paso <span class="math inline">\(h\)</span> es <span class="math inline">\(e_m(h)=x_{m+h}-\hat{x}_m(h)\)</span>. Se puede demostrar que para un proceso <span class="math inline">\(AR(p)\)</span> estacionario, <span class="math inline">\(\hat{x}_m(h)\)</span> converge a <span class="math inline">\(\mathbb{E}(x_t)\)</span> cuando <span class="math inline">\(h\to\infty\)</span>, esto es, para una serie <span class="math inline">\(AR(p)\)</span> estacionaria, la predicción a largo plazo se aproxima a su media incondicional. Esta propiedad se conoce como la <em>reversión media</em> en la literatura financiera. La desviación del error de predicción se aproxima entonces a la desviación incondicional de <span class="math inline">\(x_t\)</span>.</p>
+
+<div class="example">
+<p><span id="exm:ejem-prediccion-SOI" class="example"><strong>Ejemplo 4.3  </strong></span>Realicemos una predicción para la serie de nuevos peces dado en el ejemplo <a href="modelos-ar.html#exm:ejem-serie-nuevos-peces-AR2">4.2</a>. Para ello usaremos la función “predict” de R. Vamos a hacer una predicción de 24 meses. Del ejemplo <a href="modelos-ar.html#exm:ejem-serie-nuevos-peces-AR2">4.2</a>, pudimos notar en las ACF y PACF que un modelo que se ajusta a esta serie es un proceso <span class="math inline">\(AR(2)\)</span>, así que lo primero que hacemos es ajustar el modelo, y luego calculamos la predicción.</p>
+<p>Al realizar el gráfico de la serie y la predicción notamos que después de 12 meses, la predicción converge a la media de la serie tal como se describió previamente.</p>
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Ajuste AR(2)</span>
+regr=<span class="kw">ar.ols</span>(rec,<span class="dt">order=</span><span class="dv">2</span>,<span class="dt">demean =</span> <span class="ot">FALSE</span>, <span class="dt">intercept =</span> <span class="ot">TRUE</span>)
+regr<span class="op">$</span>asy.se.coef</code></pre></div>
+<pre><code>## $x.mean
+## [1] 1.111
+## 
+## $ar
+## [1] 0.04179 0.04188</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Prediccion</span>
+fore=<span class="kw">predict</span>(regr, <span class="dt">n.ahead=</span><span class="dv">24</span>)</code></pre></div>
+<pre><code>## Warning in object$var.pred * vars: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ts.plot</span>(rec,fore<span class="op">$</span>pred,<span class="dt">col=</span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">1980</span>,<span class="dv">1990</span>),
+        <span class="dt">xlab=</span><span class="st">&quot;Años&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Nuevos peces&quot;</span>)
+<span class="kw">lines</span>(fore<span class="op">$</span>pred,<span class="dt">type =</span> <span class="st">&quot;p&quot;</span>,<span class="dt">col=</span><span class="dv">2</span>)
+<span class="kw">lines</span>(fore<span class="op">$</span>pred<span class="op">+</span>fore<span class="op">$</span>se,<span class="dt">lty =</span> <span class="st">&quot;dashed&quot;</span>,<span class="dt">col=</span><span class="dv">4</span>)
+<span class="kw">lines</span>(fore<span class="op">$</span>pred<span class="op">-</span>fore<span class="op">$</span>se,<span class="dt">lty =</span> <span class="st">&quot;dashed&quot;</span>,<span class="dt">col=</span><span class="dv">4</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-44-1.svg" /><!-- --></p>
 
 </div>
 </div>
-
-
-
 </div>
 <div class="footnotes">
 <hr />
 <ol start="3">
 <li id="fn3"><p>Note que <span class="math inline">\(\lim_{k\to\infty}\mathbb{E}(x_t-\sum_{j=0}^{\infty}\phi^jw_{t-j})^2 = \lim_{k\to\infty}\phi^{2k}\mathbb{E}(x_{t-k}^2)=0\)</span>, de modo que <a href="modelos-ar.html#eq:eq-AR1-serie-lineal">(4.6)</a> existe en el sentido de media cuadrado.<a href="modelos-ar.html#fnref3">↩</a></p></li>
+<li id="fn4"><p>Formalmente, el AIC se define como <span class="math display">\[-2\ln L_k+2k\]</span> donde <span class="math inline">\(L_k\)</span> es la verosimilud maximizada y <span class="math inline">\(k\)</span> es el número de parámetros del modelo.<a href="modelos-ar.html#fnref4">↩</a></p></li>
+<li id="fn5"><p><em>Trade-off</em> o simplemente <em>tradeoff</em> , en algunas ocasiones traducido al español como <em>sacrificio</em>, es un anglicismo que describe una situación en la cual se debe perder cierta cualidad a cambio de otra cualidad. Un tradeoff se puede dar por varias razones, entre ellas por simples limitaciones de la física (dentro de una cantidad de espacio dada se pueden meter muchos objetos pequeños o una menor cantidad de objetos grandes). La idea de un tradeoff como una decisión por lo general implica que ésta es realizada con una compresión total de las ventajas y desventajas de la decisión en particular, como por ejemplo, es el caso cuando una persona decide invertir en acciones de una empresa (una inversión más riesgosa pero con mayor potencial) sobre bonos (por lo general más seguros pero con menor potencial de ganancias).<a href="modelos-ar.html#fnref5">↩</a></p></li>
+<li id="fn6"><p>El estadístico de Ljung-Box está dado por <span class="math display">\[Q(m) = N(N+2)\sum_{i=1}^m\frac{\hat{\rho}_i^2}{N-i}\]</span> donde <span class="math inline">\(\hat{\rho}_1,\hat{\rho}_2,\ldots\)</span>, son las <em>funciones de autocorrelación muestral</em> (ACF) de <span class="math inline">\(x_t\)</span>, <span class="math inline">\(N\)</span> el tamaño de la muestra.<a href="modelos-ar.html#fnref6">↩</a></p></li>
 </ol>
 </div>
 <script>
@@ -431,7 +614,7 @@ ga('send', 'pageview');
         </div>
       </div>
 <a href="modelos-de-series-de-tiempo.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="referencias.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="modelos-ma.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>

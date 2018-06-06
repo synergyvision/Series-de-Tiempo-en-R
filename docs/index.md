@@ -4,7 +4,7 @@
 title: "Series de Tiempo en R"
 subtitle: "Ciencia de los Datos Financieros"
 author: "Synergy Vision"
-date: "2018-05-25"
+date: "2018-06-06"
 knit: "bookdown::render_book"
 documentclass: krantz
 bibliography: [book.bib, packages.bib]
@@ -2004,7 +2004,7 @@ x_t=\phi_1x_{t-1}+\phi_2x_{t-2}+\cdots+\phi_px_{t-p}+w_t,
 (\#eq:eq-ARp)
 \end{equation}
 
-donde $x_t$ es estacionario, $\phi_1\phi_2,\ldots,\phi_p$ son constantes ($\phi_p\neq0$). A menos que se declare lo contrario, se asume que $w_t$ es un ruido blanco gaussiano de media cero y varianza $\sigma_w^2$. La media de $x_t$ en \@ref(eq:eq-ARp) es cero. Si la media $\mu$ de $x_t$ no es cero, reemplazamos $x_t$ por $x_t-\mu$ en \@ref(eq:eq-ARp), es decir
+donde $x_t$ es estacionario, $\phi_1\phi_2,\ldots,\phi_p$ son constantes ($\phi_p\neq0$). A menos que se declare lo contrario, se asume que $w_t$ es un ruido blanco gaussiano de media cero y varianza $\sigma_w^2$. La media de $x_t$ es \@ref(eq:eq-ARp) es cero. Si la media $\mu$ de $x_t$ no es cero, reemplazamos $x_t$ por $x_t-\mu$ en \@ref(eq:eq-ARp), es decir
 
 $$x_t-\mu=\phi_1(x_{t-1}-\mu)+\phi_2(x_{t-2}-\mu)+\cdots+\phi_p(x_{t-p}-\mu)+w_t$$
 
@@ -2019,7 +2019,7 @@ donde $\alpha=\mu(1-\phi_1-\phi_2-\cdots-\phi_p)$.</div>\EndKnitrBlock{definitio
 
 ----
 
-Note que \@ref(eq:eq-ARp-mu) es similar al modelo de regresión dado en \@ref(eq:eq-regresion-lineal) y por consiguiente el término *autoregresión*. Sin embargo, se presentan algunas dificultades técnicas para la aplicación de este modelo, porque los regresores $x_{t-1},x_{t-2},\ldots,x_{t-p}$ son aleatorios, mientras que $x_t$ se asume fijo. Una forma más útil se deriva de usar el siguiente operador de cambio dado por \@ref(eq:eq-backward-shift-operator). Para escribir el modelo $AR(p)$ como
+Note que \@ref(eq:eq-ARp-mu) es similar al modelo de regresión dado en \@ref(eq:eq-regresion-lineal) y por consiguiente el término *autoregresión*. Sin embargo, se presentan algunas dificultades técnicas para la aplicación de este modelo, porque los regresores $x_{t-1},x_{t-2},\ldots,x_{t-p}$ son aleatorios, mientras que $x_t$ se asume fijo. Una forma más útil se deriva de usar el siguietne operador de cambio dado por \@ref(eq:eq-backward-shift-operator). Para escribir el modelo $AR(p)$ como
 
 \begin{equation}
 (1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p)x_t=w_t
@@ -2036,13 +2036,10 @@ o más conciso como
 Las propiedades de $\phi(B)$ son importantes para resolver \@ref(eq:eq-ARp-B-conciso). Esto nos lleva a la siguiente definición.
 
 \BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-operador-autoregresivo"><strong>(\#def:defi-operador-autoregresivo) </strong></span>El *operador autoregresivo* de orden $p$ se define como
-
 \begin{equation}
 \phi(B) = 1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p
 (\#eq:eq-operador-Bp)
 \end{equation}</div>\EndKnitrBlock{definition}
-
-----
 
 ## Modelo AR(1)
 
@@ -2057,13 +2054,14 @@ x_t &=& \phi x_{t-1}+w_t = \phi(\phi x_{t-2}+w_{t-1})+w_t \\
 
 Este método sugiere que por iteración continua del operador de cambio, siempre que $|\phi|<1$ y $x_t$ sea estacionario, podemos representar un modelo $AR(1)$ como un proceso lineal dado por [^nota3]
 
-[^nota3]: Note que $\lim_{k\to\infty}\mathbb{E}(x_t-\sum_{j=0}^{\infty}\phi^jw_{t-j})^2 = \lim_{k\to\infty}\phi^{2k}\mathbb{E}(x_{t-k}^2)=0$, de modo que \@ref(eq:eq-AR1-serie-lineal) existe en el sentido de media cuadrado. 
+[^nota3]: Note que $\lim_{k\to\infty}\mathbb{E}(x_t-\sum_{j=0}^{\infty}\phi^jw_{t-j})^2 = \lim_{k\to\infty}\phi^{2k}\mathbb{E}(x_{t-k}^2)=0$, de modo que \@ref(eq:eq-AR1-serie-lineal) existe en el sentido de media cuadrado.
 
 \begin{equation}
 x_t \sum_{j=0}^{\infty}\phi^jw_{t-j}
 (\#eq:eq-AR1-serie-lineal)
 \end{equation}
 
+ 
 El proceso $AR(1)$ definido en \@ref(eq:eq-AR1-serie-lineal) es estacionario con media
 
 $$\mathbb{E}(x_t) = \sum_{j=0}^{\infty}\phi^j\mathbb{E}(w_{t-j})=0,$$
@@ -2130,8 +2128,8 @@ plot.ts(ar1_4, col="blue",type = "l",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-39-1.svg" alt="Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de $phi_1$"  />
-<p class="caption">(\#fig:unnamed-chunk-39)Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de $phi_1$</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-39-1.svg" alt="Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de phi"  />
+<p class="caption">(\#fig:unnamed-chunk-39)Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de phi</p>
 </div>
 
 A continuación mostramos las funciones de autocovarianzas de las series AR(1) simuladas anteriormente
@@ -2245,14 +2243,12 @@ c) $x_t=0.2x_{t-1}+0.35x_{t-2}+w_t$
 
 d) $x_t=-0.2x_{t-1}+0.35x_{t-2}+w_t$
 
-<div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-41-1.svg" alt="Cuatro procesos estacionarios AR(2) con distintos valores de phi1 y phi2"  />
-<p class="caption">(\#fig:unnamed-chunk-41)Cuatro procesos estacionarios AR(2) con distintos valores de phi1 y phi2</p>
-</div>
-
-<div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-42-1.svg" alt="ACF de 4 procesos estacionarios AR(2) con distintos valores de phi1 y phi2"  />
-<p class="caption">(\#fig:unnamed-chunk-42)ACF de 4 procesos estacionarios AR(2) con distintos valores de phi1 y phi2</p>
+<div class="figure">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-41-1.svg" alt="ACF de 4 procesos estacionarios AR(2)"  />
+<p class="caption">(\#fig:unnamed-chunk-41)ACF de 4 procesos estacionarios AR(2)</p>
+</div><div class="figure">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-41-2.svg" alt="ACF de 4 procesos estacionarios AR(2)"  />
+<p class="caption">(\#fig:unnamed-chunk-41)ACF de 4 procesos estacionarios AR(2)</p>
 </div>
 
 La serie (b) tiene raíces características complejas, en efecto 
@@ -2285,7 +2281,7 @@ $$(1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p)\rho(h)=0\text{, para }h>0.$$
 
 El gráfico de la ACF de un proceso $AR(p)$ estacionario mostrará una mezcla de ondas de senos y cosenos con decaimientos exponenciales dependiendo de la naturaleza de sus raíces características.
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-43"><strong>(\#exm:unnamed-chunk-43) </strong></span>Consideremos el modelo $AR(3)$ de la forma 
+\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejem-modelo-AR3"><strong>(\#exm:ejem-modelo-AR3) </strong></span>Consideremos el modelo $AR(3)$ de la forma 
 
 $$x_t=0.0047+0.35x_{t-1}+0.18x_{t-2}-0.14x_{t-3}+w_t.$$
   
@@ -2301,21 +2297,555 @@ la cual podemos factorizar como
 
 $$(1+0.52B)(1-0.87B+0.27B^2)=0$$
 
-El primer factor $(1+0.52B)=0$, muestra u ndecaimiento exponencial en la ACF. Veamos ahora el segundo factor $(1-0.87B-(-0.27)B^2)=0$, tenemos que $\phi_1^2+4\phi_2=(0.87)^2+4(-0.27)=-0.3231<0$. Por consiguiente la ACF mostrará un comportamiento en ondas de senos y cosenos.</div>\EndKnitrBlock{example}
-
+El primer factor $(1+0.52B)=0$, muestra u ndecaimiento exponencial en la ACF. Veamos ahora el segundo factor $(1-0.87B-(-0.27)B^2)=0$, tenemos que $\phi_1^2+4\phi_2=(0.87)^2+4(-0.27)=-0.3231<0$. Por consiguiente la ACF mostrará un comportamiento en ondas de senos y cosenos.
+</div>\EndKnitrBlock{example}
 
 ```r
 xt<-arima.sim(list(order=c(3,0,0),ar=c(0.35,0.18,-0.14)),n=100)
 par(mfrow=c(2,1))
 plot(xt,type="l",main="Proceso AR(3)")
-acf(xt, main="ACF para el proceso AR(3)")
+acf(xt)
 ```
 
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-44-1.svg" style="display: block; margin: auto;" />
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-42-1.svg)<!-- -->
+
+----
+
+En aplicaciones, se desconoce el orden $p$ de una serie de tiempo autoregresiva, por lo que debe especificarse empíricamente. Esto se conoce como la determinación del orden de los modelos $AR$. Existen dos enfoques generales para determinar el valor de $p$. El primero es utilizar la función de autocorrelación parcial, y el segundo utilizar alguna función de criterio de información. En **R** existe una función para determinar el orden $p$ de un proceso $AR$, sin embargo vamos a estudiar primero los dos enfoques mencionados de manera de poder entender como funciona **R** al respecto.
+
+## Función de Autocorrelación Parcial
+
+La función de autocorrelación parcial PACF (siglas en inglés: Partial Autocorrelation Function) de una serie de tiempo es una función de su ACF y es una herramienta útil para determinar el orden $p$ de un modelo autoregresivo. Una manera simple pero efectiva de introducir la PACF es considerando los siguientes modelos $AR$ en órdenes consecutivos:
+
+\begin{eqnarray*}
+x_t &=& \phi_{0,1}+\phi_{1,1}x_{t-1}+w_{1t} \\
+x_t &=& \phi_{0,2}+\phi_{1,2}x_{t-1}+\phi_{2,2}x_{t-2}+w_{2t} \\
+x_t &=& \phi_{0,3}+\phi_{1,3}x_{t-1}+\phi_{2,3}x_{t-2}+\phi_{3,3}x_{t-3}+w_{2t} \\
+\vdots & & \\
+\end{eqnarray*}
+
+donde $\phi_{0,j}, \phi_{i,j}, \{w_{jt}\}$ son respectivamente, el término constante, el coeficiente de $x_{t-j}$ y el término de error del modelo $AR(j)$. Estos modelos están en la forma de regresión lineal múltiple y se pueden estimar por mínimos cuadrados. 
+
+La estimación de $\hat{\phi}_{1,1}$ de la primera ecuación se llama *PACF muestral de paso 1* de $x_t$. LA estimación de $\hat{\phi}_{2,2}$ de la segunda ecuación es la PACF muestral de paso 2 de $x_t$. La estimación $\hat{\phi}_{3,3}$ de la tercera ecuación es la PACF muestral de paso 3 de $x_t$, y así sucesivamente.
+
+De la definición, la PACF de paso 2 muestra la contribución añadida de $x_{t-2}$ a $x_t$ sobre el modelo $AR(1)$ $x_t=\phi_0+\phi_1x_{t-1}+w_{1t}$. La PACF de paso 3 muestra la contribución añadida de $x_{t-3}$ a $x_t$ sobre un modelo $AR(2)$, etc. Por lo tanto, para un modelo $AR(p)$, la PACF de paso $p$ no debería ser cero, sino que $\hat{\phi}_{j,j}$ debería ser cercano a cero para todo $j>p$. Esta propiedad será útil para determinar el orden $p$. De hecho, bajo ciertas condiciones de regularidad, se puede demostrar que la PACF muestral de un proceso $AR(p)$ tiene las siguientes propiedades:
+
+-  $\hat{\phi}_{p,p}$ converge a $\phi_p$ cuando el tamaño $N$ de la muestra tiende a infinito.
+
+- $\hat{\phi}_{l,l}$ converge a cero para todo $l>p$.
+
+- La varianza asintótica de $\hat{\phi}_{l,l}$ es $1/N$ para $l>p$.
+
+Estos resultados dicen que para una serie $AR(p)$ la PACF muestral se corta en paso o salto $p$.
+
+Para concluir esta sección, destaquemos que tanto la función de autocorrelación (ACF) como la función de autocorrelación parcial (PACF) nos permiten determinar el orden de un modelo $AR(p)$. El cuadro siguiente indica como usarlas
+
+|   | ACF  |  PACF |
+|---|---|---|
+| AR(p)  |  Disminución gradual | Corte en paso p  |
 
 
+## Criterios de Información
+
+Existen diversos criterios de información disponibles para determinar el orden $p$ de un proceso autoregresivo. Todos ellos están basados en verosimilitud. El primer criterio ya lo definimos en \@ref(def:defi-AIC)
+
+\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-AIC-2"><strong>(\#def:defi-AIC-2) </strong></span>El Criterio de Información de Akaike se define como 
+
+\begin{equation}
+AIC = \ln\hat{\sigma}_k^2+\frac{n+2k}{n}
+(\#eq:eq-AIC)
+\end{equation}
+
+donde $\hat{\sigma}_k^2$ es el estimador de máxima verosimilitud para la varianza, $k$ es el número de parámetros en el modelo y $n$ es el tamaño de la muestra [^nota4]</div>\EndKnitrBlock{definition}
+
+----
+
+[^nota4]: Formalmente, el AIC se define como $$-2\ln L_k+2k$$ donde $L_k$ es la verosimilud maximizada y $k$ es el número de parámetros del modelo.
+
+El **Criterio de Información de Akaike** (AIC) es una medida de la calidad relativa de un modelo estadístico, para un conjunto dado de datos. Como tal, el AIC proporciona un medio para la selección del modelo. El AIC maneja un trade-off [^nota5] entre la bondad de ajuste del modelo y la complejidad del modelo. Se basa en la entropía de información: se ofrece una estimación relativa de la información perdida cuando se utiliza un modelo determinado para representar el proceso que genera los datos.
+
+[^nota5]: *Trade-off* o simplemente *tradeoff* , en algunas ocasiones traducido al español como *sacrificio*, es un anglicismo que describe una situación en la cual se debe perder cierta cualidad a cambio de otra cualidad. Un tradeoff se puede dar por varias razones, entre ellas por simples limitaciones de la física (dentro de una cantidad de espacio dada se pueden meter muchos objetos pequeños o una menor cantidad de objetos grandes). La idea de un tradeoff como una decisión por lo general implica que ésta es realizada con una compresión total de las ventajas y desventajas de la decisión en particular, como por ejemplo, es el caso cuando una persona decide invertir en acciones de una empresa (una inversión más riesgosa pero con mayor potencial) sobre bonos (por lo general más seguros pero con menor potencial de ganancias).
+  
+El AIC no proporciona una prueba de un modelo en el sentido de probar una hipótesis nula, es decir el AIC puede decir nada acerca de la calidad del modelo en un sentido absoluto. Si todos los modelos candidatos encaja mal, el AIC nodará ningún aviso de ello. El valor de $k$ que minimiza el AIC especifica el mejor modelo. La idea es que la minimización de $\hat{\sigma}_k^2$ sea  razonablemente objetiva, excepto que decrezca monótonamente cuando $k$ crece. Por lo tanto, debemos penalizar la variación del error por un término proporcional al número de parámetros. La elección del término de penalización dado por \@ref(eq:eq-AIC) no es único.
+
+En el criterio AIC definido en la ecuación \@ref(eq:eq-AIC), el sesgo es aproximado por el número de parámetros los cuales son constantes y no tienen variabilidad. Para el modelo de regresión, la corrección del sesgo el logaritmo de la verosimilitud se define como
+
+\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-AICc"><strong>(\#def:defi-AICc) </strong></span>
+\begin{equation}
+AICc = \ln\hat{\sigma}_k^2+\frac{n+k}{n-k-2}
+(\#eq:eq-AICc)
+\end{equation}
+
+donde $\hat{\sigma}_k^2$ es el estimador de máxima verosimilitud de la varianza, $k$ es el número de parámetros en el modelo y $n$ es el tamaño de la muestra.</div>\EndKnitrBlock{definition}
+
+----
+
+Este modelo fue propuesto originalmente por *N. Sugiura* en el artículo **"Further analysis of the data by Akaike's information criterion and the finite corrections"**. *Communications in Statistics, Theory and Methods*, Vol. 7, No. 1, pp. 13-26, 1978. Se tiene que el AICc es esencialmente el AIC con un término de penalización adicional para el número de parámetros. Nótese que cuando $n\to\infty$, el término de penalización adicional converge a 0, y por lo tanto el AICc converge al AIC. De manera similar que en el AIC, se selecciona el modelo con el menor valor AICc.
+
+\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-SIC"><strong>(\#def:defi-SIC) </strong></span>
+\begin{equation}
+SIC = \ln\hat{\sigma}_k^2+\frac{k\ln n}{n}
+(\#eq:eq-SIC)
+\end{equation}
+  
+usando la misma notación que en la definición \@ref(def:defi-AICc).</div>\EndKnitrBlock{definition}
+
+----
+
+SIC también llamado *Criterio Bayesiano de Información* (BIC) es un criterio para la selección de modelos. Se basa, en parte, en la función de probabilidad y está estrechamente relacionado con el Criterio de Información de Akaike (AIC). Cuando se hace ajuste de modelos, es posible aumentar la probabilidad mediante la adición de parámetros, pero esto puede resultar en sobreajuste. Tanto BIC como AIc resuelven este problema mediante la introducción de un término de penalización para el núemro de parámetros en el modelo, el término de penalización es mayor en el BIC que en el AIC.
+
+El BIC fue desarrollado por *Gideon E. Schwarz*, quien dio un argumento bayesiano a favor de su adopción. Akaike también desarrolló su propio formalismo bayesiano, que ahora se conoce como la ABIC (siglas en inglés) por Criterio de Información Bayesiano de Akaike.
+
+
+\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejem-serie-nuevos-peces-AR2"><strong>(\#exm:ejem-serie-nuevos-peces-AR2) </strong></span>Consideremos el archivo de datos "recruit.txt", consistente del número de nuevos peces en el Pacífico Central relacionado con el Índice de Oscilación del Sur (SOI) que mide los cambios en la presión del aire relativo a la temperatura de la superficie del mar. Son 453 registros de 1950 a 1987 tomados mensualmente. La ACF y la PACF indican que el modelo que mejor se ajusta es un $AR(2)$. La ACF tiene ciclos correspondientes a aproximadamente períodos de 12 meses y la PACF tiene valores grandes para $h=1,2$ y es esencialmente cero para paso de orden mayor.</div>\EndKnitrBlock{example}
+
+
+```r
+rec=ts(scan("data/recruit.txt"),start = 1950, frequency = 12)
+par(mfrow=c(3,1))
+plot(rec,type = "l", ylab = "", xlab = "meses", main = "Número de nuevos peces en el Pacífico Central (1950-1987)")
+acf(rec,48)
+pacf(rec,48)
+```
+
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-43-1.svg)<!-- -->
+
+
+## Estimación de Parámetros.
+
+Para un modelo $AR(p)$ especificado por \@ref(eq:eq-ARp), el método de mínimos cuadrados condicional, el cual inicia con $p+1$ observaciones, se usa a menudo para estimar los parámetros. Específicamente, condicionando sobre las primeras $p$ observaciones, tenemos
+
+$$x_t=\phi_0+\phi_1x_{t-1}+\cdots+\phi_px_{t-p}+w_t,\quad t=p+1,\ldots,N,$$
+
+el cual se puede estimar por mínimos cuadrados. Denotemos los estimadores de $\phi_i$ por $\hat{\phi}_i$. El *modelo ajustado* será 
+
+$$\hat{x}_t = \hat{\phi}_0+\hat{\phi}_1x_{t-1}+\cdots+\hat{\phi}_px_{t-p}$$
+
+y el residual asociado es
+
+$$\hat{w}_t=x_t-\hat{x}_t$$
+
+La serie $\{\hat{w}_t\}$ se llama *serie residual*, de la cual obtenemos
+
+$$\hat{\sigma}_w^2 = \frac{\sum_{t=p+1}^N\hat{w}_t^2}{N-2p-1}$$
+
+Debemos examinar con cuidado un modelo ajustado para verificar si es adecuado o no. Si el modelo es adecuado, entonces la serie residual debe comportarse como un ruido blanco. La ACF y el estadístico de Ljung-Box [^nota6] de los residuos son útiles para comprobar la cercanía de $\hat{w}_t$ a un ruido blanco. Para un modelo $AR(p)$, el estadístico de Ljung-Box $Q(m)$ se distribuye asintóticamente como una Chi-Cuadrado con $m-p$ grados de libertad, para significar que los $p$ coeficientes del proceso AR son estimados. Si descubirmos que un modelo ajustado es inadecuado, debemos refinarlo.
+
+[^nota6]: El estadístico de Ljung-Box está dado por $$Q(m) = N(N+2)\sum_{i=1}^m\frac{\hat{\rho}_i^2}{N-i}$$ donde $\hat{\rho}_1,\hat{\rho}_2,\ldots$, son las *funciones de autocorrelación muestral* (ACF) de $x_t$, $N$ el tamaño de la muestra.
+
+
+## Predicciones con modelos AR
+
+La predicción es una aplicación importante del análisis de series de tiempo. Para el modelo $AR(p)$ en la ecuación \@ref(eq:eq-ARp), supongamos que estamos en tiempo $m$ y estamos interesados en predecir $x_{m+h}$, donde $h\geq1$. El tiempo $m$ se llama el *origen de predicción* y el entero $h$ es el *horizonte de predicción*. Sea $\hat{x}_m(h)$ la predicción de $x_{m+h}$ usando la función de pérdida de error mínimo al cuadrado. En otras palabras, escogemos la predicción $\hat{x}_k(h)$ tal que 
+
+$$\mathbb{E}(x_{m+h}-\hat{x}_m(h))\leq\min_g\mathbb{E}(x_{m+h}-g)^2$$
+
+donde $g$ es una función de información disponible pen tiempo $m$. Nos referimos a $\hat{x}_m(h)$ como la predicción de $h$ pasos de $x_t$ con origen de predicción $m$.
+
+### Predicción de un paso
+
+Del modelo $AR(p)$ tenemos
+
+$$x_{m+1}=\phi_0+\phi_1x_m+\cdots+\phi_px_{m+1-p}+w_{m+1}$$
+
+Bajo la función de pérdida de error mínimo al cuadrado, la predicción puntual $x_{m+1}$ dado el modelo y las observaciones hasta tiempo $m$, es el valor esperado condicional
+
+$$\hat{x}_m(1) = \mathbb{E}(x_{m+1}|x_m,x_{m-1},\ldots) = \phi_0+\sum_{i=1}^p\phi_ix_{m+1-i}$$
+
+y el error de predicción asociado es 
+
+$$e_m(1)=x_{m+1}-\hat{x}_m(1)=w_{m+1}$$
+
+Consecuentemente, la varianza del error de predicción de un paso es $Var(e_m(1))=Var(w_{m+1})=\sigma_w^2$. Si $w_t$ se distribuye como una normal, entonces un intervalo de predicción de un paso del 95% de confianza está dado por
+
+$$\hat{x}_m(1)\pm1.96\sigma_w^2.$$
+
+### Predicción de dos pasos
+
+Ahora consideremos la predicción de $x_{m+2}$ con origen de predicción $m$. De un modelo $AR(p)$, tenemos
+
+$$x_{m+2} = \phi_0+\phi_1x_{m+1}+\cdots+\phi_px_{m+2-p}+w_{m+2}$$
+
+Tomando valor esperado condicional, tenemos
+
+\begin{eqnarray*}
+\hat{x}_m(2) &=& \mathbb{E}(x_{m+2}|x_m,x_{m-1},\ldots) \\
+      &=& \phi_0+\phi_1\hat{x}_m(1)+\phi_2x_m+\cdots+\phi_px_{m+2-p}
+\end{eqnarray*}
+
+y el error de predicción asociado es
+
+\begin{eqnarray*}
+e_m(2) &=& x_{m+2}-\hat{x}_m(2) = \phi_1[x_{m+1}-\hat{x}_m(1)]+w_{m+2} \\
+       &=& w_{m+2}-\phi_1w_{m+1}
+\end{eqnarray*}
+
+La varianza del error de predicción es $Var(e_m(2))=(1+\phi_1^2)\sigma_w^2$. Un intervalo de predicción para $x_{m+2}$ lo podemos calcular de la misma manera que para $x_{m+1}$. Es interesante notar que $Var(e_m(2))\geq Var(e_m(1))$, lo que indica que cuando el horizonte de predicción crece la incertidumbre de la predicción también crece.
+
+### Predicción de múltiples pasos
+
+En general, tenemos
+
+$$x_{m+h}=\phi_0+\phi_1x_{m+h-1}+\cdots+\phi_px_{m+h-p}+w_{m+h}$$
+
+La predicción de $h$ pasos basado en la función de pérdida de error mínimo al cuadrado es el valor epsrado condicional de $x_{m+h}$ dado $\{x_{m-i}\}_{i=0}^{\infty}$, el cual podemos escribir como
+
+$$\hat{x}_m(h) = \phi_0+\sum_{i=1}^p\phi_1\hat{x}_m(h-i)$$
+
+donde se entiede que $\hat{x}_m(i)=x_{m+i}$ si $i<0$. Esta predicción se puede calcular recursivamente usando las predicciones $\hat{x}_m(i)$ para $i=1,\ldots,h-1$. El error de predicción de paso $h$ es $e_m(h)=x_{m+h}-\hat{x}_m(h)$. Se puede demostrar que para un proceso $AR(p)$ estacionario, $\hat{x}_m(h)$ converge a $\mathbb{E}(x_t)$ cuando $h\to\infty$, esto es, para una serie $AR(p)$ estacionaria, la predicción a largo plazo se aproxima a su media incondicional. Esta propiedad se conoce como la *reversión media* en la literatura financiera. La desviación del error de predicción se aproxima entonces a la desviación incondicional de $x_t$.
+
+\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejem-prediccion-SOI"><strong>(\#exm:ejem-prediccion-SOI) </strong></span>Realicemos una predicción para la serie de nuevos peces dado en el ejemplo \@ref(exm:ejem-serie-nuevos-peces-AR2). Para ello usaremos la función "predict" de R. Vamos a hacer una predicción de 24 meses. Del ejemplo \@ref(exm:ejem-serie-nuevos-peces-AR2), pudimos notar en las ACF y PACF que un modelo que se ajusta a esta serie es un proceso $AR(2)$, así que lo primero que hacemos es ajustar el modelo, y luego calculamos la predicción. 
+
+Al realizar el gráfico de la serie y la predicción notamos que después de 12 meses, la predicción converge a la media de la serie tal como se describió previamente.
+</div>\EndKnitrBlock{example}
+
+
+```r
+# Ajuste AR(2)
+regr=ar.ols(rec,order=2,demean = FALSE, intercept = TRUE)
+regr$asy.se.coef
+```
+
+```
+## $x.mean
+## [1] 1.111
+## 
+## $ar
+## [1] 0.04179 0.04188
+```
+
+```r
+# Prediccion
+fore=predict(regr, n.ahead=24)
+```
+
+```
+## Warning in object$var.pred * vars: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+```
+
+```r
+ts.plot(rec,fore$pred,col=1:2,xlim=c(1980,1990),
+        xlab="Años", ylab="Nuevos peces")
+lines(fore$pred,type = "p",col=2)
+lines(fore$pred+fore$se,lty = "dashed",col=4)
+lines(fore$pred-fore$se,lty = "dashed",col=4)
+```
+
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-44-1.svg)<!-- -->
 
 <!--chapter:end:301-modelos-AR.Rmd-->
+
+# Modelos MA
+
+En este capítulo describiremos otra clase de modelos simples que también son útiles en le modelado de series de retorno en finanzas. Estos modelos se denominam mdodelos de promedio móvil ($MA$, siglas en ingles: Moving Average). Hay varias maneras de introducir los modelos $MA$. Un enfoque es tratar el modelo como una extensión de una serie de ruido blanco; alternativamente a la representación autoregresiva en la cual $x_t$ del lado izquierdo se asume como una combinación lineal, en los modelos de promedio móvil e orden $q$ $MA(q)$, asumimos el ruido blanco $w_t$ del lado derecho de la ecuación que los define como una combinación lineal de los datos observados.
+
+\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-modelo-MAq"><strong>(\#def:defi-modelo-MAq) </strong></span>El **modelo de promedio móvil de orden $q$** o modelo $MA(q)$, se define como
+
+\begin{equation}
+x_t=w_t+\theta_1x_{t-1}+\theta_2x_{t-2}+\cdots+\theta_qx_{t-q}
+(\#eq:eq-MAq)
+\end{equation}
+  
+donde hay $q$ pasos o saltos en el promedio móvil y $\theta_1,\theta_2,\ldots,\theta_q (\theta_q\neq0)$ son parámetros. [^nota7] El ruido $w_t$ se asume como un ruido blanco gaussiano.</div>\EndKnitrBlock{definition}
+
+----
+
+[^nota7]: Algunos libros y algunos paquetes estadísticos escriben el modelo $MA$ con coeficientes negativos, esto es $$x_t=w_t-\theta_1x_{t-1}-\theta_2x_{t-2}-\cdots-\theta_qx_{t-q}$$
+
+
+Podemos escribir también el modelo $MA(q)$ en la forma equivalente
+
+\begin{equation}
+x_t = \theta(B)w_t
+(\#eq:eq-MAq-operador)
+\end{equation}
+
+usando la siguiente definición.
+
+\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-operador-proemdio-movil"><strong>(\#def:defi-operador-proemdio-movil) </strong></span>El **operador de promedio móvil** se define como
+
+\begin{equation}
+\theta(B) = 1+\theta_1B+\theta_2B^2+\cdots+\theta_qb^q
+(\#eq:eq-operador-promedio-movil)
+\end{equation}</div>\EndKnitrBlock{definition}
+
+----
+
+A diferencia del proceso autoregresivo $AR(p)$, el proceso de promedio móvil $MA(q)$ es estacionario para cada valor de los parámetros $\theta_1,\theta_2,\ldots,\theta_q$.
+
+Otro enfoque para introducir los proceso de promedio móvil es tratar el modelo como un modelo $AR$ de orden infinito con algunas restricciones. No hay una razón en particular, pero por simplicidad y sin pérdida de generalidad, asumiremos *a priori* que el orden del modelo es finito. Podemos suponer, al menos en teoría, un modelo $AR$ con orden infinito como
+
+$$x_t=\phi_0+\phi_1x_{t-1}+\phi_2x_{t-2}+\cdots+w_t$$
+Sin embargo, tal modelo $AR$ no esrealista porque tiene infinitos parámetros. Una forma de hacer práctico el modelo es asumir que los coeficientes $\phi_i$ satisfacen algunas restricciones para que sean determinados por un número  finito de parámetros. Un caso especial de esta idea es
+
+\begin{equation}
+x_t=\phi_0-\theta_1x_{t-1}-\theta_1^2x_{t-2}-\theta_1^3x_{t-3}-\cdots+w_t
+(\#eq:eq-MA-infty)
+\end{equation}
+
+donde los coeficientes dependen de un simple parámetro $\theta_1$ via $\phi_i=-\theta_1^i$ para $i>1$. Para que el modelo en la ecuación \@ref(eq:eq-MA-infty) sea estacionario, $\theta_1$ debe ser menor que uno en valor absoluto, esto es, $|\theta_1|<1$; de otra forma $\theta_1^i$ y la serie serán explosivas, porque los valores de la serie de tiempo se hacen grande en magnitud rápidamente. Claramente, porque $|\phi_i|^j$ crece sin acotación cuando $j\to\infty$. 
+
+Dado que $|\theta_1|<1$, tenemos que $\theta_1^i\to0$ cuando $i\to\infty$. Por lo tanto, la contribución de $x_{t-i} a $x_t$ decae exponencialmente cuando $i$ crece. Esto es razonable, ya que la dependencia de una serie estacionaria $x_t$ de su valor $x_{t-i}$, si existe, debería decaer con el tiempo.
+
+El modelo en la ecuación \@ref(eq:eq-MA-infty) lo podemos escribir en forma más compacta. Para ello, reescribamosel modelo como
+
+\begin{equation}
+x_t+\theta_1x_{t-1}+\theta_1^2x_{t-2}+\cdots=\phi_0+w_t
+(\#eq:eq-MA-2)
+\end{equation}
+
+El modelo para $x_{t-1}$ es entonces
+
+\begin{equation}
+x_{t_1}+\theta_1x_{t-2}+\theta_1^2x_{t-3}+\cdots=\phi_0+w_{t-1}
+(\#eq:eq-MA-xt-1)
+\end{equation}
+
+Multiplicando la ecuación \@ref(eq:eq-MA-xt-1) por $\theta_1$ y restando el resultado a la ecuación \@ref(eq:eq-MA-2), obtenemos
+
+$$x_t=\phi_0(1-\theta_1)+w_t-\theta_1w_{t-1}$$
+
+que dice que excepto para el término constante, $x_t$ es un promedio ponderado de $w_t$ y $w_{t-1}$. Por lo tanto, el modelo se denomina $MA$ de orden 1 o modelo $MA(1)$. La forma general de un modelo $MA(1)$ es
+
+\begin{equation}
+x_t=c_0+w_t-\theta_1w_{t-1}
+(\#eq:eq-MA1)
+\end{equation}
+
+donde $c_0$ es constante y $\{w_t\}$ es una serie de ruido blanco. De manera similar, un modelo $MA(2)$ es de la forma
+
+\begin{equation}
+x_t=c_0+w_t-\theta_1w_{t-1}-\theta_2w_{t-2}
+(\#eq:eq-MA2)
+\end{equation}
+
+y un modelo $MA(q)$ es de la forma
+
+\begin{equation}
+x_t=c_0+w_t-\theta_1w_{t-1}-\theta_2w_{t-2}-\cdots-\theta_qw_{t-q}
+(\#eq:eq-MAq-2)
+\end{equation}
+
+con $q>0$.
+
+## Propiedades de los modelos MA
+
+Al igual que con los modelos $AR$, daremos las propiedades para los modelos $MA(1)$ y $MA(2)$, y luego generalizaremos a los modelos $MA(q)$.
+
+### Estacionaridad
+
+Los modelos $MA$ son siempre débilmente estacionarios porque son combinaciones lineales finitas de una sucesión de ruiod blanco para el cual los primeros dos momentos son invariantes en el tiempo. Por ejemplo, consideremos el modelo $MA(1)$ dado en \@ref(eq:eq-MA1). Tomando el valor esperado obtenemos
+
+\begin{eqnarray*}
+\mathbb{E}(x_t) &=& \mathbb{E}(c_0+w_t-\theta_1w_{t-1}) \\
+                &=& \mathbb{E}(c_0) = c_0
+\end{eqnarray*}
+
+el cual es invariante. Tomando la varianza en la misma ecuación \@ref(eq:eq-MA1), obtenemos
+
+\begin{eqnarray*}
+Var(x_t) &=& Var(c_0+w_t-\theta_1w_{t-1}) \\
+         &=& Var(c_0)+Var(w_t)+\theta_1^2Var(w_{t-1}) \\
+         &=& \sigma_w^2+\theta_1^2\sigma_w^2 \\
+         &=& (1+\theta_1^2)\sigma_w^2
+\end{eqnarray*}
+
+donde usamosel hecho de que $w_t$ y $w_{t-1}$ son no correlacionados. Nuevamente, $Var(x_t)$ es invariante. Los cálculos anteriores los podemos aplicar a un modelo $MA(q)$ general, de donde on¿btenemos dos propiedades generales:
+
+1) El término constante de un modelo $MA(q)$ es la media de la serie, es decir, $\mathbb{E}(x_t)=c_0$
+
+2) La varianza de un modelo $MA(q)$ es $$Var(x_t)=(1+\theta_1^2+\theta_2^2+\cdots+\theta_q^2)\sigma_w^2$$
+
+La serie en la figura siguiente corresponde a dos procesos $MA(1)$, uno con $\theta_1=0.5$ y el otro con $\theta_1=-0.5$, en ambos casos $\sigma_w^2=1$.
+
+
+```r
+par(mfrow=c(2,1))
+plot(arima.sim(list(order=c(0,0,1),ma=0.5),n=100),ylab="x1",
+     main=expression(MA(1)~~~theta==+0.5))
+plot(arima.sim(list(order=c(0,0,1),ma=-0.5),n=100),ylab="x2",
+     main=expression(MA(1)~~~theta==-0.5))
+```
+
+<div class="figure" style="text-align: center">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-45-1.svg" alt="Simulación de dos modelos MA(1)"  />
+<p class="caption">(\#fig:unnamed-chunk-45)Simulación de dos modelos MA(1)</p>
+</div>
+
+### Función de autocorrelación (ACF)
+
+Para simplificar podemos asumir que $c_0=0$, para un modelo $MA(1)$. Multiplicando el modelo por $x_{t-h}$, obtenemos
+
+$$x_{t-h}x_t=x_{t-h}w_t-\theta_1x_{t-h}w_{t-1}$$
+
+Tomando el valor esperado, obtenemos
+\begin{eqnarray}
+\gamma(h) &=& \mathbb{E}(x_{t-h}x_t) = \mathbb{E}(x_{t-h}w_t-\theta_1x_{t-h}w_{t-1}) \nonumber \\
+    &=& \begin{cases}
+          -\theta_1\sigma_w^2,&\text{ si }h=1 \\
+          0, &\text{ si }h>1
+        \end{cases}
+(\#eq:eq-autocovarianza-MA1)
+\end{eqnarray}
+
+Usando el hecho de que $Var(x_t)=(1+\theta_1^2)\sigma_w^2$, obtenemos la función de autocorrelacion ACF para un modelo $MA(1)$, a saber
+
+\begin{equation}
+\rho(h) = \begin{cases}
+            1,&\text{ si }h=0 \\
+            \frac{-\theta_1}{1+\theta_1^2},&\text{ si }h=1 \\
+            0,&\text{ si }h>1
+          \end{cases}
+(\#eq:eq-ACF-MA1)
+\end{equation}
+
+Entonces, para un modelo $MA(1)$, el paso 1 de la ACF es distinto de cero, y para orden o paso superior la ACF es cero. En otras palabras, la ACF de un modelo $MA(1)$ corta en paso 1. Note que $|\rho(1)|\leq1/2$ para todo valor de $\theta_1$. También, $x_t$ está correlacionado con $x_{t-1}$ pero no con $x_{t-2},x_{t-3},\ldots$. Constraste esto con el caso del modelo $AR(1)$ en el cual la correlación entre $x_t$ y $x_{t-k}$ nunca es cero, para $k>1$. 
+
+En la figura siguiente podemos observar las funciones de autocorrelacion de los modelos $MA(1)$ simulados anteriormente
+
+
+```r
+par(mfrow=c(2,1))
+acf(arima.sim(list(order=c(0,0,1),ma=0.5),n=100),ylab="x1",
+     main=expression(MA(1)~~~theta==+0.5))
+acf(arima.sim(list(order=c(0,0,1),ma=-0.5),n=100),ylab="x2",
+     main=expression(MA(1)~~~theta==-0.5))
+```
+
+<div class="figure" style="text-align: center">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-46-1.svg" alt="ACF para dos modelos MA(1)"  />
+<p class="caption">(\#fig:unnamed-chunk-46)ACF para dos modelos MA(1)</p>
+</div>
+
+Podemos notar en cada una de las ACF, que efectivamente tienen un corte en paso 1. Para la serie con $\theta_1=0.5$, la correlación es positiva y para la serie con $\theta=-0.5$ la correlación es negativa.
+
+
+Para un modelo $MA(2)$ dado por la ecuación \@ref(eq:eq-MA2) la función de autocorrelación está dada por
+
+\begin{equation}
+\rho(h) = \begin{cases}
+          \frac{-\theta_1+\theta_1\theta_2}{1+\theta_1^2+\theta_2^2}, &\text{ si }h=1 \\
+          \frac{-\theta_2}{1+\theta_1^2+\theta_2^2}, &\text{ si }h=2 \\
+          0, &\text{ si }h>1
+          \end{cases}
+(\#eq:eq-ACF-MA2)
+\end{equation}
+
+En este caso, la ACF corta en paso 2. Esta propiedad la podemos generalizar a los modelos $MA(q)$. Así, para un modelo $MA(q)$ la ACF se corta en paso $q$, y vale cero para $h>q$. Consecuentemente, una serie $MA(q)$ está solo linealmente relacionada con sus $q$ primeros valores y por consiguiente es un modelo de "memoria finita". 
+
+\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejem-no-unicidad-MA"><strong>(\#exm:ejem-no-unicidad-MA) </strong></span>USando las funciones de autocovarianza (ec.  \@ref(eq:eq-autocovarianza-MA1)) y de autocorrelación (ec. \@ref(eq:eq-ACF-MA1)) de un modelo $MA(1)$ podemos notar que $\rho(h)$ es el mismo para $\theta$ y $1/\theta$, probemos, por ejemplo, con $\theta=5$ y $\frac{1}{\theta}=\frac{1}{5}$
+  
+\begin{eqnarray*}
+\rho(h) &=& \begin{cases}
+           \frac{5}{(1+5^2)},&\text{ si }h=1 \\
+           0,&\text{ si }h>1
+          \end{cases} = \begin{cases}
+                         \frac{5}{26},&\text{ si }h=1 \\
+                         0,&\text{ si }h>1
+                        \end{cases} \\
+\rho(h) &=& \begin{cases}
+           \frac{1/5}{(1+(1/5)^2)},&\text{ si }h=1 \\
+           0,&\text{ si }h>1
+          \end{cases} = \begin{cases}
+                         \frac{5}{26},&\text{ si }h=1 \\
+                         0,&\text{ si }h>1
+                        \end{cases}
+\end{eqnarray*}
+
+Además, el par $\sigma_w^2=1$ y $\theta=5$ llevan a la misma función de autocovarianza que el par $\sigma_w^2=25$ y $\theta=1/5$, esto es
+
+$$\gamma(h) = \begin{cases}
+              26,&\text{ si }h=0\\
+              5,&\text{ si }h=1\\
+              0,&\text{ si }h>1
+              \end{cases}$$
+
+Entonces los procesos $MA(1)$
+
+$$x_t=w_t+\frac{1}{5}w_{t-1}, w_t\sim iidN(0,25)\text{  y  } x_t=v_t+5v_{t-1},  v_t\sim iidN(0,1)$$
+
+son los mismos debido a la normalidad, es decir, todas las distribuciones finitas son las mismas.
+              
+Para descubrir cual de los modelos es el modelo invertible, podemos invertir los papeles de $x_t$ y $w_t$ (porque estamos copiando el caso $AR$) y escribir el modelo $MA(1)$ como $w_t=-\theta w_{t-1}+x_t$. Siguiendo los pasos para \@ref(eq:eq-AR1-serie-lineal), si $|\theta|<1$, entonces $w_t=\sum_{j=0}^{\infty}(-\theta)^jx_{t-j}$, lo cual es la representación del modelo $AR$ infinito deseado. Por consiguiente, elegimos el modelo con $\sigma_w^2=25$ y $\theta=1/5$ ya que este modelo es invertible</div>\EndKnitrBlock{example}
+
+----
+
+## Identificación del orden de un MA
+
+La ACF es muy útil para identificar el orden de un modelo $MA$. Para una serie de tiempo $x_t$ con ACF $\rho(h)$, si $\rho(q)\neq0$, pero $\rho(h)=0$ para $h>q$, entonces $x_t$ sigue un modelo $MA(q)$. La figura siguiente muestra el gráfico de la ACF para la serie de porcentajes de cambio diario de la Bolsa de Valores de New York del ejemplo \@ref(exm:Bolsa-Valores-New-York). Las lineas discontinuas en azul en la ACF denotan los dos límites de error estándar. Se puede notar que la serie tiene un ACF significativo en pasos 1,2 y 5, lo que nos sugiere el siguiente modelo $MA(5)$
+$$x_t=c_0+w_t-\theta_1w_{t-1}-\theta_2w_{t-2}-\theta_5w_{t-5}$$
+
+<div class="figure" style="text-align: center">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-47-1.svg" alt="Serie de tiempo y función de autocorrelación de los porcentajes de cambio diario de la Bolsa de Valores de New York, desde el 2 de febrero de 1984 hasta el 31 de diciembre de 1991"  />
+<p class="caption">(\#fig:unnamed-chunk-47)Serie de tiempo y función de autocorrelación de los porcentajes de cambio diario de la Bolsa de Valores de New York, desde el 2 de febrero de 1984 hasta el 31 de diciembre de 1991</p>
+</div>
+
+## Estimación
+
+La estimación de máxima verosimilitud se usa comúnmente para estimar  modelos $MA$. Existen dos enfoques para evaluar la función de verosimilitud de un modelo $MA$. El primer enfoque asume que los valores iniciales, es decir, para $t\leq0$, son ceros. Como tal, los valores necesarios en el cálculo de la función de verosmilitud se obtiene recursivamente del modelo iniciando con $w_1=x_1-c_0$ y $w_2=x_2-c_0+\theta w_1$. Este enfoque se conoce como el *método de verosimilitud condicional* y las estimaciones resultantes son las estimaciones de máxima verosimilitud condicional. El segundo enfoque trata los valores iniciales en $t\leq0$ como parámetros adicionales del modelo y los estima conjuntamente con otros parámetros. Este enfoque se conoce como el *método de verosimilitud exacta*. Las estimaciones de verosimilitud exacta son preferibles a las condicionales, pero requieren un cálculo más extenso. Si el tamaño de la muestra es grande, entonces los dos tipos de estimación de máxima verosimilitud están cerca uno del otro.
+
+## Predicciones usando modelos MA
+
+Las predicciones con modelos MA son fáciles de obtener. Como el modelo es de "memoria finita", la predicción converge rápidamente a la media de la seire. Para ver esto, supongamos que la predicción inicia en $m$. Para la predicción de un paso de un proceso $MA(1)$, el modelo nos dice que
+
+$$x_{m+1}=c_0+w_{m+1}-\theta_1w_m$$
+
+Tomando el valor esperado condicional, tenemos
+
+\begin{eqnarray*}
+  \hat{x}_m(1) &=& \mathbb{E}(x_{m+1}|x_m,x_{m-1},\ldots) = c_0-\theta_1w_m \\
+  e_m(1) &=& x_{m+1}-\hat{x}_m(1) = w_{m+1}
+\end{eqnarray*}
+
+La varianza del error de predicción de un paso es $Var[e_m(1)]=\sigma_w^2$. En la práctica, el valor $w_m$ lo podemos obtener de varias maneras. Por ejemplo, suponemos que $w_0=0$, entonces $w_1=x_1-c_0$ y calculamos $w_t$ para $2\leq t\leq m$ recursivamente usando $w_t=x_t-c_0+\theta_1w_{t-1}$. Alternativamente, podemos calcularlo usando la representación $AR$ del modelo $MA(1)$. (Véase el ejemplo \@ref(exm:ejem-no-unicidad-MA))
+
+Para la predicción de dos pasos, de la ecuación
+
+$$x_{m+2}=c_0+w_{m+2}-\theta_1w_{m+1}$$
+
+obtenemos
+
+\begin{eqnarray*}
+  \hat{x}_m(2) &=& \mathbb{E}(x_{m+2}|x_m,x_{m-1},\ldots)=c_0\\
+  e_m(2) &=& x_{m+2}-\hat{x}_m(2) = w_{m+2}-\theta_1w_{m+1}
+\end{eqnarray*}
+
+La varianza del error de predicción es $Var[e_m(2)]=(1+\theta_1^2)\sigma_m^2$, la cual es la varianza del proceso $MA$ y es mayor o igual que la varianza del error de predicción de un paso. Este resultado muestra que para un modelo $MA(1)$ la predicción de dos pasos de la serie es sencillamente la media incondicional del modelo. Esto es cierto para cualquier predicción iniciando en $m$. Más generalmente $\hat{x}_m(h)=c_0$ para $h>2$. En resumen, para un modelo $MA(1)$, la predicción de un paso a futuro con origen en $m$ es $c_0-\theta_1w_m$ y la predicción de múltiples pasos es $c_0$, el cual es la media incondicional del modelo. Si graficamos la predicción $\hat{x}_m(h)$ versus $h$ podemos ver que la predicción es una linea horizontal después del paso uno.
+
+De manera similar, para un modelo $MA(2)$, tenemos 
+
+$$x_{m+h} = c_0+w_{m+h}-\theta_1w_{m+h-1}-\theta_2w_{m+h-2}$$
+
+para el cual obtenemos
+
+\begin{eqnarray*}
+ \hat{x}_m(1) &=& c_0-\theta_1w_m-\theta_2w_{m-1} \\
+ \hat{x}_m(2) &=& c_0-\theta_2w_m \\
+ \hat{x}_m(h) &=& c_0\text{, para }h>2
+\end{eqnarray*}
+
+Entonces, la predicción de múltiples pasos de un modelo $MA(2)$ tiende a la media de la serie después de dos pasos. La varianza del error de predicción converge a la varianza de la serie después de dos pasos. En general, para un modelo $MA(q)$, la predicción multipasos converge a la media de la serie después de los primeros $q$ pasos.
+
+----
+
+** Resumen **
+
+Para concluir daremos un resumen de las propiedades estudiadas para los modelos $AR$ y $MA$ en estos dos capítulos:
+
+- Para los modelos $MA$, la ACF es útil para especificar el orden dado que la ACF se corta en salto $q$ para una serie $MA(q)$.
+
+- Para un modelo $AR$, la PACF es útil para determinar el orden ya que la PACF se corta en salto $p$ para un proceso $AR(p)$.
+
+- Una serie $MA$ es siempre estacionaria, pero para que una serie $AR$ sea estacionaria, todas sus raíces características deben ser menor que u1 en módulo.
+
+- Para una serie estacionaria, la predicción de múltiples pasos converge a la media de la serie y la varianza del error de predicción converge a la varianza de la serie.
+
+
+ 
+
+
+<!--chapter:end:302-modelos-MA.Rmd-->
 
 \cleardoublepage 
 

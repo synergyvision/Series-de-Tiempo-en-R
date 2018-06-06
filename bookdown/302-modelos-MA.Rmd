@@ -1,0 +1,303 @@
+# Modelos MA
+
+En este capítulo describiremos otra clase de modelos simples que también son útiles en le modelado de series de retorno en finanzas. Estos modelos se denominam mdodelos de promedio móvil ($MA$, siglas en ingles: Moving Average). Hay varias maneras de introducir los modelos $MA$. Un enfoque es tratar el modelo como una extensión de una serie de ruido blanco; alternativamente a la representación autoregresiva en la cual $x_t$ del lado izquierdo se asume como una combinación lineal, en los modelos de promedio móvil e orden $q$ $MA(q)$, asumimos el ruido blanco $w_t$ del lado derecho de la ecuación que los define como una combinación lineal de los datos observados.
+
+```{definition, defi-modelo-MAq}
+El **modelo de promedio móvil de orden $q$** o modelo $MA(q)$, se define como
+
+\begin{equation}
+x_t=w_t+\theta_1x_{t-1}+\theta_2x_{t-2}+\cdots+\theta_qx_{t-q}
+(\#eq:eq-MAq)
+\end{equation}
+  
+donde hay $q$ pasos o saltos en el promedio móvil y $\theta_1,\theta_2,\ldots,\theta_q (\theta_q\neq0)$ son parámetros. [^nota7] El ruido $w_t$ se asume como un ruido blanco gaussiano.
+```
+
+----
+
+[^nota7]: Algunos libros y algunos paquetes estadísticos escriben el modelo $MA$ con coeficientes negativos, esto es $$x_t=w_t-\theta_1x_{t-1}-\theta_2x_{t-2}-\cdots-\theta_qx_{t-q}$$
+
+
+Podemos escribir también el modelo $MA(q)$ en la forma equivalente
+
+\begin{equation}
+x_t = \theta(B)w_t
+(\#eq:eq-MAq-operador)
+\end{equation}
+
+usando la siguiente definición.
+
+```{definition, defi-operador-proemdio-movil}
+El **operador de promedio móvil** se define como
+
+\begin{equation}
+\theta(B) = 1+\theta_1B+\theta_2B^2+\cdots+\theta_qb^q
+(\#eq:eq-operador-promedio-movil)
+\end{equation}
+```
+
+----
+
+A diferencia del proceso autoregresivo $AR(p)$, el proceso de promedio móvil $MA(q)$ es estacionario para cada valor de los parámetros $\theta_1,\theta_2,\ldots,\theta_q$.
+
+Otro enfoque para introducir los proceso de promedio móvil es tratar el modelo como un modelo $AR$ de orden infinito con algunas restricciones. No hay una razón en particular, pero por simplicidad y sin pérdida de generalidad, asumiremos *a priori* que el orden del modelo es finito. Podemos suponer, al menos en teoría, un modelo $AR$ con orden infinito como
+
+$$x_t=\phi_0+\phi_1x_{t-1}+\phi_2x_{t-2}+\cdots+w_t$$
+Sin embargo, tal modelo $AR$ no esrealista porque tiene infinitos parámetros. Una forma de hacer práctico el modelo es asumir que los coeficientes $\phi_i$ satisfacen algunas restricciones para que sean determinados por un número  finito de parámetros. Un caso especial de esta idea es
+
+\begin{equation}
+x_t=\phi_0-\theta_1x_{t-1}-\theta_1^2x_{t-2}-\theta_1^3x_{t-3}-\cdots+w_t
+(\#eq:eq-MA-infty)
+\end{equation}
+
+donde los coeficientes dependen de un simple parámetro $\theta_1$ via $\phi_i=-\theta_1^i$ para $i>1$. Para que el modelo en la ecuación \@ref(eq:eq-MA-infty) sea estacionario, $\theta_1$ debe ser menor que uno en valor absoluto, esto es, $|\theta_1|<1$; de otra forma $\theta_1^i$ y la serie serán explosivas, porque los valores de la serie de tiempo se hacen grande en magnitud rápidamente. Claramente, porque $|\phi_i|^j$ crece sin acotación cuando $j\to\infty$. 
+
+Dado que $|\theta_1|<1$, tenemos que $\theta_1^i\to0$ cuando $i\to\infty$. Por lo tanto, la contribución de $x_{t-i} a $x_t$ decae exponencialmente cuando $i$ crece. Esto es razonable, ya que la dependencia de una serie estacionaria $x_t$ de su valor $x_{t-i}$, si existe, debería decaer con el tiempo.
+
+El modelo en la ecuación \@ref(eq:eq-MA-infty) lo podemos escribir en forma más compacta. Para ello, reescribamosel modelo como
+
+\begin{equation}
+x_t+\theta_1x_{t-1}+\theta_1^2x_{t-2}+\cdots=\phi_0+w_t
+(\#eq:eq-MA-2)
+\end{equation}
+
+El modelo para $x_{t-1}$ es entonces
+
+\begin{equation}
+x_{t_1}+\theta_1x_{t-2}+\theta_1^2x_{t-3}+\cdots=\phi_0+w_{t-1}
+(\#eq:eq-MA-xt-1)
+\end{equation}
+
+Multiplicando la ecuación \@ref(eq:eq-MA-xt-1) por $\theta_1$ y restando el resultado a la ecuación \@ref(eq:eq-MA-2), obtenemos
+
+$$x_t=\phi_0(1-\theta_1)+w_t-\theta_1w_{t-1}$$
+
+que dice que excepto para el término constante, $x_t$ es un promedio ponderado de $w_t$ y $w_{t-1}$. Por lo tanto, el modelo se denomina $MA$ de orden 1 o modelo $MA(1)$. La forma general de un modelo $MA(1)$ es
+
+\begin{equation}
+x_t=c_0+w_t-\theta_1w_{t-1}
+(\#eq:eq-MA1)
+\end{equation}
+
+donde $c_0$ es constante y $\{w_t\}$ es una serie de ruido blanco. De manera similar, un modelo $MA(2)$ es de la forma
+
+\begin{equation}
+x_t=c_0+w_t-\theta_1w_{t-1}-\theta_2w_{t-2}
+(\#eq:eq-MA2)
+\end{equation}
+
+y un modelo $MA(q)$ es de la forma
+
+\begin{equation}
+x_t=c_0+w_t-\theta_1w_{t-1}-\theta_2w_{t-2}-\cdots-\theta_qw_{t-q}
+(\#eq:eq-MAq-2)
+\end{equation}
+
+con $q>0$.
+
+## Propiedades de los modelos MA
+
+Al igual que con los modelos $AR$, daremos las propiedades para los modelos $MA(1)$ y $MA(2)$, y luego generalizaremos a los modelos $MA(q)$.
+
+### Estacionaridad
+
+Los modelos $MA$ son siempre débilmente estacionarios porque son combinaciones lineales finitas de una sucesión de ruiod blanco para el cual los primeros dos momentos son invariantes en el tiempo. Por ejemplo, consideremos el modelo $MA(1)$ dado en \@ref(eq:eq-MA1). Tomando el valor esperado obtenemos
+
+\begin{eqnarray*}
+\mathbb{E}(x_t) &=& \mathbb{E}(c_0+w_t-\theta_1w_{t-1}) \\
+                &=& \mathbb{E}(c_0) = c_0
+\end{eqnarray*}
+
+el cual es invariante. Tomando la varianza en la misma ecuación \@ref(eq:eq-MA1), obtenemos
+
+\begin{eqnarray*}
+Var(x_t) &=& Var(c_0+w_t-\theta_1w_{t-1}) \\
+         &=& Var(c_0)+Var(w_t)+\theta_1^2Var(w_{t-1}) \\
+         &=& \sigma_w^2+\theta_1^2\sigma_w^2 \\
+         &=& (1+\theta_1^2)\sigma_w^2
+\end{eqnarray*}
+
+donde usamosel hecho de que $w_t$ y $w_{t-1}$ son no correlacionados. Nuevamente, $Var(x_t)$ es invariante. Los cálculos anteriores los podemos aplicar a un modelo $MA(q)$ general, de donde on¿btenemos dos propiedades generales:
+
+1) El término constante de un modelo $MA(q)$ es la media de la serie, es decir, $\mathbb{E}(x_t)=c_0$
+
+2) La varianza de un modelo $MA(q)$ es $$Var(x_t)=(1+\theta_1^2+\theta_2^2+\cdots+\theta_q^2)\sigma_w^2$$
+
+La serie en la figura siguiente corresponde a dos procesos $MA(1)$, uno con $\theta_1=0.5$ y el otro con $\theta_1=-0.5$, en ambos casos $\sigma_w^2=1$.
+
+```{r, fig.align='center', fig.cap="Simulación de dos modelos MA(1)" }
+par(mfrow=c(2,1))
+plot(arima.sim(list(order=c(0,0,1),ma=0.5),n=100),ylab="x1",
+     main=expression(MA(1)~~~theta==+0.5))
+plot(arima.sim(list(order=c(0,0,1),ma=-0.5),n=100),ylab="x2",
+     main=expression(MA(1)~~~theta==-0.5))
+```
+
+### Función de autocorrelación (ACF)
+
+Para simplificar podemos asumir que $c_0=0$, para un modelo $MA(1)$. Multiplicando el modelo por $x_{t-h}$, obtenemos
+
+$$x_{t-h}x_t=x_{t-h}w_t-\theta_1x_{t-h}w_{t-1}$$
+
+Tomando el valor esperado, obtenemos
+\begin{eqnarray}
+\gamma(h) &=& \mathbb{E}(x_{t-h}x_t) = \mathbb{E}(x_{t-h}w_t-\theta_1x_{t-h}w_{t-1}) \nonumber \\
+    &=& \begin{cases}
+          -\theta_1\sigma_w^2,&\text{ si }h=1 \\
+          0, &\text{ si }h>1
+        \end{cases}
+(\#eq:eq-autocovarianza-MA1)
+\end{eqnarray}
+
+Usando el hecho de que $Var(x_t)=(1+\theta_1^2)\sigma_w^2$, obtenemos la función de autocorrelacion ACF para un modelo $MA(1)$, a saber
+
+\begin{equation}
+\rho(h) = \begin{cases}
+            1,&\text{ si }h=0 \\
+            \frac{-\theta_1}{1+\theta_1^2},&\text{ si }h=1 \\
+            0,&\text{ si }h>1
+          \end{cases}
+(\#eq:eq-ACF-MA1)
+\end{equation}
+
+Entonces, para un modelo $MA(1)$, el paso 1 de la ACF es distinto de cero, y para orden o paso superior la ACF es cero. En otras palabras, la ACF de un modelo $MA(1)$ corta en paso 1. Note que $|\rho(1)|\leq1/2$ para todo valor de $\theta_1$. También, $x_t$ está correlacionado con $x_{t-1}$ pero no con $x_{t-2},x_{t-3},\ldots$. Constraste esto con el caso del modelo $AR(1)$ en el cual la correlación entre $x_t$ y $x_{t-k}$ nunca es cero, para $k>1$. 
+
+En la figura siguiente podemos observar las funciones de autocorrelacion de los modelos $MA(1)$ simulados anteriormente
+
+```{r, fig.align='center', fig.cap="ACF para dos modelos MA(1)" }
+par(mfrow=c(2,1))
+acf(arima.sim(list(order=c(0,0,1),ma=0.5),n=100),ylab="x1",
+     main=expression(MA(1)~~~theta==+0.5))
+acf(arima.sim(list(order=c(0,0,1),ma=-0.5),n=100),ylab="x2",
+     main=expression(MA(1)~~~theta==-0.5))
+```
+
+Podemos notar en cada una de las ACF, que efectivamente tienen un corte en paso 1. Para la serie con $\theta_1=0.5$, la correlación es positiva y para la serie con $\theta=-0.5$ la correlación es negativa.
+
+
+Para un modelo $MA(2)$ dado por la ecuación \@ref(eq:eq-MA2) la función de autocorrelación está dada por
+
+\begin{equation}
+\rho(h) = \begin{cases}
+          \frac{-\theta_1+\theta_1\theta_2}{1+\theta_1^2+\theta_2^2}, &\text{ si }h=1 \\
+          \frac{-\theta_2}{1+\theta_1^2+\theta_2^2}, &\text{ si }h=2 \\
+          0, &\text{ si }h>1
+          \end{cases}
+(\#eq:eq-ACF-MA2)
+\end{equation}
+
+En este caso, la ACF corta en paso 2. Esta propiedad la podemos generalizar a los modelos $MA(q)$. Así, para un modelo $MA(q)$ la ACF se corta en paso $q$, y vale cero para $h>q$. Consecuentemente, una serie $MA(q)$ está solo linealmente relacionada con sus $q$ primeros valores y por consiguiente es un modelo de "memoria finita". 
+
+```{example, ejem-no-unicidad-MA, main="No unicidad de modelos MA e Invertibilidad"}
+USando las funciones de autocovarianza (ec.  \@ref(eq:eq-autocovarianza-MA1)) y de autocorrelación (ec. \@ref(eq:eq-ACF-MA1)) de un modelo $MA(1)$ podemos notar que $\rho(h)$ es el mismo para $\theta$ y $1/\theta$, probemos, por ejemplo, con $\theta=5$ y $\frac{1}{\theta}=\frac{1}{5}$
+  
+\begin{eqnarray*}
+\rho(h) &=& \begin{cases}
+           \frac{5}{(1+5^2)},&\text{ si }h=1 \\
+           0,&\text{ si }h>1
+          \end{cases} = \begin{cases}
+                         \frac{5}{26},&\text{ si }h=1 \\
+                         0,&\text{ si }h>1
+                        \end{cases} \\
+\rho(h) &=& \begin{cases}
+           \frac{1/5}{(1+(1/5)^2)},&\text{ si }h=1 \\
+           0,&\text{ si }h>1
+          \end{cases} = \begin{cases}
+                         \frac{5}{26},&\text{ si }h=1 \\
+                         0,&\text{ si }h>1
+                        \end{cases}
+\end{eqnarray*}
+
+Además, el par $\sigma_w^2=1$ y $\theta=5$ llevan a la misma función de autocovarianza que el par $\sigma_w^2=25$ y $\theta=1/5$, esto es
+
+$$\gamma(h) = \begin{cases}
+              26,&\text{ si }h=0\\
+              5,&\text{ si }h=1\\
+              0,&\text{ si }h>1
+              \end{cases}$$
+
+Entonces los procesos $MA(1)$
+
+$$x_t=w_t+\frac{1}{5}w_{t-1}, w_t\sim iidN(0,25)\text{  y  } x_t=v_t+5v_{t-1},  v_t\sim iidN(0,1)$$
+
+son los mismos debido a la normalidad, es decir, todas las distribuciones finitas son las mismas.
+              
+Para descubrir cual de los modelos es el modelo invertible, podemos invertir los papeles de $x_t$ y $w_t$ (porque estamos copiando el caso $AR$) y escribir el modelo $MA(1)$ como $w_t=-\theta w_{t-1}+x_t$. Siguiendo los pasos para \@ref(eq:eq-AR1-serie-lineal), si $|\theta|<1$, entonces $w_t=\sum_{j=0}^{\infty}(-\theta)^jx_{t-j}$, lo cual es la representación del modelo $AR$ infinito deseado. Por consiguiente, elegimos el modelo con $\sigma_w^2=25$ y $\theta=1/5$ ya que este modelo es invertible
+```
+
+----
+
+## Identificación del orden de un MA
+
+La ACF es muy útil para identificar el orden de un modelo $MA$. Para una serie de tiempo $x_t$ con ACF $\rho(h)$, si $\rho(q)\neq0$, pero $\rho(h)=0$ para $h>q$, entonces $x_t$ sigue un modelo $MA(q)$. La figura siguiente muestra el gráfico de la ACF para la serie de porcentajes de cambio diario de la Bolsa de Valores de New York del ejemplo \@ref(exm:Bolsa-Valores-New-York). Las lineas discontinuas en azul en la ACF denotan los dos límites de error estándar. Se puede notar que la serie tiene un ACF significativo en pasos 1,2 y 5, lo que nos sugiere el siguiente modelo $MA(5)$
+$$x_t=c_0+w_t-\theta_1w_{t-1}-\theta_2w_{t-2}-\theta_5w_{t-5}$$
+
+```{r, echo=FALSE, fig.align='center', fig.cap="Serie de tiempo y función de autocorrelación de los porcentajes de cambio diario de la Bolsa de Valores de New York, desde el 2 de febrero de 1984 hasta el 31 de diciembre de 1991"}
+par(mfrow=c(2,1))
+plot(NYSE, xlab = "Tiempo", ylab = "Porcentaje de cambio")
+acf(NYSE)
+```
+
+## Estimación
+
+La estimación de máxima verosimilitud se usa comúnmente para estimar  modelos $MA$. Existen dos enfoques para evaluar la función de verosimilitud de un modelo $MA$. El primer enfoque asume que los valores iniciales, es decir, para $t\leq0$, son ceros. Como tal, los valores necesarios en el cálculo de la función de verosmilitud se obtiene recursivamente del modelo iniciando con $w_1=x_1-c_0$ y $w_2=x_2-c_0+\theta w_1$. Este enfoque se conoce como el *método de verosimilitud condicional* y las estimaciones resultantes son las estimaciones de máxima verosimilitud condicional. El segundo enfoque trata los valores iniciales en $t\leq0$ como parámetros adicionales del modelo y los estima conjuntamente con otros parámetros. Este enfoque se conoce como el *método de verosimilitud exacta*. Las estimaciones de verosimilitud exacta son preferibles a las condicionales, pero requieren un cálculo más extenso. Si el tamaño de la muestra es grande, entonces los dos tipos de estimación de máxima verosimilitud están cerca uno del otro.
+
+## Predicciones usando modelos MA
+
+Las predicciones con modelos MA son fáciles de obtener. Como el modelo es de "memoria finita", la predicción converge rápidamente a la media de la seire. Para ver esto, supongamos que la predicción inicia en $m$. Para la predicción de un paso de un proceso $MA(1)$, el modelo nos dice que
+
+$$x_{m+1}=c_0+w_{m+1}-\theta_1w_m$$
+
+Tomando el valor esperado condicional, tenemos
+
+\begin{eqnarray*}
+  \hat{x}_m(1) &=& \mathbb{E}(x_{m+1}|x_m,x_{m-1},\ldots) = c_0-\theta_1w_m \\
+  e_m(1) &=& x_{m+1}-\hat{x}_m(1) = w_{m+1}
+\end{eqnarray*}
+
+La varianza del error de predicción de un paso es $Var[e_m(1)]=\sigma_w^2$. En la práctica, el valor $w_m$ lo podemos obtener de varias maneras. Por ejemplo, suponemos que $w_0=0$, entonces $w_1=x_1-c_0$ y calculamos $w_t$ para $2\leq t\leq m$ recursivamente usando $w_t=x_t-c_0+\theta_1w_{t-1}$. Alternativamente, podemos calcularlo usando la representación $AR$ del modelo $MA(1)$. (Véase el ejemplo \@ref(exm:ejem-no-unicidad-MA))
+
+Para la predicción de dos pasos, de la ecuación
+
+$$x_{m+2}=c_0+w_{m+2}-\theta_1w_{m+1}$$
+
+obtenemos
+
+\begin{eqnarray*}
+  \hat{x}_m(2) &=& \mathbb{E}(x_{m+2}|x_m,x_{m-1},\ldots)=c_0\\
+  e_m(2) &=& x_{m+2}-\hat{x}_m(2) = w_{m+2}-\theta_1w_{m+1}
+\end{eqnarray*}
+
+La varianza del error de predicción es $Var[e_m(2)]=(1+\theta_1^2)\sigma_m^2$, la cual es la varianza del proceso $MA$ y es mayor o igual que la varianza del error de predicción de un paso. Este resultado muestra que para un modelo $MA(1)$ la predicción de dos pasos de la serie es sencillamente la media incondicional del modelo. Esto es cierto para cualquier predicción iniciando en $m$. Más generalmente $\hat{x}_m(h)=c_0$ para $h>2$. En resumen, para un modelo $MA(1)$, la predicción de un paso a futuro con origen en $m$ es $c_0-\theta_1w_m$ y la predicción de múltiples pasos es $c_0$, el cual es la media incondicional del modelo. Si graficamos la predicción $\hat{x}_m(h)$ versus $h$ podemos ver que la predicción es una linea horizontal después del paso uno.
+
+De manera similar, para un modelo $MA(2)$, tenemos 
+
+$$x_{m+h} = c_0+w_{m+h}-\theta_1w_{m+h-1}-\theta_2w_{m+h-2}$$
+
+para el cual obtenemos
+
+\begin{eqnarray*}
+ \hat{x}_m(1) &=& c_0-\theta_1w_m-\theta_2w_{m-1} \\
+ \hat{x}_m(2) &=& c_0-\theta_2w_m \\
+ \hat{x}_m(h) &=& c_0\text{, para }h>2
+\end{eqnarray*}
+
+Entonces, la predicción de múltiples pasos de un modelo $MA(2)$ tiende a la media de la serie después de dos pasos. La varianza del error de predicción converge a la varianza de la serie después de dos pasos. En general, para un modelo $MA(q)$, la predicción multipasos converge a la media de la serie después de los primeros $q$ pasos.
+
+----
+
+** Resumen **
+
+Para concluir daremos un resumen de las propiedades estudiadas para los modelos $AR$ y $MA$ en estos dos capítulos:
+
+- Para los modelos $MA$, la ACF es útil para especificar el orden dado que la ACF se corta en salto $q$ para una serie $MA(q)$.
+
+- Para un modelo $AR$, la PACF es útil para determinar el orden ya que la PACF se corta en salto $p$ para un proceso $AR(p)$.
+
+- Una serie $MA$ es siempre estacionaria, pero para que una serie $AR$ sea estacionaria, todas sus raíces características deben ser menor que u1 en módulo.
+
+- Para una serie estacionaria, la predicción de múltiples pasos converge a la media de la serie y la varianza del error de predicción converge a la varianza de la serie.
+
+
+ 
+
