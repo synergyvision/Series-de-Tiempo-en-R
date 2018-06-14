@@ -1,6 +1,6 @@
 # Modelos MA
 
-En este capítulo describiremos otra clase de modelos simples que también son útiles en le modelado de series de retorno en finanzas. Estos modelos se denominam mdodelos de promedio móvil ($MA$, siglas en ingles: Moving Average). Hay varias maneras de introducir los modelos $MA$. Un enfoque es tratar el modelo como una extensión de una serie de ruido blanco; alternativamente a la representación autoregresiva en la cual $x_t$ del lado izquierdo se asume como una combinación lineal, en los modelos de promedio móvil e orden $q$ $MA(q)$, asumimos el ruido blanco $w_t$ del lado derecho de la ecuación que los define como una combinación lineal de los datos observados.
+En este capítulo describiremos otra clase de modelos simples que también son útiles en el modelado de series de retorno en finanzas. Estos modelos se denominam modelos de promedio móvil ($MA$, siglas en inglés: Moving Average). Hay varias maneras de introducir los modelos $MA$. Un enfoque es tratar el modelo como una extensión de una serie de ruido blanco; alternativamente a la representación autoregresiva en la cual $x_t$ del lado izquierdo se asume como una combinación lineal, en los modelos de promedio móvil e orden $q$ $MA(q)$, asumimos el ruido blanco $w_t$ del lado derecho de la ecuación que los define como una combinación lineal de los datos observados.
 
 ```{definition, defi-modelo-MAq}
 El **modelo de promedio móvil de orden $q$** o modelo $MA(q)$, se define como
@@ -27,7 +27,7 @@ x_t = \theta(B)w_t
 
 usando la siguiente definición.
 
-```{definition, defi-operador-proemdio-movil}
+```{definition, defi-operador-promedio-movil}
 El **operador de promedio móvil** se define como
 
 \begin{equation}
@@ -117,7 +117,7 @@ Var(x_t) &=& Var(c_0+w_t-\theta_1w_{t-1}) \\
          &=& (1+\theta_1^2)\sigma_w^2
 \end{eqnarray*}
 
-donde usamosel hecho de que $w_t$ y $w_{t-1}$ son no correlacionados. Nuevamente, $Var(x_t)$ es invariante. Los cálculos anteriores los podemos aplicar a un modelo $MA(q)$ general, de donde on¿btenemos dos propiedades generales:
+donde usamos el hecho de que $w_t$ y $w_{t-1}$ son no correlacionados. Nuevamente, $Var(x_t)$ es invariante. Los cálculos anteriores los podemos aplicar a un modelo $MA(q)$ general, de donde obtenemos dos propiedades generales:
 
 1) El término constante de un modelo $MA(q)$ es la media de la serie, es decir, $\mathbb{E}(x_t)=c_0$
 
@@ -188,8 +188,8 @@ Para un modelo $MA(2)$ dado por la ecuación \@ref(eq:eq-MA2) la función de aut
 
 En este caso, la ACF corta en paso 2. Esta propiedad la podemos generalizar a los modelos $MA(q)$. Así, para un modelo $MA(q)$ la ACF se corta en paso $q$, y vale cero para $h>q$. Consecuentemente, una serie $MA(q)$ está solo linealmente relacionada con sus $q$ primeros valores y por consiguiente es un modelo de "memoria finita". 
 
-```{example, ejem-no-unicidad-MA, main="No unicidad de modelos MA e Invertibilidad"}
-USando las funciones de autocovarianza (ec.  \@ref(eq:eq-autocovarianza-MA1)) y de autocorrelación (ec. \@ref(eq:eq-ACF-MA1)) de un modelo $MA(1)$ podemos notar que $\rho(h)$ es el mismo para $\theta$ y $1/\theta$, probemos, por ejemplo, con $\theta=5$ y $\frac{1}{\theta}=\frac{1}{5}$
+```{example, ejem-no-unicidad-MA, name="No unicidad de modelos MA e Invertibilidad"}
+Usando las funciones de autocovarianza (ec.  \@ref(eq:eq-autocovarianza-MA1)) y de autocorrelación (ec. \@ref(eq:eq-ACF-MA1)) de un modelo $MA(1)$ podemos notar que $\rho(h)$ es el mismo para $\theta$ y $1/\theta$, probemos, por ejemplo, con $\theta=5$ y $\frac{1}{\theta}=\frac{1}{5}$
   
 \begin{eqnarray*}
 \rho(h) &=& \begin{cases}

@@ -46,7 +46,7 @@ Las propiedades de $\phi(B)$ son importantes para resolver \@ref(eq:eq-ARp-B-con
 El *operador autoregresivo* de orden $p$ se define como
 \begin{equation}
 \phi(B) = 1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p
-(\#eq:eq-operador-Bp)
+(\#eq:eq-operador-autoregresivo)
 \end{equation}
 ```
 
@@ -91,7 +91,7 @@ Si en \@ref(eq:eq-ACV-AR1), hacemos $h=0$, obtenemos la varianza del proceso $AR
 
 $$Var(x_t)=\frac{\sigma_w^2}{1-\phi^2},$$
 
-asumiendo que $\phi_1^2<1$. El requisito de que $\phi_1^2<1$ resulta del hecho de que la varianza de una variable aleatoria es acotada y no negativa. Por consiguiente, la estacionaridad de un modelo $AR(1)$ implica que $-1<\phi_1<1$. Pero si $-1<\phi_1<1$, entonces por \@ref(eq:eq-AR1-serie-lineal) y la independencia de $\{w_t\}$ se puede demostrar que la media y la varianza de $x_t$ son finitas. Además, por la desigualdad de Cauchy-Schwartz todas las autocovarianzas de $x_t$ son finitas. Por lo tanto, el modelo $AR(1)$ es estacionario. En resumen, una condición necesaria y suficiente para que un proceos $AR(1)$ sea estacionario es $|\phi_1|<1$.
+asumiendo que $\phi_1^2<1$. El requisito de que $\phi_1^2<1$ resulta del hecho de que la varianza de una variable aleatoria es acotada y no negativa. Por consiguiente, la estacionaridad de un modelo $AR(1)$ implica que $-1<\phi_1<1$. Pero si $-1<\phi_1<1$, entonces por \@ref(eq:eq-AR1-serie-lineal) y la independencia de $\{w_t\}$ se puede demostrar que la media y la varianza de $x_t$ son finitas. Además, por la desigualdad de Cauchy-Schwartz todas las autocovarianzas de $x_t$ son finitas. Por lo tanto, el modelo $AR(1)$ es estacionario. En resumen, una condición necesaria y suficiente para que un proceso $AR(1)$ sea estacionario es $|\phi_1|<1$.
 
 De \@ref(eq:eq-ACV-AR1) la ACF de un modelo $AR(1)$ es
 
@@ -144,6 +144,25 @@ acf(ar1_2,type = "covariance", main="ACF de la Serie AR(1) con phi=-0.8")
 acf(ar1_3,type = "covariance", main="ACF de la Serie AR(1) con phi=0.4")
 acf(ar1_4,type = "covariance", main="ACF de la Serie AR(1) con phi=-0.5")
 ```
+
+
+```{example, name= "Modelo AR Explosivo y causalidad", ejem-modelo-AR-explosivo-causal}
+
+Ya hemos descritos las condiciones para que un proceso $AR(1)$ sea estacionario. Nos preguntamos si existe un proceso AR(1) estacionario con $|\phi|>1$. Tal proceso será llamado *explosivo* porque los valores de la serie de tiempo se hacen grande en magnitud rápidamente. Claramente, porque $|\phi|^j$ crece sin acotación cuando $j\to\infty$. Por otra parte, $\sum_{j=0}^{k-1}\phi^jw_{t-j}$ no converge (en media cuadrado) cuando $k\to\infty$, de modo que la idea intuitiva usada para obtener \@ref(eq:eq-AR1-serie-lineal) no funciona acá directamente.
+Podemos modificar el argumento para obtener un modelo estacionario como sigue. Escribimos $x_{t+1}=\phi x_t+w_{t+1}$ en cuyo caso
+
+\begin{eqnarray}
+  x_t &=& \phi^{-1}x_{t+1}-\phi^{-1}w_{t+1}=\phi^{-1}(\phi^{-1}x_{t+2}-\phi^{-1}w_{t+2})-\phi^{-1}w_{t+1} \nonumber\\
+      &\vdots&  \nonumber\\
+      &=& \phi^{-1}x_{t+k}-\sum_{j=1}^{k-1}\phi^{-1}w_{t+j},(\#eq:eq-modelo-AR-estacionario)
+\end{eqnarray}
+  
+iterando $k$ pasos hacia adelante. Porque $|\phi|^{-1}<1$, este resultado sugiere el modelo AR(1) estacionario que depende del futuro
+$$x_t=-\sum_{j=1}^{\infty}\phi^{-1}w_{t+j}$$
+
+Podemos verificar que este modelo es estacionario y de la forma AR(1), $x_t=\phi x_{t-1}+w_t$. Desafortunadamente, el modelo es inútil porque requiere conocer el futuro para predecir el futuro. Cuando un proceso no depende del futuro, tal como un AR(1) con $|\phi|<1$, decimos que el proceso es *causal*. En el caso explosivo de este ejemplo, el proceso es estacionario, pero también depende del futuro, y no causal.
+```
+
 
 ## Modelo AR(2)
 
@@ -284,7 +303,7 @@ x^p-\phi_1x^{p-1}-\phi_2x^{p-2}-\cdots-\phi_p=0
 (\#eq:eq-polinomio-ARp)
 \end{equation}
 
-la cual nos referimos como la *ecuación característica* del modelo. Si todas las *raíces caractarísticas* de esta ecuación son menores qye uno en módulo, esto es $|r_j|<1$, con $j=1,\ldots,p$, entonces la serie $x_t$ es estacionaria. Para un proceso $AR(p)$ estacionario, la ACF satisface la ecuación en diferencias
+la cual nos referimos como la *ecuación característica* del modelo. Si todas las *raíces características* de esta ecuación son menores qye uno en módulo, esto es $|r_j|<1$, con $j=1,\ldots,p$, entonces la serie $x_t$ es estacionaria. Para un proceso $AR(p)$ estacionario, la ACF satisface la ecuación en diferencias
 
 $$(1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p)\rho(h)=0\text{, para }h>0.$$
 
