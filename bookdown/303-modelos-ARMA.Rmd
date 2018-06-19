@@ -568,13 +568,573 @@ plot(ARMAtoMA(ar=0.9,ma=0.5,50))
 
 ## Pronósticos
 
+El objetivo en el pronóstico, es predecir los valores futuros de una serie de tiempo $x_{n+m}, m=1,2,\ldots$ basado en los valores de la serie observados hasta el tiempo actual $\mathbf{x}=\{x_n,x_{n-1},\ldots,x_1\}$. En esta sección asumiremos que $x_t$ es estacionario y que los parámetros del modelo son conocidos. El problema de hacer pronósticos cuando los parámetros del modelo son desconocidos se analizará en la siguiente sección. En los capítulos para modelos AR y modelos MA, vimos como realizar los pronósticos o predicciones para los mismos. A continuación daremos métodos más generales de predicción y que se pueden utilizar para los modelos AR, MA y ARMA.
+
+El mínimo del error cuadrático medio del predictor $x_{n+m}$ es
+$$x_{n+m}^n=\mathbb{E}(x_{n+m}|x_n,x_{n-1},\ldots,x_1)$$
+porque el valor esperado condicional minimiza el error cuadrático medio
+
+\begin{equation}
+  \mathbb{E}[x_{n+m}-g(\mathbf{x})]^2
+(\#eq:eq-esperanza-error-cuadratico-medio)
+\end{equation}
+
+donde $g(\mathbf{x})$ es una función de las observaciones $\mathbf{x}$.
+
+Primero, nos restringiremos a los predictores que son función lineal de los datos, esto es, predictores de la forma
+
+\begin{equation}
+  x_{n+m}^n=\alpha_0+\sum_{k=1}^{n}\alpha_kx_k
+(\#eq:eq-predictores)
+\end{equation}
+
+donde $\alpha_0,\alpha_1,\ldots,\alpha_n$ son números reales. Los predictores lineales de la forma (\ref{eq-predictores}) que minimizan el error cuadrático medio del predictor \@ref(eq:eq-esperanza-error-cuadratico-medio) son llamados el **mejor predictor lineal (BLP's)**. Como demostraremos luego, los predictores lineales dependen solo del segundo momento del proceso, lo cual es fácil de estimar a partir de los datos.
+
+A continuación daremos algunas propiedades y ejemplos.
+
+```{proposition, name="Mejor Predictor Lineal para Procesos Estacionarios", propiedad-mejor-predictor-lineal}
+
+Dada las observaciones $x_1,x_2,\ldots,x_n$, el mejor predictor lineal $x_{n+m}^n=\alpha_0+\sum_{k=1}^{n}\alpha_kx_k$, de $x_{n+m}$ para $m\geq1$, se halla resolviendo
+
+\begin{equation}
+  \mathbb{E}\left[(x_{n+m}-x_{n+m}^n)x_k\right]=0\text{, para } k=0,1,2,\ldots
+(\#eq:eq-mejor-predictor-lineal)
+\end{equation}
+
+donde $x_0=1$.
+```
+
+----
+
+Las ecuaciones especificadas en \@ref(eq:eq-mejor-predictor-lineal) son llamadas ecuaciones de predicción, y son usadas para resolver los coeficientes $\{\alpha_0,\alpha_1,\ldots,\alpha_n\}$. Si $\mathbb{E}(x_t)=\mu$, la primera ecuación ($k=0$) de \@ref(eq:eq-mejor-predictor-lineal) implica
+
+$$\mathbb{E}(x_{n+m}^n)=\mathbb{E}(x_{m+n})=\mu.$$
+
+Entonces, tomando valor esperado en \@ref(eq:eq-predictores), tenemos
+
+$$\mu=\alpha_0+\sum_{k=1}^{n}\alpha_k\mu\text{  o   }\alpha_0=\mu\left(1-\sum_{k=1}^{n}\alpha_k\right).$$
+
+Por lo tanto, la forma del BLP es
+$$x_{n+m}^n=\mu+\sum_{k=1}^{n}\alpha_k(x_k-\mu).$$
+
+
+Sin perdida de generalidad, podemos considerar el caso $\mu=0$ en cuyo caso, $\alpha_0=0$
+
+Consideremos primero la predicción de un paso. Esto es, dado $\{x_1,x_2,\ldots,x_n\}$, queremos predecir el valor la serie temporal en tiempo $t=n+1$, o sea $x_{n+1}$. El BLP de $x_{n+1}$ es
+
+\begin{equation}
+  x_{n+1}^n=\phi_{n1}x_n+\phi_{n2}x_{n-1}+\cdots+\phi_{nn}x_1
+(\#eq:eq-BLP-1-paso)
+\end{equation}
+
+donde, $\alpha_k$ en \@ref(eq:eq-predictores) lo escribiremos como $\phi_{n,n+1-k}$ en \@ref(eq:eq-BLP-1-paso), para $k=1,2,\ldots,n$. Usando la proposición \@ref(prp:propiedad-mejor-predictor-lineal), los coeficientes $\{\phi_{n1},\phi_{n2},\ldots,\phi_{nn}\}$ satisfacen
+
+$$\mathbb{E}\left[\left(x_{n+1}-\sum_{j=1}^{n}\phi_{nj}x_{n+1-j}\right)x_{n+1-k}\right]=0\text{, para }k=1,2,\ldots,n$$
+
+o
+
+\begin{equation}
+  \sum_{j=1}^{n}\phi_{nj}\gamma(k-j)=\gamma(k)\text{, }k=1,2,\ldots,n
+(\#eq:eq-coeficientes-BLP)
+\end{equation}
+
+
+Las ecuaciones de predicción \@ref(eq:eq-coeficientes-BLP) se pueden escribir en forma matricial como
+
+\begin{equation}
+  \Gamma_n\vec{\phi}_n=\vec{\gamma}_n
+(\#eq:eq-prediccion-BLP-matricial)
+\end{equation}
+
+donde $\Gamma_n=\{\gamma(k-j)\}_{j,k=1}^n$ es una matriz $n\times n$, $\vec{\phi}_n=(\phi_{n1},\phi_{n2},\ldots,\phi_{nn})^t$ es un vector $n\times1$ y $\vec{\gamma}_n=(\gamma(1),\gamma(2),\ldots,\gamma(n))^t$ es un vector $n\times1$.
+
+La matriz $\Gamma_n$ es no-negativa definida. Si $\Gamma_n$ es singular, existen muchas soluciones de \@ref(eq:eq-prediccion-BLP-matricial), pero por el Teorema de Proyección (véase Cramer \& Leadbetter (1967)) $x_{n+1}^n$ es único. Si $\Gamma_n$ es no singular, los elementos de $\vec{\phi}_n$ son únicos, y están dados por
+
+\begin{equation}
+  \vec{\phi}_n=\Gamma_n^{-1}\vec{\gamma}_n.
+(\#eq:eq-elementos-matriz-phi-n)
+\end{equation}
+
+Para un modelo ARMA, el hecho de que $\sigma_w^2>0$ y $\gamma(h)\to0$ cuando $h\to\infty$ es suficiente para asegurar que $\Gamma_n$ es positiva definida.
+
+A veces es conveniente escribir el pronóstico de un paso en forma vectorial
+
+\begin{equation} 
+  x_{n+1}^n=\vec{\phi}^t_n\mathbf{x}
+(\#eq:eq-BLP-1-paso-matricial)
+\end{equation}
+
+donde $\mathbf{x}=(x_1,x_2,\ldots,x_n)^t$. El error cuadrático medio de la predicción de un paso es
+
+\begin{equation}
+  P_{n+1}^n=\mathbb{E}(x_{n+1}-x_{n+1}^n)^2=\gamma(0)-\vec{\gamma}^t_n\Gamma_n^{-1}\vec{\gamma}_n.
+(\#eq:eq-ecm-prediccion-1-paso)
+\end{equation}
+
+Para verificar \@ref(eq:eq-ecm-prediccion-1-paso), usemos \@ref(eq:eq-elementos-matriz-phi-n) y \@ref(eq:eq-BLP-1-paso-matricial)
+
+\begin{eqnarray*}
+  \mathbb{E}(x_{n+1}-x_{n+1}^n)^2 &=& \mathbb{E}(x_{n+1}-\vec{\phi}^t_n\mathbf{x})^2=\mathbb{E}(x_{n+1}-\vec{\gamma}^t_n\Gamma_n^{-1}\mathbf{x})^2 \\
+         &=& \mathbb{E}(x_{n+1}^2-2\vec{\gamma}^t_n\Gamma_n^{-1}\mathbf{x}x_{n+1}+\vec{\gamma}^t_n\Gamma_n^{-1}\mathbf{xx^t}\Gamma_n^{-1}\vec{\gamma}_n) \\
+         &=& \gamma(0)-2\vec{\gamma}^t_n\Gamma_n^{-1}\vec{\gamma}_n+\vec{\gamma}^t_n\Gamma_n^{-1}\Gamma_n\Gamma_n^{-1}\vec{\gamma}_n \\
+         &=& \gamma(0)-\vec{\gamma}^t_n\Gamma_n^{-1}\vec{\gamma}^t_n.
+\end{eqnarray*}
+
+
+```{example, name="Predicción para un AR(2)", ejem-prediccion-AR2}
+
+Suponga que tenemos un proceso AR(2) causal $x_t=\phi_1x_{t-1}+\phi_2x_{t-2}+w_t$, y una observación $x_1$. Entonces, usando la ecuación \@ref(eq:eq-elementos-matriz-phi-n), la predicción de $x_2$ basada en $x_1$ es
+$$x_2^1=\phi_{11}x_1=\frac{\gamma(1)}{\gamma(0)}x_1=\rho(1)x_1$$
+Ahora, supóngase que deseamos la predicción de $x_3$ basado en dos observaciones $x_1$ y $x_2$. Podemos usar \@ref(eq:eq-elementos-matriz-phi-n) de nuevo y resolver
+
+$$x_3^2=\phi_{21}x_2+\phi_{22}x_1=(\gamma(1),\gamma(2))\left(
+                                                         \begin{array}{cc}
+                                                           \gamma(0) & \gamma(1) \\
+                                                           \gamma(1) & \gamma(0) \\
+                                                         \end{array}
+                                                       \right)^{-1}\left(
+                                                                     \begin{array}{c}
+                                                                       x_2 \\
+                                                                       x_1 \\
+                                                                     \end{array}
+                                                                   \right)
+$$
+
+pero, debe quedar claro a partir del modelo que $x_3^2=\phi_1x_2+\phi_2x_1$.
+
+Dado que $\phi_1x_2+\phi_2x_1$ satisface las ecuaciones de predicción \@ref(eq:eq-mejor-predictor-lineal)
+
+\begin{eqnarray*}
+  \mathbb{E}\{[x_3-(\phi_1x_2+\phi_2x_1)]x_1\} &=& \mathbb{E}(w_3x_1)=0 \\
+  \mathbb{E}\{[x_3-(\phi_1x_2+\phi_2x_1)]x_2\} &=& \mathbb{E}(w_3x_2)=0
+\end{eqnarray*}
+
+De ello se deduce que, de hecho $x_3^2=\phi_1x_2+\phi_2x_1$, y por la unicidad de los coeficientes en este caso, que $\phi_{21}=\phi_1$ y $\phi_{22}=\phi_2$. Continuando de esta misma manera, es fácil verificar que para $n\geq2$
+
+$$x_{n+1}^n=\phi_1x_n+\phi_2x_{n-1}$$
+
+Esto es, $\phi_{n1}=\phi_1$, $\phi_{n2}=\phi_2$ y $\phi_{nj}=0$ para $j=3,4,\ldots,n$
+```
+
+----
+
+Del ejemplo \@ref(exm:ejem-prediccion-AR2), es claro que si la serie de tiempo es un proceso AR(p) causal, entonces para $n\geq p$
+
+\begin{equation}
+  x_{n+1}^n=\phi_1x_n+\phi_2x_{n-1}+\cdots+\phi_px_{n-p+1}.
+(\#eq:eq-predictor-ARp)
+\end{equation}
+
+Para modelos ARMA en general, las ecuaciones de predicción no serán tan simple como en el caso AR puro. Además, para $n$ grande, el uso de \@ref(eq:eq-elementos-matriz-phi-n) es prohibitivo, ya que requiere la inversión de una matriz grande. Sin embargo, existen soluciones iterativas que no requieren ninguna inversión de matriz. En particular, utilizaremos la solución recursiva de Levinson (1947) y Durbin (1960).
+
+
+```{proposition, name= "Algoritmo de Durbin-Levinson", propiedad-algoritmo-durbin-levinson}
+
+Las ecuaciones \@ref(eq:eq-elementos-matriz-phi-n) y \@ref(eq:eq-ecm-prediccion-1-paso) se pueden resolver iterativamente como sigue:
+
+\begin{equation}
+  \phi_{00}=0\text{, } P_1^0=\gamma(0)
+(\#eq:eq-phi00-P10)
+\end{equation}
+
+Para $n\geq1$
+  
+\begin{equation}
+  \phi_{nn}=\frac{\rho(n)-\sum_{k=1}^{n-1}\phi_{n-1,k}\rho(n-k)}{1-\sum_{k=1}^{n-1}\phi_{n-1,k}\rho(k)}\text{, con }P_{n+1}^n=P_n^{n-1}(1-\phi_{nn}^2)
+(\#eq:eq-phi-nn-P-n)
+\end{equation}
+
+donde, para $n\geq2$
+
+\begin{equation}
+  \phi_{nk}=\phi_{n-1,k}-\phi_{nn}\phi_{n-1,k-1}\text{, para }k=1,2,\ldots,n-1
+(\#eq:eq-coeficientes-phi-durbin-levinson)
+\end{equation}
+```
+
+----
+
+```{example, name = "Uso del Algoritmo Durbin-Levinson",   ejem-algoritmo-durbin-levinson}
+
+Para usar el algoritmo, iniciemos con $\phi_{00}=0, P_1^0=\gamma(0)$. Entonces, para $n=1$,
+
+$$\phi_{11}=\rho(1)\text{ y }P_2^1=\gamma(0)[1-\phi_{11}^2].$$
+
+Para $n=2$
+
+\begin{eqnarray*}
+  \phi_{22} &=& \frac{\rho(2)-\phi_{11}\rho(1)}{1-\phi_{11}\rho(1)}=\frac{\rho(2)-\rho(1)^2}{1-\rho(1)^2} \\
+  \phi_{21} &=& \phi_{11}-\phi_{22}\phi_{11}=\rho(1)[1-\phi_{22}] \\
+  P_3^2 &=& \gamma(0)[1-\phi_{11}^2][1-\phi_{22}^2]
+\end{eqnarray*}
+
+Para $n=3$
+
+$$\phi_{33}=\frac{\rho(3)-\phi_{21}\rho(2)-\phi_{22}\rho(1)}{1-\phi_{21}\rho(1)-\phi_{22}\rho(2)}$$
+
+y así sucesivamente.
+```
+
+----
+
+Una consecuencia importante del algoritmo de Durbin-Levinson es la siguiente propiedad.
+
+```{proposition, name = "Solución Iterativa para la PACF", propiedad-solucion-iterativa-PACF}
+
+La PACF de un proceso estacionario $x_t$, se puede obtener via iteración de $$\phi_{nn}=\frac{\rho(n)-\sum_{k=1}^{n-1}\phi_{n-1,k}\rho(n-k)}{1-\sum_{k=1}^{n-1}\phi_{n-1,k}\rho(k)}\text{, con }P_{n+1}^n=P_n^{n-1}(1-\phi_{nn}^2)$$ como $\phi_{nn}$, para $n=1,2,\ldots$
+```
+
+----
+
+```{example, name= "La PACF de un AR(2)", ejem-PACF-AR2}
+
+Del ejemplo \@ref(exm:ejem-PACF-ARp-causal), sabemos que para un AR(2), $\phi_{hh}=0$ para $h>2$, pero usaremos los resultados del ejemplo \@ref(exm:ejem-prediccion-AR2) y la proposición \@ref(prp:propiedad-solucion-iterativa-PACF) para calcular los primeros tres valores de la PACF. Recuerde (Ejemplo \@ref(exm:ejem-ACF-AR2)) que para un AR(2), $\rho(1)=\phi_1/(1-\phi_2)$ y en general $\rho(h)-\phi_1\rho(h-1)-\phi_2\rho(h-2)=0$ para $h\geq2$. Entonces
+
+\begin{eqnarray*}
+  \phi_{11} &=& \rho(1)=\frac{\phi_1}{1-\phi_2} \\
+  \phi_{22} &=& \frac{\rho(2)-\rho(1)^2}{1-\rho(1)^2}=\frac{\left[\phi_1\left(\frac{\phi_1}{1-\phi_2}\right)+\phi_2\right]-\left(\frac{\phi_1}{1-\phi_2}\right)^2}{1-\left(\frac{\phi_1}{1-\phi_2}\right)^2}=\phi_2 \\
+  \phi_{21} &=& \phi_1 \\
+  \phi_{33} &=& \frac{\rho(3)-\phi_1\rho(2)-\phi_2\rho(1)}{1-\phi_1\rho(1)-\phi_2\rho(2)}=0.
+\end{eqnarray*}
+```
+
+----
+
+Hasta ahora nos hemos concentrado en la predicción de un paso, pero la proposición \@ref(prp:propiedad-mejor-predictor-lineal) nos permite calcular el BLP de $x_{n+m}$ para cada $m\geq1$. Dado los datos $\{x_1,x_2,\ldots,x_n\}$ el predictor de $m$ pasos es
+
+\begin{equation}
+  x_{n+m}^n=\phi_{n1}^{(m)}x_n+\phi_{n2}^{(m)}x_{n-1}+\cdots+\phi_{nn}^{(m)}x_1
+(\#eq:eq-predictor-m-pasos)
+\end{equation}
+
+donde $\{\phi_{n1}^{(m)},\phi_{n2}^{(m)},\ldots,\phi_{nn}^{(m)}\}$ satisfacen las ecuaciones de predicción
+
+$$\sum_{j=1}^{n}\phi_{nj}^{(m)}\mathbb{E}(x_{n+1-j}x_{n+1-k})=\mathbb{E}(x_{n+m}x_{n+1-k})\text{, }k=1,2,\ldots,n$$
+
+o
+
+\begin{equation}
+  \sum_{j=1}^{n}\phi_{nj}^{(m)}\gamma(k-j)=\gamma(m+k-1)\text{, }k=1,2,\ldots,n
+(\#eq:eq-prediccion-m-pasos)
+\end{equation}
+
+Las ecuaciones de predicción se pueden escribir nuevamente en forma matricial como
+
+\begin{equation}
+  \Gamma_n\vec{\phi}_n^{(m)}=\vec{\gamma}_n^{(m)}
+(\#eq:eq-prediccion-m-pasos-matricial)
+\end{equation}
+
+donde $\vec{\gamma}_n^{(m)}=(\gamma(m),\ldots,\gamma(m+n-1))^t$ y $\vec{\phi}_n^{(m)}=(\phi_{n1}^{(m)},\phi_{n2}^{(m)},\ldots,\phi_{nn}^{(m)})^t$ son vectores $n\times1$.
+
+El error cuadrático medio del predictor de $m$ pasos es
+
+\begin{equation}
+  P_{n+m}^n=\mathbb{E}(x_{n+m}-x_{n+m}^n)^2=\gamma(0)-(\vec{\gamma}_n^{(m)})^t\Gamma_n^{-1}\vec{\gamma}_n^{(m)}
+(\#eq:eq-ecm-prediccion-m-pasos)
+\end{equation}
+
+Otro algoritmo útil para calcular pronósticos es dado por Brockwell \& Davis (1996)[\ref{brockwell:davis}]. Este algoritmo se obtiene por aplicación directa del Teorema de Proyección a $x_t-x_t^{t-1}$ para $t=1,2,\ldots,n$ usando el hecho de que $x_t-x_t^{t-1}$ y $x_s-x_s^{s-1}$ son no-correlacionados para $s\neq t$. Presentamos el caso en el cual $x_t$ es una serie de tiempo estacionaria de media cero.
+
+
+```{proposition, name = "Algoritmo de Innovaciones", propiedad-algoritmo-innovaciones}
+
+Los predictores $x_{t+1}^t$ y sus errores cuadráticos medios $P_{t+1}^t$ se pueden calcular iterativamente como
+
+$$x_1^0=0\text{, }P_1^0=\gamma(0)$$
+
+\begin{equation}\label{}
+  x_{t+1}^t=\sum_{j=1}^{t}\theta_{tj}(x_{t+1-j}-x_{t+1-j}^{t-j})\text{, } t=1,2,\ldots
+(\#eq:eq-interactiva-predictor-x)
+\end{equation}
+
+\begin{equation}
+    P_{t+1}^t=\gamma(0)-\sum_{j=0}^{t-1}\theta_{t,t-j}^2P_{j+1}^j\text{, }t=1,2,\ldots
+(\#eq:eq-interactiva-ecm-x)
+\end{equation}
+
+donde, para $j=0,1,\ldots,t-1$,
+
+\begin{equation}
+  \theta_{t,t-j}=\left(\gamma(t-j)-\sum_{k=0}^{j-1}\theta_{j,j-k}\theta_{t,t-k}P_{k+1}^k\right)\left(P_{j+1}^j\right)^{-1}
+(\#eq:eq-coeficiente-innovacion)
+\end{equation}
+```
+
+----
+
+Dado los datos $x_1,x_2,\ldots,x_n$ el algoritmo de innovación se puede calcular sucesivamente para $t=1$, luego $t=2$ y así hasta $t=n$, en cuyo caso obtenemos el predictor $x_{n+1}^n$ y el error cuadrático medio $P_{n+1}^n$. El predictor de $m$ pasos y el error cuadrático medio basado en el algoritmo de innovación son dados por
+
+\begin{eqnarray}
+  x_{n+m}^n &=& \sum_{j=m}^{n+m-1}\theta_{n+m-1,j}(x_{n+m-j}-x_{n+m-j}^{n+m-j-1})(\#eq:eq-interactiva-predictor-x-m-pasos) \\
+  P_{n+m}^n &=& \gamma(0)-\sum_{j=m}^{n+m-1}\theta_{n+m-1,j}^2P_{n+m-j}^{n+m-j-1}(\#eq:eq-interactiva-ecm-x-m-pasos)
+\end{eqnarray}
+
+donde los $\theta_{n+m-1,j}$ se obtienen por iteración continua de \@ref(eq:eq-coeficiente-innovacion).
+
+
+```{example, name = "Predicción de un MA(1)", ejem-prediccion-MA1}
+
+El algoritmo de innovación nos da un buen predictor para un proceso de promedio móvil. Considere un modelo MA(1), $x_t=w_t+\theta x_{t-1}$. Recuerde que $\gamma(0)=(1+\theta^2)\sigma_w^2, \gamma(1)=\theta\sigma_w^2$ y $\gamma(h)=0$ para $h>1$. Entonces, usando la proposición \@ref(prp:propiedad-algoritmo-innovaciones), tenemos,
+
+\begin{eqnarray*}
+  \theta_{n1} &=& \theta\sigma_w^2/P_n^{n-1} \\
+  \theta_{nj} &=& 0\text{, para }j=2,3,\ldots,n \\
+  P_1^0 &=& (1+\theta^2)\sigma_w^2 \\
+  P_{n+1}^n &=& (1+\theta^2-\theta\theta_{n1})\sigma_w^2
+\end{eqnarray*}
+
+Finalmente, de \@ref(eq:eq-interactiva-predictor-x) el predictor de un paso es
+
+$$x_{n+1}^n=\theta(x_n-x_n^{n-1})\sigma_w^2/P_n^{n-1}$$
+```
+  
 
 ### Pronósticos para procesos ARMA
 
+Las ecuaciones de predicción general \@ref(eq:eq-mejor-predictor-lineal) nos dan una pequeña intuición en el pronóstico de los modelos ARMA en general. Hay diferentes maneras de expresar estos pronósticos, y cada uno ayuda a entender la estructura especial de la predicción ARMA. A través de toda esta sección asumiremos que $x_t$ es un proceso ARMA(p,q) causal e invertible $\phi(B)x_t=\theta(B)w_t$ donde $w_t\sim\text{iid}N(0,\sigma_w^2)$. En el caso de media distinto de cero, $\mathbb{E}(x_t)=\mu$, reemplazamos $x_t$ por $x_t-\mu$ en el modelo.
+
+Primero consideraremos dos tipos de pronósticos. Escribiremos el mínimo del error cuadrático medio del predictor $x_{n+m}$ como $x_{n+m}^n$ basado en los datos $\{x_n,x_{n-1},\ldots,x_1\}$, esto es
+
+$$x_{n+m}^n=\mathbb{E}(x_{n+m}|x_n,x_{n-1},\ldots,x_1).$$
+
+Para un modelo ARMA, es fácil  calcular el predictor de $x_{n+m}$ asumiendo que tenemos el historial completo del proceso $\{x_n,x_{n-1},\ldots\}$. Denotaremos el predictor de $x_{n+m}$ basado en *infinitos valores pasados* como
+
+$$\tilde{x}_{n+m}=\mathbb{E}(x_{n+m}|x_n,x_{n-1},\ldots).$$
+
+La idea aquí, es que para muestra grandes $\tilde{x}_{n+m}$ proveerá una buena aproximación de $x_{n+m}^n$.
+
+Ahora, escribamos $x_{n+m}$ en sus formas causal e invertible
+
+\begin{eqnarray}
+  x_{n+m} &=& \sum_{j=0}^{\infty}\psi_jw_{n+m-j}\text{, }\psi_0=1 (\#eq:eq-predictor-forma-causal) \\
+  w_{n+m} &=& \sum_{j=0}^{\infty}\pi_jx_{n+m-j}\text{, }\pi_0=1 (\#eq:eq-predictor-forma-invertible)
+\end{eqnarray}
+
+Entonces, tomando esperanza condicional en \@ref(eq:eq-predictor-forma-causal), tenemos
+
+\begin{equation}
+  \tilde{x}_{n+m}=\sum_{j=0}^{\infty}\psi_j\tilde{w}_{n+m-j}=\sum_{j=m}^{\infty}\psi_jw_{n+m-j}
+(\#eq:eq-esperanza-predictor-causal)
+\end{equation}
+
+ya que  por \@ref(eq:eq-predictor-forma-invertible)
+
+$$\tilde{w}_t\equiv\mathbb{E}(w_t|x_n,x_{n-1},\ldots)=\begin{cases}
+                    0,& t>n\\
+                    w_t,& t\leq n
+                \end{cases}$$
+
+
+Similarmente, tomando esperanza condicional en \@ref(eq:eq-predictor-forma-invertible), se tiene
+
+$$0=\tilde{x}_{n+m}+\sum_{j=1}^{\infty}\pi_j\tilde{x}_{n+m-j}$$
+
+o
+
+\begin{equation}
+  \tilde{x}_{n+m}=-\sum_{j=1}^{m-1}\pi_j\tilde{x}_{n+m-j}-\sum_{j=m}^{\infty}\pi_jx_{n+m-j}
+(\#eq:eq-esperanza-predictor-invertible)
+\end{equation}
+
+usando el hecho de que $\mathbb{E}(x_t|x_n,x_{n-1},\ldots)=x_t$ para $t\leq n$.
+
+La predicción se consigue recursivamente usando \@ref(eq:eq-esperanza-predictor-invertible) iniciando con un predictor de un paso $m=1$ y continuando para $m=2,3,\ldots$. Usando \@ref(eq:eq-esperanza-predictor-invertible) podemos escribir
+
+$$x_{n+m}-\tilde{x}_{n+m}=\sum_{j=0}^{m-1}\psi_jw_{n+m-j}$$
+
+de modo que el error cuadrático medio de predicción se puede escribir como
+
+\begin{equation}
+  P_{n+m}^n=\mathbb{E}(x_{n+m}-\tilde{x}_{n+m})^2=\sigma_w^2\sum_{j=0}^{m-1}\psi_j^2
+(\#eq:eq-ecm-prediccion)
+\end{equation}
+
+También, observe que para una muestra fija de tamaño $n$ los errores de predicción están correlacionados. Esto es, para $k\geq1$,
+
+\begin{equation}
+  \mathbb{E}[(x_{n+m}-\tilde{x}_{n+m})(x_{n+m+k}-\tilde{x}_{n+m+k})]=\sigma_w^2\sum_{j=0}^{m-1}\psi_j\psi_{j+k}
+(\#eq:eq-correlacion-ecm-prediccion)
+\end{equation}
+
+
+```{example, name = "Pronóstico a largo plazo", ejem-pronostico-largo-plazo}
+
+Consideremos el pronóstico para un proceso ARMA de media $\mu$. Del caso de media cero en \@ref(eq:eq-esperanza-predictor-causal) podemos deducir que el pronóstico de $m$ pasos se puede escribir como
+
+\begin{equation}
+    \tilde{x}_{n+m}=\mu+\sum_{j=m}^{\infty}\psi_jw_{n+m-j}
+(\#eq:eq-pronostico-m-pasos)
+\end{equation}
+
+Note que los $\psi$ pesos decrece a cero de forma exponencial, es claro entonces que
+
+$$\tilde{x}_{n+m}\to\mu$$
+
+exponencialmente (en el sentido de media cuadrado) cuando $m\to\infty$. Más aún, por \@ref(eq:eq-ecm-prediccion) el error cuadrático medio de predicción
+
+\begin{equation}
+  P_{n+m}^n\to\sigma_w^2\sum_{j=0}^{\infty}\psi_j^2,
+(\#eq:eq-convergencia-ecm-prediccion)
+\end{equation}
+
+exponencialmente cuando $m\to\infty$.
+
+Es claro de \@ref(eq:eq-pronostico-m-pasos) y \@ref(eq:eq-convergencia-ecm-prediccion) que el pronóstico de un proceso ARMA rápidamente se estabiliza a la media con un error de predicción constante a medida que el periodo de pronóstico  $m$ crece. 
+```
+
+----
+
+Cuando $n$ es pequeño, las ecuaciones generales de predicción \@ref(eq:eq-mejor-predictor-lineal) se puede usar fácilmente. Cuando $n$ es grande, usaremos \@ref(eq:eq-esperanza-predictor-causal) por truncamiento, porque solo tenemos disponibles las observaciones $x_1,x_2,\ldots,x_n$. En este caso truncamos \@ref(eq:eq-esperanza-predictor-causal) haciendo
+
+$$\sum_{j=n+m}^{\infty}\pi_jx_{n+m-j}=0$$
+
+El predictor truncado se escribe entonces como
+
+\begin{equation}
+  \tilde{x}_{n+m}^n=-\sum_{j=1}^{m-1}\pi_j\tilde{x}_{n+m-j}^n-\sum_{j=m}^{n+m-1}\pi_jx_{n+m-j}
+(\#eq:eq-predictor-truncado)
+\end{equation}
+
+el cual es también calculado recursivamente para $m=1,2,\ldots$. El error cuadrático medio de predicción, en este caso, se aproxima por \@ref(eq:eq-ecm-prediccion).
+
+
+Para un modelo AR(p) y cuando $n>p$ la ecuación \@ref(eq:eq-predictor-ARp) nos da el predictor exacto $x_{n+m}^n$ de $x_{n+m}$ y no hay necesidad de aproximación. Esto es, para $n>p$, $\tilde{x}_{n+m}^n=\tilde{x}_{n+m}=x_{n+m}^n$.
 
 
 
+También, en este caso, el error de predicción de un paso es $\mathbb{E}(x_{n+1}-x_{n+1}^n)^2=\sigma_w^2$. Para un modelo ARMA(p,q) en general, los predictores truncados para $m=1,2,\ldots$, son
+
+\begin{equation}
+  \tilde{x}_{n+m}^n=\phi_1\tilde{x}_{n+m}^n+\cdots+\phi_p\tilde{x}_{n+m-p}^n+\theta_1\tilde{w}_{n+m-1}^n+\cdots+\theta_q\tilde{w}_{n+m-q}^n
+(\#eq:eq-predictor-truncado-ARMApq)
+\end{equation}
+
+donde $\tilde{x}_t^n=x_t$ para $1\leq t\leq n$ y $\tilde{x}_t^n=0$ para $t\leq0$. Los errores de predicción truncados están dados por:
+
+\begin{equation*}
+  \begin{cases}
+  \tilde{w}_t^n=0&\text{ para }t\leq0\text{ ó }t>n\\
+  \tilde{w}_t^n=\phi(B)\tilde{x}_t^n-\theta_1\tilde{w}_{t-1}^n-\cdots-\theta_q\tilde{w}_{t-q}^n&\text{ para }1\leq t\leq n.
+  \end{cases}
+\end{equation*}
+
+
+```{example, name = "Pronóstico para una serie ARMA(1,1)", ejem-pronostico-ARMA11}
+
+Dado los datos $x_1,x_2,\ldots,x_n$ para propósito de pronósticos, escribiremos el modelo como
+
+$$x_{n+1}=\phi x_n+w_{n+1}+\theta w_n.$$
+
+Entonces, basado en \@ref(eq:eq-predictor-truncado-ARMApq), el pronóstico truncado de un paso es
+
+$$\tilde{x}_{n+1}^n=\phi x_n+0+\theta\tilde{w}_n^n.$$
+
+Para $m\geq2$, tenemos
+
+$$\tilde{x}_{n+m}^n=\phi\tilde{x}_{n+m-1}^n,$$
+
+el cual puede ser calculado recursivamente para $m=1,2,\ldots$.
+
+
+Para calcular $\tilde{w}_n^n$, que se necesitará para iniciar los pronósticos sucesivos, podemos escribir el modelo como $w_t=x_t-\phi x_{t-1}-\theta w_{t-1}$ para $t=1,2,\ldots,n$. Para el pronóstico truncado, usando \@ref(eq:eq-predictor-truncado-ARMApq) hacemos $\tilde{w}_0^n=0, \tilde{w}_1^n=x_1$ y entonces iteramos el error
+
+$$\tilde{w}_t^n=x_t-\phi x_{t-1}-\theta\tilde{w}_{t-1}^n\text{, }t=2,3,\ldots,n.$$
+
+La varianza aproximada del pronóstico se calcula de \@ref(eq:eq-ecm-prediccion) usando los $\psi$ pesos determinados como en el ejemplo \@ref(exm:ejem-pesos-ARMA-causal). En particular, los $\psi$ pesos satisfacen $\psi_j=(\phi+\theta)\phi^{j-1}$ para $j\geq1$. Este resultado nos da
+
+\begin{eqnarray*}
+  P_{n+m}^n &=& \sigma_w^2\left[1+(\phi+\theta)^2\sum_{j=1}^{m-1}\phi^{2(j-1)}\right] \\
+            &=& \sigma_w^2\left[1+\frac{(\phi+\theta)^2(1-\phi^{2(m-1)})}{(1-\phi^2)}\right]
+\end{eqnarray*}
+
+```
+
+----
+
+Para evaluar la precisión de los pronósticos, se calculan los intervalos de predicción junto con el pronóstico. En general, los $(1-\alpha)$ intervalos de predicción son de la forma
+
+\begin{equation}
+  x_{n+m}^n\pm c_{\frac{\alpha}{2}}\sqrt{P_{n+m}^n}
+(\#eq:eq-intervalos-prediccion)
+\end{equation}
+
+donde $c_{\alpha/2}$ se elige de manera de obtener el grado deseado de confidencia. Por ejemplo, si el proceso es gaussiano, entonces elegimos $c_{\alpha/2}=2$ los cual nos da un intervalo de predicción de aproximadamente 95\% para $x_{n+m}$. Si estamos interesados en establecer un intervalos de predicción sobre más de un periodo de tiempo, entonces $c_{\alpha/2}$ se ajustará apropiadamente, por ejemplo, usando la desigualdad de Bonferroni. (véase Shumway (2006), Capítulo 4)
 
 
 
+```{example, name = "Pronóstico para la serie de nuevos peces", ejem-pronostico-serie-reclutamiento}
+
+Usando los parámetros estimados como los valores actuales de los parámetros, la figura \@ref(fig:grafico-pronostico-serie-reclutamiento) muestra los resultados de la serie de nuevos peces dada en el ejemplo \@ref(exm:ejem-serie-nuevos-peces-AR2), sobre un periodo de 24 meses $m=1,2,\ldots,24$.
+
+Los pronósticos actuales se calculan como
+
+$$x_{n+m}^n=6.74+1.35x_{n+m-1}^n-0.46x_{n+m-2}^n$$
+
+para $n=453$ y $m=1,2,\ldots,12$. Recuerde que $x_t^s=x_t$ cuando $t\leq s$. Los errores de pronóstico $P_{n+m}^n$ se calculan usando \@ref(eq:eq-ecm-prediccion). Recuerde que $\hat{\sigma}_w^2=90.31$, y usando \@ref(eq:eq-diferencias-homogeneas-pesos) del ejemplo \@ref(exm:ejem-serie-nuevos-peces-AR2) tenemos $\psi_j=1.35\psi_{j-1}-0.46\psi_{j-2}$ para $j\geq2$, donde $\psi_0=1$ y $\psi_1=1.35$. Entonces para $n=453$
+
+\begin{eqnarray*}
+  P_{n+1}^n &=& 90.31 \\
+  P_{n+2}^n &=& 90.31(1+1.35^2) \\
+  P_{n+3}^n &=& 90.31(1+1.35^2+[1.35^2-0.46^2])
+\end{eqnarray*}
+
+y así sucesivamente.
+
+Note como el pronóstico se nivela rápidamente y los intervalos de predicción son amplios, aún cuando en este caso los límites están basados en un solo error estándar; esto es, $x_{n+m}^n\pm\sqrt{P_{n+m}^n}$.
+
+```
+
+
+```{r echo=FALSE, fig.align = "center",fig.cap="24 meses de pronósticos para la serie de reclutamientos (nuevos peces)", grafico-pronostico-serie-reclutamiento}
+knitr::include_graphics("images/Estimacion-Yule-Walker-serie-reclutamiento.png")
+```
+
+----
+
+Completaremos está sección con una breve discusión de retroproyección. En retroproyección deseamos predecir $x_{1-m}$, $m=1,2,\ldots$, basado en los datos $\{x_1,x_2,\ldots,x_n\}$.
+
+Escribamos la retroproyección como
+
+\begin{equation}
+  x_{1-m}^n=\sum_{j=1}^{n}\alpha_jx_j
+(\#eq:eq-retroproyeccion)
+\end{equation}
+
+Análogamente a \@ref(eq:eq-prediccion-m-pasos), las ecuaciones de predicción (asumiendo $\mu=0$) son
+
+\begin{eqnarray}
+  \sum_{j=1}^{n}\alpha_j\mathbb{E}(x_jx_k) &=& \mathbb{E}(x_{1-m}x_k)\text{, }k=1,\ldots,n\text{ ó } (\#eq:eq-retroproyeccion-m-pasos-1) \\
+  \sum_{j=1}^{n}\alpha_j\gamma(k-j) &=& \gamma(m+k-1)\text{, }k=1,\ldots,n (\#eq:eq-retroproyeccion-m-pasos-2)
+\end{eqnarray}
+
+Estas ecuaciones son precisamente las ecuaciones de predicción para predicción a futuro. Estos es, $\alpha_j\equiv\phi_{nj}^{(m)}$ para $j=1,\ldots,n$ donde los $\phi_{nj}^{(m)}$ están dados por \@ref(eq:eq-prediccion-m-pasos-matricial). Finalmente las retroproyecciones están dadas por
+
+\begin{equation}
+  x_{1-m}^n=\phi_{nj}^{(m)}x_1+\ldots+\phi_{nn}^{(m)}x_n\text{, con }m=1,2,\ldots
+(\#eq:eq-retroproyeccion-final)
+\end{equation}
+
+
+```{example, name = "Retroproyección de un proceso ARMA(1,1)", ejem-retroproyeccion-ARMA11}
+
+Considere un proceso ARMA(1,1) causal e invertible $x_t=\phi x_{t-1}+\theta w_{t-1}+w_t$, llamaremos a este, modelo hacia adelante.  Hemos visto que el mejor predictor lineal hacia atrás en el tiempo es el mismo predictor lineal hacia adelante en el tiempo para procesos estacionarios. Dado que estamos suponiendo que el modelo ARMA es gaussiano, tenemos que el mínimo error cuadrático medio de predicción hacia atrás es el mismo que hacia adelante para modelos ARMA. Entonces, el proceso se puede generar equivalentemente por un modelo hacia atrás $x_t=\phi x_{t+1}+\theta v_{t+1}+v_t$ donde $\{v_t\}$ es un ruido blanco gaussiano con varianza $\sigma_w^2$. [^nota8] 
+
+[^nota8:] En el caso estacionario gaussiano (a) la distribución de $\{x_{n+1},x_n,\ldots,x_1\}$ es la misma que (b) la distribución de $\{x_0,x_1,\ldots,x_n\}$. En pronóstico usamos (a) para obtener $\mathbb{E}(x_{n+1}|x_n,\ldots,x_1)$; en retroproyección usamos (b) para obtener $\mathbb{E}(x_0|x_1,\ldots,x_n)$. Dado que (a) y (b) son iguales, los dos problemas son equivalentes.
+
+Escribiremos $x_t=\sum_{j=0}^{\infty}\psi_jv_{t+j}$ donde $\psi_0=1$; esto significa que $x_t$ es no-correlacionado con $\{v_{t-1},v_{t-2},\ldots\}$, en analogía con el modelo a futuro.
+
+Dado los datos $\{x_1,x_2,\ldots,x_n\}$, truncamos $v_t=\mathbb{E}(v_n|x_1,\ldots,x_n)$ a cero. Esto es, hacemos $\tilde{v}_n^n=0$, como aproximación inicial, y entonces generamos los errores
+
+$$\tilde{v}_t^n=x_t-\phi x_{t+1}+\theta\tilde{v}_{t+1}^n\text{, con }t=(n-1),(n-2),\ldots,1.$$
+
+Entonces
+
+$$\tilde{x}_0^n=\phi x_1+\theta\tilde{v}_1^n+\tilde{v}_0^n=\phi x_1+\theta\tilde{v}_1^n.$$
+
+porque $\tilde{v}_t^n=0$ para $t\leq0$. Continuando, las retroproyecciones truncadas general están dadas por
+
+$$\tilde{x}_{1-m}^n=\phi\tilde{x}_{2-m}^n\text{, para }m=2,3,\ldots$$
+
+```
 

@@ -371,11 +371,63 @@ Para concluir esta sección, destaquemos que tanto la función de autocorrelaci�
 | AR(p)  |  Disminución gradual | Corte en paso p  |
 
 
+```{example, name = "La PACF de un AR(1) causal", ejem-PACF-AR1-causal}
+
+Considere la PACF de un proceso AR(1) dado por $x_t=\phi x_{t-1}+w_t$ con $|\phi|<1$. Por definición, $\phi_{1,1}=\rho(1)=\phi$. Para calcular $\phi_{2,2}$ considere la regresión de $x_2$ en $x_1$, $x_2^1=\beta x_1$. Minimicemos $\beta$
+
+$$\mathbb{E}(x_2-\beta x_1)^2 = \gamma(0)-2\beta\gamma(1)+\beta^2\gamma(0).$$
+
+Derivando e igualando a cero, tenemos $\beta=\gamma(1)/\gamma(0)=\rho(0)=\phi$. Entonces $x_2^1=\phi x_1$. Ahora, consideremos la regresión de $x_0$ en $x_1$, $x_0^1=\beta x_1$. Nuevamente, minimizamos $\beta$
+
+$$\mathbb{E}(x_0-\beta x_1)^2 = \gamma(0)-2\beta\gamma(1)+\beta^2\gamma(0).$$
+
+Esta ecuación es la misma que la anterior, por lo que $\beta=\phi$ y $x_0^1=\phi x_1$. Por consiguiente, $\phi_{22}=\text{corr}(x_2-\phi x_1,x_0-\phi x_1)$. Pero, note que
+
+$$\text{cov}(x_2-\phi x_1,x_0-\phi x_1)=\gamma(2)-2\phi\gamma(1)+\phi^2\gamma(0)=0$$
+
+porque $\gamma(h)=\gamma(0)\phi^h$. Entonces $\phi_{2,2}=0$.
+```
+
+----
+
+```{example, name = "La PACF de un AR(p) causal", ejem-PACF-ARp-causal}
+
+Sea $x_t=\sum_{j=1}^{p}\phi_jx_{t-j}+w_j$ donde las raíces de $\phi(z)$ están fuera del círculo unitario. En particular, $x_h=\sum_{j=1}^{p}\phi_jx_{h-j}+w_h$. Cuando $h>p$, la regresión de $x_h$ en $x_{h-1},x_{h-2},\ldots,x_1$ es
+
+$$x_h^{h-1}=\sum_{j=1}^{p}\phi_jx_{h-j}$$
+
+Este resultado se demostrará en la sección "Pronósticos" del capítulo "Modelos ARMA".
+
+Entonces, cuando $h>p$,
+
+\begin{eqnarray*}
+  \phi_{hh} &=& \text{corr}(x_h-x_h^{h-1},x_0-x_0^{h-1}) \\
+            &=& \text{corr}(w_h,x_0-x_0^{h-1})
+\end{eqnarray*}
+
+ya que, por causalidad $x_0-x_0^{h-1}$ depende sólo de $\{w_{h-1},w_{h-2},\ldots\}$. Cuando $h\leq p$, $\phi_{pp}$ no es cero y $\phi_{11},\phi_{22},\ldots,\phi_{p-1,p-1}$ no son necesariamente ceros.
+
+La figura \@ref(fig:grafico-ACF-PACF-AR2) muestra las ACF y PACF del modelo AR(2) dado por 
+
+$$x_t=1.5x_{t-1}-0.75x_{t-2}+w_t.$$
+```
+
+```{r, fig.align="CENTER", fig.cap="Las ACF y PACF de un modelo AR(2) con phi_1=1.5 y phi_2=-0.75", grafico-ACF-PACF-AR2}
+ACF=ARMAacf(ar=c(1.5,-0.75),ma=0,25)
+PACF=ARMAacf(ar=c(1.5,-0.75),ma=0,25,pacf=T)
+par(mfrow=c(1,2))
+plot(ACF,type="h",ylim=c(-0.8,1),xlab="Salto")
+abline(h=0)
+plot(PACF,type="h",ylim=c(-0.8,1),xlab="Salto")
+abline(h=0)
+```
+
+
 ## Criterios de Información
 
 Existen diversos criterios de información disponibles para determinar el orden $p$ de un proceso autoregresivo. Todos ellos están basados en verosimilitud. El primer criterio ya lo definimos en \@ref(def:defi-AIC)
 
-```{definition, defi-AIC-2, main="Criterio de Información de Akaike (AIC)"}
+```{definition, defi-AIC-2, name="Criterio de Información de Akaike (AIC)"}
 El Criterio de Información de Akaike se define como 
 
 \begin{equation}
@@ -398,7 +450,7 @@ El AIC no proporciona una prueba de un modelo en el sentido de probar una hipót
 
 En el criterio AIC definido en la ecuación \@ref(eq:eq-AIC), el sesgo es aproximado por el número de parámetros los cuales son constantes y no tienen variabilidad. Para el modelo de regresión, la corrección del sesgo el logaritmo de la verosimilitud se define como
 
-```{definition, defi-AICc, main="AIC con sesgo corregido (AICc)"}
+```{definition, defi-AICc, name="AIC con sesgo corregido (AICc)"}
 
 \begin{equation}
 AICc = \ln\hat{\sigma}_k^2+\frac{n+k}{n-k-2}
@@ -412,7 +464,7 @@ donde $\hat{\sigma}_k^2$ es el estimador de máxima verosimilitud de la varianza
 
 Este modelo fue propuesto originalmente por *N. Sugiura* en el artículo **"Further analysis of the data by Akaike's information criterion and the finite corrections"**. *Communications in Statistics, Theory and Methods*, Vol. 7, No. 1, pp. 13-26, 1978. Se tiene que el AICc es esencialmente el AIC con un término de penalización adicional para el número de parámetros. Nótese que cuando $n\to\infty$, el término de penalización adicional converge a 0, y por lo tanto el AICc converge al AIC. De manera similar que en el AIC, se selecciona el modelo con el menor valor AICc.
 
-```{definition, defi-SIC, main="Criterio de Información de Schwarz (SIC)"}
+```{definition, defi-SIC, name="Criterio de Información de Schwarz (SIC)"}
 
 \begin{equation}
 SIC = \ln\hat{\sigma}_k^2+\frac{k\ln n}{n}
