@@ -566,6 +566,108 @@ plot(ARMAtoMA(ar=0.9,ma=0.5,50))
 
 ----
 
+
+### Función de Autocorrelación (ACF) para modelos ARMA
+
+Iniciemos mostrando la ACF de un proceso MA(q) $x_t=\theta(B)w_t$, donde $\theta(B)=1+\theta_1B+\cdots+\theta_qB^q$. Dado que $x_t$ es una combinación lineal de términos de ruido blanco, el proceso es estacionario con media
+
+$$\mathbb{E}(x_t)=\sum_{j=0}^{q}\theta_j\mathbb{E}(w_{t-j})=0,$$
+
+donde podemos escribir $\theta_0=1$, y la función de autocovarianza es
+
+\begin{eqnarray}
+  \gamma(h)=\text{cov}(x_{t+h},x_t) &=& \mathbb{E}\left[\left(\sum_{j=0}^{q}\theta_jw_{t+h-j}\right)\left(\sum_{k=0}^{q}\theta_kw_{t-k}\right)\right] \nonumber \\
+   &=& \begin{cases}\sigma_w^2\sum_{j=0}^{q-h}\theta_j\theta_{j+h},&\text{ si }0\leq h\leq q\\
+                    0,&\text{ si }h>q\end{cases}(\#eq:eq-autocovarianza-MA-q)
+\end{eqnarray}
+
+Recuerde que $\gamma(h)=\gamma(-h)$, por eso solo mostramos $\gamma(h)$ para $h\geq0$.
+
+El corte de $\gamma(h)$ después de $q$ saltos es la firma del modelo MA(q). Dividiendo (\ref{eq-autocovarianza-MA-q}) por $\gamma(0)$ conseguimos la ACF de un MA(q):
+
+\begin{equation}
+  \rho(h)=\begin{cases}\frac{\sum_{j=0}^{q-h}\theta_j\theta_{j+h}}{1+\theta_1^2+\cdots+\theta_q^2},&\text{ si }1\leq h\leq q\\
+                0,\text{ si }h>q\end{cases}
+(\#eq:eq-ACF-MA-q)
+\end{equation}
+
+Para un modelo ARMA(p,q) causal $\phi(B)x_t=\theta(B)w_t$, donde los ceros de $\phi(z)$ están fuera del círculo unitario, podemos escribir
+
+$$x_t=\sum_{j=0}^{\infty}\psi_jw_{t-j}$$
+
+Se sigue inmediatamente que $\mathbb{E}(x_t)=0$. También, la función de autocovarianza de $x_t$ se puede escribir como
+
+\begin{equation}
+  \gamma(h)=\text{cov}(x_{t-h},x_t)=\sigma_w^2\sum_{j=0}^{\infty}\psi_j\psi_{j+h}\text{, }h\geq0
+(\#eq:eq-autocovarianza-ARMA)
+\end{equation}
+
+
+Podemos entonces usar \@ref(eq:eq-diferencias-homogeneas-pesos) y \@ref(eq:eq-condicion-inicial-pesos) para resolver los $\psi$-pesos. A su vez, podemos resolver para $\gamma(h)$ y la ACF $\rho(h)=\gamma(h)/\gamma(0)$. Como en el ejemplo \@ref(exm:ejem-ACF-AR2), también es posible obtener una ecuación en diferencias homogénea directamente en términos de $\gamma(h)$. Primero, escribimos
+
+\begin{eqnarray}
+  \gamma(h) &=& \text{cov}(x_{t+h},x_t)=\mathbb{E}\left[\left(\sum_{j=1}^{p}\phi_jx_{t+h-j}+\sum_{j=0}^{q}\theta_jw_{t+h-j}\right)x_t\right]\nonumber \\
+    &=& \sum_{j=1}^{p}\phi_j\gamma(h-j)+\sigma_w^2\sum_{j=h}^{q}\theta_j\psi_{j-h}\text{, }h\geq0 (\#eq:eq-autocovarianza-ARMA-2)
+\end{eqnarray}
+
+donde hemos usado el hecho de que $x_t=\sum_{k=0}^{\infty}\psi_jw_{t-k}$ y para $h\geq0$,
+
+$$\mathbb{E}(w_{t+h-j}x_t)=\mathbb{E}\left[w_{t+h-j}\left(\sum_{k=0}^{\infty}\psi_kw_{t-k}\right)\right]=\psi_{j-h}\sigma_w^2.$$
+
+
+De \@ref(eq:eq-autocovarianza-ARMA-2) podemos escribir una ecuación general homogénea para la ACF de un proceso ARMA causal:
+
+\begin{equation}
+  \gamma(h)-\phi_1\gamma(h-1)-\cdots-\phi_p\gamma(h-p)=0\text{, }h\geq\max(p,q+1)
+(\#eq:eq-ACF-ARMA-causal)
+\end{equation}
+
+con condiciones iniciales
+
+\begin{equation}
+  \gamma(h)-\sum_{j=1}^{p}\phi_j\gamma(h-j)=\sigma_w^2\sum_{j=h}^{q}\theta_j\psi_{j-h}\text{, }0\leq h<\max(p,q+1).
+(\#eq:eq-condicion-inicial-ACF-ARMA-causal)
+\end{equation}
+
+Dividiendo \@ref(eq:eq-ACF-ARMA-causal) y \@ref(eq:eq-condicion-inicial-ACF-ARMA-causal) por $\gamma(0)$ nos permite resolver la ACF $\rho(h)=\gamma(h)/\gamma(0)$.
+
+
+```{example, name="La ACF de un proceso ARMA(1,1)", ejem-ACF-ARMA11}
+
+Consideremos el proceso ARMA(1,1) causal $x_t=\phi x_{t-1}+\theta w_{t-1}+w_t$ donde $|\phi|<1$. Basándonos en \@ref(eq:eq-ACF-ARMA-causal) la función de autocovarianza satisface
+
+$$\gamma(h)-\phi\gamma(h-1)=0\text{, }h=2,3,\ldots,$$
+
+así, la solución general es $\gamma(h)=c\phi^h$ para $h=1,2,\ldots$. Para obtener las condiciones iniciales, usamos \@ref(eq:eq-condicion-inicial-ACF-ARMA-causal):
+
+\begin{eqnarray*}
+  \gamma(0) &=& \phi\gamma(1)+\sigma_w^2[1+\theta\phi+\theta^2] \\
+  \gamma(1) &=& \phi\gamma(0)+\sigma_w^2\theta
+\end{eqnarray*}
+
+Resolviendo para $\gamma(0)$ y $\gamma(1)$, obtenemos
+
+\begin{eqnarray*}
+  \gamma(0) &=& \sigma_w^2\frac{1+2\theta\phi+\theta^2}{1-\phi^2} \\
+  \gamma(1) &=& \sigma_w^2\frac{(1+\theta\phi)(\phi+\theta)}{1-\phi^2}
+\end{eqnarray*}
+
+Para resolver $c$, note que $\gamma(1)=c\phi$, en cuyo caso $c=\gamma(1)/\phi$. Por consiguiente, la solución particular es
+
+$$\gamma(h)=\sigma_w^2\frac{(1+\theta\phi)(\phi+\theta)}{1-\phi^2}\phi^{h-1}$$
+
+Finalmente, dividiendo por $\gamma(0)$ nos da la ACF
+
+\begin{equation}
+  \rho(h)=\frac{(1+\theta\phi)(\phi+\theta)}{1+2\theta\phi+\theta^2}\phi^{h-1}\text{, }h\geq1
+(\#eq:eq-ACF-ARMA11)
+\end{equation}
+```
+
+----
+
+
+
 ## Pronósticos
 
 El objetivo en el pronóstico, es predecir los valores futuros de una serie de tiempo $x_{n+m}, m=1,2,\ldots$ basado en los valores de la serie observados hasta el tiempo actual $\mathbf{x}=\{x_n,x_{n-1},\ldots,x_1\}$. En esta sección asumiremos que $x_t$ es estacionario y que los parámetros del modelo son conocidos. El problema de hacer pronósticos cuando los parámetros del modelo son desconocidos se analizará en la siguiente sección. En los capítulos para modelos AR y modelos MA, vimos como realizar los pronósticos o predicciones para los mismos. A continuación daremos métodos más generales de predicción y que se pueden utilizar para los modelos AR, MA y ARMA.

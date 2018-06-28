@@ -1,0 +1,836 @@
+# Estimación de parámetros
+
+## Estimación
+
+A lo largo de esta sección, supongamos que tenemos $n$ observaciones, $x_1,\ldots,x_n$, a partir de un proceso ARMA(p,q) gaussiano causal e invertible en el que, inicialmente, los parámetros de orden, $p$ y $q$, son conocidos. Nuestro objetivo es estimar los parámetros, $\phi_1,\ldots,\phi_p,\theta_1,\ldots,\theta_q$ y $\sigma_w^2$. Vamos a discutir el problema de determinar $p$ y $q$ más adelante en esta sección.
+
+Comenzamos con el método de estimación de momentos. La idea detrás de estos estimadores es el de igualar los momentos de la población a los momentos de la muestra y luego resolver para los parámetros en términos de los momentos de la muestra. Inmediatamente vemos que, si $\mathbb{E}(x_t)=\mu$, entonces  estimador de momentos de $\mu$ es el promedio de la muestra $\bar{x}$. Por lo tanto, mientras se discute el método de momentos, vamos a suponer $\mu=0$. Aunque el método de momentos puede producir buenos estimadores, a veces puede conducir a estimadores subóptimos. En primer lugar, consideremos el caso en el cual el método conduce a un estimador óptimo (eficiente), esto es, un modelo AR(p).
+
+Cuando el proceso es AR(p),
+$$x_t=\phi_1x_{t-1}+\cdots+\phi_px_{t-p}+w_t,$$
+las primeras $p+1$ ecuaciones de \@ref(eq:eq-ACF-ARMA-causal) y \@ref(eq:eq-condicion-inicial-ACF-ARMA-causal) conducen a la siguiente definición:
+
+```{definition, defi-ecuacion-yule-walker}
+Las *ecuaciones de Yule-Walker* están dadas por
+
+\begin{eqnarray}
+\gamma(h)  &=& \phi_1\gamma(h-1)+\cdots\phi_p\gamma(h-p),\quad h=1,2,\ldots,p (\#eq:eq-yule-walker-gamma)\\
+\sigma_w^2 &=& \gamma(0)-\phi_1\gamma(1)-\cdots-\phi_p\gamma(p)  (\#eq:eq-yule-walker-sigma)
+\end{eqnarray}
+```
+
+----
+
+En notacion matricial, las ecuaciones de Yule-Walker son:
+
+\begin{equation}
+  \Gamma_p\mathbf{\phi}=\mathbf{\gamma}_p, \sigma_w^2=\gamma(0)-\mathbf{\phi}^t\mathbf{\gamma}_p,
+(\#eq:eq-yule-walker-matricial)
+\end{equation}
+
+donde $\Gamma_p=\{\gamma(k-j)\}_{j,k=1}^p$ es una matriz de orden $p\times p$, $\mathbf{\phi}=(\phi_1,\ldots,\phi_p)^t$ es un vector $p\times1$ y $\mathbf{\gamma}_p=(\gamma(1),\ldots,\gamma(p))^t$ es un vector $p\times1$. Usando el método de los momentos, reemplazamos $\gamma(h)$ en \@ref(eq:eq-yule-walker-matricial) por $\hat{\gamma}(h)$ y resolvemos
+
+\begin{equation}
+  \hat{\mathbf{\phi}} = \hat{\Gamma}_p^{-1}\hat{\mathbf{\gamma}}_p, \hat{\sigma}_w^2 = \hat{\gamma}(0)-\hat{\mathbf{\gamma}}_p^t\hat{\Gamma}_p^{-1}\hat{\mathbf{\gamma}}_p.
+(\#eq:eq-estimadores-yule-walker)
+\end{equation}
+
+Estos estimadores son llamados **estimadores de Yule-Walker**. Para propósitos de cálculo es a veces más conveniente trabajar con la ACF muestral. Factorizando $\hat{\gamma}(0)$ en \@ref(eq:eq-estimadores-yule-walker) podemos escribir los estimadores de Yule-Walker como:
+
+\begin{equation}
+  \hat{\mathbf{\phi}} = \hat{\mathbf{R}}_p^{-1}\hat{\mathbf{\rho}}_p,  \hat{\sigma}_w^2 = \hat{\gamma}(0)\left[1-\hat{\mathbf{\rho}}_p^t\hat{\mathbf{R}}_p^{-1}\hat{\mathbf{\rho}}_p\right],
+(\#eq:eq-estimadores-yule-walker-2)
+\end{equation}
+
+donde $\hat{\mathbf{R}}_p=\{\hat{\rho}(k-j)\}_{j,k=1}^p$ es una matriz de orden $p\times p$ y $\hat{\mathbf{\rho}}_p=(\hat{\rho}(1),\ldots,\hat{\rho}_p)^t$ es un vector $p\times1$.
+
+Para un modelo $AR(p)$, si el tamaño de la muestra es grande, los estimadores de Yule-Walker tienen distribución aproximadamente normal y $\hat{\sigma}_w^2$ es cercano al valor real de $\sigma_w^2$. Establecemos este resultado en la proposición \@ref(prp:propie-estimadores-yule-walker-muestra-grande).
+
+```{proposition, name = "Resultado de muestras de tamaño grande para los estimadores de Yule-Walker", propie-estimadores-yule-walker-muestra-grande}
+
+El comportamiento asintótico ($n\to\infty$) de los estimadores de Yule-Walker en el caso de un proceso AR(p) causal es como sigue:
+  
+\begin{equation}
+  \sqrt{n}(\hat{\mathbf{\phi}}-\mathbf{\phi})\stackrel{d}{\to} N(\mathbf{0},\sigma_w^2\Gamma_p^{-1}),\qquad \hat{\sigma}_w^2\stackrel{p}{\to}\sigma_w^2
+(\#eq:eq-convergencia-estimadores-yule-walker)
+\end{equation}
+```
+
+----
+
+El algoritmo de Durbin-Levinson, \@ref(eq:eq-phi00-P10) a \@ref(eq:eq-coeficientes-phi-durbin-levinson), se puede usar para calcular $\hat{\mathbf{\phi}}$ sin invertir $\hat{\Gamma}_p$ o $\hat{\mathbf{R}}_p$, reemplazando $\gamma(h)$ por $\hat{\gamma}(h)$ en el algoritmo. En la corrida del algoritmo, iterativamente calculamos el $h\times1$ vector, $\hat{\mathbf{\phi}}_h=(\hat{\phi}_{h1},\ldots,\hat{\phi}_{hh})^t$, para $h=1,2,\ldots$. Por lo tanto, además de obtener el pronóstico deseado, el algoritmo de Durbin-Levinson nos da $\hat{\phi}_{hh}$, la PACF muestral. Usando \@ref(eq:eq-convergencia-estimadores-yule-walker) se puede demostrar la siguiente propiedad.
+
+```{proposition, name="Distribución de PACF para muestras grandes", propie-distribucion-PACF-muestra-grande}
+
+Para un proceso $AR(p)$ causal, asintóticamente ($n\to\infty$)
+\begin{equation}
+  \sqrt{n}\hat{\phi}_{hh}\stackrel{d}{\to}N(0,1),\text{ para } h>p.
+(\#eq:eq-convergencia-PACF-muestral)
+\end{equation}
+```
+
+----
+
+```{example, name="Estimación de Yule-Walker para un proceso AR(2)", ejem-estimacion-yule-walker-AR2}
+
+Los datos mostrados en la figura \@ref(fig:grafico-AR2-simulado) son $n=144$ observaciones simuladas de un modelo AR(2)
+$$x_t=1.5x_{t-1}-0.75x_{t-2}+w_t,$$
+donde $w_t\sim iid N(0,1)$. Para estos datos, $\hat{\gamma}(0)=8.434, \hat{\rho}(1)=0.834$, y $\hat{\rho}(2)0=.476$. En consecuencia,
+
+$$\hat{\mathbf{\phi}} = \left(
+                      \begin{array}{c}
+                        \hat{\phi}_1 \\
+                        \hat{\phi}_2 \\
+                      \end{array}
+                    \right) = \left[
+                                \begin{array}{cc}
+                                  1 & 0.834 \\
+                                  0.834 & 1 \\
+                                \end{array}
+                              \right]^{-1}\left(
+                                            \begin{array}{c}
+                                              0.834 \\
+                                              0.476 \\
+                                            \end{array}
+                                          \right) = \left(
+                                                      \begin{array}{c}
+                                                        1.439 \\
+                                                        -0.725 \\
+                                                      \end{array}
+                                                    \right)
+$$
+
+y
+
+$$\hat{\sigma}_w^2 = 8.434\left[1-(0.834,0.476)\left(
+                                                 \begin{array}{c}
+                                                   1.439 \\
+                                                   -0.725 \\
+                                                 \end{array}
+                                               \right)\right] = 1.215.
+$$
+
+Por la proposición \@ref(prp:propie-estimadores-yule-walker-muestra-grande), la matriz de varianza-covarianzas asintótica de $\hat{\mathbf{\phi}}$,
+
+$$\frac{1}{144}\frac{1.215}{8.434}\left[
+                                    \begin{array}{cc}
+                                      1 & 0.834 \\
+                                      0.834 & 1 \\
+                                    \end{array}
+                                  \right]^{-1} = \left[
+                                                   \begin{array}{cc}
+                                                     0.057^2 & -0.003 \\
+                                                     -0.003 & 0.057^2 \\
+                                                   \end{array}
+                                                 \right],
+$$
+
+se puede usar para hallar la región de confianza o hacer inferencias sobre $\hat{\mathbf{\phi}}$ y sus componentes. Por ejemplo, un intervalo de confianza aproximado del 95\% para $\phi_2$ es $-0.725\pm2(0.057)$ 0 $(-0.839, -0.611)$ el cual contiene el valor real de $\phi_2=-0.75$.
+
+Para estos datos, las tres primeras correlaciones muestrales fueron $\hat{\phi}_{11}=\hat{\rho}(1)=0.834, \hat{\phi}_{22}=\hat{\phi}_2=-0.725$ y $\hat{\phi}_{33}=-0.075$. De acuerdo a la Propiedad~\ref{propie-distribucion-PACF-muestra-grande}, el error estándar asintótico de $\hat{\phi}_{33}$ es $1/\sqrt{144}=0.083$, y el valor observado es $-0.075$, que esta a menos de una desviación estándar de $\phi_{33}=0$.
+```
+
+----
+
+```{example, name="Estimación de Yule-Walker para la serie de nuevos peces", ejem-estimacion-yule-walker-serie-reclutamiento}
+
+Consideremos nuevamente la serie de nuevos peces y ajustemos un modeloa AR(2) usando la estimación de Yule-Walker. Abajo están los resultados de fijar el modelo usando R.
+
+
+|Parámetros   |Valores   |
+|---|--:|
+|Media estimada   |62.26278   |
+|$\phi_1$ y $\phi_2$ estimados   |1.3315874;  -0.4445447   |
+|Errores estándar   |0.04222637;  0.04222637   |
+|Error de varianza estimada   |94.79912   |
+    
+Las instrucciones R para realizar la estimación de Yule-Walker y generar la figura \@ref(fig:grafico-pronostico-serie-reclutamiento-yw) son:
+```
+
+----
+
+```{r, fig.cap="Estimación de Yule-Walker para la serie de nuevos peces", grafico-pronostico-serie-reclutamiento-yw} 
+rec=scan("data/recruit.txt")
+rec.yw=ar.yw(rec, order=2)
+# -----------------------------------------
+rec.pr=predict(rec.yw, n.ahead=24) 
+U=rec.pr$pred+rec.pr$se 
+L=rec.pr$pred-rec.pr$se 
+meses=360:453 
+plot(meses,rec[meses], type="o", xlim=c(360,480),ylab="Nuevos peces", main="Estimación de Yule-Walker para la serie de nuevos peces")
+lines(rec.pr$pred, col="red",type="o") 
+lines(U, col="blue",lty="dashed")
+lines(L, col="blue",lty="dashed")
+```
+
+
+En el caso de los modelos AR(p), los estimadores de Yule-Walker dados en \@ref(eq:eq-estimadores-yule-walker-2) son óptimos en el sentido de que la distribución asintótica, \@ref(eq:eq-convergencia-estimadores-yule-walker), es la mejor distribución normal asintótica. Esto se debe a que, dadas las condiciones iniciales, los modelos AR(p) son modelos lineales, y los estimadores de Yule-Walker son esencialmente estimadores de mínimos cuadrados. Si utilizamos el método de momentos para los modelos MA o ARMA, no obtendremos estimadores óptimos debido a que tales procesos no son lineales en los parámetros.
+
+```{example, name="Estimación por el Método de los Momentos para un proceso MA(1)" , ejem-estimacion-momentos-MA1}
+
+Considere la serie de tiempo
+
+$$x_t=w_t+\theta w_{t-1},$$
+
+donde $|\theta|<1$. El modelo se puede escribir como
+
+$$x_t=\sum_{j=1}^{\infty}(-\theta)^jx_{t-j}+w_t,$$
+
+el cual es no lineal en $\theta$. Las primeras dos autocovarianza poblacionales son $\gamma(0)=\sigma_w^2(1+\theta^2)$ y $\gamma(1)=\sigma_w^2\theta$, de modo que la estimación de $\theta$ se halla resolviendo
+
+$$\hat{\rho}(1) = \frac{\hat{\gamma}(1)}{\hat{\gamma}(0)} = \frac{\hat{\theta}}{1+\hat{\theta}^2}.$$
+
+Existen dos soluciones, por lo que elegimos la invertible. Si $|\hat{\rho}(1)|\leq\frac{1}{2}$, la solución es real, en cualquier otro caso, no existe solución real. Aún cuando $|\rho(1)|<\frac{1}{2}$ para un modelo MA(1), puede pasar que $|\hat{\rho}(1)|\geq\frac{1}{2}$ porque este es un estimador. Cuando $|\hat{\rho}(1)|<\frac{1}{2}$, la estimación invertible es
+
+$$\hat{\theta}=\frac{1-\sqrt{1-4\hat{\rho}(1)^2}}{2\hat{\rho}(1)}.$$
+
+Se puede demostrar que [^nota10]
+
+[^nota10:] La notación AN se lee \textbf{asintóticamente normal} y se define como: Sea $\{x_n\}$ una sucesión de variables aleatorias, se dice que $\{x_n\}$ que es \textbf{asintóticamente normal} con media $\mu_n$ y varianza $\sigma_n^2$, si cuando $n\to\infty$, $$\sigma_n^{-1}(x_n-\mu_n)\stackrel{d}{\to}z,$$donde $z$ tiene distribución normal estándar.
+
+$$\hat{\theta} \sim AN\left(\theta,\frac{1+\theta^2+4\theta^4+\theta^6+\theta^8}{n(1-\theta^2)^2}\right).$$
+
+El estimador de máxima verosimilitud (que discutiremos en la próxima sección) de $\theta$, en este caso, tiene una varianza asintótica de $(1-\theta^2)/n$. Cuando $\theta=0.5$, por ejemplo, la relación de la varianza asintótica del estimador por el método de los momentos y el estimador por el método de máxima verosimilitud de $\theta$ es alrededor de 3.5. Esto es, para muestras grandes, la varianza del estimador por el método de los momentos es alrededor de 3.5 veces mayor que la varianza del estimador por el EMV de $\theta$ cuando $\theta=0.5$.
+```
+
+
+## Estimación por Máxima Verosimilitud y Mínimos Cuadrados {#sect-EMV}
+
+
+Para fijar ideas, primero enfoquemos en un modelo causal AR(1). Sea
+
+$$x_t=\mu+\phi(x_{t-1}-\mu)+w_t,$$
+
+donde $|\phi|<1$ y $w_t\sim\text{iid}N(0,\sigma_w^2)$. Dado los datos $x_1,x_2,\ldots,x_n$ buscamos la función de verosimilitud
+
+$$L(\mu,\phi,\sigma_w^2)=f_{\mu,\phi,\sigma_w^2}(x_1,x_2,\ldots,x_n).$$
+
+En el caso de un modelo AR(1), podemos escribir la función de verosimilitud como
+
+$$L(\mu,\phi,\sigma_w^2)=f(x_1)f(x_2|x_1)\cdots f(x_n|x_{n-1}),$$
+
+donde hemos eliminado los parámetros en las densidades $f(\cdot)$ para facilitar la notación.
+
+
+Dado que $x_t|x_{t-1}\sim N(\mu+\phi(x_{t-1}-\mu,\sigma_w^2)$ tenemos
+
+$$f(x_t|x_{t-1})=f_w[(x_t-\mu)-\phi(x_{t-1}-\mu)],$$
+
+donde $f_w(\cdot)$ es la densidad de $w_t$, esto es, la densidad normal con media cero y varianza $\sigma_w^2$. Podemos escribir la función de verosimilitud como
+
+$$L(\mu,\phi,\sigma_w^2)=f(x_1)\prod_{t=2}^{n}f_w[(x_t-\mu)-\phi(x_{t-1}-\mu)].$$
+
+Para hallar $f(x_1)$ podemos usar la representación causal
+
+$$x_1=\mu+\sum_{j=0}^{\infty}\phi^jw_{1-j},$$
+
+para ver que $x_1$ es normal con media $\mu$ y varianza $\sigma_w^2/(1-\phi^2)$.
+
+
+Finalmente, para un AR(1), la verosimilitud es
+
+\begin{equation}
+  L(\mu,\phi,\sigma_w^2)=(2\pi\sigma_w^2)^{-n/2}(1-\phi^2)^{1/2}\exp\left[-\frac{S(\mu,\phi)}{2\sigma_w^2}\right]
+(\#eq:eq-funcion-verosimilitud-AR1)
+\end{equation}
+
+donde
+
+\begin{equation}
+  S(\mu,\phi)=(1-\phi^2)(x_1-\mu)^2+\sum_{t=2}^{n}[(x_t-\mu)-\phi(x_{t-1}-\mu)]^2.
+(\#eq:eq-S-AR1)
+\end{equation}
+
+Normalmente, $S(\mu,\phi)$ se llama *suma de cuadrados incondicional*. Podemos también considerar la estimación de $\mu$ y $\phi$ usando la suma de cuadrados incondicional, esto es, minimizando $S(\mu,\phi)$.
+
+Tomando la derivada parcial del logaritmo de \@ref(eq:eq-funcion-verosimilitud-AR1) con respecto a $\sigma_w^2$ e igualando a cero, que para cada valor de $\mu$ y $\phi$ en el espacio de parámetros, $\sigma_w^2=n^{-1}S(\mu,\phi)$ maximiza la verosimilitud. Por consiguiente, el estimador de máxima verosimilitud de $\sigma_w^2$ es
+
+\begin{equation}
+  \hat{\sigma}_w^2=n^{-1}S(\hat{\mu},\hat{\phi})
+(\#eq:eq-estimador-EMV-sigma-AR1)
+\end{equation}
+
+donde $\hat{\mu}$ y $\hat{\phi}$ son los estimadores de máxima verosimilitud de $\mu$ y $\phi$ respectivamente.
+
+Si reemplazamos $n$ en \@ref(eq:eq-estimador-EMV-sigma-AR1) por $n-2$ podemos obtener el estimador de mínimo cuadrado incondicional de $\sigma_w^2$.
+
+Si en \@ref(eq:eq-funcion-verosimilitud-AR1) tomamos logaritmo, reemplazamos $\sigma_w^2$ por $\hat{\sigma}_w^2$, e ignoramos las constantes, $\hat{\mu}$ y $\hat{\phi}$ son los valores que minimizan la función de criterio
+
+\begin{equation}
+  l(\mu,\phi)=\ln[n^{-1}S(\mu,\phi)]-n^{-1}\ln(1-\phi^2).
+(\#eq:eq-funcion-criterio-AR1)
+\end{equation}
+
+Esto es, $l(\mu,\phi)\propto-2\ln L(\mu,\phi,\hat{\sigma}_w^2)$. [^nota11]
+
+[^nota11:] La función de criterio a veces es llamada perfil de verosimilitud.
+
+Dado que \@ref(eq:eq-S-AR1) o \@ref(eq:eq-funcion-criterio-AR1) son funciones complicadas de los parámetros, la minimización de $l(\mu,\phi)$ o $S(\mu,\phi)$ se hace numéricamente. En el caso de modelos AR, tenemos la ventaja que, condicionando los valores inicial, ellos son modelos lineales. Esto es, podemos eliminar el término en la verosimilitud que causa la no-linealidad.
+
+Condicionando sobre $x_1$ la verosimilitud condicional llega a ser
+
+\begin{eqnarray}
+  L(\mu,\phi,\sigma_w^2|x_1) &=& \prod_{t=2}^{n}f_w[(x_t-\mu)-\phi(x_{t-1}-\mu)] \nonumber \\
+        &=& (2\pi\sigma_w^2)^{-(n-1)/2}\exp\left[-\frac{S_c(\mu,\phi)}{2\sigma_w^2}\right] (\#eq:eq-verosimilitud-condicional-AR1)
+\end{eqnarray}
+
+donde la suma de cuadrados condicional  es
+
+\begin{equation}
+  S_c(\mu,\phi)=\sum_{t=2}^{n}[(x_t-\mu)-\phi(x_{t-1}-\mu)]^2.
+(\#eq:eq-suma-cuadrado-condicional-AR1)
+\end{equation}
+
+El estimador de máxima verosimilitud condicional de $\sigma_w^2$ es
+
+\begin{equation}
+  \hat{\sigma}_w^2=S_c(\hat{\mu},\hat{\phi})/(n-1)
+(\#eq:eq-EMV-condicional-sigma-AR1)
+\end{equation}
+
+y $\hat{\mu}$ y $\hat{\phi}$ son los valores que minimizan la suma de cuadrados condicional $S_c(\mu,\phi)$.
+
+Haciendo $\alpha=\mu(1-\phi)$ la suma de cuadrados condicional se puede escribir como
+
+\begin{equation}
+  S_c(\mu,\phi)=\sum_{t=2}^{n}[x_t-(\alpha+\phi x_{t-1})]^2.
+(\#eq:eq-suma-cuadrado-condicional-AR1-2)
+\end{equation}
+
+El problema ahora es un problema de regresión lineal visto en el Tema 2. Siguiendo los resultados de la estimación de mínimos cuadrados, tenemos $\hat{\alpha}=\bar{x}_{(2)}-\hat{\phi}\bar{x}_{(1)}$ donde $\bar{x}_{(1)}=(n-1)^{-1}\sum_{t=1}^{n-1}x_t$ y $\bar{x}_{(2)}=(n-1)^{-1}\sum_{t=2}^{n}x_t$ y los estimados condicionales son entonces
+
+\begin{eqnarray}
+  \hat{\mu} &=& \frac{\bar{x}_{(2)}-\hat{\phi}\bar{x}_{(1)}}{1-\hat{\phi}} (\#eq:eq-EMV-condicional-mu) \\
+    \hat{\phi} &=& \frac{\sum_{t=2}^{n}(x_t-\bar{x}_{(2)})(x_{t-1}-\bar{x}_{(1)})}{\sum_{t=2}^{n}(x_{t-1}-\bar{x}_{(1)})^2}. (\#eq:eq-EMV-condicional-phi)
+\end{eqnarray}
+
+De \@ref(eq:eq-EMV-condicional-mu) y \@ref(eq:eq-EMV-condicional-phi) vemos que $\hat{\mu}\approx\bar{x}$ y $\hat{\phi}\approx\hat{\rho}(1)$. Estos es, los estimadores de Yule-Walker y los estimadores de mínimos cuadrados son aproximadamente los mismos. La única diferencia es la inclusión o exclusión de los términos que envuelven los puntos finales $x_1$ y $x_n$. Podemos también ajustar el estimado de $\sigma_w^2$ en \@ref(eq:eq-EMV-condicional-sigma-AR1) para que sea equivalente al estimador de mínimos cuadrados, esto es, dividimos $S_c(\hat{\mu},\hat{\phi})$ por $(n-3)$ en vez de $(n-1)$ en \@ref(eq:eq-EMV-condicional-sigma-AR1).
+
+
+Para un modelo general AR(p) los estimadores máxima verosimilitud, mínimos cuadrados incondicionales y mínimos cuadrados condicionales se obtienen de manera análoga al ejemplo de AR(1).
+
+Para modelos ARMA en general, es difícil escribir la función de verosimilitud como una función explícita de los parámetros. En vez de eso, es conveniente escribir la verosimilitud en término de las innovaciones o errores de predicción de un paso, $x_t-x_t^{t-1}$.
+
+Supóngase que $x_t$ es un proceso ARMA(p,q) causal con $w_t\sim\text{idd}N(0,\sigma_w^2)$.
+
+Sea $\pmb{\beta}=(\mu,\phi_1\ldots,\phi_p,\theta_1,\ldots,\theta_q)^t$ un vector de orden $(p+q+1)\times1$ de los parámetros del modelo. La función de verosimilitud se puede escribir como
+
+$$L(\pmb{\beta},\sigma_w^2)=\prod_{t=1}^{n}f(x_t|x_{t-1},\ldots,x_1)$$
+
+La distribución condicional de $x_t$ dados $x_{t-1},\ldots,x_1$ es gaussiana con media $x_t^{t-1}$ y varianza $P_t^{t-1}$. Además, para modelos ARMA, podemos escribir $P_t^{t-1}=\sigma_w^2r_t^{t-1}$ donde $r_t^{t-1}$ no depende de $\sigma_w^2$.
+
+
+La función de verosimilitud de la muestra se puede escribir entonces como
+
+\begin{equation}
+  L(\mathbf{\beta},\sigma_w^2)=(2\pi\sigma_w^2)^{-n/2}\left[r_1^0(\mathbf{\beta})r_2^1(\mathbf{\beta})\cdot sr_n^{n-1}(\mathbf{\beta})\right]^{1/2}\exp\left[-\frac{S(\mathbf{\beta})}{2\sigma_w^2}\right]
+(\#eq:eq-funcion-verosimilitud-datos)
+\end{equation}
+
+donde
+
+\begin{equation}
+  S(\mathbf{\beta})=\sum_{t=1}^{n}\left[\frac{(x_t-x_t^{t-1}(\mathbf{\beta}))^2}{r_t^{t-1}(\mathbf{\beta})}\right].
+(\#eq:eq-S-beta)
+\end{equation}
+
+Se tiene que $x_t^{t-1}$ y $r_t^{t-1}$ son funciones de $\mathbf{\beta}$ y hacemos este hecho explícito en \@ref(eq:eq-funcion-verosimilitud-datos) y \@ref(eq:eq-S-beta).
+
+
+Dados los valores para $\mathbf{\beta}$ y $\sigma_w^2$, la verosimilitud se puede evaluar usando las técnicas vistas para Pronósticos. La estimación de máxima verosimilitud ahora procederá maximizando \@ref)eq:eq-funcion-verosimilitud-datos) con respecto a $\mathbf{\beta}$ y $\sigma_w^2$. Tenemos entonces
+
+\begin{equation}
+  \hat{\sigma}_w^2=n^{-1}S(\hat{\mathbf{\beta}}),
+(\#eq:eq-sigma-estimado-EMV)
+\end{equation}
+
+donde $\hat{\mathbf{\beta}}$ es el valor de $\mathbf{\beta}$ que minimiza la función de criterio
+
+\begin{equation}
+  l(\mathbf{\beta})=\ln[n^{-1}S(\mathbf{\beta})]+n^{-1}\sum_{t=1}^{n}\ln r_t^{t-1}(\mathbf{\beta}).
+(\#eq:eq-funcion-criterio-EMV)
+\end{equation}
+
+Por ejemplo, para el modelo AR(1) discutido arriba, la función genérica $l(\mathbf{\beta})$ en \@ref(eq:eq-funcion-criterio-EMV) es $l(\mu,\phi)$ en \@ref(eq:eq-funcion-criterio-AR1) y la general $S(\mathbf{\beta})$ en \@ref(eq:eq-S-beta) es $S(\mu,\phi)$ dado en \@ref(eq:eq-S-AR1).
+
+
+De \@ref(eq:eq-S-AR1) y \@ref(eq:eq-funcion-criterio-AR1) se ve que $x_1^0=\mu$ y $x_t^{t-1}=\mu+\phi(x_{t-1}-\mu)$ para $t=2,\ldots,n$. También $r_1^0=1/(1-\phi^2)$ y $r_t^{t-1}=1$ para $t=2,\ldots,n$.
+
+Los mínimos cuadrados incondicional se desarrollarán minimizando \@ref(eq:eq-S-beta) con respecto a $\mathbf{\beta}$. La estimación de mínimos cuadrados condicional envuelve minimizar \@ref(eq:eq-S-beta) con respecto a $\mathbf{\beta}$ pero donde, para facilitar la carga computacional, las predicciones y sus errores se obtienen por condicionamiento sobre los valores iniciales de las observaciones. En general, se usan las rutinas numéricas de optimización para obtener las estimaciones y sus errores estándar.
+
+```{example, name="Algoritmos de Newton-Raphson y puntuación", ejem-algoritmo-newton-raphson}
+
+Dos rutinas numéricas de optimización comunes para la estimación de máxima verosimilitud son el Newton-Raphson y el de puntuación. Daremos una breve descripción de las ideas matemáticas. La implementación de estos algoritmos es más complicada de lo que discutiremos en este ejemplo.
+
+Sea $l(\mathbf{\beta})$ una función de criterio de $k$ parámetros $\mathbf{\beta}=(\beta_1,\ldots,\beta_k)$ la cual deseamos minimizar respecto a $\mathbf{\beta}$. Por ejemplo, considere la función de verosimilitud dada por \@ref(eq:eq-funcion-criterio-AR1) o \@ref(eq:eq-funcion-criterio-EMV). Suponga que $l(\hat{\mathbf{\beta}})$ es el extremo que estamos interesados en hallar, y $\hat{\mathbf{\beta}}$ se halla resolviendo $\partial l(\mathbf{\beta})/\partial\beta_j=0$ para $j=1,\ldots,k$. Denotemos por $l^{(1)}(\mathbf{\beta})$ el vector $k\times1$ de derivadas parciales
+
+$$l^{(1)}(\mathbf{\beta})=\left(\frac{\partial l(\mathbf{\beta})}{\partial\beta_1},\cdots,\frac{\partial l(\mathbf{\beta})}{\partial\beta_k}\right)^t$$
+  
+
+Note que $l^{(1)}(\mathbf{\hat{\beta}})=\textbf{0}$.
+
+Sea $l^{(2)}(\mathbf{\beta})$ una matriz $k\times k$ de las segundas derivadas parciales
+
+$$l^{(2)}(\mathbf{\beta})=\left\{-\frac{\partial l^2(\mathbf{\beta})}{\partial\beta_i\partial\beta_j}\right\}_{i,j=1}^{k}$$
+
+y supongamos que $l^{(2)}(\mathbf{\beta})$ es no singular. Sea $\mathbf{\beta}_{(0)}$ un estimador inicial de $\mathbf{\beta}$. Entonces, usando el desarrollo de Taylor, tenemos la siguiente aproximación:
+
+$$\textbf{0}=l^{(1)}(\mathbf{\hat{\beta}})\approx l^{(1)}(\mathbf{\beta}_{(0)})-l^{(2)}(\mathbf{\beta}_{(0)})\left[\mathbf{\hat{\beta}}-\mathbf{\beta}_0\right]$$
+
+Haciendo el lado derecho cero y resolviendo para $\mathbf{\hat{\beta}}$ se tiene
+
+$$\mathbf{\beta}_{(1)}=\mathbf{\beta}_{(0)}+\left[l^{(2)(\mathbf{\beta}_{(0)}})\right]^{-1}l^{(1)}(\mathbf{\beta}_{(0)})$$
+
+El algoritmo de Newton-Raphson procede iterando este resultado, reemplazando $\mathbf{\beta}_{(0)}$ por $\mathbf{\beta}_{(1)}$ para obtener $\mathbf{\beta}_{(2)}$ y así sucesivamente, hasta que converja. Bajo un conjunto apropiado  de condiciones, la sucesión de estimadores $\mathbf{\beta}_{(1)},\mathbf{\beta}_{(2)},\ldots$, convergerá a $\mathbf{\hat{\beta}}$ el estimador de máxima verosimilitud para $\mathbf{\beta}$.
+
+Para la estimación de máxima verosimilitud, la función de criterio usada es $l(\mathbf{\beta})$ dada por (\@ref(eq:eq-funcion-criterio-EMV); $l^{(1)}(\mathbf{\beta})$ es llamado el **vector de puntuación** y $l^{(2)}(\mathbf{\beta})$ es llamado el **Hessiano**. En el algoritmo de puntuaciones, reemplazamos $l^{(2)}(\mathbf{\beta})$ por $\mathbb{E}[l^{(2)}(\mathbf{\beta})]$, la matriz de información. Bajo condiciones apropiadas, la inversa de la matriz de información es la matriz de varianza-covarianza asintótica del estimador $\mathbf{\hat{\beta}}$. Esta es a veces aproximada por la inversa del Hessiano en $\mathbf{\hat{\beta}}$.
+
+Si las derivadas son difíciles de obtener, es posible usar la estimación de verosimilitud cuasi-máxima donde se usan las técnicas numéricas para aproximar las derivadas.
+```
+
+----
+
+```{example, name="EMV para la serie de nuevos peces", ejem-EMV-serie-reclutamiento}
+
+En el ejemplo \@ref(exm:ejem-estimacion-yule-walker-serie-reclutamiento)  fijamos un modelo AR(2) para la serie de nuevos peces usando las ecuaciones de Yule-Walker. El siguiente comando en R fija el modelo AR(2) via máxima verosimilitud. Pueden comparar estos resultados con los obtenidos en el ejemplo \@ref(exm:ejem-estimacion-yule-walker-serie-reclutamiento).
+```
+
+```{r}
+rec.mle=ar.mle(rec,order=2)
+rec.mle
+```
+
+
+## Estimación de mínimos cuadrados para modelos ARMA(p,q)
+
+Ahora discutiremos la estimación de mínimos cuadrados para modelos ARMA(p,q) via Gauss-Newton. Sea $x_t$ un proceso ARMA(p,q) gaussiano causal e invertible. Escribimos $\mathbf{\beta}=(\phi_1,\ldots,\phi_p$, $\theta_1,\ldots,\theta_q)^t$, para simplificación de la discusión, hacemos $\mu=0$. Escribimos el modelo en términos de los errores
+
+\begin{equation}
+  w_t(\mathbf{\beta})=x_t-\sum_{j=1}^{p}\phi_jx_{t-j}-\sum_{k=1}^{q}\theta_kw_{t-k}(\mathbf{\beta})
+(\#eq:eq-modelo-ARMA-pq-EMV)
+\end{equation}
+
+para enfatizar la dependencia de los errores sobre los parámetros.
+
+Para mínimos cuadrados condicional, aproximamos la suma residual de cuadrados condicionando por $x_1,\ldots,x_p (p>0)$ y $w_p=w_{p-1}=\cdots=w_{1-q}=0 (q>0)$, en cuyo caso podemos evaluar \@ref(eq:eq-modelo-ARMA-pq-EMV) para $t=p+1,p+2,\ldots,n$. Usando estos argumentos condicionales, el error de suma de cuadrados condicional es
+
+$$S_c(\mathbf{\beta})=\sum_{t=p+1}^{n}w_t^2(\mathbf{\beta})$$
+
+
+Minimizando $S_c(\mathbf{\beta})$ con respecto a $\mathbf{\beta}$ obtenemos los estimados de mínimos cuadrados condicional.
+
+Si $q=0$, el problema es una regresión lineal, y no se necesitan técnicas iterativas para minimizar $S_c(\phi_1,\ldots,\phi_p)$. Si $q>0$ el problema es de regresión no-lineal y tenemos que acudir a optimización numérica.
+
+Cuando $n$ es grande, condicionando sobre unos pocos valores iniciales tendremos poca influencia sobre los estimados finales de los parámetros. En el caso de muestras de tamaño pequeño a moderado, podemos usar mínimos cuadrados incondicionales. El problema de mínimos cuadrados incondicional es elegir $\mathbf{\beta}$ para minimizar la suma de cuadrados incondicional, la cual denotamos por $S(\mathbf{\beta})$.
+
+La suma de cuadrados incondicional se puede escribir de varias maneras. Una de las maneras es la siguiente forma [^nota12]
+
+[^nota12:] Para detalles, véase Box, G.E.P., Jenkins, G.M. and Reinsel, G.C. (1994). *Time Series Analysis, Forecasting and Control, 3rd ed.* Englewood Cliffs, NJ: Prentice Hall. Apéndice A7.3.
+
+$$S(\mathbf{\beta})=\sum_{t=-\infty}^{n}\hat{w}_t^2(\mathbf{\beta})$$
+
+donde $\hat{w}_t^2(\mathbf{\beta})=\mathbb{E}(w_t|x_1,\ldots,x_n)$. Cuando $t\leq0$ los $\hat{w}_t(\mathbf{\beta})$ se obtienen por retroproyección. Como una forma práctica, aproximamos $S(\mathbf{\beta})$ por medio de iniciar la suma en $t=-M+1$ donde $M$ se elige suficientemente grande para garantizar que $\sum_{t=-\infty}^{-M}\hat{w}_t^2(\mathbf{\beta})\approx0$. En el caso de estimación por mínimos cuadrados incondicional, son necesarias las técnicas de optimización numéricas aún cuando $q=0$.
+
+
+Para emplear Gauss-Newton, sea $\mathbf{\beta}_{(0)}=(\phi_1^{(0)},\ldots,\phi_p^{(0)},\theta_1^{(0)},\ldots,\theta_q^{(0)})^t$ un estimado inicial de $\mathbf{\beta}$. Por ejemplo, podemos obtener $\mathbf{\beta}_{(0)}$ por el método de los momentos. El desarrollo de Taylor de primer orden de $w_t(\mathbf{\beta})$ es
+
+\begin{equation}
+  w_t(\mathbf{\beta}) \approx w_t(\mathbf{\beta}_{(0)})-\left(\mathbf{\beta}-\mathbf{\beta}_{(0)}\right)^t z_t(\mathbf{\beta}_{(0)})
+(\#eq:eq-desarrollo-Taylor-1-wt)
+\end{equation}
+
+donde
+
+$$z_t(\mathbf{\beta}_{(0)})=\left(-\frac{\partial w_t(\mathbf{\beta}_{(0)})}{\partial\beta_1},\cdots,-\frac{\partial w_t(\mathbf{\beta}_{(0)})}{\partial\beta_{p+q}}\right)^t\text{, }t=1,\ldots,n$$
+
+La aproximación lineal de $S_c(\mathbf{\beta})$ s
+
+\begin{equation}
+  Q(\mathbf{\beta})=\sum_{t=p+1}^{n}\left[w_t(\mathbf{\beta}_{(0)})-\left(\mathbf{\beta}-\mathbf{\beta}_{(0)}\right)^tz_t(\mathbf{\beta}_{(0)})\right]^2
+(\#eq:eq-aprox-lineal-S-beta)
+\end{equation}
+
+y esta es la cantidad que queremos minimizar. Para aproximar los mínimos cuadrados incondicional, iniciaremos la suma en \@ref(eq:eq-aprox-lineal-S-beta) en $t=-M+1$ para $M$ grande, y trabajamos con los valores de retroproyección.
+
+Usando los resultados de mínimos cuadrados ordinarios, sabemos que
+
+\begin{equation}
+  (\widehat{\mathbf{\beta}-\mathbf{\beta}}_{(0)})=\left(n^{-1}\sum_{t=p+1}^{n}z_t(\mathbf{\beta}_{(0)})z_t^t(\mathbf{\beta}_{(0)})\right)^{-1}
+\left(n^{-1}\sum_{t=p+1}^{n}z_t(\mathbf{\beta}_{(0)})w_t(\mathbf{\beta}_{(0)})\right)
+(\#eq:eq-beta-estimado-mc)
+\end{equation}
+
+minimiza $Q(\mathbf{\beta})$. De \@ref(eq:eq-beta-estimado-mc) podemos escribir el estimado Gauss-Newton de un paso como
+
+\begin{equation}
+  \mathbf{\beta}_{(1)}=\mathbf{\beta}_{(0)}+\Delta(\mathbf{\beta}_{(0)})
+(\#eq:eq-estimador-gauss-newton-1)
+\end{equation}
+
+donde $\Delta(\mathbf{\beta}_{(0)})$ denota el lado derecho de \@ref(eq:eq-beta-estimado-mc). La estimación Gauss-Newton se logra reemplazando $\mathbf{\beta}_{(0)}$ por $\mathbf{\beta}_{(1)}$ en \@ref(eq:eq-estimador-gauss-newton-1). Este procedimiento se repite, iterando para $j=2,3,\ldots$, para calcular
+
+$$\mathbf{\beta}_{(j)}=\mathbf{\beta}_{(j-1)}+\Delta(\mathbf{\beta}_{(j-1)})$$
+
+hasta converger.
+
+```{example, name="Gauss-Newton para un MA(1)", ejem-gauss-newton-MA1}
+
+Considere un proceso MA(1) invertible, $x_t=w_t+\theta w_{t-1}$. Escribimos el error truncado como
+
+\begin{equation}
+  w_t(\theta)=x_t-\theta w_{t-1}(\theta)\text{, }t=1,\ldots,n
+(\#eq:eq-error-truncado-MA1)
+\end{equation}
+
+donde condicionamos $w_0(\theta)=0$. Derivando respecto de $\theta$
+
+\begin{equation}
+  -\frac{\partial w_t(\theta)}{\partial\theta}=w_{t-1}(\theta)+\theta\frac{\partial w_{t-1}(\theta)}{\partial\theta}\text{, }t=1,\ldots,n
+(\#eq:eq-derivada-error-truncado-MA1)
+\end{equation}
+
+donde $\partial w_0(\theta)/\partial\theta=0$. Usando la notación de \@ref(eq:eq-desarrollo-Taylor-1-wt) podemos escribir \@ref(eq:eq-derivada-error-truncado-MA1) como
+
+\begin{equation}
+  z_t(\theta)=w_{t-1}(\theta)-\theta z_{t-1}(\theta)\text{, }t=1,\ldots,n
+(\#eq:eq-derivada-error-truncado-MA1-2)
+\end{equation}
+
+donde $z_0(\theta)=0$.
+
+Sea $\theta_{(0)}$ una estimación inicial de $\theta$, por ejemplo, el estimado dado en el ejemplo \@ref(exm:ejem-estimacion-momentos-MA1). Entonces, el procedimiento Gauss-Newton para mínimos cuadrados condicional está dado por
+
+\begin{equation}
+  \theta_{(j+1)}=\theta_{(j)}+\frac{\sum_{t=1}^{n}z_t(\theta_{(j)})w_t(\theta_{(j)})}{\sum_{t=1}^{n}z_t^2(\theta_{(j)})}\text{, }j=0,1,2,\ldots
+(\#eq:eq-procedimiento-gauss-newton-MA1)
+\end{equation}
+
+donde los valores en \@ref(eq:eq-procedimiento-gauss-newton-MA1) se calculan recursivamente usando \@ref(eq:eq-error-truncado-MA1) y \@ref(eq:eq-derivada-error-truncado-MA1). Los cálculos se paran cuando $|\theta_{(j+1)}-\theta_{(j)}|$ ó $|Q(\theta_{(j+1)})-Q(\theta_{(j)})|$ son menor que alguna cantidad prefijada.
+```
+
+----
+
+```{example, name="Ajuste de la serie de varvas glaciares", ejem-ajuste-varvas-glaciares}
+
+Consideremos la serie de espesores de varvas glaciares en Massachusetts para $n=634$ años, como analizamos en el ejemplo 3.4.3 (Tema 3) donde ajustamos a un modelo de promedio móvil de primer orden una transformación logarítmica, podemos también a esa serie ajustar una ecuación en diferencia de la transformación logarítmica, como sigue
+
+$$\nabla[\ln(x_t)]=\ln(x_t)-\ln(x_{t-1})=\ln\left(\frac{x_t}{x_{t-1}}\right)$$
+
+el cual se puede interpretar como la proporción del porcentaje de cambio en el espesor.
+
+En la figura \@ref(fig:grafico-ACF-PACF-varvas-glaciares) mostramos las ACF y PACF muestral, confirmando la tendencia de $\nabla[\ln(x_t)]$ de comportarse como proceso de promedio móvil de primer orden ya que la ACF tiene un pico significativa en paso 1 y la PACF decrece exponencialmente.
+
+
+A continuación se muestran 9 iteraciones del procedimiento de Gauss-Newton dado en \@ref(eq:eq-procedimiento-gauss-newton-MA1), iniciando con $\hat{\theta}_0=-0.1$, dando los valores
+
+$$-0.442; -0.624; -0.717;-0.750;-0.763;-0.768;-0.771;-0.772;-0.772;$$
+
+para $\theta_{(1)},\ldots,\theta_{(9)}$, y la varianza estimada del error es $\hat{\sigma}_w^2=0.236$. Usando el valor final de $\hat{\theta}=\theta_{(9)}=-0.772$ y el vector $z_t$ de derivadas parciales en \@ref(eq:eq-derivada-error-truncado-MA1-2) nos da un error estándar de $0.025$ y un $t$-valor de $-0.772/0.025=-30.88$ con $632$ grados de libertad (se pierde uno con las diferencias).
+```
+
+```{r, fig.cap="ACF y PACF de la serie varvas glaciares", grafico-ACF-PACF-varvas-glaciares}
+varva=scan("data/varve.txt")
+dv=log(varva[2:634]/varva[1:633]);
+par(mfrow=c(2,1))
+acf(dv,30) 
+pacf(dv,30)
+```
+
+----
+
+En el caso general de un proceso ARMA(p,q) causal e invertible, las estimaciones de máxima verosimilitud, y las estimaciones de mínimos cuadrados condicional e incondicional (y las estimación de Yule-Walker en el caso de modelos AR) dan estimadores óptimos. La prueba de este resultado general se puede hallar en Brockwell y Davis (2006). Denotaremos los coeficientes del proceso ARMA por $\mathbf{\beta}=(\phi_1,\ldots,\phi_p,\theta_1,\ldots,\theta_q)'$.
+
+
+```{proposition, name="Distribución de los estimadores para muestras grandes", propie-distribucion-estimadores-muestras-grandes}
+
+Bajo condiciones apropiadas, para procesos ARMA causal e invertible, los estimadores de máxima verosimilitud, mínimos cuadrados incondicional y condicional, cada uno inicializado por los estimadores dados por el método de los momentos, proveen estimadores óptimos de $\sigma_w^2$ y $\mathbf{\beta}$ en el sentido de que $\hat{\sigma}_w^2$ es consistente, y la distribución asintótica de $\mathbf{\hat{\beta}}$ es la mejor distribución normal asintótica. En particular, cuando $n\to\infty$
+
+\begin{equation}
+  \sqrt{n}\left(\mathbf{\hat{\beta}}-\mathbf{\beta}\right)\overset{d}{\to}N(\textbf{0},\sigma_w^2\Gamma_{p,q}^{-1})
+(\#eq:eq-distribucion-estimadores-muestras-grandes)
+\end{equation}
+```
+
+----
+
+En \@ref(eq:eq-distribucion-estimadores-muestras-grandes) la matriz de varianza-covarianza del estimador $\mathbf{\hat{\beta}}$ es la inversa de la matriz de transformación. En este caso, la matriz $\Gamma_{p,q}$ de orden $(p+q)\times(p+q)$, que tiene la forma
+
+\begin{equation}
+  \Gamma_{p,q}=\left(
+                   \begin{array}{cc}
+                     \Gamma_{\phi\phi} & \Gamma_{\phi\theta} \\
+                     \Gamma_{\theta\phi} & \Gamma_{\theta\theta} \\
+                   \end{array}
+                 \right)
+(\#eq:eq-matriz-Gamma-pq)
+\end{equation}
+
+
+La $p\times p$ matriz $\Gamma_{\phi\phi}$ es dada por \@ref(eq:eq-yule-walker-matricial), esto es, el $ij$-ésimo elemento de $\Gamma_{\phi\phi}$ para $i,j=1,\ldots,p$ es $\gamma_x(i-j)$ de un proceso AR(p) $\phi(B)x_t=w_t$. Similarmente, $\Gamma_{\theta\theta}$ es una matriz $q\times q$ con el $ij$-ésimo elemento para $i,j=1,\ldots,q$ igual a $\gamma_y(i-j)$ de un proceso AR(q) $\theta(B)y_t=w_t$. La $p\times q$ matriz $\Gamma_{\phi\theta}=\{\gamma_{xy}(i-j)\}$ para $i=1,\ldots,p; j=1,\ldots,q$; estos es, el $ij$-ésimo elemento es la covarianza cruzada entre dos procesos AR dados por $\phi(B)x_t=w_t$ y $\theta(B)y_t=w_t$. Finalmente, $\Gamma_{\theta\phi}=\Gamma_{\phi\theta}'$ es de orden $q\times p$.
+
+
+```{example, name="Algunas distribuciones asintóticas específicas", ejem-distribuciones-asintoticas-especificas}
+
+Las siguientes distribuciones son algunos casos de la proposición \@ref(prp:propie-distribucion-estimadores-muestras-grandes)
+
+1) **AR(1):** $\gamma_x(0)=\sigma_w^2/(1-\phi^2)$, de esta manera $\sigma_w^2\Gamma_{1,0}^{-1}=(1-\phi^2)$. Entonces
+    \begin{equation}
+        \hat{\phi}\sim AN[\phi,n^{-1}(1-\phi^2)]
+    (\#eq:eq-distribucion-asintotica-AR1)
+    \end{equation}
+
+2) **AR(2):** Pueden verificar que $\gamma_x(0)=\left(\frac{1-\phi_2}{1+\phi_2}\right)\frac{\sigma_w^2}{(1-\phi_2)^2-\phi_1^2}$ y $\gamma_x(1)=\phi_1\gamma_x(0)+\phi_2\gamma_x(1)$. De este hecho, podemos calcular $\Gamma_{2,0}^{-1}$. En particular, tenemos
+  \begin{equation}
+    \left(
+      \begin{array}{c}
+        \hat{\phi}_1 \\
+        \hat{\phi}_2 \\
+      \end{array}
+    \right)\sim AN\left[\left(
+                          \begin{array}{c}
+                            \phi_1 \\
+                            \phi_2 \\
+                          \end{array}
+                        \right), n^{-1}\left(
+                                         \begin{array}{cc}
+                                           1-\phi_2^2 & -\phi_1(1+\phi_2) \\
+                                           \text{sym} & 1-\phi_2^2 \\
+                                         \end{array}
+                                       \right)\right]
+(\#eq:eq-distribucion-asintotica-AR2)  
+\end{equation}
+
+3) **MA(1):** En este caso, escribimos $\theta(B)y_t=w_t$ ó $y_t+\theta y_{t-1}=w_t$. Entonces, análogamente al caso AR(1), $\gamma_t(0)=\sigma_w^2/(1-\theta^2)$, de este modo $\sigma_w^2\Gamma_{0,1}^{-1}=(1-\theta^2)$. Entonces,
+  \begin{equation}
+    \hat{\theta}\sim AN[\theta,n^{-1}(1-\theta^2)]
+  (\#eq:eq-distribucion-asintotica-MA1)
+  \end{equation}
+
+4) **MA(2):** Escribiendo $y_t+\theta_1y_{t-1}+\theta_2y_{t-2}=w_t$, así, análogamente al caso AR(2), tenemos
+  \begin{equation}
+    \left(
+      \begin{array}{c}
+        \hat{\theta}_1 \\
+        \hat{\theta}_2 \\
+      \end{array}
+    \right)\sim AN\left[\left(
+                          \begin{array}{c}
+                            \theta_1 \\
+                            \theta_2 \\
+                          \end{array}
+                        \right), n^{-1}\left(
+                                         \begin{array}{cc}
+                                           1-\theta_2^2 & -\theta_1(1+\theta_2) \\
+                                           \text{sym} & 1-\theta_2^2 \\
+                                         \end{array}
+                                       \right)\right]
+ (\#eq:eq-distribucion-asintotica-MA2)
+ \end{equation}
+
+
+5) **ARMA(1,1):** Para calcular $\Gamma_{\phi\theta}$ debemos hallar $\gamma_{xy}(0)$, donde $x_t-\phi x_{t-1}=w_t$ y $y_t+\theta y_{t-1}=w_t$. Tenemos
+\begin{eqnarray*}
+  \gamma_{xy}(0) &=& \text{cov}(x_t,y_t)=\text{cov}(\phi x_{t-1}+w_t,-\theta y_{t-1}+w_t \\
+                 &=& -\phi\theta\gamma_{xy}(0)+\sigma_w^2
+\end{eqnarray*}
+Resolviendo, hallamos $\gamma_{xy}(0)=\sigma_w^2/(1+\phi\theta)$. Entonces,
+\begin{equation}
+   \left(
+      \begin{array}{c}
+        \hat{\phi} \\
+        \hat{\theta} \\
+      \end{array}
+    \right)\sim AN\left[\left(
+                          \begin{array}{c}
+                            \phi \\
+                            \theta \\
+                          \end{array}
+                        \right), n^{-1}\left[
+                                         \begin{array}{cc}
+                                           (1-\phi^2)^{-1} & (1+\phi\theta)^{-1} \\
+                                           \text{sym} & (1-\theta^2)^{-1} \\
+                                         \end{array}
+                                       \right]^{-1}\right]
+ (\#eq:eq-distribucion-asintotica-ARMA11)
+\end{equation}
+
+```
+
+----
+
+Puede resultar sorprendente, que las distribuciones asintóticas de $\hat{\phi}$ de un AR(1) [ecuación \@ref(eq:eq-distribucion-asintotica-AR1)] y $\hat{\theta}$ de un MA(1) [ecuación \@ref(eq:eq-distribucion-asintotica-MA1)] sean de la misma forma. Es posible explicar este resultado heurístico inesperado usando la intuición de regresión lineal. Esto es, para el modelo de regresión normal presentado en la Sección 3.3 del Tema 3 sin término de intercepción $x_t=\beta z_t+w_t$, sabemos que $\hat{\beta}$ es normalmente distribuido con media $\beta$, y de (3.16) (Tema 3)
+
+$$\text{var}\left\{\sqrt{n}\left(\hat{\beta}-\beta\right)\right\}=n\sigma_w^2\left(\sum_{t=1}^{n}z_t^2\right)^{-1}=\sigma_w^2\left(n^{-1}\sum_{t=1}^{n}z_t^2\right)^{-1}$$
+
+Para el modelo AR(1) causal dado por $x_t=\phi x_{t-1}+w_t$, la intuición de regresión nos dice que debemos esperar que para $n$ grande
+
+$$\sqrt{n}(\hat{\phi}-\phi)$$
+
+es aproximadamente normal con media cero y varianza dada por
+
+$$\sigma_w^2\left(n^{-1}\sum_{t=1}^{n}x_{t-1}^2\right)^{-1}$$
+
+
+Ahora, $n^{-1}\sum_{t=2}^{n}x_{t-1}^2$ es la varianza muestral (recuerde que la media de $x_t$ es cero) de $x_t$, de modo que cuando $n$ se hace grande podemos esperar que esta se aproxime a $\text{var}(x_t)=\gamma(0)=\sigma_w^2/(1-\phi^2)$. Entonces, la varianza muestral grande de $\sqrt{n}(\hat{\phi}-\phi)$ es
+
+$$\sigma_w^2\gamma_x(0)^{-1}=\sigma_w^2\left(\frac{\sigma_w^2}{1-\phi^2}\right)^{-1}=(1-\phi^2)$$
+
+esto es, \@ref(eq:eq-distribucion-asintotica-AR1) vale.
+
+En el caso de un MA(1), podemos usar la discusión del  ejemplo \@ref(exm:ejem-gauss-newton-MA1) para escribir un modelo de regresión aproximado para el MA(1). Esto es, considere la aproximación \@ref(eq:eq-derivada-error-truncado-MA1-2) como el modelo de regresión
+
+$$z_t(\hat{\theta})=-\theta z_{t-1}(\hat{\theta})+w_{t-1}$$
+
+donde ahora, $z_{t-1}(\hat{\theta})$ se define como en el ejemplo \@ref(exm:ejem-gauss-newton-MA1), jugando el papel de regresor.
+
+Continuando con la analogía, podemos esperar que la distribución asintótica de $\sqrt{n}(\hat{\phi}-\phi)$ sea normal con media cero y varianza aproximada
+
+$$\sigma_w^2\left(n^{-1}\sum_{t=1}^{n}z_{t-1}^2(\hat{\theta})\right)^{-1}$$
+
+Como en el caso AR(1), $n^{-1}\sum_{t=1}^{n}z_{t-1}^2(\hat{\theta})$ es la varianza muestral de $z_t(\hat{\theta})$, de modo que para $n$ grande, esta debería ser $\text{var}\{z_t(\theta)\}=\gamma_z(0)$.
+
+Pero, note que, como se ve de \@ref(eq:eq-derivada-error-truncado-MA1-2), $z_t(\theta)$ es aproximadamente un proceso AR(1) con parámetro $-\theta$. Por la tanto,
+
+$$\sigma_w^2\gamma_X(0)^{-1}=\sigma_w^2\left(\frac{\sigma_w^2}{1-(-\theta)^2}\right)^{-1}=(1-\theta^2)$$
+
+lo cual concuerda con \@ref(eq:eq-distribucion-asintotica-MA1).
+
+
+Finalmente, la distribución asintótica de los parámetros estimados de un AR y de un MA son de la misma forma, porque en el caso MA, los *regresores* son las diferencias del proceso $z_t(\theta)$ que tienen estructura AR, y es esta estructura la que determina la varianza asintótica de los estimadores.
+
+En el ejemplo 3.31 el error estándar estimado de $\hat{\theta}$ fue $0.025$. En el ejemplo, este valor se calculó como la raíz cuadrada de
+
+$$s_w^2\left(n^{-1}\sum_{t=2}^{n}z_{t-1}^2(\hat{\theta})\right)^{-1}$$
+
+donde $n=633, s_w^2=0.236$ y $\hat{\theta}=-0.772$. Usando \@ref(eq:eq-distribucion-asintotica-MA1), también pudimos haber calculado este valor usando la aproximación asintótica, como la raíz cuadrada de $(1-0.772^2)/633$ lo cual también nos da $0.025$.
+
+
+El comportamiento asintótico de los estimadores de los parámetros nos da una información adicional sobre el problema de ajuste de los modelos ARMA a los datos. Por ejemplo, supongamos que una serie de tiempo sigue un proceso AR(1) y decidimos fijar un modelo AR(2) a los datos. ¿Habrá algún problema si hacemos esto? Más generalmente, *¿por qué no fijamos un modelo AR de orden grande para asegurar que capturamos toda la dinámica del proceso?* Después de todo, si el proceso es realmente un AR(1), los otros parámetros autoregresivos no serán significativos. La respuesta es que si sobre ajustamos el modelo, podemos perder eficiencia. Por ejemplo, si fijamos un modelo AR(1) a un proceso AR(1), para $n$ grande, $\text{var}(\hat{\phi})\approx n^{-1}(1-\phi_1^2)$. Pero si fijamos un modelo AR(2) a un proceso AR(1), para $n$ grande, $\text{var}(\hat{\phi})\approx n^{-1}(1-\phi_2^2)=n^{-1}$ porque $\phi_2=0$. En consecuencia, la varianza de $\phi_1$ ha sido aumentada, haciendo del estimador menos preciso. Sin embargo, diremos que el sobre ajuste lo podemos usar como una herramienta de diagnóstico. Por ejemplo,, si fijamos un modelo AR(2) a los datos y estos se satisfacen con el modelo, entonces, agregando un parámetro más y fijando un modelo AR(3) debería darnos aproximadamente el mismo modelo como en el ajuste AR(2). Discutiremos los modelos de diagnóstico con más detalle más adelante.
+
+Si $n$ es pequeño o si los parámetros están cerca de los bordes o cotas, la aproximación asintótica puede ser un poco pobre. La técnica de bootstrap puede ser útil en este caso. Para una explicación ampliada de bootstrap véase Efron y Tibshirani (1994). Daremos un ejemplo simple de bootstrap para un proceso AR(1)
+
+```{example, name="Bootstrap para un AR(1)", ejem-bootstrap-AR1}
+
+Consideremos un modelo AR(1) con coeficiente de regresión cerca a la cota de causalidad y un error del proceso que es simétrico pero no normal. Específicamente, considere el modelo estacionario y causal
+
+\begin{equation}\label{}
+  x_t=\mu+\phi(x_{t-1}-\mu)+w_t
+(\#eq:eq-modelo-estacionario-causal)
+\end{equation}
+
+donde $\mu=50, \phi=0.95$ y $w_t$ son iid doble exponencial con localización cero, y parámetro de escala $\beta=2$. La densidad de $w_t$ está dada por
+
+$$f_{w_t}(w)=\frac{1}{2\beta}\exp[-|w|/\beta]\text{ con }-\infty<w<\infty$$
+
+En este ejemplo, $\mathbb{E}(w_t)=0$ y $\text{var}(w_t)=2\beta^2=8$. La figura \@ref(fig:grafico-modelo-estacionario-causal-n-100) muestra $n=100$ observaciones simuladas de este proceso.
+```
+
+```{r, fig.cap="Modelo causal estacionario, n=100",grafico-modelo-estacionario-causal-n-100}
+boot=scan("data/ar1boot.txt")
+plot(boot,type="b",xlab="Tiempo")
+```
+
+Esta realización en particular es interesante, ya que los datos lucen como si fuesen generados de un proceso no-estacionario con tres diferentes niveles de media. De hecho, los datos fueron generados por un modelo estacionario y causal de buen comportamiento, aunque no normal. Para mostrar las ventajas del bootstrap, procederemos como si no conociéramos la distribución del error y procederemos como si este fuera normal; por supuesto, esto significa, por ejemplo, que los EMV de $\phi$ basados en una normal no serán los EMV reales porque los datos no son normales.
+
+Usando los datos mostrado en la figura \@ref{fig:grafico-modelo-estacionario-causal-n-100), obtenemos los estimadores de Yule-Walker $\hat{\mu}=40.0483, \hat{\phi}=0.9572$ y $s_w^2=15.55$, donde $s_w^2$  es el estimado de $\text{var}(w_t)$.
+
+```{r}
+m=mean(boot)
+m
+fit=ar.yw(boot,order=1)
+fit
+phi=fit$ar
+```
+
+Basándonos en la proposición \@ref(prp:propie-distribucion-estimadores-muestras-grandes), diremos que $\hat{\phi}$ es aproximadamente normal con media $\phi$ y varianza $(1-\phi^2)/100$, la cual es aproximada por $(1-0.957^2)/100=0.029^2$.
+
+Para evaluar la distribución muestral finita de $\hat{\phi}$ cuando $n=100$, simularemos 1000 realizaciones de este proceso AR(1) y estimaremos los parámetros vía Yule-Walker. La densidad muestral finita del estimador Yule-Walker de $\phi$ basado en 1000 simulaciones se muestra en la figura \@ref(fig:grafico-densidad-muestral-estimadores-yule-walker). Claramente la distribución muestral no está cerca a la normalidad para este tamaño muestral. La media de la distribución mostrada es $0.8638$ y la varianza es $0.122^2$ estos valores son muy distintos de los valores asintóticos.
+
+```{r, fig.cap="Densidad muestral finita de los estimadores de Yule-Walker de phi", grafico-densidad-muestral-estimadores-yule-walker}
+# Densidad del estimador de Yule-Walker de phi
+phi.est=0
+x.sim=boot[1]
+wt=rexp(100,1/2)
+for (i in 1:1000)
+  {
+  for (j in 2:100)
+  {x.sim[j]=50+0.95*(x.sim[j-1]-50)+wt[j]}
+  fit.est=ar.yw(x.sim,order=1)
+  phi.est[i]=fit.est$ar}
+
+plot(density(phi.est),main="Densidad muestral finita de los estimadores de Yule-Walker de phi")
+```
+
+Algunos de los cuantiles de la distribución muestral son: 
+
+|Cuantil|  5% |  10% | 25%  |  50% | 75%  |  90% | 95%  |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+|Valor   |0.6747 |  0.6957 |  0.7587 |  0.8638 |  0.9689 |  1.0320 |  1.0530 |
+
+
+
+Antes de discutir la técnica de bootstrap, estudiemos el proceso de innovación muestral $x_t-x_t^{t-1}$ con la correspondiente varianza $P_t^{t-1}$. Para el modelo AR(1) de este ejemplo
+
+$$x_t^{t-1}=\mu+\phi(x_{t-1}-\mu)\text{, }t=2,\ldots,100$$
+
+De aquí, se sigue que
+
+$$P_t^{t-1}=\mathbb{E}(x_t-x_t^{t-1})^2=\sigma_w^2\text{, }t=2,\ldots,100$$
+
+Cuando $t=1$, tenemos
+
+$$x_1^0=\mu\text{ y }P_1^0=\sigma_w^2/(1-\phi^2)$$
+
+Entonces, las innovaciones tiene media cero pero varianzas distintas; a fin de que todas las innovaciones tengan la misma varianza $\sigma_w^2$, las escribiremos como
+
+\begin{eqnarray}
+  \epsilon_1 &=& (x_1-\mu)\sqrt{(1-\phi^2)} \nonumber \\
+  \epsilon_t &=& (x_t-\mu)-\phi(x_{t-1}-\mu)\text{, para }t=2,\ldots,100 (\#eq:eq-innovaciones-bootstrap)
+\end{eqnarray}
+
+De estas ecuaciones, podemos escribir el modelo en término de las innovaciones $\epsilon_t$ como
+
+\begin{eqnarray}
+  x_1 &=& \mu+\epsilon_1/\sqrt{(1-\phi^2)} \nonumber\\
+  x_t &=& \mu+\phi(x_{t-1}-\mu)+\epsilon_t\text{, para }t=2,\ldots,100 (\#eq:eq-modelo-innovaciones)
+\end{eqnarray}
+
+A continuación, reemplazamos los parámetros con sus estimados en \@ref(eq:eq-innovaciones-bootstrap), esto es, $n=100, \hat{\mu}=40.048$ y $\hat{\phi}=0.957$ y denotamos los resultados de las innovaciones muestrales como $\{\hat{\epsilon}_1,\ldots,\hat{\epsilon}_{100}\}$. Para obtener una muestra bootstrap, primero escogemos una muestra aleatoria con reemplazo con $n=100$ del conjunto de innovaciones muestral, llamemos a esta muestra $\{\epsilon_1^*,\ldots,\epsilon_{100}^*\}$. Ahora, generamos un conjunto de datos bootstrap secuencialmente haciendo
+
+\begin{eqnarray}
+  x_1^* &=& 40.048+\epsilon_1^*/\sqrt{(1-0.957^2)} \nonumber\\
+  x_t^* &=& 40.048+0.957(x_{t-1}^*-40.048)+\epsilon_t^*\text{, }t=2,\ldots,n (\#eq:eq-generacion-datos-bootstrap)
+\end{eqnarray}
+
+A continuación, estimamos los parámetros como si los datos fueran $x_t^*$. Llamamos a estos estimados $\hat{\mu}(1),\hat{\phi}(1)$ y $s_w^2(1)$. Repetimos este proceso un número grande $N$ de veces, generando una colección de parámetros estimados bootstrap $\{\hat{\mu}(k),\hat{\phi}(k),s_w^2(k),k=1,\ldots,N\}$. Podemos entonces aproximar la distribución muestral finita de un estimador de los valores del parámetro obtenido con bootstrap. Por ejemplo, podemos aproximar la distribución de $\hat{\phi}-\phi$ por la distribución empírica de $\hat{\phi}(k)-\hat{\phi}$ para $k=1,\ldots,N$.
+
+La figura \@ref(fig:grafico-histograma-bootstrap) muestra un histograma bootstrap de 200 estimaciones de $\phi$ hechas con bootstrap usando los datos en la figura \@ref(fig:grafico-modelo-estacionario-causal-n-100}. En particular, la media de la distribución de $\hat{\phi}(k)$ es $0.8750$ con varianza $0.0556^2$. Algunos cuantiles de esta distribución son: 
+
+| Cuantil | 5%  | 10%  |  25% | 50%  |  75% | 90%  |  95% |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| Valor  |  0.7833 |  0.8014 |  0.8412 |  0.8762 |  0.9135 |  0.9455 |  0.9672 |
+
+
+
+```{r, fig.cap="Histograma bootstrap de phi basado en 200 iteraciones.",  grafico-histograma-bootstrap, warning=FALSE}
+# Booststrap
+
+nboot=200
+resids=fit$resid
+resids=resids[2:100]
+boot.star=boot
+phi.star=matrix(0,nboot,1)
+for (i in 1:nboot){
+  resid.star=sample(resids,replace=TRUE)
+  for (t in 1:99){
+    boot.star[t+1]=boot+phi*(boot.star[t]-boot)+resid.star[t]
+  }
+  phi.star[i]=ar.yw(boot.star,order=1)$ar
+}
+# Histograma
+hist(phi.star,breaks=15,col = "lightblue",
+main="Histograma de frecuencia para phi estimado con bootstrap")
+
+```
+
+----
