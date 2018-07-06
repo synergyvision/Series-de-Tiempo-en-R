@@ -1,0 +1,213 @@
+# Modelos ARIMA
+
+En este capítulo examinaremos el problema de encontrar un modelo apropiado para un conjunto determinado de observaciones $\{x_1,\ldots,x_n\}$ que no son necesariamente generados por una serie de tiempo estacionaria. Si los datos (a) no muestran desviaciones aparentes de la estacionariedad y (b) tienen una función de autocovarianza en rápida disminución, intentamos ajustar un modelo ARMA a los datos medios corregidos utilizando las técnicas desarrolladas en el capítulo de modelos ARMA. De lo contrario, buscamos primero una transformación de los datos que genere una nueva serie con las propiedades (a) y (b). Esto puede lograrse frecuentemente mediante la diferenciación, lo que nos lleva a considerar la clase de modelos ARIMA (siglas en inglés: autoregressive integrated moving-average).
+
+En muchas situaciones, las series de tiempo pueden pensarse o ver como la composición de dos componentes, una componente de tendencia no estacionaria y una componente estacionaria de media cero. Por ejemplo, consideremos el modelo
+
+\begin{equation}
+x_t = \mu_t+y_t,
+(\#eq:eq-modelo-base-1-diferencia)
+\end{equation}
+
+donde $\mu_t=\beta_0+\beta_1t$ y $y_t$ es estacionario. Si diferenciamos este proceso, obtenemos un proceso estacionario, en efecto
+
+\begin{eqnarray*}
+\nabla x_t &=& x_t-x_{t-1} = (\mu_t+y_t)-(\mu_{t-1}+y_{t-1}) \\
+    &=& (\beta_0+\beta_1t+y_t)-(\beta_0+\beta_1(t-1)+y_{t-1}) \\
+    &=& \beta_1 + y_t-y_{t-1} \\
+    &=& \beta_1+\nabla y_t.
+\end{eqnarray*}
+
+El cual claramente es estacionario.
+
+Otro modelo que lleva a la primera diferenciación es el caso en el cual $\mu_t$ en la ecuación \@ref(eq:eq-modelo-base-1-diferencia), es un proceso estocástico y que varía lentamente de acuerdo a un paseo laeatorio. Esto es,
+
+$$\mu_t=\mu_{t-1}+v_t,$$
+
+donde $v_t$ es estacionario. Tenemos entonces
+
+$$x_t=\mu_{t-1}+v_t+y_t.$$
+
+En este caso,
+
+\begin{eqnarray*}
+\nabla x_t &=& x_t-x_{t-1} \\
+    &=& (\mu_{t-1}+v_t+y_t)-(\mu_{t-2}+v_{t-1}+y_{t-1}) \\
+    &=& v_t+\nabla y_t,
+\end{eqnarray*}
+
+es estacionario. Si $\mu_t$ en \@ref(eq:eq-modelo-base-1-diferencia) es un polinomio de grado $k$, $\mu_t=\sum_{i=0}^k\beta_it^i$, entonces la serie diferenciada $\nabla^ky_t$ es estacinaia. Por ejemplo, sea $\mu_t=\beta_0+\beta_1t+\beta_2t^2$, luego
+
+$$x_t=\mu_t+y_t = \beta_0+\beta_1t+\beta_2t^2+y_t.$$
+
+Diferenciando una vez se tiene
+
+\begin{eqnarray*}
+\nabla x_t &=& (\mu_t+y_t)-(\mu_{t-1}+y_{t-1}) \\
+    &=& (\beta_0+\beta_1t+\beta_2t^2+y_t) - (\beta_0+\beta_1(t-1)+\beta_2(t-1)^2+y_{t-1}) \\
+    &=& \beta_0+\beta_1t+\beta_2t^2+y_t-\beta_0-\beta_1t-\beta_1-\beta_2(t^2-2t+1)-y_{t-1} \\
+    &=& \beta_1+\beta_2+2\beta_2t+\nabla y_t.
+\end{eqnarray*}
+
+Volvemos a diferenciar
+
+\begin{eqnarray*}
+\nabla(\nabla x_t) &=& (\beta_1+\beta_2+2\beta_2t+(y_t-y_{t-1})) - (\beta_1+\beta_2+2\beta_2(t-1)+(y_{t-1}-y_{t-2})) \\
+    &=& \beta_1+\beta_2+2\beta_2t+y_t-y_{t-1}-\beta_1-\beta_2-2\beta_2t+2\beta_2-y_{t-1}+y_{t-2} \\
+    &=& 2\beta_2+\nabla(\nabla y_t) \\
+    &=& 2\beta_2+\nabla^2y_t.
+\end{eqnarray*}
+
+El cual es estacionario. Los modelos estocásticos con tendencia llevan a diferenciaciones de orden superior. Por ejemplo, supongamos 
+
+$$\mu_t=\mu_{t-1}+v_t\text{ y }v_t=v_{t-1}+e_t$$
+
+donde $e_t$ es estacionario. Entonces $\nabla x_t = v_t+\nabla y_t$ no es estacionario, pero 
+
+$$\nabla^2x_t = e_t+\nabla^2y_t,$$
+
+si es estacionario.
+
+Los modelos ARMA integrados o modelos ARIMA, es una extensión de los modelos ARMA que incluyen diferenciación. Formalmente, tenemos la siguiente definición.
+
+```{definition, defi-modelo-ARIMA}
+Un proceso $x_t$ es un proceso ARIMA(p,d,q) si 
+
+$$\nabla^dx_t = (1-B)^dx_t$$
+  
+es un proceso ARMA(p,q). En general, escribimos el modelo como 
+
+\begin{equation}
+  \phi(B)(1-B)^dx_t = \theta(B)w_t.
+(\#eq:eq-modelo-ARIMA)
+\end{equation}
+
+Si $\mathbb{E}(\nabla^dx_t)=\mu$, escribimos el modelo como
+
+$$\phi(B)(1-B)^dx_t=\delta+\theta(B)w_t,$$
+
+donde $\delta=\mu(1-\phi_1-\cdots-\phi_p)$.
+```
+
+----
+
+Debido a la no estacionaridad, debemosser cuidadosos cuando realizamos predicciones.
+
+## Construcción de modelos ARIMA
+
+Hay algunos pasos básicos para ajustar modelos ARIMA a series de tiempo:
+
+- Gráfico de los datos.
+
+- Posible transformación de los datos (diferenciación, logaritmo, etc.).
+
+- Identificación del orden de dependencia del modelo.
+
+- Estimación del (los) parámetro(s).
+
+- Diagnóstico.
+
+- Elección del modelo.
+
+Primero, como en todo análisis de datos, debemos realizar un gráfico de serie de tiempo de los datos e inspeccionar el mismo para ver cualquier anomalía. Si, por ejemplo, la variabilidad crece en el tiempo, será necesario que transformemos los datos para estabilizar la varianza. En este caso, las transformaciones de potencia de la clase Box-Cox resultan útiles. Por ejemplo, supongamos un proceso que evoluciona como un cambio porcentual bastante pequeño, como una inversión. Supongamos que
+
+$$x_t=(1+p_t)x_{t-1},$$
+
+donde $x_t$ es el valor de la inversión en tiempo $t$ y $p_t$ es el porcentaje de cambio del periodo $t-1$ al $t$, el cual puede ser negativo. Tomando logaritmo tenemos
+
+$$\ln(x_t) = \ln(1+p_t)+\ln(x_{t-1})$$
+
+o
+
+$$\nabla\ln(x_t) = \ln(1+p_t).$$
+
+Si el porcentaje de cambio $p_t$ se mantiene relativamente pequeño en magnitud, entonces $\ln(1+p_t)\approx p_t$ [^nota13] y entonces
+
+$$\nabla\ln(x_t)\approx p_t,$$
+[^nota13:]$\ln(1+p)=p-\frac{p^2}{2}+\frac{p^3}{3}-\cdots$ para $-1<p\leq1$. Si $p$ es un porcentaje de cambio pequeño, entonces los términos de orden superior en el desarrollo son despreciables.
+
+será un proceso relativamente estable. A menudo $\nabla\ln(x_t)$ se llama el retorno o tasa de crecimiento. Después de una transformación apropiada de los datos, el siguiente paso es identificar los valores preliminares del orden autoregresivo $p$, el orden de diferenciación $d$ y el orden de promedio móvil $q$.
+
+Ya hemos abordado en parte el problema de la elección del orden de diferenciación. El gráfico de la serie de tiempo nos ayudará a deterinar si hace falta una diferenciación. Si se requiere una diferenciación, entonces diferenciamos los datos una vez $(d=1)$, e inspeccionamos el gráfico de $\nabla x_t$. Si hace falta otra diferenciación, entonces volvemos a diferenciar $(d=2)$ e inspeccionamos nuevamente el gráfico, esta vez el de $\nabla^2x_t$. Debemos tener cuidado de no sobre diferenciar pues esto puede introducir dependencia donde no la hay. Por ejemplo, $x_t=w_t$ es no correlacionado, pero $\nabla x_t=w_t-w_{t-1}$ es un proceso $MA(1)$. Además del gráfico de la serie de tiempo, la ACF muestral nos puede ayudar a ver si es necesaria una diferenciación. Dado que el polinomio $\phi(z)(1-z)^d$ tiene raíz unitaria, la ACF muestral $\hat{\rho}(h)$, no decaerá a cero tan rápido cuando $h$ crece. Entonces, un lento decaimiento en $\hat{\rho}(h)$ es un indicativo de que se necesitará una diferenciación.
+
+Una vez que hemos establecido el valor preliminar de $d$, el siguiente paso es ver la ACF y PACF muestrales de $\nabla^dx_t$ para el valor de $d$ elegido. Usando la tabla resumen para la elección de modelos ARMA (véase la tabla al final de la sección [Propiedades de los modelos ARMA(p,q)]) como guía, escogemos los valores preliminares de $p$ y $q$.
+
+Dado que estamos trabajando con estimaciones, dos modelos que luzcan diferentes pueden ser de hecho bastante similares, por lo tanto, nodebemos preocuparnos, de momento, en ser muy precisos al ajustar un modelo. En este punto, unos pocos valores preliminares de $p,d$ y $q$ serán suficientes y nos permitirán iniciar las estimaciones de los parámetros. A continuación daremos un ejemplo de uso de los pasos previamente descritos.
+
+```{example, name="Análisis de datos G.N.P.", ejem-gnp-data}
+Consideremos los datos del Producto Nacional Bruto trimestral de EE.UU en miles de millónes de dólares, desde el primer trimestre de 1947 hasta el tercer trimestre de 2002. Son $n=223$ observaciones, losdatos han sido ajustados estacionalmente. El archivo de datos es "gnp96.txt", y fueron obtenidos del *Federal Reserve Bank of St. Louis* (http://research.stlouisfed.org/). El gráfico \@ref(fig:fig-gnp-data) muestra la serie de tiempo correspondiente.
+```
+
+```{r, fig.cap="Producto Nacional Bruto trimestral de EE.UU (en miles de millónes de dólares), desde el 1er trimestre de 1947 hasta el 3er trimestre de 2002.", fig-gnp-data}
+# Lectura de los datos
+gnp=read.table("data/gnp96.txt")
+# Grafico de la serie
+plot(gnp,type="l", xlab="Años",ylab="G.N.P.",col="blue")
+```
+
+Dado que la serie presenta una fuerte tendencia creciente, no es claro si la varianza crece con el tiempo. Por lo tanto para propósito de demostrar como usar la ACF muestral, en la figura \@ref(fig:fig-acf-gnp) mostramos la misma. Como el decaimiento es lento, esto nos sugiere que una diferenciación es posible.
+
+```{r, fig.cap="ACF muestral para la serie de datos G.N.P.", fig-acf-gnp}
+# ACF muestral de GNP
+acf(gnp[,2], 50)
+```
+
+La figura \@ref(fig:fig-gnp-dif-1) muestra la primera diferenciación, allí podemos observar que la variabilidad en la segunda mitad de datos es mayor que en la primera mitad. Además, parece que la tendencia creciente todavía está presente, porlo tanto, tomando en cuenta los pasos descritos al inicio de esta sección primero transformamos losdatos y luego diferenciamos, así obtenemos $y_t=\nabla\ln(x_t)$. 
+
+```{r, fig.cap="Primera diferenciación de la serie de tiempo G.N.P.", fig-gnp-dif-1}
+# Primera diferencia
+gnpdif=diff(gnp[,2])
+plot(gnp[2:223,1],gnpdif, type="l",xlab="Años",ylab="diff(G.N.P.)",
+     col="blue")
+```
+
+La figura \@ref(fig:fig-gnp-log-dif-1) muestra la serie transformada y diferenciada, podemos ver allí que el proceso parece ser estable. Más aún, podemos interpretar los valores de $y_t$ como el porcentaje de crecimiento trimestral del Producto Nacional Bruto de EE.UU.
+
+```{r,fig.cap="Serie de tiempo de G.N.P. transformada (log) y diferenciada una vez", fig-gnp-log-dif-1}
+# Transformacion y primera diferencia
+gnpgr = diff(log(gnp[,2]))
+plot(gnp[2:223,1],gnpgr,type = "l",xlab="Años",ylab="diff(G.N.P.)",
+     col="blue")
+```
+
+Graficamos ahora las ACF y PACF muestral de $y_t$. Observando las ACF y PACF parece que la ACF se corta en paso 2 y la PACF decae, lo que nos sugiere un modelo $MA(2)$ para la tasa de crecimiento del P.N.B., o un modelo ARIMA(0,1,2) para $y_t$. Pero en lugar de enfocarnos en un solo modelo, si detallamos las ACF y PACF muestral, parece sugerir que la ACF decrece y la PACF se corta en paso 1, lo que sugiere un modelo $AR(1)$ para la tasa de cambio o un modelo ARIMA(1,1,0) para $y_t$. Podemos decir entonces que un modelo ARIMA(1,1,2) es una primera elección de ajuste.
+
+```{r,fig.cap="ACF y PACF muestrales para las serie de tiempo G.N.P., transformada y diferenciada", fig-acf-pacf-gnp}
+# ACF y PACF de la transformacion
+par(mfrow=c(2,1))
+acf(gnpgr, 24)
+pacf(gnpgr,24)
+```
+
+A modo de entrenamiento vamos a realizar primeramente los ajustes de los modelos $MA(2)$ y $AR(1)$ por separado. Para ello nos valemos de R, usaremos la función 'sarima' del paquete 'astsa'. Iniciamos con el modelo $AR(1)$.
+
+```{r}
+sarima(gnpgr, 1, 0, 0) # AR(1)
+```
+
+El modelo $AR(1)$ estimado es $x_t=\mu(1-\phi_1)+\phi_1x_{t-1}+\hat{w}_t$
+
+\begin{equation}
+x_t = 0.0083_{(0.001)}(1-0.3467)+0.3467_{(0.063)}x_{t-1}+\hat{w}_t
+(\#eq:eq-modelo-AR1-gnp)
+\end{equation}
+
+donde $\hat{\sigma}_w=0.0095$ con 220 grados de libertad; note que la constante en \@ref(eq:eq-modelo-AR1-gnp) es $0.0083(1-0.3467)=0.005$. Los valores entre parentesis son los errores estándar estimados.
+
+Ahora usando EMV fijamos un modelo $MA(2)$ para la tasa de crecimiento $x_t$, siendo el modelo estimado
+
+\begin{equation}
+x_t = 0.008_{(0.001)}+0.303_{(0.065)}\hat{w}_{t-1}+0204_{(0.064)}\hat{w}_{t-2}+\hat{w}_t
+(\#eq:eq-modelo-MA2-gnp)
+\end{equation}
+
+donde $\hat{\sigma}_w=0.0094$ con 219 grados de libertad. Los valores entre parentesis corresponden a los errores estándar estimados. Aunque la constante es muy pequeña, su valor es significativo, no incluir una constante lleva a conclusiones erróneas sobre la naturaleza de la economía estadounidense. Si no  incluimos una constane, asumiríamos que la tasa de crecimiento trimestral promedio es cero, mientras que en realidad la tasa de crecimiento trimestral promedio del P.N.B. de EE.UU es de alrededor del 1% (véase la gráfica \@ref(fig:fig-gnp-data)).
+
+```{r}
+sarima(gnpgr, 0, 0, 2) # MA(2)
+# Psi-pesos
+ARMAtoMA(ar=.3467, ma=0, 10) # prints psi-weights
+```
+
+----
+

@@ -42,6 +42,7 @@ library(stats)
 library(png)
 library(jpeg)
 library(kableExtra)
+library(astsa)
 ```
 
 ```{r include=FALSE}
