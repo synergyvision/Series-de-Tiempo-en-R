@@ -203,11 +203,131 @@ x_t = 0.008_{(0.001)}+0.303_{(0.065)}\hat{w}_{t-1}+0204_{(0.064)}\hat{w}_{t-2}+\
 
 donde $\hat{\sigma}_w=0.0094$ con 219 grados de libertad. Los valores entre parentesis corresponden a los errores estándar estimados. Aunque la constante es muy pequeña, su valor es significativo, no incluir una constante lleva a conclusiones erróneas sobre la naturaleza de la economía estadounidense. Si no  incluimos una constane, asumiríamos que la tasa de crecimiento trimestral promedio es cero, mientras que en realidad la tasa de crecimiento trimestral promedio del P.N.B. de EE.UU es de alrededor del 1% (véase la gráfica \@ref(fig:fig-gnp-data)).
 
-```{r}
-sarima(gnpgr, 0, 0, 2) # MA(2)
+```{r,fig.cap="Modelo ARIMA(0,0,2) para la serie G.N.P. y residuales", fig-modelo-arima002-gnp}
+gnpgr.ma=sarima(gnpgr, 0, 0, 2) # MA(2)
 # Psi-pesos
 ARMAtoMA(ar=.3467, ma=0, 10) # prints psi-weights
 ```
 
 ----
 
+El siguiente paso en el ajuste de modelos es el diagnóstico. Esta investigación incluye el análisis de residuales así como la comparación de modelos. De nuevo, el primer paso envuelve un gráfico de las innovaciones (o residuales) $x_t-\hat{x}_t^{t-1}$ o de las innovaciones estandarizadas
+
+\begin{equation}
+ e_t = (x_t-\hat{x}_t^{t-1})/\sqrt{\hat{P}_t^{t-1}}
+(\#eq:eq-innovaciones-estandar)
+\end{equation}
+
+donde $\hat{x}_t^{t-1}$ es la predicción de un paso de $x_t$ basado en el modelo ajustado y $\hat{P}_t^{t-1}$ es varianza del error estimado de un paso. Si el modelo se ajusta bien, el residual estandarizado debe comportarse como una sucesión iid de media cero y varianza uno, así que debemos observar bien el gráfico de la serie de tiempo para ver si hay desviación evidente de esta suposición. Por ejemplo, es posible en el caso no-gaussiano tener un proceso no-correlacionado para el cual valores contiguos en tiempo sean altamente dependientes. Como ejemplo, podemos mencionar la familia de modelos GARCH que discutiremos en el capítulo siguiente.
+
+Para determinar o investigar sobre la normaidad marginal nos valemos del histograma de los residuales, así visualmente podemos ver si el mismo se parece o ajusta a la curva de densidad normal. Además de esto, un gráfico de probabilidad normal o un gráfico de cuantiles (qq-plot) nos puede ayudar a identificar la desviación de la normalidad.
+
+También podemos inspeccionar la autocorrelación muestral de los residuales $\hat{\rho}_e(h)$, para ver algún patrón o valores grandes. Recordemos que, para un ruido blanco, las autocorrelaciones muestrales son aproximadamente independientes y normalmente distribuidas con media cero y varianza $1/n$. Por consiguiente, una buena forma de inspeccionar la estructura de correlación de los residuales es graficar $\hat{\rho}_e(h)$ vs $h$ junto con las cotas de error $\pm2/\sqrt{n}$. Tome en cuenta, sin embargo, que los residuales de un modelo ajustado, no tendrán necesariamente las propiedades de un ruido blanco y la varianza de $\hat{\rho}_e(h)$ puede ser mucho menor que $1/n$.
+
+Además de graficar $\hat{\rho}_e(h)$, podemos realizar una prueba de hipótesis general que tome en consideración las magnitudes de $\hat{\rho}_e(h)$ como grupo. Por ejemplo, puede ser el caso que individualmente cada $\hat{\rho}_e(h)$ sea pequeño en magnitud, digamos menr que $2/\sqrt{n}$ en magnitud, es decir $|\hat{\rho}_e(h)|<2/\sqrt{n}$, pero colectivamente, los valores sean grandes. El estadístico de Ljung-Box-Pierce dado por 
+
+\begin{equation}
+ Q = n(n+2)\sum_{h=1}^H\frac{\hat{\rho}_e^2(h)}{n-h}
+ (\#eq:eq-estadistico-ljung-box-pierce)
+\end{equation}
+
+es útil para realizar esta prueba de hipótesis. El  valor $H$ en \@ref(eq:eq-estadistico-ljung-box-pierce) se elige de manera arbitraria, en general se usa $H=20$. Bajo la hipótesis nula de que el modelo es adecuado, asintóticamente, (cuando $n\to\infty$), $Q$ se distribuye como una chi-cuadrado con $H-p-q$ grados de libertad, esto es $Q\sim\chi_{H-p-q}^2$. Entonces, rechazamos la hipótesis nula a nivel $\alpha$ si el valor  de $Q$ es mayor que la $\chi_{H-p-q}^2(1-\alpha)$.
+
+```{example, name="Diagnóstico para la tasa de crecimiento del P.N.B", diagnostico-tasa-crecimiento-gnp}
+Enfoquémonos en el modelo $MA(2)$ ajustado del ejemplo \@ref(exm:ejem-gnp-data), el análisis de los residuales de $AR(1)$ es similar. La figura \@ref(fig:fig-modelo-arima002-gnp) muestra el gráfico de los residuales estandarizados (parte superior), la ACF de los residuales (parte media izquierda) (Note que R incluye la correlación en paso cero que siempre es uno) y los valores del estadístico $Q$, dado en \@ref(eq:eq-estadistico-ljung-box-pierce) desde paso $H=1$ hasta $H=20$ (parte inferior). 
+```
+
+```{r}
+tsdiag(gnpgr.ma,gof.lag=20)
+```
+
+Observando el gráfico de los residuales estandarizados en \@ref(fig:fig:diagnostico-residual-MA2-gnp), no muestra un patrón obvio. Note que no hay valores atípicos pero si algunos pocos valores mayores que 3 desviaciones estándar. La ACF de los residuales no muestra una aparente desviación de la suposición del modelo, y el estadístico $Q$ no es significativo para los primeros 20 pasos calculados.
+
+Finalmente la figura \@ref(fig:fig-histograma-qq-plot-residual-gnp) muestra un histograma de los residuales (parte superior) y un gráfico qq-plot de los residuales (parte inferior). En la misma podemos observar que los residuales están cercanos a la normalidad excepto para algunos valores extremos en la cola
+
+```{r,fig.cap="Histograma de los residuales para P.N.B. (parte superior), y qq-plot de los residuales (parte inferior), para el modelo MA(2)", fig-histograma-qq-plot-residual-gnp}
+par(mfrow=c(2,1))
+hist(gnpgr.ma$resid,br=12)
+qqnorm(gnpgr.ma$resid)
+```
+
+Para concluir, realizamos la prueba de Shapiro-Wilk (referencia), la cual nos da un $p$-valor de 0.003, lo que indica que los residuales no son normal. Por lo tanto, el modelo parece ajustarse bien salvo que debemos usar una distribución con una cola más pesada que la distribución normal. El comando en R para la prueba de Shapiro-Wilk es
+
+```{r}
+shapiro.test(gnpgr.ma$resid)
+```
+----
+
+Podemos hacer lo mismo ahora para el modelo ARIMA(1,1,2)
+```{r, fig.cap="diagnóstico para el modelo ARIMA de B.N.P", fig-diagnostico-gnp-arima}
+gnpgr.arima=arima(gnpgr,order=c(1,1,2))
+tsdiag(gnpgr.arima$resid,gof.lag=20)
+```
+
+Explicación ...
+
+```{r, fig.cap="Histograma de los residuales para P.N.B. (parte superior), y qq-plot de los residuales (parte inferior), para el modelo ARIMA(1,1,2)",fig-histograma-qq-plot-residual-gnp-arima}
+par(mfrow=c(2,1))
+hist(gnpgr.arima$resid)
+qqnorm(gnpgr.arima$resid)
+shapiro.test(gnpgr.arima)
+```
+
+Explicación...
+
+----
+
+Como explicamos previamente, debemos tener cuidado con sobreajustar un modelo; no siempre es el caso que más es mejor. Sobreajustar nos lleva a estimadores menos preciso, y agregar más parámetros puede ajustar mejor los datos pero puede llevar a malas predicciones. Este resultado se ilustra en el ejemplo siguiente.
+
+```{example, name="Un problema de sobreajuste", ejem-problema-sobreajuste}
+La figura \@ref(fig-sobreajuste-poblacion-usa), muestra  la población de los EE.UU., según el censo oficial cada 10 años de 1910 hasta 1990 (puntos azules). Si usamos estos nueve puntos para predecir la población a futuro de los EE.UU. podemos usar un polinomio de grado 8 para ajustar las 9 observaciones; lo cual como se observa en la gráfica es perfecta. El modelo en este caso es 
+
+$$x_t=\beta_0+\beta_1t+\beta_2t^2+\cdots+\beta_8t^8+w_t$$
+
+El modelo fijado, el cual es graficado hasta el año 2010, (linea continua roja), pasa a través de los 9 puntos. El modelo predice que la población de los EE.UU. estará cercana a cero en el año 2000, y cruzará el cero en algún mes del año 2002, lo cual es falso.
+```
+
+```{r}
+uspop=read.table("data/USPOP2.txt", header = TRUE)
+fit.usp=lm(Pob~t+I(t^2)+I(t^3)+I(t^4)+I(t^5)+I(t^6)+I(t^7)+I(t^8),
+           data=uspop)
+plot(uspop,type="p",lty=19,col="blue",xlim=c(1910,2010))
+lines(x = uspop$t, y=predict(fit.usp), col = "red", lwd = 2)
+```
+----
+
+El paso final en el ajuste de modelos es la elección del modelo. Esto es, debemos decidir que modelo mantendremos para la predicción. La técnica más popular es calcular los índices AIC, AICc y SIC (BIC), descritos en (referencias).
+
+```{example, name="Elección del modelo para la serie P.N.B. de EE.UU.", ejem-eleccion-modelo-gnp}
+Volviendo al análisis del P.N.B. de EE.UU., visto en los ejemplos () y (), recordemos que los modelos son AR(1), MA(2) y ARIMA(1,1,2). Para escoger el modelo final, comparemos los valores del AIC, AICc y SIC para los 3 modelos
+```
+```{r}
+n=length(gnpgr)
+# Modelos AR
+kar=length(gnpgr.ar$coef)
+sar=gnpgr.ar$sigma2
+# Modelos MA
+kma=length(gnpgr.ma$coef)
+sma=gnpgr.ma$sigma2
+# Modelo ARIMA
+karima=length(gnpgr.arima$coef)
+sarima=gnpgr.arima$sigma2
+# AIC
+log(sar)+(n+2*kar)/n
+log(sma)+(n+2*kma)/n
+log(sarima)+(n+2*karima)/n
+# AICc
+log(sar)+(n+kar)/(n-kar-2)
+log(sma)+(n+kma)/(n-kma-2)
+log(sarima)+(n+karima)/(n-karima-2)
+# BIC (SIC)
+log(sar)+kar*log(n)/n
+log(sma)+kma*log(n)/n
+log(sarima)+karima*log(n)/n
+```
+----
+
+
+## Modelos SARIMA
+
+En esta sección vamos a introducir diversas modificaciones a los modelos ARIMA para que se ajusten a comportamiento estacional y no-estacionario. 
