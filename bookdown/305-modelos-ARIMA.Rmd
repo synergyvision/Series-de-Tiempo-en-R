@@ -121,10 +121,11 @@ o
 
 $$\nabla\ln(x_t) = \ln(1+p_t).$$
 
-Si el porcentaje de cambio $p_t$ se mantiene relativamente pequeño en magnitud, entonces $\ln(1+p_t)\approx p_t$ [^nota13] y entonces
+Si el porcentaje de cambio $p_t$ se mantiene relativamente pequeño en magnitud, entonces $\ln(1+p_t)\approx p_t$ [^nota9] y entonces
+
+[^nota9]: $\ln(1+p)=p-\frac{p^2}{2}+\frac{p^3}{3}-\cdots$ para $-1<p\leq1$. Si $p$ es un porcentaje de cambio pequeño, entonces los términos de orden superior en el desarrollo son despreciables.
 
 $$\nabla\ln(x_t)\approx p_t,$$
-[^nota13:]$\ln(1+p)=p-\frac{p^2}{2}+\frac{p^3}{3}-\cdots$ para $-1<p\leq1$. Si $p$ es un porcentaje de cambio pequeño, entonces los términos de orden superior en el desarrollo son despreciables.
 
 será un proceso relativamente estable. A menudo $\nabla\ln(x_t)$ se llama el retorno o tasa de crecimiento. Después de una transformación apropiada de los datos, el siguiente paso es identificar los valores preliminares del orden autoregresivo $p$, el orden de diferenciación $d$ y el orden de promedio móvil $q$.
 
@@ -237,13 +238,13 @@ es útil para realizar esta prueba de hipótesis. El  valor $H$ en \@ref(eq:eq-e
 Enfoquémonos en el modelo $MA(2)$ ajustado del ejemplo \@ref(exm:ejem-gnp-data), el análisis de los residuales de $AR(1)$ es similar. La figura \@ref(fig:fig-modelo-arima002-gnp) muestra el gráfico de los residuales estandarizados (parte superior), la ACF de los residuales (parte media izquierda) (Note que R incluye la correlación en paso cero que siempre es uno) y los valores del estadístico $Q$, dado en \@ref(eq:eq-estadistico-ljung-box-pierce) desde paso $H=1$ hasta $H=20$ (parte inferior). 
 ```
 
-```{r}
-#tsdiag(gnpgr.ma2,gof.lag=20)
+```{r, fig.cap="Diagnóstico de los residuales con el modelo MA(2) de la serie P.N.B.", fig-diagnostico-residual-MA2-gnp}
+tsdiag(gnpgr.ma2,gof.lag=20)
 ```
 
-Observando el gráfico de los residuales estandarizados en \@ref(fig:fig:diagnostico-residual-MA2-gnp), no muestra un patrón obvio. Note que no hay valores atípicos pero si algunos pocos valores mayores que 3 desviaciones estándar. La ACF de los residuales no muestra una aparente desviación de la suposición del modelo, y el estadístico $Q$ no es significativo para los primeros 20 pasos calculados.
+Observando el gráfico de los residuales estandarizados en \@ref(fig:fig-diagnostico-residual-MA2-gnp), no muestran un patrón obvio. Note que no hay valores atípicos pero si algunos pocos valores mayores que 3 desviaciones estándar. La ACF de los residuales no muestra una aparente desviación de la suposición del modelo, y el estadístico $Q$ no es significativo para los primeros 20 pasos calculados.
 
-Finalmente la figura \@ref(fig:fig-histograma-qq-plot-residual-gnp) muestra un histograma de los residuales (parte superior) y un gráfico qq-plot de los residuales (parte inferior). En la misma podemos observar que los residuales están cercanos a la normalidad excepto para algunos valores extremos en la cola
+Finalmente la figura \@ref(fig:fig-histograma-qq-plot-residual-gnp) muestra un histograma de los residuales (parte superior) y un gráfico qq-plot de los residuales (parte inferior). En la misma podemos observar que los residuales están cercanos a la normalidad excepto para algunos valores extremos en la cola.
 
 ```{r,fig.cap="Histograma de los residuales para P.N.B. (parte superior), y qq-plot de los residuales (parte inferior), para el modelo MA(2)", fig-histograma-qq-plot-residual-gnp}
 par(mfrow=c(2,1))
@@ -259,21 +260,21 @@ shapiro.test(gnpgr.ma2$resid)
 ----
 
 Podemos hacer lo mismo ahora para el modelo ARIMA(1,1,2)
-```{r, fig.cap="diagnóstico para el modelo ARIMA de B.N.P", fig-diagnostico-gnp-arima}
+```{r, fig.cap="Diagnóstico para el modelo ARIMA de B.N.P", fig-diagnostico-gnp-arima}
 gnpgr.arima=arima(gnpgr,order=c(1,1,2))
 tsdiag(gnpgr.arima,gof.lag=20)
 ```
 
-Explicación ...
+Nuevamente, observando el gráfico de los residuales estandarizados, estos no muestran un patrón obvio. Note que tampoco hay valores atípicos pero si algunos pocos valores mayores que 3 desviaciones estándar. La ACF de los residuales no muestra una aparente desviación de la suposición del modelo, y el estadístico $Q$ no es significativo para los primeros 20 pasos calculados.
 
-```{r, fig.cap="Histograma de los residuales para P.N.B. (parte superior), y qq-plot de los residuales (parte inferior), para el modelo ARIMA(1,1,2)", fig-histograma-qq-plot-residual-gnp-arima}
+```{r, fig.cap="Histograma de los residuales para P.N.B. (parte superior), y qq-plot de los residuales (parte inferior), para el modelo ARIMA(1,1,2)",fig-histograma-qq-plot-residual-gnp-arima}
 par(mfrow=c(2,1))
-hist(gnpgr.arima$residuals)
-qqnorm(gnpgr.arima$residuals)
-shapiro.test(gnpgr.arima$residuals)
+hist(gnpgr.arima$resid)
+qqnorm(gnpgr.arima$resid)
+shapiro.test(gnpgr.arima$resid)
 ```
 
-Explicación...
+La figura \@ref(fig:fig-histograma-qq-plot-residual-gnp-arima) muestra un histograma de los residuales (parte superior) y un gráfico qq-plot de los residuales (parte inferior). En la misma, de manera similar al modelo $MA(2)$ podemos observar que los residuales están cercanos a la normalidad excepto para algunos valores extremos en la cola. Por último, realizamos la prueba de Shapiro-Wilk, la cual nos da un $p$-valor de 0.001, lo que indica que los residuales no son normales. Por lo tanto, de nuevo, este modelo parece también ajustarse bien salvo que debemos usar una distribución con una cola más pesada que la distribución normal.
 
 ----
 
@@ -287,14 +288,13 @@ $$x_t=\beta_0+\beta_1t+\beta_2t^2+\cdots+\beta_8t^8+w_t$$
 El modelo fijado, el cual es graficado hasta el año 2010, (linea continua roja), pasa a través de los 9 puntos. El modelo predice que la población de los EE.UU. estará cercana a cero en el año 2000, y cruzará el cero en algún mes del año 2002, lo cual es falso.
 ```
 
-```{r,fig.cap="Población de los EE.UU (puntos azules) y modelos ajustado (linea roja continua) de 1910 hasta 2010",fig-sobreajuste-poblacion-usa}
+```{rfig.cap="Población de los EE.UU (puntos azules) y modelos ajustado (linea roja continua) de 1910 hasta 2010",fig-sobreajuste-poblacion-usa}
 uspop=read.table("data/USPOP2.txt", header = TRUE)
 fit.usp=lm(Pob~t+I(t^2)+I(t^3)+I(t^4)+I(t^5)+I(t^6)+I(t^7)+I(t^8),
            data=uspop)
 plot(uspop,type="p",lty=19,col="blue",xlim=c(1910,2010))
 lines(x = uspop$t, y=predict(fit.usp), col = "red", lwd = 2)
 ```
-
 ----
 
 El paso final en el ajuste de modelos es la elección del modelo. Esto es, debemos decidir que modelo mantendremos para la predicción. La técnica más popular es calcular los índices AIC, AICc y SIC (BIC), descritos en las definiciones \@ref(def:defi-AIC-2), \@ref(def:defi-AICc) y \@ref(def:defi-SIC).
@@ -313,25 +313,18 @@ sma=gnpgr.ma2$sigma2
 # Modelo ARIMA
 karima=length(gnpgr.arima$coef)
 sarima=gnpgr.arima$sigma2
-
-Tabla=matrix(numeric(9),3,3)
 # AIC
-Tabla[1,1]=log(sar)+(n+2*kar)/n
-Tabla[2,1]=log(sma)+(n+2*kma)/n
-Tabla[3,1]=log(sarima)+(n+2*karima)/n
+log(sar)+(n+2*kar)/n
+log(sma)+(n+2*kma)/n
+log(sarima)+(n+2*karima)/n
 # AICc
-Tabla[3,2]=log(sar)+(n+kar)/(n-kar-2)
-Tabla[3,2]=log(sma)+(n+kma)/(n-kma-2)
-Tabla[3,2]=log(sarima)+(n+karima)/(n-karima-2)
+log(sar)+(n+kar)/(n-kar-2)
+log(sma)+(n+kma)/(n-kma-2)
+log(sarima)+(n+karima)/(n-karima-2)
 # BIC (SIC)
-Tabla[3,2]=log(sar)+kar*log(n)/n
-Tabla[3,2]=log(sma)+kma*log(n)/n
-Tabla[3,2]=log(sarima)+karima*log(n)/n
-# Nombre de las columnas
-Tabla<-as.data.frame(Tabla)
-colnames(Tabla)=c("AIC","AICc","SIC")
-rownames(Tabla)=c("AR(1)","MA(2)","ARIMA(1,1,2)")
-Tabla
+log(sar)+kar*log(n)/n
+log(sma)+kma*log(n)/n
+log(sarima)+karima*log(n)/n
 ```
 ----
 
@@ -609,6 +602,5 @@ Finalmente, el pronóstico para 12 meses de los datos con la transformación log
 sarima.for(lx, 12, 0,1,1, 0,1,1,12)
 ```
 
-
-
+----
 

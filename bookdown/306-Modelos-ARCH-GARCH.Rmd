@@ -1,0 +1,45 @@
+# Modelos ARCH y GARCH
+
+Antes de comenzar, es necesario precisar el concepto de volatilidad en
+el contexto del análisis financiero. Se denomina volatilidad a la tasa relativa a la que un activo experimenta una drástica disminución o aumento de su precio dentro de un período predeterminado de tiempo. La
+volatilidad se determina mediante el cálculo de la desviación estándar
+anualizada de la variación diaria del precio. Si el precio de la acción aumenta y disminuye rápidamente durante cortos períodos de tiempo,
+entonces se dice que tiene una volatilidad alta. Si el precio se mantiene casi siempre en el mismo valor entonces se dice que tiene volatilidad baja. Los inversores evalúan la volatilidad de las acciones antes de tomar una decisión en, la compra de una oferta de acciones nuevas, la adquisición de acciones adicionales de un activo ya presente en una cartera, o en la venta de acciones que actualmente est án en poder del inversionista. La idea detrás de la comprensión del comportamiento de la volatilidad de los activos es organizar las inversiones para obtener el máximo rendimiento con el mínimo de oportunidades de pérdida.
+
+En esta sección se discutirán algunos de los modelos estadísticos y econométricos mas importantes para la modelización de la volatilidad de series de tiempo de rentabilidades de activos. A diferencia del análisis de series de tiempo tradicional, el cual se enfoca principalmente en la modelización del momento condicional de primer orden, los denominados modelos de heterocedasticidad condicional buscan captar la dependencia dentro del momento condicional de segundo orden, en otras palabras, el objetivo ahora es modelizar la volatilidad. La incertidumbre o riesgo constituye uno de los temas de investigación principales en el análisis financiero. Como se mencion´o, la volatilidad es un factor importante en las finanzas puesto que proporciona un método simple para calcular el valor en riesgo de una situación financiera en la gestión de riesgos. Por otra parte, la modelización de la volatilidad de una serie de tiempo puede mejorar la eficiencia en la estimación de parámetros y la exactitud en los intervalos de predicción. En esta sección se discutirán los modelos univariados de la volatilidad entre los que se incluyen el modelo autorregresivo de heterocedasticidad condicional (*ARCH*) de Engle
+(1982), el modelo generalizado ARCH (*GARCH*) de Bollerslev (1986), entre otros.
+
+La volatilidad tiene la particularidad de que no es posible su observación directa. Aún cuando esto no es posible, la volatilidad tiene algunas características que pueden ser observadas en las series de rentabilidad de activos entre los que se pueden destacar,
+
+- Agrupamiento de la volatilidad (cluster). En otras palabras, períodos
+de volatilidades altas y períodos de volatilidades bajas.
+
+- Evolución continua de la volatilidad en el tiempo.
+
+- Las variaciones de la volatilidad se presentan en un rango fijo,
+es decir, no diverge al infinito. En términos estadísticos, se puede
+decir que la volatilidad es a menudo estacionaria.
+
+- La volatilidad parece reaccionar de manera diferente a un incremento
+elevado de los precios o una disminución sustancial de los precios. Este efecto es conocido con el nombre de apalancamiento o efecto palanca.
+
+Tales propiedades descritas anteriormente juegan un papel importante
+en el desarrollo de los modelos usados para caracterizar la volatilidad.
+
+## Estructura de los Modelos
+
+Como se discutió en secciones anteriores, más precisamente en la sección de modelos lineales, una serie de tiempo $x_t$ se puede escribir como la suma de dos componentes,
+
+## Modelos ARCH
+
+### Estimación de un Modelo ARCH(p)
+
+### Predicción con modelos ARCH
+
+## Modelos GARCH
+
+### Estimación de un Modelo GARCH
+
+### Predicción con modelos GARCH
+
+
