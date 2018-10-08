@@ -31,7 +31,7 @@ x_t=\mu_t+w_t = \mathbb{E}(x_t|\mathcal{F}_{t-1})
 (\#eq:eq-modelos-xt-2-componentes)
 \end{equation}
 
-donde $\mathcl{F}_{t-1}$ representa la información disponible hasta el tiempo $t-1$. Usualmente, $\mathcal{F}_{t-1}$ consiste de todas la funciones lineales del pasado de $x_t$. El objetivo de los proceso descritos por \@ref(eq:eq-modelos-xt-2-componentes) es la modelización de $\mu_t=\mathbb{E}(x_t|\mathcal{F}_{t-1})$, con la suposición de que $w_t$ sea un ruido blanco condicionalmente homocedástico, es decir,
+donde $\mathcal{F}_{t-1}$ representa la información disponible hasta el tiempo $t-1$. Usualmente, $\mathcal{F}_{t-1}$ consiste de todas la funciones lineales del pasado de $x_t$. El objetivo de los proceso descritos por \@ref(eq:eq-modelos-xt-2-componentes) es la modelización de $\mu_t=\mathbb{E}(x_t|\mathcal{F}_{t-1})$, con la suposición de que $w_t$ sea un ruido blanco condicionalmente homocedástico, es decir,
 
 \begin{equation}
 \mathbb{E}(w_t^2) = \mathbb{E}(w_t^2|\mathcal{F}_{t-1}) = \sigma_w^2.
@@ -65,7 +65,7 @@ El primer modelo que proporciona un enfoque sistemático para el modelado de la 
 \begin{eqnarray}
 w_t^2 &=& \nu_t\sqrt{h_t} \nonumber \\
 h_t   &=& \alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2.
-(\#eq:eq-modelo-ARCHp)
+(\#eq:eq-modelos-ARCHp)
 \end{eqnarray}
 
 Donde $\{\nu_t\}$ es una sucesión de variables aleatorias iid con media 0 y varianza 1, $\alpha_0>0,\alpha_p>0$ y $\alpha_i\geq0, i=1,\ldots,p-1$. La condición de no negatividad sobre los coeficinetes $\alpha_i$ garantizan que la varianza condicional $h_t$ sea positiva.
@@ -73,10 +73,10 @@ Donde $\{\nu_t\}$ es una sucesión de variables aleatorias iid con media 0 y var
 ```{remark}
 Algunos autores usan $\sigma_t^2$ para denotar la varianza condicional en la ecuación \@ref(eq:eq-modelos-ARCHp) en lugar de $h_t$ tal como lo denotamos. Así pues, el modelo $ARCH(p)$ también lo podemos escirbir de la siguiente manera:
 
-\begin{eqnarray*}
+\begin{eqnarray}
 w_t &=& \nu_t\sigma_t \\
 \sigma_t^2 &=& \alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2.
-\end{eqnarray*}
+\end{eqnarray}
 
 Sin embargo, en lo que sigue y por razones prácticas, usareos la primera notación que describimos en la ecuación \@ref(eq:eq-modelos-ARCHp).
 ```
@@ -94,15 +94,15 @@ donde $\eta_t=w_t^2-h_t$. Recordando la teoría de los modelos $AR$, si las raí
 
 $$Var(w_t^2) = \sigma_w^2 = \mathbb{E}(w_t^2) = \frac{\alpha_0}{1-\alpha_1-\cdots-\alpha_p}$$
 
-siempre y cuando $1-\alpha_1-\cdots-\alpha_p>0$. Tomando en cuenta la ecuación \@ref(eq:eq-modelo-ARCHp), podemos ver la razón por la cual los modelos $ARCH$ pueden describir el agrupamiento de la volatilidad. El mmodelo establece que la varianza condicional $h_t$ es una función creciente de $w_{t-1}^2$ para $i=1,\ldots,p$. Por lo tanto, valores grandes de $w_{t-1}$ (en módulo) dan lugar a valores grandes de $h_t$. Por consiguiente, $w_t$ también tiende a asumirvalores grandes (en módulo).
+siempre y cuando $1-\alpha_1-\cdots-\alpha_p>0$. Tomando en cuenta la ecuación \@ref(eq:eq-modelos-ARCHp), podemos ver la razón por la cual los modelos $ARCH$ pueden describir el agrupamiento de la volatilidad. El mmodelo establece que la varianza condicional $h_t$ es una función creciente de $w_{t-1}^2$ para $i=1,\ldots,p$. Por lo tanto, valores grandes de $w_{t-1}$ (en módulo) dan lugar a valores grandes de $h_t$. Por consiguiente, $w_t$ también tiende a asumirvalores grandes (en módulo).
 
 Además de capturar el agrupamiento de la volatilidad, los modelos $ARCH$ tambie'n reflejan el exceso de kurtosis estándar de las series de rentabilidad. Para estudiar esta y otras propiedades, consideraremos por simplicidad el modelo $ARCH(1)$, que asume la forma siguiente:
 
-\begin{eqnarray*}
+\begin{eqnarray}
 w_t &=& \nu_t\sqrt{h_t} \nonumber\\
 h_t &=& \alpha_0+\alpha_1w_{t-1}^2. 
 (\#eq:eq-modelo-ARCH1)
-\end{equation}
+\end{eqnarray}
 
 Entonces, tenemos que 
 
@@ -141,13 +141,14 @@ Por otro lado, las condiciones para la existencia de momentos de orden mayor, im
 
 ### Estimación de un Modelo ARCH(p)
 
-Los estimadores que se usan con más frecuencia para estimar los modelos $ARCH$ son los que se obtienen de la función de máxima verosimilitud gaussiana condicional. Consideremos el modelo $ARCH(p)$ dado en la ecuación \@ref(eq:eq-modelo-ARCHp). Bao la hipótesis de normalidad de $\nu_t$, tenemos que la distribución de $w_t$ condicionado a $\mathcal{F}_{t-1}$, tiene una distribución normal co media $\mu=0$ y varianza $h_t=0$, y la función de máxima verosimilitud adopta la forma
+Los estimadores que se usan con más frecuencia para estimar los modelos $ARCH$ son los que se obtienen de la función de máxima verosimilitud gaussiana condicional. Consideremos el modelo $ARCH(p)$ dado en la ecuación \@ref(eq:eq-modelos-ARCHp). Bao la hipótesis de normalidad de $\nu_t$, tenemos que la distribución de $w_t$ condicionado a $\mathcal{F}_{t-1}$, tiene una distribución normal co media $\mu=0$ y varianza $h_t=0$, y la función de máxima verosimilitud adopta la forma
 
 \begin{eqnarray}
-f(w_1,\ldots,w_T|\vec{\alpha}) &=& f(w_T|\mathcal{F}_{T-1})f(w_T-1|\mathcal{F}_{T-2})\cdots f(w_{p+1}|\mathc{F}_p)f(w_1,\ldots,w_p|\vec{\alpha}) \nonumber\\
+f(w_1,\ldots,w_T|\vec{\alpha}) &=& f(w_T|\mathcal{F}_{T-1})f(w_T-1|\mathcal{F}_{T-2})\cdots f(w_{p+1}|\mathcal{F}_p)f(w_1,\ldots,w_p|\vec{\alpha}) \nonumber\\
   \prod_{t=p+1}^T\frac{1}{\sqrt{2\pi h_t}}\exp\left(\frac{-w_t^2}{2h_t}\right)f(w_1,\ldots,w_p|\vec{\alpha})
   (\#eq:eq-FMV-ARCH)
 \end{eqnarray}
+
 donde $\vec{\alpha}=(\alpha_0,\alpha_1,\ldots,\alpha_p)^T$ y $f(w_1,\ldots,w_p|\vec{\alpha})$ es la función de densidad conjunta de $w_1,\ldots,w_p$. Dado que la forma exacta de esta densidad es difícil de calcular, consideraremos la función de verosimilitud condicionada siguiente:
 
 \begin{equation}
@@ -213,13 +214,13 @@ Se puede demostrar que el proceso es estrictamente estacionario con $\mathbb{E}(
 
 $$\sigma_w^2 = \mathbb{E}(w_t^2) = \frac{\alpha_0}{1-(\sum_{i=1}^p\alpha_i+\sum_{j=1}^q\beta_j)}.$$
 
-En efecto, bajjo la suposición de estacionaridad se tiene
+En efecto, bajo la suposición de estacionaridad se tiene
 
 \begin{eqnarray*}
 \mathbb{E}(w_t^2) &=& \mathbb{E}(h_t) \\
     &=& \alpha_0+\sum_{i=1}^p\alpha_i\mathbb{E}(w_{t-i}^2)+\sum_{j=1}^q\beta_j\mathbb{E}(h_{t-j}) \\
     &=& \alpha_0+\sum_{i=1}^p\mathbb{E}(w_t^2)+\sum_{j=1}^q\beta_j\mathbb{E}(w_t^2),
-\end_eqnarray*}
+\end{eqnarray*}
 
 y despejando $\mathbb{E}(w_t^2)$ se obtiene la expresión dada para la varianza incondicional.
 

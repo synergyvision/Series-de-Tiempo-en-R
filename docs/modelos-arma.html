@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Series de Tiempo en R</title>
+  <meta name="description" content="Series de Tiempo en R">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Series de Tiempo en R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://synergy.vision/Series-de-Tiempo-en-R/" />
+  <meta property="og:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+  
+  <meta name="github-repo" content="synergyvision/Series-de-Tiempo-en-R/" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Series de Tiempo en R" />
+  
+  
+  <meta name="twitter:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+
+<meta name="author" content="Synergy Vision">
+
+
+<meta name="date" content="2018-10-08">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="modelos-ma.html">
+<link rel="next" href="estimacion-de-parametros.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="https://cdn.datacamp.com/datacamp-light-latest.min.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="images/logovision-black.png" width="160"></img></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#por-que-leer-este-libro"><i class="fa fa-check"></i>¿Por qué leer este libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-libro"><i class="fa fa-check"></i>Estructura del libro</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#informacion-sobre-los-programas-y-convenciones"><i class="fa fa-check"></i>Información sobre los programas y convenciones</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#practicas-interactivas-con-r"><i class="fa fa-check"></i>Prácticas interactivas con R</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="acerca-del-autor.html"><a href="acerca-del-autor.html"><i class="fa fa-check"></i>Acerca del Autor</a></li>
+<li class="chapter" data-level="1" data-path="introduccion.html"><a href="introduccion.html"><i class="fa fa-check"></i><b>1</b> Introducción</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduccion.html"><a href="introduccion.html#conceptos-financieros-basicos"><i class="fa fa-check"></i><b>1.1</b> Conceptos financieros básicos</a></li>
+<li class="chapter" data-level="1.2" data-path="introduccion.html"><a href="introduccion.html#conceptos-basicos"><i class="fa fa-check"></i><b>1.2</b> Conceptos básicos</a></li>
+<li class="chapter" data-level="1.3" data-path="introduccion.html"><a href="introduccion.html#ejemplos"><i class="fa fa-check"></i><b>1.3</b> Ejemplos</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduccion.html"><a href="introduccion.html#clasificacion-de-las-series-de-tiempo"><i class="fa fa-check"></i><b>1.3.1</b> Clasificación de las series de tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduccion.html"><a href="introduccion.html#componentes-de-una-serie-de-tiempo"><i class="fa fa-check"></i><b>1.4</b> Componentes de una serie de tiempo</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduccion.html"><a href="introduccion.html#el-modelo-aditivo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.1</b> El Modelo Aditivo de Componentes de Series de Tiempo</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduccion.html"><a href="introduccion.html#el-modelo-multiplicativo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.2</b> El Modelo Multiplicativo de Componentes de Series de Tiempo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>2</b> Características de series de tiempo</a><ul>
+<li class="chapter" data-level="2.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#medidas-de-dependencia-para-series-de-tiempo"><i class="fa fa-check"></i><b>2.1</b> Medidas de dependencia para series de tiempo</a></li>
+<li class="chapter" data-level="2.2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia"><i class="fa fa-check"></i><b>2.2</b> Estimación de la Tendencia</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-en-ausencia-de-estacionalidad"><i class="fa fa-check"></i><b>2.2.1</b> Estimación de la tendencia en ausencia de estacionalidad</a></li>
+<li class="chapter" data-level="2.2.2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-y-la-estacionalidad"><i class="fa fa-check"></i><b>2.2.2</b> Estimación de la tendencia y la estacionalidad</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-por-regresion-clasica"><i class="fa fa-check"></i><b>2.3</b> Estimación de la tendencia por regresión clásica</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#regresion-clasica"><i class="fa fa-check"></i><b>2.3.1</b> Regresión Clásica</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>3</b> Modelos de series de tiempo</a><ul>
+<li class="chapter" data-level="3.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-estocasticos"><i class="fa fa-check"></i><b>3.1</b> Modelos Estocásticos</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#procesos-estocasticos"><i class="fa fa-check"></i><b>3.1.1</b> Procesos Estocásticos</a></li>
+<li class="chapter" data-level="3.1.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#momentos-varianza-covarianza-y-correlacion"><i class="fa fa-check"></i><b>3.1.2</b> Momentos, Varianza, Covarianza y Correlación</a></li>
+<li class="chapter" data-level="3.1.3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#variacion-de-un-proceso"><i class="fa fa-check"></i><b>3.1.3</b> Variación de un proceso</a></li>
+<li class="chapter" data-level="3.1.4" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#martingalas"><i class="fa fa-check"></i><b>3.1.4</b> Martingalas</a></li>
+<li class="chapter" data-level="3.1.5" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#propiedad-de-markov"><i class="fa fa-check"></i><b>3.1.5</b> Propiedad de Markov</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-lineales"><i class="fa fa-check"></i><b>3.2</b> Modelos lineales</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#proceso-de-ruido-blanco"><i class="fa fa-check"></i><b>3.2.1</b> Proceso de Ruido Blanco</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="modelos-ar.html"><a href="modelos-ar.html"><i class="fa fa-check"></i><b>4</b> Modelos AR</a><ul>
+<li class="chapter" data-level="4.1" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar1"><i class="fa fa-check"></i><b>4.1</b> Modelo AR(1)</a></li>
+<li class="chapter" data-level="4.2" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar2"><i class="fa fa-check"></i><b>4.2</b> Modelo AR(2)</a></li>
+<li class="chapter" data-level="4.3" data-path="modelos-ar.html"><a href="modelos-ar.html#procesos-arp"><i class="fa fa-check"></i><b>4.3</b> Procesos AR(p)</a></li>
+<li class="chapter" data-level="4.4" data-path="modelos-ar.html"><a href="modelos-ar.html#funcion-de-autocorrelacion-parcial"><i class="fa fa-check"></i><b>4.4</b> Función de Autocorrelación Parcial</a></li>
+<li class="chapter" data-level="4.5" data-path="modelos-ar.html"><a href="modelos-ar.html#criterios-de-informacion"><i class="fa fa-check"></i><b>4.5</b> Criterios de Información</a></li>
+<li class="chapter" data-level="4.6" data-path="modelos-ar.html"><a href="modelos-ar.html#estimacion-de-parametros."><i class="fa fa-check"></i><b>4.6</b> Estimación de Parámetros.</a></li>
+<li class="chapter" data-level="4.7" data-path="modelos-ar.html"><a href="modelos-ar.html#predicciones-con-modelos-ar"><i class="fa fa-check"></i><b>4.7</b> Predicciones con modelos AR</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-un-paso"><i class="fa fa-check"></i><b>4.7.1</b> Predicción de un paso</a></li>
+<li class="chapter" data-level="4.7.2" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-dos-pasos"><i class="fa fa-check"></i><b>4.7.2</b> Predicción de dos pasos</a></li>
+<li class="chapter" data-level="4.7.3" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-multiples-pasos"><i class="fa fa-check"></i><b>4.7.3</b> Predicción de múltiples pasos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="modelos-ma.html"><a href="modelos-ma.html"><i class="fa fa-check"></i><b>5</b> Modelos MA</a><ul>
+<li class="chapter" data-level="5.1" data-path="modelos-ma.html"><a href="modelos-ma.html#propiedades-de-los-modelos-ma"><i class="fa fa-check"></i><b>5.1</b> Propiedades de los modelos MA</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="modelos-ma.html"><a href="modelos-ma.html#estacionaridad"><i class="fa fa-check"></i><b>5.1.1</b> Estacionaridad</a></li>
+<li class="chapter" data-level="5.1.2" data-path="modelos-ma.html"><a href="modelos-ma.html#funcion-de-autocorrelacion-acf"><i class="fa fa-check"></i><b>5.1.2</b> Función de autocorrelación (ACF)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="modelos-ma.html"><a href="modelos-ma.html#identificacion-del-orden-de-un-ma"><i class="fa fa-check"></i><b>5.2</b> Identificación del orden de un MA</a></li>
+<li class="chapter" data-level="5.3" data-path="modelos-ma.html"><a href="modelos-ma.html#estimacion"><i class="fa fa-check"></i><b>5.3</b> Estimación</a></li>
+<li class="chapter" data-level="5.4" data-path="modelos-ma.html"><a href="modelos-ma.html#predicciones-usando-modelos-ma"><i class="fa fa-check"></i><b>5.4</b> Predicciones usando modelos MA</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="modelos-arma.html"><a href="modelos-arma.html"><i class="fa fa-check"></i><b>6</b> Modelos ARMA</a><ul>
+<li class="chapter" data-level="6.1" data-path="modelos-arma.html"><a href="modelos-arma.html#propiedades-de-los-modelos-armapq"><i class="fa fa-check"></i><b>6.1</b> Propiedades de los modelos ARMA(p,q)</a></li>
+<li class="chapter" data-level="6.2" data-path="modelos-arma.html"><a href="modelos-arma.html#ecuaciones-en-diferencias"><i class="fa fa-check"></i><b>6.2</b> Ecuaciones en Diferencias</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="modelos-arma.html"><a href="modelos-arma.html#funcion-de-autocorrelacion-acf-para-modelos-arma"><i class="fa fa-check"></i><b>6.2.1</b> Función de Autocorrelación (ACF) para modelos ARMA</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="modelos-arma.html"><a href="modelos-arma.html#pronosticos"><i class="fa fa-check"></i><b>6.3</b> Pronósticos</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="modelos-arma.html"><a href="modelos-arma.html#pronosticos-para-procesos-arma"><i class="fa fa-check"></i><b>6.3.1</b> Pronósticos para procesos ARMA</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html"><i class="fa fa-check"></i><b>7</b> Estimación de parámetros</a><ul>
+<li class="chapter" data-level="7.1" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#estimacion-1"><i class="fa fa-check"></i><b>7.1</b> Estimación</a></li>
+<li class="chapter" data-level="7.2" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#sect-EMV"><i class="fa fa-check"></i><b>7.2</b> Estimación por Máxima Verosimilitud y Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="7.3" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#estimacion-de-minimos-cuadrados-para-modelos-armapq"><i class="fa fa-check"></i><b>7.3</b> Estimación de mínimos cuadrados para modelos ARMA(p,q)</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="modelos-arima.html"><a href="modelos-arima.html"><i class="fa fa-check"></i><b>8</b> Modelos ARIMA</a><ul>
+<li class="chapter" data-level="8.1" data-path="modelos-arima.html"><a href="modelos-arima.html#construccion-de-modelos-arima"><i class="fa fa-check"></i><b>8.1</b> Construcción de modelos ARIMA</a></li>
+<li class="chapter" data-level="8.2" data-path="modelos-arima.html"><a href="modelos-arima.html#modelos-sarima"><i class="fa fa-check"></i><b>8.2</b> Modelos SARIMA</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html"><i class="fa fa-check"></i><b>9</b> Modelos ARCH y GARCH</a><ul>
+<li class="chapter" data-level="9.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estructura-de-los-modelos"><i class="fa fa-check"></i><b>9.1</b> Estructura de los Modelos</a></li>
+<li class="chapter" data-level="9.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-arch"><i class="fa fa-check"></i><b>9.2</b> Modelos ARCH</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimacion-de-un-modelo-archp"><i class="fa fa-check"></i><b>9.2.1</b> Estimación de un Modelo ARCH(p)</a></li>
+<li class="chapter" data-level="9.2.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#prediccion-con-modelos-arch"><i class="fa fa-check"></i><b>9.2.2</b> Predicción con modelos ARCH</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-garch"><i class="fa fa-check"></i><b>9.3</b> Modelos GARCH</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimacion-de-un-modelo-garch"><i class="fa fa-check"></i><b>9.3.1</b> Estimación de un Modelo GARCH</a></li>
+<li class="chapter" data-level="9.3.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#prediccion-con-modelos-garch"><i class="fa fa-check"></i><b>9.3.2</b> Predicción con modelos GARCH</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="analisis-espectral.html"><a href="analisis-espectral.html"><i class="fa fa-check"></i><b>10</b> Análisis Espectral</a><ul>
+<li class="chapter" data-level="10.1" data-path="analisis-espectral.html"><a href="analisis-espectral.html#comportamiento-ciclico-y-periodicidad"><i class="fa fa-check"></i><b>10.1</b> Comportamiento Cíclico y Periodicidad</a></li>
+<li class="chapter" data-level="10.2" data-path="analisis-espectral.html"><a href="analisis-espectral.html#la-densidad-espectral"><i class="fa fa-check"></i><b>10.2</b> La Densidad Espectral</a></li>
+<li class="chapter" data-level="10.3" data-path="analisis-espectral.html"><a href="analisis-espectral.html#periodograma-y-transformada-discreta-de-fourier"><i class="fa fa-check"></i><b>10.3</b> Periodograma y Transformada Discreta de Fourier</a></li>
+<li class="chapter" data-level="10.4" data-path="analisis-espectral.html"><a href="analisis-espectral.html#estimacion-espectral-no-parametrica"><i class="fa fa-check"></i><b>10.4</b> Estimación Espectral No-paramétrica</a></li>
+<li class="chapter" data-level="10.5" data-path="analisis-espectral.html"><a href="analisis-espectral.html#procesos-de-incremento-ortogonal-sobre--pipi"><i class="fa fa-check"></i><b>10.5</b> Procesos de Incremento Ortogonal sobre <span class="math inline">\([-\pi,\pi]\)</span></a></li>
+<li class="chapter" data-level="10.6" data-path="analisis-espectral.html"><a href="analisis-espectral.html#integracion-con-respecto-a-un-proceso-de-incremento-ortogonal"><i class="fa fa-check"></i><b>10.6</b> Integración con Respecto a un Proceso de Incremento Ortogonal</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="analisis-espectral.html"><a href="analisis-espectral.html#propiedades-de-la-integral-estocastica"><i class="fa fa-check"></i><b>10.6.1</b> Propiedades de la Integral Estocástica</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="analisis-espectral.html"><a href="analisis-espectral.html#la-representacion-espectral"><i class="fa fa-check"></i><b>10.7</b> La Representación Espectral</a></li>
+</ul></li>
+<li class="appendix"><span><b>Apéndice</b></span></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Series de Tiempo en R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="modelos-arma" class="section level1">
+<h1><span class="header-section-number">Capítulo 6</span> Modelos ARMA</h1>
+<p>En el capítulo 2, introdujimos las funciones de autocorrelación y correlación cruzada (ACFs y CCFs) como herramientas para clarificar las relaciones que pueden ocurrir dentro y entre las series de tiempo en varios rezagos. Además, explicamos cómo construir modelos lineales basado en la teoría clásica de regresión para la explotación de las asociaciones indicadas por los valores grandes de la ACF o CCF. Los métodos de este capítulo, en dominio del tiempo, o de regresión, son apropiados cuando se trata de posiblemente no estacionaridad con series de tiempo cortas; estas series son la regla y no la excepción en muchas aplicaciones.</p>
+<p>La regresión clásica es a menudo insuficiente para explicar todas las dinámicas interesantes de una serie de tiempo. Por ejemplo, la ACF de los residuos del ajuste de regresión lineal simple a los datos globales de la temperatura (véase el Ejemplo <a href="caracteristicas-de-series-de-tiempo.html#exm:ejem-temperatura-global">2.6</a> del capítulo 2, Sección 2.3.1) revela una estructura adicional en los datos que la regresión no captura. En lugar de ello, la introducción de correlación como un fenómeno que se puede generar a través de relaciones lineales retardadas lleva a proponer los modelos autorregresivo (AR) y autorregresivo de promedio móvil (ARMA). Añadiendo modelos no estacionarios a la combinación conduce al modelo autorregresivo integrado de media móvil (ARIMA) popularizado en el destacado trabajo de Box y Jenkins (1970). El método de Box-Jenkins para la identificación de un posible modelo ARIMA se da en el siguiente capítulo junto con técnicas para la estimación de parámetros y la previsión para estos modelos.</p>
+<p>El modelo de regresión clásico del Capítulo 3 fue desarrollado para el caso estático, es decir, que sólo permite que la variable dependiente sea influenciada por los valores actuales de las variables independientes. En el caso de series de tiempo, es deseable permitir que la variable dependiente sea influenciada por los valores pasados de las variables independientes y posiblemente por sus propios valores pasados. Si el presente puede ser modelado plausiblemente en términos de sólo los valores pasados de las entradas independientes, tenemos la atractiva posibilidad de que la predicción será posible.</p>
+<p>Ahora procederemos con un desarrollo más general de modelos autoregresivos, de promedio móvil y mezcla de ambos modelos para series de tiempo estacionarias.</p>
+
+<div class="definition">
+<p><span id="def:defi-modelo-ARMA" class="definition"><strong>Definición 6.1  </strong></span>Una serie de tiempo <span class="math inline">\(\{x_t; t=0,\pm1,\pm2,\ldots\}\)</span> es un <em>proceso autoregresivo de promedio móvil</em>, denotado <span class="math inline">\(ARMA(p,q)\)</span>, si es estacionario y</p>
+<span class="math display" id="eq:eq-modelo-ARMA">\[\begin{equation}
+    x_t=\phi_1x_{t-1}+\cdots+\phi_px_{t-p}+w_t+\theta_1w_{t-1}+\cdots+\theta_qw_{t-q}
+\tag{6.1}
+\end{equation}\]</span>
+<p>con <span class="math inline">\(\phi_p\neq0,\theta_q\neq0\)</span> y <span class="math inline">\(\sigma_w^2&gt;0\)</span>. Los parámetros <span class="math inline">\(p\)</span> y <span class="math inline">\(q\)</span> son llamados ordenes autoregresivos y de promedio móvil respectivamente. Si <span class="math inline">\(x_t\)</span> tiene media <span class="math inline">\(\mu\)</span> distinto de cero, hacemos <span class="math inline">\(\alpha=\mu(1-\phi_1-\cdots-\phi_p)\)</span> y escribimos el modelo como</p>
+<span class="math display" id="eq:eq-modelo-ARMA-media-no-cero">\[\begin{equation}
+    x_t=\alpha+\phi_1x_{t-1}+\cdots+\phi_px_{t-p}+w_t+\theta_1w_{t-1}+\cdots+\theta_qw_{t-q}
+\tag{6.2}
+\end{equation}\]</span>
+A menos que se declare lo contrario, <span class="math inline">\(\{w_t;t=0,\pm1,\pm2,\ldots\}\)</span> es una sucesión de ruido blanco gaussiano.
+</div>
+
+<hr />
+<p>Como se observó previamente, cuando <span class="math inline">\(q=0\)</span>, el modelo es llamado modelo autoregresivo de orden <span class="math inline">\(p\)</span>, AR(p), y cuando <span class="math inline">\(p=0\)</span> el modelo es llamado modelo de promedio móvil de orden <span class="math inline">\(q\)</span> MA(q). Como ayuda en la investigación de los modelos ARMA, será útil escribir estos usando el operador AR <a href="modelos-ar.html#eq:eq-operador-autoregresivo">(4.5)</a> y el operador MA <a href="modelos-ma.html#eq:eq-operador-promedio-movil">(5.3)</a>. En particular el modelo ARMA(p,q) en <a href="modelos-arma.html#eq:eq-modelo-ARMA">(6.1)</a> se puede escribir en forma concisa como</p>
+<span class="math display" id="eq:eq-modelo-ARMA-conciso">\[\begin{equation}
+    \phi(B)x_t=\theta(B)w_t
+\tag{6.3}
+\end{equation}\]</span>
+<p>Antes de discutir las condiciones bajo la cual <a href="modelos-arma.html#eq:eq-modelo-ARMA">(6.1)</a> es causal e invertible, veamos un potencial problema con el modelo ARMA.</p>
+
+<div class="example">
+<p><span id="exm:ejem-modelo-econometria" class="example"><strong>Ejemplo 6.1  </strong></span>En econometría, es usual considerar modelos dinámicos del siguiente tipo; llamemos <span class="math inline">\(x_1,\ldots,x_r\)</span> a la característica numérica de interés en un sector económico arbitrario dado (precios, nivel de producción, ingresos, inversiones, etc.), asumiendo por ejemplo que las observaciones son anuales. Para el año <span class="math inline">\(n\)</span> existe un vector asociado <span class="math inline">\(X(n)\)</span> con coordenadas <span class="math inline">\(x_1(n),\ldots,x_r(n)\)</span>. Asumimos que <span class="math inline">\(X(n)\)</span> verifica la recursión lineal del tipo <span class="math display">\[X(n) = A_0X(n)+A_1X(n-1)+\cdots+A_jX(n-j)\]</span> donde <span class="math inline">\(A_0,\ldots,A_j\)</span> son matrices, pero esa relación  es perturbada por un efecto aleatorio <span class="math inline">\(w(n)\)</span> con media cero, no correlacionado para diferentes años. Entonces <span class="math inline">\(X(n)\)</span> llega a ser un vector aleatorio que verifica</p>
+<span class="math display" id="eq:eq-vector-aleatorio-ejemplo-econometria">\[\begin{equation}
+X(n) = \sum_{k=0}^jA_kX(n-k) + w(n).
+\tag{6.4}
+\end{equation}\]</span>
+<p>Se puede demostrar, con unas pocas restricciones sobre los <span class="math inline">\(A_k\)</span>, que si <span class="math inline">\(w(n)\)</span> es un ruido blanco, entonces existe un proceso estacionario <span class="math inline">\(X(n)\)</span> que satisface <a href="modelos-arma.html#eq:eq-vector-aleatorio-ejemplo-econometria">(6.4)</a> tal que para cada <span class="math inline">\(i=1,\ldots,r\)</span>, <span class="math inline">\(x_i(n)\)</span> es un proceso ARMA.</p>
+</div>
+
+
+<div class="example">
+<p><span id="exm:ejem-redundancia-parametro" class="example"><strong>Ejemplo 6.2  (Redundancia de Parámetro)  </strong></span>Considere un proceso de ruido blanco <span class="math inline">\(x_t=w_t\)</span>. Equivalentemente podemos escribir este como <span class="math inline">\(0.5x_{t-1}=0.5w_{t-1}\)</span> utilizando el operador de cambio una vez y multiplicando por 0.5. Ahora, restamos las dos representaciones para obtener</p>
+<span class="math display" id="eq:eq-redundancia-parametro-ARMA11">\[\begin{equation}
+    x_t-0.5x_{t-1}=w_t-0.5w_{t-1}\text{ ó }x_t=0.5x_{t-1}-0.5w_{t-1}+w_t
+\tag{6.5}
+\end{equation}\]</span>
+<p>el cual luce como un modelo ARMA(1,1). De hecho, <span class="math inline">\(x_t\)</span> es todavía un ruido blanco; nada ha cambiado en esta consideración [esto es, <span class="math inline">\(x_t=w_t\)</span> es la solución de <a href="modelos-arma.html#eq:eq-redundancia-parametro-ARMA11">(6.5)</a>, pero hemos escondido el hecho de que <span class="math inline">\(x_t\)</span> es un ruido blanco debido al parámetro de redundancia o sobre-parametrización.</p>
+<p>Escribiendo el parámetro de redundancia en la forma de operador como <span class="math inline">\(\phi(B)x_t=\theta(B)w_t\)</span> o <span class="math display">\[(1-0.5B)x_t=(1-0.5B)w_t\]</span> Aplicando el operador <span class="math inline">\(\phi(B)^{-1}=(1-0.5B)^{-1}\)</span> a ambos lados de la igualdad, obtenemos <span class="math display">\[x_t=(1-0.5B)^{-1}(1-0.5B)x_t=(1-0.5B)^{-1}(1-0.5B)w_t=w_t\]</span> el cual es el modelo original.</p>
+<p>Podemos fácilmente detectar el problema de sobre-parametrización con el uso de los operadores o sus polinomios asociados. Esto es, escribimos el polinomio AR <span class="math inline">\(\phi(z)=(1-0.5z)\)</span>, el polinomio MA <span class="math inline">\(\theta(z)=(1-0.5z)\)</span> y note que ambos polinomios tienen un factor común, este es <span class="math inline">\((1-0.5z)\)</span>. Este factor común identifica los parámetros de redundancia de inmediato. Descartando el factor en cada uno, nos queda <span class="math inline">\(\phi(z)=1\)</span> y <span class="math inline">\(\theta(z)=1\)</span> de donde se concluye que <span class="math inline">\(\phi(B)=1\)</span> y <span class="math inline">\(\theta(B)=1\)</span>, y deducimos que el modelo es un ruido blanco. La consideración de parámetros de redundancia será crucial cuando discutamos la estimación de modelo ARMA en general. Como apuntó este ejemplo, podemos fijar un modelo ARMA(1,1) a un ruido blanco y conseguir que los parámetros estimados sean significativos. Si no fuéramos conscientes de la redundancia de parámetros, se podría alegar que los datos están correlacionados, cuando en realidad no lo son.</p>
+</div>
+
+<hr />
+<p>Los ejemplos <a href="modelos-ar.html#exm:ejem-modelo-AR-explosivo-causal">4.1</a>, <a href="modelos-ma.html#exm:ejem-no-unicidad-MA">5.1</a> y <a href="modelos-arma.html#exm:ejem-redundancia-parametro">6.2</a> señalan un número de problemas con la definición general de los modelos ARMA(p,q) dados por <a href="modelos-arma.html#eq:eq-modelo-ARMA">(6.1)</a> o equivalentemente por <a href="modelos-arma.html#eq:eq-modelo-ARMA-conciso">(6.3)</a>. En resumen, tenemos los siguientes problemas:</p>
+<ol style="list-style-type: decimal">
+<li><p>Modelos de parámetros redundantes,</p></li>
+<li><p>Modelos AR estacionarios que dependen del futuro, y</p></li>
+<li><p>Modelos MA que no son únicos.</p></li>
+</ol>
+<p>Para resolver estos problemas, requeriremos algunas restricciones adicionales sobre los parámetros de los modelos, pero primero, daremos las siguientes definiciones:</p>
+
+<div class="definition">
+<p><span id="def:defi-polinomios-AR-MA" class="definition"><strong>Definición 6.2  </strong></span>Los <em>Polinomios AR y MA</em> se definen como</p>
+<span class="math display" id="eq:eq-polinomio-AR">\[\begin{equation}
+    \phi(z)=1-\phi_1z-\cdots-\phi_pz^p\text{, }\phi_p\neq0
+\tag{6.6}
+\end{equation}\]</span>
+<p>y</p>
+<span class="math display" id="eq:eq-polinomio-MA">\[\begin{equation}
+    \theta(z)=1+\theta_1z+\cdots+\theta_qz^q\text{, }\theta_q\neq0
+\tag{6.7}
+\end{equation}\]</span>
+respectivamente, donde <span class="math inline">\(z\)</span> es un número complejo.
+</div>
+
+<hr />
+<p>Para abordar el primer problema (Modelos de parámetros redundantes), de ahora en adelante nos referiremos a un modelo <span class="math inline">\(ARMA(p,q)\)</span> el sentido de su forma más simple. Esto es, además de la definición original dada en la ecuación <a href="modelos-arma.html#eq:eq-modelo-ARMA">(6.1)</a>, requeriremos también que <span class="math inline">\(\phi(z)\)</span> y <span class="math inline">\(\theta(z)\)</span> no tengan factores comunes. Así, el proceso <span class="math inline">\(x_t=0.5x_{t-1}-0.5w_{t-1}+w_t\)</span> discutido en el ejemplo <a href="modelos-arma.html#exm:ejem-redundancia-parametro">6.2</a> no se refiere a un proceso ARMA(1,1) porque en su forma reducida <span class="math inline">\(x_t\)</span> es un ruido blanco.</p>
+<p>Para resolver el problema del modelo con dependencia del futuro, introduciremos formalmente el concepto de causalidad.</p>
+
+<div class="definition">
+<p><span id="def:defi-causalidad" class="definition"><strong>Definición 6.3  </strong></span>Un modelo ARMA(p,q), <span class="math inline">\(\phi(B)x_t=\theta(B)w_t\)</span>, se dice que es <em>causal</em> si la serie de tiempo <span class="math inline">\(\{x_t:t=0,\pm1,\pm2,\ldots\}\)</span> se puede escribir como un proceso lineal de un lado, esto es</p>
+<span class="math display" id="eq:eq-modelo-causal">\[\begin{equation}
+    x_t=\sum_{j=0}^{\infty}\psi_jw_{t-j}=\psi(B)w_t
+\tag{6.8}
+\end{equation}\]</span>
+donde <span class="math inline">\(\psi(B)=\sum_{j=0}^{\infty}\psi_jB^j\)</span> y <span class="math inline">\(\sum_{j=0}^{\infty}|\psi_j|&lt;\infty\)</span>; haciendo <span class="math inline">\(\psi_0=1\)</span>
+</div>
+
+<hr />
+<p>En el ejemplo <a href="modelos-ar.html#exm:ejem-modelo-AR-explosivo-causal">4.1</a> el proceso <span class="math inline">\(AR(1)\)</span> <span class="math inline">\(x_t=\phi z_{t-1}+w_t\)</span> es causal solo cuando <span class="math inline">\(|\phi|&lt;1\)</span>. Equivalentemente, el proceso es causal sólo cuando la raíz de <span class="math inline">\(\phi(z)=1-\phi z\)</span> es mayor que uno en valor absoluto. Esto es, la raíz <span class="math inline">\(z_0\)</span> de <span class="math inline">\(\phi(z)\)</span> es <span class="math inline">\(z_0=1/\phi\)</span> (porque <span class="math inline">\(\phi(z_0)=0\)</span>) y <span class="math inline">\(|z_0|&gt;1\)</span>, porque <span class="math inline">\(|\phi|&lt;1\)</span>.</p>
+
+<div class="definition">
+<span id="def:defi-modelo-invertible" class="definition"><strong>Definición 6.4  </strong></span>Un modelo ARMA(p,q) <span class="math inline">\(\phi(B)x_t=\theta(B)w_t\)</span> se dice <em>invertible</em> si la serie de tiempo <span class="math inline">\(\{x_t:t=0,\pm1,\pm2,\ldots\}\)</span> se puede escribir como
+<span class="math display" id="eq:eq-modelo-invertible">\[\begin{equation}
+    \pi(B)x_t=\sum_{j=0}^{\infty}\pi_jx_{t-j}=w_t
+\tag{6.9}
+\end{equation}\]</span>
+donde <span class="math inline">\(\pi(B)=\sum_{j=0}^{\infty}\pi_jB^j\)</span> y <span class="math inline">\(\sum_{j=0}^{\infty}|\pi_j|&lt;\infty\)</span>; hacemos <span class="math inline">\(\pi_0=1\)</span>
+</div>
+
+<div id="propiedades-de-los-modelos-armapq" class="section level2">
+<h2><span class="header-section-number">6.1</span> Propiedades de los modelos ARMA(p,q)</h2>
+
+<div class="proposition">
+<p><span id="prp:propiedad-causalidad-ARMApq" class="proposition"><strong>Proposición 6.1  (Propiedad 1: Causalidad)  </strong></span>Un modelo ARMA(p,q) es causal si y solo si <span class="math inline">\(\phi(z)\neq0\)</span> para <span class="math inline">\(|z|\leq1\)</span>. El coeficiente del proceso lineal dado en <a href="modelos-arma.html#eq:eq-modelo-causal">(6.8)</a> se puede determinar resolviendo</p>
+<p><span class="math display">\[\psi(z)=\sum_{j=0}^{\infty}\psi_jz^j=\frac{\theta(z)}{\phi(z)}\text{, }|z|&lt;1.\]</span></p>
+Otra manera de ver la propiedad 1, es que un <em>modelo ARMA es causal sólo cuando las raíces de <span class="math inline">\(\phi(z)\)</span> están fuera del círculo unitario</em>, esto es <span class="math inline">\(\phi(z)=0\)</span> sólo cuando <span class="math inline">\(|z|&gt;1\)</span>.
+</div>
+
+<hr />
+
+<div class="proof">
+<p> <span class="proof"><em>Demostración. </em></span> Supongamos primero que las raíces de <span class="math inline">\(\phi(z)\)</span>, digamos <span class="math inline">\(z_1,\ldots,z_p\)</span>, están fuera del círculo unitario. Escribimos las raíces en el siguiente orden <span class="math inline">\(1&lt;|&lt;_1|\leq|z_2|\leq\ldots\leq|z_p|\)</span>, note que <span class="math inline">\(z_1,\ldots,z_p\)</span> no son necesariamente únicas, y hacemos <span class="math inline">\(|z_1|=1+\epsilon\)</span>, para algún <span class="math inline">\(\epsilon&gt;0\)</span>. Entonces, <span class="math inline">\(\phi(z)\neq0\)</span> siempre que <span class="math inline">\(|z|&lt;|z_1|=1+\epsilon\)</span> y por consiguiente, <span class="math inline">\(\phi^{-1}(z)\)</span> existe y tiene un desarrollo en serie de potencias</p>
+<p><span class="math display">\[\frac{1}{\phi(z)} = \sum_{j=0}^{\infty}a_jz^j,\quad |z|&lt;1+\epsilon.\]</span></p>
+<p>Ahora, elegimos un valor de <span class="math inline">\(\delta\)</span> tal que <span class="math inline">\(0&lt;\delta&lt;\epsilon\)</span>, y hacemos <span class="math inline">\(z=1+\delta\)</span>, el cual está dentro del radio de convergencia. Se sigue entonces que</p>
+<span class="math display" id="eq:eq-convergencia-phi">\[\begin{equation}
+  \phi^{-1}(1+\delta) = \sum_{j=0}^{\infty}a_j(1+\delta)^j&lt;\infty.
+\tag{6.10}
+\end{equation}\]</span>
+<p>Así, podemos cada término de la suma en <a href="modelos-arma.html#eq:eq-convergencia-phi">(6.10)</a> por una constante, sea esta <span class="math inline">\(|a_j(1+\delta)^j|&lt;c\)</span>, para <span class="math inline">\(c&gt;0\)</span>. Por consiguiente, <span class="math inline">\(|a_j|&lt;c(1+\delta)^{-j}\)</span>, de donde se sigue que</p>
+<span class="math display" id="eq:eq-convergencia-aj">\[\begin{equation}
+  \sum_{j=0}^{\infty}|a_j|&lt;\infty.
+\tag{6.11}
+\end{equation}\]</span>
+<p>En consecuencia, <span class="math inline">\(\phi^{-1}(B)\)</span> existe y podemos aplicar este a ambos lados del modelo ARMA, <span class="math inline">\(\phi(B)x_t=\theta(B)w_t\)</span>, para obtener</p>
+<p><span class="math display">\[x_t = \phi^{-1}(B)\phi(B)x_t = \phi^{-1}(B)\theta(B)w_t.\]</span></p>
+<p>Entonces, haciendo <span class="math inline">\(\psi(B)=\phi^{-1}(B)\theta(B)\)</span>, tenemos</p>
+<p><span class="math display">\[x_t = \psi(B)w_t = \sum_{j=0}^{\infty}\psi_jw_{t-j},\]</span></p>
+<p>donde los <span class="math inline">\(\psi\)</span>-pesos, los cuales son absolutamente sumables, pueden ser evaluados por medio de <span class="math inline">\(\psi(z) = \phi^{-1}(z)\theta(z)\)</span> para <span class="math inline">\(|z|\leq1\)</span>.</p>
+<p>Ahora, supongamos que <span class="math inline">\(x_t\)</span> es un proceso causal, esto es, el proceso tiene la representación</p>
+<p><span class="math display">\[x_t = \sum_{j=0}^{\infty}\psi_jw_{t-j},\quad\text{con}\quad \sum_{j=0}^{\infty}|\psi_j|&lt;\infty.\]</span></p>
+<p>En este caso, escribimos</p>
+<p><span class="math display">\[x_t = \psi(B)w_t,\]</span></p>
+<p>y multiplicando a ambos lados por <span class="math inline">\(\phi(B)\)</span> nos queda</p>
+<span class="math display" id="eq:eq-modelo-causal-conciso">\[\begin{equation}
+  \phi(B)x_t = \phi(B)\psi(B)w_t.
+\tag{6.12}
+\end{equation}\]</span>
+<p>Además de <a href="modelos-arma.html#eq:eq-modelo-causal-conciso">(6.12)</a>, el modelo ARMA se puede escribir como</p>
+<span class="math display" id="eq:eq-modelo-ARMA-conciso2">\[\begin{equation}
+  \phi(B)x_t = \theta(B)w_t.
+\tag{6.13}
+\end{equation}\]</span>
+<p>De <a href="modelos-arma.html#eq:eq-modelo-causal-conciso">(6.12)</a> y <a href="modelos-arma.html#eq:eq-modelo-ARMA-conciso2">(6.13)</a>, notamos que</p>
+<span class="math display" id="eq:eq-B15">\[\begin{equation}
+  \phi(B)\psi(B)w_t = \theta(B)w_t.
+\tag{6.14}
+\end{equation}\]</span>
+<p>Ahora, sea <span class="math display">\[a(z) = \phi(z)\psi(z) = \sum_{j=0}^{\infty}a_jz^j,\quad |z|\leq1\]</span> y, por consiguiente, podemos escribir <a href="modelos-arma.html#eq:eq-B15">(6.14)</a> como</p>
+<span class="math display" id="eq:eq-B16">\[\begin{equation}
+  \sum_{j=0}^{\infty}a_jw_{t-j} = \sum_{j=0}^{q}\theta_jw_{t-j}.
+\tag{6.15}
+\end{equation}\]</span>
+<p>A continuación, multiplicamos ambos lados de <a href="modelos-arma.html#eq:eq-B16">(6.15)</a> por <span class="math inline">\(w_{t-h}\)</span>, para <span class="math inline">\(h=0,1,2,\ldots\)</span>, y tomamos esperanza. Haciendo esto, obtenemos</p>
+<span class="math display" id="eq:eq-B17">\[\begin{eqnarray}
+  a_h &amp;=&amp; \theta_h,\quad h=0,1,\ldots,q \nonumber \\
+  a_h &amp;=&amp; 0, \quad h&gt;q. \tag{6.16}
+\end{eqnarray}\]</span>
+<p>De <a href="modelos-arma.html#eq:eq-B17">(6.16)</a> concluimos que</p>
+<span class="math display" id="eq:eq-igualdad-phi-psi-theta">\[\begin{equation}
+  \phi(z)\psi(z) = a(z) = \theta(z),\quad |z|\leq1.
+\tag{6.17}
+\end{equation}\]</span>
+<p>Si existe un número en el círculo unitario, digamos <span class="math inline">\(z_0\)</span>, para el cual <span class="math inline">\(\phi(z_0)=0\)</span>, entonces por <a href="modelos-arma.html#eq:eq-igualdad-phi-psi-theta">(6.17)</a>, <span class="math inline">\(\theta(z_0)=0\)</span>. Pero, si existe tal <span class="math inline">\(z_0\)</span> entonces <span class="math inline">\(\phi(z)\)</span> y <span class="math inline">\(\theta(z)\)</span> tienen un factor común lo cual no es posible. En consecuencia, podemos escribir <span class="math inline">\(\psi(z) = \theta(z)/\phi(z)\)</span>. Además, por hipótesis, tenemos que <span class="math inline">\(|\psi(z)|&lt;\infty\)</span> para <span class="math inline">\(|z|\leq1\)</span>, y por lo tanto</p>
+<span class="math display" id="eq:eq-B19">\[\begin{equation}
+  |\psi(z)| = \left|\frac{\theta(z)}{\phi(z)}\right|&lt;\infty,\text{ para }|z|\leq1.
+\tag{6.18}
+\end{equation}\]</span>
+Finalmente, la ecuación <a href="modelos-arma.html#eq:eq-B19">(6.18)</a> implica que <span class="math inline">\(\phi(z)\neq0\)</span> para <span class="math inline">\(|z|\leq1\)</span>; esto es, las raíces de <span class="math inline">\(\phi(z)\)</span> están fuera del círculo unitario.
+</div>
+
+<hr />
+
+<div class="proposition">
+<p><span id="prp:propiedad-invertibilidad-ARMApq" class="proposition"><strong>Proposición 6.2  (Propiedad 2: Invertibilidad)  </strong></span>Un modelo ARMA(p,q) es <em>invertible</em> si y solo si <span class="math inline">\(\theta(z)\neq0\)</span> para <span class="math inline">\(|z|\leq1\)</span>. El coeficiente <span class="math inline">\(\pi_j\)</span> de <span class="math inline">\(\pi(B)\)</span> dado en <a href="modelos-arma.html#eq:eq-modelo-invertible">(6.9)</a> se puede determinar al resolver</p>
+<p><span class="math display">\[\pi(z)=\sum_{j=0}^{\infty}\pi_jz^j=\frac{\phi(z)}{\theta(z)}\text{, }|z|\leq1.\]</span></p>
+Otra manera de escribir la propiedad 2, es que un <em>proceso ARMA es invertible solo cuando las raíces de <span class="math inline">\(\theta(z)\)</span> están fuera del círculo unitario</em>; esto es, <span class="math inline">\(\theta(z)=0\)</span> sólo cuando <span class="math inline">\(|z|&gt;1\)</span>.
+</div>
+
+<hr />
+
+<div class="proof">
+ <span class="proof"><em>Demostración. </em></span> La demostración de esta propiedad es similar a la propiedad 1, y se deja como ejercicio.
+</div>
+
+<hr />
+
+<div class="example">
+<p><span id="exm:ejem-redundancia-causalidad-invertibilidad" class="example"><strong>Ejemplo 6.3  (Redundancia de Parámetros, Causalidad e Invertibilidad)  </strong></span></p>
+<p>Considere el proceso</p>
+<p><span class="math display">\[x_t=0.4x_{t-1}+0.45x_{t-2}+w_t+w_{t-1}+0.25w_{t-2}\]</span></p>
+<p>o, en la forma operador</p>
+<p><span class="math display">\[(1-0.4B-0.45B^2)x_t=(1+B+0.25B^2)w_t\]</span></p>
+<p>A primera vista <span class="math inline">\(x_t\)</span> parece ser un proceso ARMA(2,2). Pero, los polinomios asociados</p>
+<span class="math display">\[\begin{eqnarray*}
+\phi(z) &amp;=&amp; 1-0.4z-0.45z^2=(1+0.5z)(1-0.9z)
+\theta(z) &amp;=&amp; (1+z+0.25z^2)=(1+0.5z)^2
+\end{eqnarray*}\]</span>
+<p>tienen un factor común que se puede cancelar.</p>
+<p>Después de cancelar los factores comunes, los polinomios quedan <span class="math inline">\(\phi(z)=(1-0.9z)\)</span> y <span class="math inline">\(\theta(z)=(1+0.5z)\)</span>, de modo que el modelo es un proceso ARMA(1,1) <span class="math inline">\((1-0.9B)x_t=(1+0.5B)w_t\)</span> o</p>
+<span class="math display" id="eq:eq-ejemplo-ARMA11">\[\begin{equation}
+  x_t=0.9x_{t-1}+0.5w_{t-1}+w_t
+\tag{6.19}
+\end{equation}\]</span>
+<p>El modelo es causal, porque <span class="math inline">\(\phi(z)=(1-0.9z)=0\)</span> cuando <span class="math inline">\(z=10/9\)</span> que está fuera del círculo unitario. El modelo también es invertible porque la raíz de <span class="math inline">\(\theta(z)=(1+0.5z)\)</span> es <span class="math inline">\(z=-2\)</span> que también está fuera del circulo unitario.</p>
+<p>Para escribir el modelo como un proceso lineal, podemos obtener los <span class="math inline">\(\psi\)</span>-pesos usando la proposición <a href="modelos-arma.html#prp:propiedad-causalidad-ARMApq">6.1</a>:</p>
+<span class="math display">\[\begin{eqnarray*}
+\psi(z) &amp;=&amp; \frac{\theta(z)}{\phi(z)}=\frac{(1+0.5z)}{(1-0.9z)} \\
+        &amp;=&amp; (1+0.5z)(1+0.9z+0.9^2z^2+0.9^3z^3+\cdots)\text{ }|z|\leq1
+\end{eqnarray*}\]</span>
+<p>El coeficiente de <span class="math inline">\(z^j\)</span> en <span class="math inline">\(\psi(z)\)</span> es <span class="math inline">\(\psi_j=(0.5+0.9)0.9^{j-1}\)</span>, para <span class="math inline">\(j\geq1\)</span>, así, podemos escribir () como</p>
+<p><span class="math display">\[x_t=w_t+1.4\sum_{j=0}^{\infty}0.9^{j-1}w_{t-j}\]</span></p>
+<p>Similarmente, para hallar la representación invertible usando la proposición <a href="modelos-arma.html#prp:propiedad-invertibilidad-ARMApq">6.2</a>:</p>
+<p><span class="math display">\[\pi(z)=\frac{\phi(z)}{\theta(z)}=(1-0.9z)(1-0.5z+0.5^2z^2-0.5^3z^3+\cdots)\text{ }|z|\leq1.\]</span></p>
+<p>En este caso, los <span class="math inline">\(\pi\)</span>-pesos están dados por <span class="math inline">\(\pi_j=(-1)^j(0.9+0.5)0.5^{j-1}\)</span> para <span class="math inline">\(j\geq1\)</span> y por lo tanto, podemos escribir <a href="modelos-arma.html#eq:eq-ejemplo-ARMA11">(6.19)</a> como</p>
+<span class="math display">\[x_t=1.4\sum_{j=0}^{\infty}(-0.5)^{j-1}x_{t-j}+w_t\]</span>
+</div>
+
+<hr />
+<p>La PACF para los modelos <span class="math inline">\(MA\)</span> se comporta como el ACF para los modelos <span class="math inline">\(AR\)</span>. También, la PACF para modelos <span class="math inline">\(AR\)</span> se comporta como la ACF para modelos <span class="math inline">\(MA\)</span>. Debido a que un modelo ARMA invertible tiene una representación <span class="math inline">\(AR\)</span> infinita, la PACF no tendrá corte. Resumimos estos resultados en la tabla siguiente</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">AR(p)</th>
+<th align="center">MA(q)</th>
+<th align="center">ARMA(p,q)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ACF</td>
+<td align="center">Disminución</td>
+<td align="center">Corte después</td>
+<td align="center">Disminución</td>
+</tr>
+<tr class="even">
+<td></td>
+<td align="center">gradual</td>
+<td align="center">de paso <span class="math inline">\(q\)</span></td>
+<td align="center">gradual</td>
+</tr>
+<tr class="odd">
+<td>PACF</td>
+<td align="center">Corte después</td>
+<td align="center">Disminución</td>
+<td align="center">Disminución</td>
+</tr>
+<tr class="even">
+<td></td>
+<td align="center">de paso <span class="math inline">\(q\)</span></td>
+<td align="center">gradual</td>
+<td align="center">gradual</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="ecuaciones-en-diferencias" class="section level2">
+<h2><span class="header-section-number">6.2</span> Ecuaciones en Diferencias</h2>
+<p>El estudio del comportamiento de los procesos ARMA es mucho mejor si se tiene un conocimiento básico de ecuaciones en diferencias, simplemente porque los procesos ARMA son ecuaciones en diferencias. Este tópico será también muy útil para el estudio de los modelos en dominio del tiempo y procesos estocásticos en general. Vamos a dar una breve y heurística reseña del tema junto con algunos ejemplos de la utilidad de la teoría.</p>
+<p>Supongamos que tenemos una sucesión de números <span class="math inline">\(u_0,u_1,u_2,\ldots\)</span> tal que</p>
+<span class="math display" id="eq:eq-sucesion-u-n">\[\begin{equation}
+    u_n-\alpha u_{n-1}=0\text{, }\alpha\neq0\text{, }n=1,2,\ldots
+\tag{6.20}
+\end{equation}\]</span>
+<p>Por ejemplo, recuerde <a href="modelos-ar.html#eq:eq-ACF-AR1">(4.8)</a>, en la cual mostramos que la ACF de un proceso AR(1) es una sucesión <span class="math inline">\(\rho(h)\)</span> que satisface</p>
+<p><span class="math display">\[\rho(h)=\phi\rho(h-1)=0\text{, para }h=1,2\ldots\]</span> La ecuación <a href="modelos-arma.html#eq:eq-sucesion-u-n">(6.20)</a> representa un ecuación en diferencias homogénea de orden 1. Para resolver la ecuación, escribimos</p>
+<span class="math display">\[\begin{eqnarray*}
+  u_1 &amp;=&amp; \alpha u_0 \\
+  u_2 &amp;=&amp; \alpha u_1 = \alpha^2u_0 \\
+      &amp;\vdots&amp;  \\
+  u_n &amp;=&amp; \alpha u_{n-1} = \alpha^nu_0.
+\end{eqnarray*}\]</span>
+<p>Dando una condición inicial <span class="math inline">\(u_0=c\)</span> podemos resolver <a href="modelos-arma.html#eq:eq-sucesion-u-n">(6.20)</a>, sea esta <span class="math inline">\(u_n=\alpha^nc\)</span>.</p>
+<p>En la notación de operador, <a href="modelos-arma.html#eq:eq-sucesion-u-n">(6.20)</a> se puede escribir como <span class="math inline">\((1-\alpha B)u_n=0\)</span>. El polinomio asociado a <a href="modelos-arma.html#eq:eq-sucesion-u-n">(6.20)</a> es <span class="math inline">\(\alpha(z)=1-\alpha z\)</span>, y las raíz <span class="math inline">\(z_0\)</span> del polinomio es <span class="math inline">\(z_0=1/\alpha\)</span>, esto es <span class="math inline">\(\alpha(z_0)=0\)</span>.</p>
+<p>Conocemos la solución de <a href="modelos-arma.html#eq:eq-sucesion-u-n">(6.20)</a> con condición inicial <span class="math inline">\(u_0=c\)</span>, esta es</p>
+<p><span class="math display">\[u_n=\alpha^nc=(z_0^{-1})^nc.\]</span></p>
+<p>Esto es, la solución de la ecuación en diferencias <a href="modelos-arma.html#eq:eq-sucesion-u-n">(6.20)</a> solo depende de la condición inicial y de la inversa de la raíz del polinomio asociado <span class="math inline">\(\alpha(z)\)</span>.</p>
+<p>Supóngase ahora que la sucesión satisface</p>
+<span class="math display" id="eq:eq-sucesion-u-n-2">\[\begin{equation}
+    u_n-\alpha_1u_{n-1}-\alpha_2u_{n-2}=0\text{, }\alpha_2\neq0\text{, }n=2,3,\ldots
+\tag{6.21}
+\end{equation}\]</span>
+<p>Esta ecuación es una ecuación en diferencias homogénea de orden 2. El correspondiente polinomio es</p>
+<p><span class="math display">\[\alpha(z)=1-\alpha_1z-\alpha_2z^2\]</span> el cual tiene dos raíces <span class="math inline">\(z_1\)</span> y <span class="math inline">\(z_2\)</span>, tal que <span class="math inline">\(\alpha(z_1)=\alpha(z_2)=0\)</span>.</p>
+<p>Consideremos dos casos:</p>
+<ul>
+<li><strong>Caso 1:</strong> <span class="math inline">\(z_1\neq z_2\)</span>.} La solución general en este caso es
+<span class="math display" id="eq:eq-solucio-u-n-raices-distintas">\[\begin{equation}
+    u_n=c_1z_1^{-n}+c_2z_2^{-n}
+\tag{6.22}
+\end{equation}\]</span>
+donde <span class="math inline">\(c_1\)</span> y <span class="math inline">\(c_2\)</span> dependen de las condiciones iniciales. Esta afirmación puede ser verificada por la sustitución directa de <a href="modelos-arma.html#eq:eq-solucio-u-n-raices-distintas">(6.22)</a> en <a href="modelos-arma.html#eq:eq-sucesion-u-n-2">(6.21)</a>:
+<span class="math display">\[\begin{eqnarray*}
+c_1z_1^{-n}+c_2z_2^{-n} &amp;-&amp; \alpha_1\left(c_1z_1^{-(n-1)}+c_2z_2^{-(n-1)}\right)-\alpha_2\left(c_1z_1^{-(n-2)}+c_2z_2^{-(n-2)}\right) \\
+     &amp;=&amp; c_1z_1^{-n}(1-\alpha_1z_1-\alpha_2z_1^2)+c_2z_2^{-n}((1-\alpha_1z_2-\alpha_2z_2^2) \\
+     &amp;=&amp; c_1z_1^{-n}\alpha(z_1)+c_2z_2^{-n}\alpha(z_2) \\
+     &amp;=&amp; 0.
+\end{eqnarray*}\]</span>
+Dando dos condiciones iniciales <span class="math inline">\(u_0\)</span> y <span class="math inline">\(u_1\)</span> podemos resolver para <span class="math inline">\(c_1\)</span> y <span class="math inline">\(c_2\)</span>:
+<span class="math display">\[\begin{eqnarray*}
+    u_0 &amp;=&amp; c_1+c_2 \\
+    u_1 &amp;=&amp; c_1z_1^{-1}+c_2z_2^{-1}
+\end{eqnarray*}\]</span>
+<p>donde <span class="math inline">\(z_1\)</span> y <span class="math inline">\(z_2\)</span> se pueden resolver en términos de <span class="math inline">\(\alpha_1\)</span> y <span class="math inline">\(\alpha_2\)</span> usando la fórmula cuadrática por ejemplo.</p></li>
+<li><strong>Caso 2:</strong> <span class="math inline">\(z_1=z_2 (=z_0)\)</span>. En este caso la solución general de <a href="modelos-arma.html#eq:eq-sucesion-u-n-2">(6.21)</a> es
+<span class="math display" id="eq:eq-solucio-u-n-raices-iguales">\[\begin{equation}
+    u_n=z_0^{-n}(c_1+c_2n)
+    \tag{6.23}
+\end{equation}\]</span>
+Esta afirmación se puede verificar por sustitución directa de <a href="modelos-arma.html#eq:eq-solucio-u-n-raices-iguales">(6.23)</a> en <a href="modelos-arma.html#eq:eq-sucesion-u-n-2">(6.21)</a>:
+<span class="math display">\[\begin{eqnarray*}
+z_0^{-n}(c_1+c_2n) &amp;-&amp; \alpha_1\left(z_0^{-(n-1)}[c_1+c_2(n-1)]\right)-\alpha_2\left(z_0^{-(n-2)}[c_1+c_2(n-2)]\right) \\
+     &amp;=&amp; z_0^{-n}(c_1+c_2n)(1-\alpha_1z_0-\alpha_2z_0^2)+c_2z_0^{-n+1}(\alpha_1+2\alpha_2z_0) \\
+     &amp;=&amp; c_2z_0^{-n+1}(\alpha_1+2\alpha_2z_0).
+\end{eqnarray*}\]</span>
+Para demostrar que <span class="math inline">\((\alpha_1+2\alpha_2z_0)=0\)</span>, escribimos <span class="math inline">\(1-\alpha_1z-\alpha_2z^2=(1-z_0^{-1}z)^2\)</span> y derivamos respecto de <span class="math inline">\(z\)</span> en ambos lados de la ecuación para obtener <span class="math inline">\((\alpha_1+2\alpha_2z)=2z_0^{-1}(1-z_0^{-1}z)\)</span>. Entonces <span class="math inline">\((\alpha_1+2\alpha_2z_0)=2z_0^{-1}(1-z_0^{-1}z_0)=0\)</span>. Finalmente, dando dos condiciones iniciales <span class="math inline">\(u_0\)</span> y <span class="math inline">\(u_1\)</span> podemos resolver para <span class="math inline">\(c_1\)</span> y <span class="math inline">\(c_2\)</span>;
+<span class="math display">\[\begin{eqnarray*}
+    u_0 &amp;=&amp; c_1 \\
+    u_1 &amp;=&amp; (c_1+c_2)z_0^{-1}
+\end{eqnarray*}\]</span></li>
+</ul>
+<p>Resumiendo:</p>
+En el caso de raíces distintas, la solución de la ecuación en diferencias homogénea de grado 2 es
+<span class="math display">\[\begin{eqnarray*}
+  u_n &amp;=&amp; z_1^{-n}\times(\text{un polinomio en } n \text{ de grado }m_1-1) \\
+      &amp;+&amp; z_2^{-n}\times(\text{un polinomio en } n \text{ de grado }m_2-1)
+\end{eqnarray*}\]</span>
+<p>donde <span class="math inline">\(m_1\)</span> es la multiplicidad de la raíz <span class="math inline">\(z_1\)</span> y <span class="math inline">\(m_2\)</span> es la multiplicidad de la raíz <span class="math inline">\(z_2\)</span>. En este ejemplo, se tiene <span class="math inline">\(m_1=m_2=1\)</span> y decimos que <span class="math inline">\(c_1\)</span> y <span class="math inline">\(c_2\)</span> son polinomios de grado cero respectivamente.</p>
+<p>En el caso de raíces repetidas, la solución es <span class="math display">\[u_n=z_0^{-n}\times(\text{un polinomio en } n \text{ de grado }m_0-1),\]</span> donde <span class="math inline">\(m_0\)</span> es la multiplicidad de la raíz <span class="math inline">\(z_0\)</span>; esto es <span class="math inline">\(m_0=2\)</span>. En este caso, escribimos el polinomio de grado uno como <span class="math inline">\(c_1+c_2n\)</span>. En ambos casos, resolvimos <span class="math inline">\(c_1\)</span> y <span class="math inline">\(c_2\)</span> dando dos condiciones iniciales <span class="math inline">\(u_0\)</span> y <span class="math inline">\(u_1\)</span>.</p>
+<p>Veamos a continuacion algunos ejemplos de uso de las ecuaciones en diferencias, los dos primeros veremos la aplicación a procesos <span class="math inline">\(AR(2)\)</span>, y posteriormente daremos un ejemplo de uso para modelos ARMA.</p>
+
+<div class="example">
+<p><span id="exm:ejem-ACF-AR2" class="example"><strong>Ejemplo 6.4  (La ACF de un proceso AR(2))  </strong></span> Supóngase que <span class="math inline">\(x_t=\phi_1x_{t-1}+\phi_2x_{t-2}+w_t\)</span> es un proceso <span class="math inline">\(AR(2)\)</span> causal. Multiplicando ambos lados del modelo por <span class="math inline">\(x_{t-h}\)</span> para <span class="math inline">\(h&gt;0\)</span>, tomando esperanza:</p>
+<p><span class="math display">\[\mathbb{E}(x_tx_{t-h})=\phi_1\mathbb{E}(x_{t-1}x_{t-h})+\phi_2\mathbb{E}(x_{t-2}x_{t-h})+\mathbb{E}(w_tx_{t-h})\]</span></p>
+<p>El resultado es</p>
+<span class="math display" id="eq:eq-autocovarianza-AR2">\[\begin{equation}
+    \gamma(h)=\phi_1\gamma(h-1)+\phi_2\gamma(h-2)\text{, para }h=1,2,\ldots
+\tag{6.24}
+\end{equation}\]</span>
+<p>En <a href="modelos-arma.html#eq:eq-autocovarianza-AR2">(6.24)</a> estamos usando el hecho de que <span class="math inline">\(\mathbb{E}(x_t)=0\)</span> y para <span class="math inline">\(h&gt;0\)</span>,</p>
+<p><span class="math display">\[\mathbb{E}(w_tx_{t-h})=\mathbb{E}\left(w_t\sum_{j=0}^{\infty}\psi_jw_{t-h-j}\right)=0.\]</span></p>
+<p>Dividimos <a href="modelos-arma.html#eq:eq-autocovarianza-AR2">(6.24)</a> por <span class="math inline">\(\gamma(0)\)</span> para obtener la ecuación en diferencia de la ACF del proceso:</p>
+<span class="math display" id="eq:eq-ACF-AR2">\[\begin{equation}
+  \rho(h)-\phi_1\rho(h-1)-\phi_2\rho(h-2)=0\text{, con }h=1,2,\ldots.
+\tag{6.25}
+\end{equation}\]</span>
+<p>Las condiciones iniciales son <span class="math inline">\(\rho(0)=1\)</span> y <span class="math inline">\(\rho(-1)=\phi_1/(1-\phi_2)\)</span>, lo cual se obtiene evaluando <span class="math inline">\(h=1\)</span> en <a href="modelos-arma.html#eq:eq-ACF-AR2">(6.25)</a> y observando que <span class="math inline">\(\rho(1)=\rho(-1)\)</span>.</p>
+<p>Usando los resultados para la ecuación en diferencias homogénea de orden dos, sean <span class="math inline">\(z_1\)</span> y <span class="math inline">\(z_2\)</span> las raíces del polinomio asociado <span class="math inline">\(\phi(z)=1-\phi_1z-\phi_2z^2\)</span>. Como el modelo es causal sabemos que las raíces están fuera del círculo unitario: <span class="math inline">\(|z_1|&gt;1\)</span> y <span class="math inline">\(|z_2|&gt;1\)</span>. Ahora consideremos la solución para los tres casos:</p>
+<ul>
+<li><p><strong>Caso 1:</strong> Cuando <span class="math inline">\(z_1\)</span> y <span class="math inline">\(z_2\)</span> son reales y distintos, entonces <span class="math display">\[\rho(h)=c_1z_1^{-h}+c_2z_2^{-h},\]</span> de modo que <span class="math inline">\(\rho(h)\to0\)</span> exponencialmente cuando <span class="math inline">\(h\to\infty\)</span>.</p></li>
+<li><p><strong>Caso 2:</strong> Cuando <span class="math inline">\(z_1=z_2(=z_0)\)</span> son reales e iguales, entonces <span class="math display">\[\rho(h)=z_0^{-h}(c_1+c_2h),\]</span> de modo que <span class="math inline">\(\rho(h)\to0\)</span> exponencialmente cuando <span class="math inline">\(h\to\infty\)</span>.</p></li>
+<li><strong>Caso 3:</strong> Cuando <span class="math inline">\(z_1=\bar{z}_2\)</span> son complejas conjugadas, entonces <span class="math inline">\(c_2=\bar{c}_1\)</span> (porque <span class="math inline">\(\rho(h)\)</span> es real) y <span class="math display">\[\rho(h)=c_1z_1^{-h}+\bar{c}_1\bar{z}_1^{-h}.\]</span> Escribiendo <span class="math inline">\(c_1\)</span> y <span class="math inline">\(z_1\)</span> en coordenadas polares, por ejemplo <span class="math inline">\(z_1=|z_1|e^{i\theta}\)</span> donde <span class="math inline">\(\theta\)</span> es el ángulo cuya tangente es el radio de la parte imaginaria y la parte real de <span class="math inline">\(z_1\)</span>; el rango de <span class="math inline">\(\theta\)</span> es <span class="math inline">\([-\pi,\pi]\)</span>. Entonces, usando el hecho de que <span class="math inline">\(e^{i\alpha}+e^{-i\alpha}=2\cos(\alpha)\)</span> la solución tiene la forma <span class="math display">\[\rho(h)=a|z_1|^{-h}\cos(h\theta+b),\]</span> donde <span class="math inline">\(a\)</span> y <span class="math inline">\(b\)</span> se determinan de las condiciones iniciales. De nuevo <span class="math inline">\(\rho(h)\)</span> tiende a cero exponencialmente cuando <span class="math inline">\(h\to\infty\)</span> pero en forma senosoidal.
+</div>
+</li>
+</ul>
+<hr />
+
+<div class="example">
+<span id="exm:ejem-camino-muestral-AR2" class="example"><strong>Ejemplo 6.5  (Camino muestral de un proceso AR(2) con raíces complejas)  </strong></span> La Figura <a href="modelos-arma.html#fig:grafico-AR2-simulado">6.1</a> muestra <span class="math inline">\(n=144\)</span> observaciones de un modelo AR(2) <span class="math display">\[x_t=1.5x_{t-1}-0.75x_{t-2}+w_t\]</span> con <span class="math inline">\(\sigma_w^2=1\)</span> y con raíces complejas, así el proceso exhibe un comportamiento pseudo-cíclico con una frecuencia de un ciclo cada 12 puntos de tiempo. El polinomio autoregresivo para este modelo es <span class="math inline">\(\phi(z)=1-1.5z+0.75z^2\)</span>. Las raíces de <span class="math inline">\(\phi(z)\)</span> son <span class="math inline">\(1\pm i/\sqrt{3}\)</span> y <span class="math inline">\(\theta=\tan^{-1}(1/\sqrt{3})=2\pi/12\)</span> radianes por unidad de tiempo. Para convertir el ángulo a ciclos por unidad de tiempo, dividimos por <span class="math inline">\(2\pi\)</span> para obtener <span class="math inline">\(1/12\)</span> ciclos por unidad de tiempo. La ACF para este modelo se muestra en la parte inferior de la Figura <a href="modelos-arma.html#fig:grafico-AR2-simulado">6.1</a>.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulación del proceso AR(2)</span>
+<span class="kw">set.seed</span>(<span class="dv">5</span>)
+ar2=<span class="kw">arima.sim</span>(<span class="kw">list</span>(<span class="dt">order=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="dt">ar=</span><span class="kw">c</span>(<span class="fl">1.5</span>,<span class="op">-</span><span class="fl">0.75</span>)), <span class="dt">n=</span><span class="dv">144</span>)
+<span class="co"># Gráfico del proceso AR(2)</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))
+<span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">144</span><span class="op">/</span><span class="dv">12</span>,ar2,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;Tiempo (una unidad=12ptos)&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;AR(2)&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">0</span><span class="op">:</span><span class="dv">12</span>,<span class="dt">lty=</span><span class="st">&quot;dotted&quot;</span>)
+<span class="co"># Raices del polinomio asociado</span>
+<span class="kw">Arg</span>(<span class="kw">polyroot</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="op">-</span><span class="fl">1.5</span>,<span class="fl">0.75</span>))[<span class="dv">1</span>])<span class="op">/</span>(<span class="dv">2</span><span class="op">*</span>pi)</code></pre></div>
+<pre><code>## [1] 0.08333</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Cálculo de la ACF</span>
+ACF =<span class="st"> </span><span class="kw">ARMAacf</span>(<span class="dt">ar=</span><span class="kw">c</span>(<span class="fl">1.5</span>,<span class="fl">0.75</span>),<span class="dt">ma=</span><span class="dv">0</span>,<span class="dv">50</span>)
+<span class="co"># Gráfico de la ACF</span>
+<span class="kw">plot</span>(ACF,<span class="dt">type=</span><span class="st">&quot;h&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;LAG&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>)</code></pre></div>
+<div class="figure"><span id="fig:grafico-AR2-simulado"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/grafico-AR2-simulado-1.svg" alt="Modelo AR(2) simulado, n=144, con phi_1=1.5,  phi_2=-0.75 (parte superior) y la función de autocovarianza (parte inferior)"  />
+<p class="caption">
+Figura 6.1: Modelo AR(2) simulado, n=144, con phi_1=1.5, phi_2=-0.75 (parte superior) y la función de autocovarianza (parte inferior)
+</p>
+</div>
+<hr />
+<p>Ahora, daremos la solución para una ecuación en diferencias homogénea general de orden <span class="math inline">\(p\)</span>:</p>
+<span class="math display" id="eq:eq-sucesion-u-n-p">\[\begin{equation}
+  u_n-\alpha_1u_{n-1}-\cdots-\alpha_pu_{n-p}=0\text{, con } \alpha_p\neq0\text{, }n=p,p+1,\ldots
+\tag{6.26}
+\end{equation}\]</span>
+<p>El polinomio asociado es</p>
+<p><span class="math display">\[\alpha(z)=1-\alpha_1z-\alpha_2z^2-\cdots-\alpha_pz^p.\]</span></p>
+<p>Suponga que <span class="math inline">\(\alpha(z)\)</span> tiene <span class="math inline">\(r\)</span> raíces distintas, <span class="math inline">\(z_1\)</span> con multiplicidad <span class="math inline">\(m_1\)</span>, <span class="math inline">\(z_2\)</span> con multiplicidad <span class="math inline">\(m_2,\ldots,\)</span> y <span class="math inline">\(z_r\)</span> con multiplicidad <span class="math inline">\(m_r\)</span>, tal que <span class="math inline">\(m_1+m_2+\cdots+m_r=p\)</span>. La solución general para la ecuación <a href="modelos-arma.html#eq:eq-sucesion-u-n-p">(6.26)</a> es</p>
+<span class="math display" id="eq:eq-solucion-general-u-n">\[\begin{equation}
+  u_n=z_1^{-n}P_1(n)+z_2^{-n}P_2(n)+\cdots+z_r^{-n}P_r(n),
+\tag{6.27}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(P_j(n)\)</span> para <span class="math inline">\(j=1,2,\ldots,r\)</span> es un polinomio en <span class="math inline">\(n\)</span> de grado <span class="math inline">\(m_j-1\)</span>. Dadas las condiciones iniciales <span class="math inline">\(u_0,u_1,\ldots,u_{p-1}\)</span> podemos resolver <span class="math inline">\(P_j(n)\)</span> explícitamente para <span class="math inline">\(j=1,2,\ldots,r\)</span></p>
+
+<div class="example">
+<p><span id="exm:ejem-pesos-ARMA-causal" class="example"><strong>Ejemplo 6.6  (Determinación de los psi-pesos de un proceso ARMA(p,q) causal)  </strong></span> Para un modelo ARMA(p,q) causal <span class="math inline">\(\phi(B)x_t=\theta(B)w_t\)</span> donde los ceros de <span class="math inline">\(\phi(z)\)</span> están fuera del círculo unitario, recordemos que podemos escribir este como</p>
+<p><span class="math display">\[x_t=\sum_{j=0}^{\infty}\psi_jw_{t-j}\]</span></p>
+<p>donde los <span class="math inline">\(\psi\)</span>-pesos se determinan usando la propiedad 1. (Proposición <a href="modelos-arma.html#prp:propiedad-causalidad-ARMApq">6.1</a>)</p>
+<p>Para un modelo <span class="math inline">\(MA(q)\)</span> puro <span class="math inline">\(\psi_0=1,\psi_j=\theta_j\)</span> para <span class="math inline">\(j=1,2,\ldots,q\)</span> y <span class="math inline">\(\psi_j=0\)</span> en otro caso.</p>
+<p>Para el caso general de un modelo ARMA(p,q) la tarea de resolver los <span class="math inline">\(\psi\)</span>-pesos es más complicada, como se demostró en el ejemplo <a href="modelos-arma.html#exm:ejem-redundancia-causalidad-invertibilidad">6.3</a>.</p>
+<p>La teoría de ecuaciones en diferencias homogénea será útil para resolver este problema.</p>
+<p>Para resolver los <span class="math inline">\(\psi\)</span>-pesos en general, debemos igualar los coeficientes en <span class="math inline">\(\psi(z)\phi(z)=\theta(z)\)</span></p>
+<p><span class="math display">\[(\psi_0+\psi_1z+\psi_2z^2+\cdots)(1-\phi_1z-\phi_2z^2-\cdots)=(1+\theta_1z+\theta_2z^2+\cdots)\]</span></p>
+<p>Los primeros valores serán</p>
+<span class="math display">\[\begin{eqnarray*}
+  \psi_0 &amp;=&amp; 1 \\
+  \psi_1-\phi_1\psi_0 &amp;=&amp; \theta_1 \\
+  \psi_2-\phi_1\psi_1-\phi_2\psi_0 &amp;=&amp; \theta_2 \\
+  \psi_3-\phi_1\psi_2-\phi_2\psi_1-\phi_3\psi_0 &amp;=&amp; \theta_3 \\
+   &amp;\vdots &amp;
+\end{eqnarray*}\]</span>
+<p>donde podemos tomar <span class="math inline">\(\phi_j=0\)</span> para <span class="math inline">\(j&gt;p\)</span> y <span class="math inline">\(\theta_j=0\)</span> para <span class="math inline">\(j&gt;q\)</span>.</p>
+<p>Los <span class="math inline">\(\psi\)</span>-pesos satisfacen la ecuación en diferencias homogénea dada por</p>
+<span class="math display" id="eq:eq-diferencias-homogeneas-pesos">\[\begin{equation}
+  \psi_j-\sum_{k=1}^{p}\phi_k\psi_{j-k}=0\text{, con }j\geq\max(p,q+1)
+\tag{6.28}
+\end{equation}\]</span>
+<p>con condiciones iniciales</p>
+<span class="math display" id="eq:eq-condicion-inicial-pesos">\[\begin{equation}
+    \psi_j-\sum_{k=1}^{j}\phi_k\psi_{j-k}=\theta_j\text{, con }0\leq j&lt;\max(p,q+1).
+\tag{6.29}
+\end{equation}\]</span>
+<p>La solución general depende de las raíces del polinomio AR <span class="math inline">\(\phi(z)=1-\phi_1z-\cdots-\phi_pz^p\)</span> como se ve de <a href="modelos-arma.html#eq:eq-diferencias-homogeneas-pesos">(6.28)</a>. La solución particular de hecho dependerá de las condiciones iniciales.</p>
+<p>Considere el proceso ARMA dado en <a href="modelos-arma.html#eq:eq-ejemplo-ARMA11">(6.19)</a> <span class="math inline">\(x_t=0.9x_{t-1}+0.5w_{t-1}+w_t\)</span>.</p>
+<p>Dado que <span class="math inline">\(\max(p,q+1)=2\)</span>, usando <a href="modelos-arma.html#eq:eq-condicion-inicial-pesos">(6.29)</a>, tenemos que <span class="math inline">\(\psi_0=1\)</span> y <span class="math inline">\(\psi_1=0.9+0.5=1.4\)</span>. De <a href="modelos-arma.html#eq:eq-diferencias-homogeneas-pesos">(6.28)</a> para <span class="math inline">\(j=2,3,\ldots,\)</span> los <span class="math inline">\(\psi\)</span>-pesos satisfacen <span class="math inline">\(\psi_j-0.9\psi_{j-1}=0\)</span>. La solución general es <span class="math inline">\(\psi_j=c0.9^j\)</span>.</p>
+<p>Para hallar la solución particular, usamos la condición inicial <span class="math inline">\(\psi=1.4\)</span>, de modo que <span class="math inline">\(1.4=c0.9\)</span> ó <span class="math inline">\(c=1.4/0.9\)</span>. Finalmente <span class="math inline">\(\psi_j=1.4(0.9)^{j-1}\)</span> para <span class="math inline">\(j\geq1\)</span> como vimos en el ejemplo <a href="modelos-arma.html#exm:ejem-redundancia-causalidad-invertibilidad">6.3</a>.</p>
+Para ver los primeros 50 <span class="math inline">\(\psi\)</span>-pesos, usamos las siguientes instrucciones en R:
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ARMAtoMA</span>(<span class="dt">ar=</span><span class="fl">0.9</span>,<span class="dt">ma=</span><span class="fl">0.5</span>, <span class="dv">50</span>)</code></pre></div>
+<pre><code>##  [1] 1.400000 1.260000 1.134000 1.020600 0.918540
+##  [6] 0.826686 0.744017 0.669616 0.602654 0.542389
+## [11] 0.488150 0.439335 0.395401 0.355861 0.320275
+## [16] 0.288248 0.259423 0.233481 0.210132 0.189119
+## [21] 0.170207 0.153187 0.137868 0.124081 0.111673
+## [26] 0.100506 0.090455 0.081410 0.073269 0.065942
+## [31] 0.059348 0.053413 0.048072 0.043264 0.038938
+## [36] 0.035044 0.031540 0.028386 0.025547 0.022992
+## [41] 0.020693 0.018624 0.016762 0.015085 0.013577
+## [46] 0.012219 0.010997 0.009898 0.008908 0.008017</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">ARMAtoMA</span>(<span class="dt">ar=</span><span class="fl">0.9</span>,<span class="dt">ma=</span><span class="fl">0.5</span>,<span class="dv">50</span>))</code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-54"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-54-1.svg" alt="psi-pesos para el modelo ARMA,  x_t=0.9x_{t-1}+0.5w_{t-1}+w_t"  />
+<p class="caption">
+Figura 6.2: psi-pesos para el modelo ARMA, x_t=0.9x_{t-1}+0.5w_{t-1}+w_t
+</p>
+</div>
+<hr />
+<div id="funcion-de-autocorrelacion-acf-para-modelos-arma" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> Función de Autocorrelación (ACF) para modelos ARMA</h3>
+<p>Iniciemos mostrando la ACF de un proceso MA(q) <span class="math inline">\(x_t=\theta(B)w_t\)</span>, donde <span class="math inline">\(\theta(B)=1+\theta_1B+\cdots+\theta_qB^q\)</span>. Dado que <span class="math inline">\(x_t\)</span> es una combinación lineal de términos de ruido blanco, el proceso es estacionario con media</p>
+<p><span class="math display">\[\mathbb{E}(x_t)=\sum_{j=0}^{q}\theta_j\mathbb{E}(w_{t-j})=0,\]</span></p>
+<p>donde podemos escribir <span class="math inline">\(\theta_0=1\)</span>, y la función de autocovarianza es</p>
+<span class="math display" id="eq:eq-autocovarianza-MA-q">\[\begin{eqnarray}
+  \gamma(h)=\text{cov}(x_{t+h},x_t) &amp;=&amp; \mathbb{E}\left[\left(\sum_{j=0}^{q}\theta_jw_{t+h-j}\right)\left(\sum_{k=0}^{q}\theta_kw_{t-k}\right)\right] \nonumber \\
+   &amp;=&amp; \begin{cases}\sigma_w^2\sum_{j=0}^{q-h}\theta_j\theta_{j+h},&amp;\text{ si }0\leq h\leq q\\
+                    0,&amp;\text{ si }h&gt;q\end{cases}\tag{6.30}
+\end{eqnarray}\]</span>
+<p>Recuerde que <span class="math inline">\(\gamma(h)=\gamma(-h)\)</span>, por eso solo mostramos <span class="math inline">\(\gamma(h)\)</span> para <span class="math inline">\(h\geq0\)</span>.</p>
+<p>El corte de <span class="math inline">\(\gamma(h)\)</span> después de <span class="math inline">\(q\)</span> saltos es la firma del modelo MA(q). Dividiendo () por <span class="math inline">\(\gamma(0)\)</span> conseguimos la ACF de un MA(q):</p>
+<span class="math display" id="eq:eq-ACF-MA-q">\[\begin{equation}
+  \rho(h)=\begin{cases}\frac{\sum_{j=0}^{q-h}\theta_j\theta_{j+h}}{1+\theta_1^2+\cdots+\theta_q^2},&amp;\text{ si }1\leq h\leq q\\
+                0,\text{ si }h&gt;q\end{cases}
+\tag{6.31}
+\end{equation}\]</span>
+<p>Para un modelo ARMA(p,q) causal <span class="math inline">\(\phi(B)x_t=\theta(B)w_t\)</span>, donde los ceros de <span class="math inline">\(\phi(z)\)</span> están fuera del círculo unitario, podemos escribir</p>
+<p><span class="math display">\[x_t=\sum_{j=0}^{\infty}\psi_jw_{t-j}\]</span></p>
+<p>Se sigue inmediatamente que <span class="math inline">\(\mathbb{E}(x_t)=0\)</span>. También, la función de autocovarianza de <span class="math inline">\(x_t\)</span> se puede escribir como</p>
+<span class="math display" id="eq:eq-autocovarianza-ARMA">\[\begin{equation}
+  \gamma(h)=\text{cov}(x_{t-h},x_t)=\sigma_w^2\sum_{j=0}^{\infty}\psi_j\psi_{j+h}\text{, }h\geq0
+\tag{6.32}
+\end{equation}\]</span>
+<p>Podemos entonces usar <a href="modelos-arma.html#eq:eq-diferencias-homogeneas-pesos">(6.28)</a> y <a href="modelos-arma.html#eq:eq-condicion-inicial-pesos">(6.29)</a> para resolver los <span class="math inline">\(\psi\)</span>-pesos. A su vez, podemos resolver para <span class="math inline">\(\gamma(h)\)</span> y la ACF <span class="math inline">\(\rho(h)=\gamma(h)/\gamma(0)\)</span>. Como en el ejemplo <a href="modelos-arma.html#exm:ejem-ACF-AR2">6.4</a>, también es posible obtener una ecuación en diferencias homogénea directamente en términos de <span class="math inline">\(\gamma(h)\)</span>. Primero, escribimos</p>
+<span class="math display" id="eq:eq-autocovarianza-ARMA-2">\[\begin{eqnarray}
+  \gamma(h) &amp;=&amp; \text{cov}(x_{t+h},x_t)=\mathbb{E}\left[\left(\sum_{j=1}^{p}\phi_jx_{t+h-j}+\sum_{j=0}^{q}\theta_jw_{t+h-j}\right)x_t\right]\nonumber \\
+    &amp;=&amp; \sum_{j=1}^{p}\phi_j\gamma(h-j)+\sigma_w^2\sum_{j=h}^{q}\theta_j\psi_{j-h}\text{, }h\geq0 \tag{6.33}
+\end{eqnarray}\]</span>
+<p>donde hemos usado el hecho de que <span class="math inline">\(x_t=\sum_{k=0}^{\infty}\psi_jw_{t-k}\)</span> y para <span class="math inline">\(h\geq0\)</span>,</p>
+<p><span class="math display">\[\mathbb{E}(w_{t+h-j}x_t)=\mathbb{E}\left[w_{t+h-j}\left(\sum_{k=0}^{\infty}\psi_kw_{t-k}\right)\right]=\psi_{j-h}\sigma_w^2.\]</span></p>
+<p>De <a href="modelos-arma.html#eq:eq-autocovarianza-ARMA-2">(6.33)</a> podemos escribir una ecuación general homogénea para la ACF de un proceso ARMA causal:</p>
+<span class="math display" id="eq:eq-ACF-ARMA-causal">\[\begin{equation}
+  \gamma(h)-\phi_1\gamma(h-1)-\cdots-\phi_p\gamma(h-p)=0\text{, }h\geq\max(p,q+1)
+\tag{6.34}
+\end{equation}\]</span>
+<p>con condiciones iniciales</p>
+<span class="math display" id="eq:eq-condicion-inicial-ACF-ARMA-causal">\[\begin{equation}
+  \gamma(h)-\sum_{j=1}^{p}\phi_j\gamma(h-j)=\sigma_w^2\sum_{j=h}^{q}\theta_j\psi_{j-h}\text{, }0\leq h&lt;\max(p,q+1).
+\tag{6.35}
+\end{equation}\]</span>
+<p>Dividiendo <a href="modelos-arma.html#eq:eq-ACF-ARMA-causal">(6.34)</a> y <a href="modelos-arma.html#eq:eq-condicion-inicial-ACF-ARMA-causal">(6.35)</a> por <span class="math inline">\(\gamma(0)\)</span> nos permite resolver la ACF <span class="math inline">\(\rho(h)=\gamma(h)/\gamma(0)\)</span>.</p>
+
+<div class="example">
+<p><span id="exm:ejem-ACF-ARMA11" class="example"><strong>Ejemplo 6.7  (La ACF de un proceso ARMA(1,1))  </strong></span> Consideremos el proceso ARMA(1,1) causal <span class="math inline">\(x_t=\phi x_{t-1}+\theta w_{t-1}+w_t\)</span> donde <span class="math inline">\(|\phi|&lt;1\)</span>. Basándonos en <a href="modelos-arma.html#eq:eq-ACF-ARMA-causal">(6.34)</a> la función de autocovarianza satisface</p>
+<p><span class="math display">\[\gamma(h)-\phi\gamma(h-1)=0\text{, }h=2,3,\ldots,\]</span></p>
+<p>así, la solución general es <span class="math inline">\(\gamma(h)=c\phi^h\)</span> para <span class="math inline">\(h=1,2,\ldots\)</span>. Para obtener las condiciones iniciales, usamos <a href="modelos-arma.html#eq:eq-condicion-inicial-ACF-ARMA-causal">(6.35)</a>:</p>
+<span class="math display">\[\begin{eqnarray*}
+  \gamma(0) &amp;=&amp; \phi\gamma(1)+\sigma_w^2[1+\theta\phi+\theta^2] \\
+  \gamma(1) &amp;=&amp; \phi\gamma(0)+\sigma_w^2\theta
+\end{eqnarray*}\]</span>
+<p>Resolviendo para <span class="math inline">\(\gamma(0)\)</span> y <span class="math inline">\(\gamma(1)\)</span>, obtenemos</p>
+<span class="math display">\[\begin{eqnarray*}
+  \gamma(0) &amp;=&amp; \sigma_w^2\frac{1+2\theta\phi+\theta^2}{1-\phi^2} \\
+  \gamma(1) &amp;=&amp; \sigma_w^2\frac{(1+\theta\phi)(\phi+\theta)}{1-\phi^2}
+\end{eqnarray*}\]</span>
+<p>Para resolver <span class="math inline">\(c\)</span>, note que <span class="math inline">\(\gamma(1)=c\phi\)</span>, en cuyo caso <span class="math inline">\(c=\gamma(1)/\phi\)</span>. Por consiguiente, la solución particular es</p>
+<p><span class="math display">\[\gamma(h)=\sigma_w^2\frac{(1+\theta\phi)(\phi+\theta)}{1-\phi^2}\phi^{h-1}\]</span></p>
+<p>Finalmente, dividiendo por <span class="math inline">\(\gamma(0)\)</span> nos da la ACF</p>
+<span class="math display" id="eq:eq-ACF-ARMA11">\[\begin{equation}
+  \rho(h)=\frac{(1+\theta\phi)(\phi+\theta)}{1+2\theta\phi+\theta^2}\phi^{h-1}\text{, }h\geq1
+\tag{6.36}
+\end{equation}\]</span>
+</div>
+
+<hr />
+</div>
+</div>
+<div id="pronosticos" class="section level2">
+<h2><span class="header-section-number">6.3</span> Pronósticos</h2>
+<p>El objetivo en el pronóstico, es predecir los valores futuros de una serie de tiempo <span class="math inline">\(x_{n+m}, m=1,2,\ldots\)</span> basado en los valores de la serie observados hasta el tiempo actual <span class="math inline">\(\mathbf{x}=\{x_n,x_{n-1},\ldots,x_1\}\)</span>. En esta sección asumiremos que <span class="math inline">\(x_t\)</span> es estacionario y que los parámetros del modelo son conocidos. El problema de hacer pronósticos cuando los parámetros del modelo son desconocidos se analizará en la siguiente sección. En los capítulos para modelos AR y modelos MA, vimos como realizar los pronósticos o predicciones para los mismos. A continuación daremos métodos más generales de predicción y que se pueden utilizar para los modelos AR, MA y ARMA.</p>
+<p>El mínimo del error cuadrático medio del predictor <span class="math inline">\(x_{n+m}\)</span> es <span class="math display">\[x_{n+m}^n=\mathbb{E}(x_{n+m}|x_n,x_{n-1},\ldots,x_1)\]</span> porque el valor esperado condicional minimiza el error cuadrático medio</p>
+<span class="math display" id="eq:eq-esperanza-error-cuadratico-medio">\[\begin{equation}
+  \mathbb{E}[x_{n+m}-g(\mathbf{x})]^2
+\tag{6.37}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(g(\mathbf{x})\)</span> es una función de las observaciones <span class="math inline">\(\mathbf{x}\)</span>.</p>
+<p>Primero, nos restringiremos a los predictores que son función lineal de los datos, esto es, predictores de la forma</p>
+<span class="math display" id="eq:eq-predictores">\[\begin{equation}
+  x_{n+m}^n=\alpha_0+\sum_{k=1}^{n}\alpha_kx_k
+\tag{6.38}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(\alpha_0,\alpha_1,\ldots,\alpha_n\)</span> son números reales. Los predictores lineales de la forma () que minimizan el error cuadrático medio del predictor <a href="modelos-arma.html#eq:eq-esperanza-error-cuadratico-medio">(6.37)</a> son llamados el <strong>mejor predictor lineal (BLP’s)</strong>. Como demostraremos luego, los predictores lineales dependen solo del segundo momento del proceso, lo cual es fácil de estimar a partir de los datos.</p>
+<p>A continuación daremos algunas propiedades y ejemplos.</p>
+
+<div class="proposition">
+<p><span id="prp:propiedad-mejor-predictor-lineal" class="proposition"><strong>Proposición 6.3  (Mejor Predictor Lineal para Procesos Estacionarios)  </strong></span> Dada las observaciones <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span>, el mejor predictor lineal <span class="math inline">\(x_{n+m}^n=\alpha_0+\sum_{k=1}^{n}\alpha_kx_k\)</span>, de <span class="math inline">\(x_{n+m}\)</span> para <span class="math inline">\(m\geq1\)</span>, se halla resolviendo</p>
+<span class="math display" id="eq:eq-mejor-predictor-lineal">\[\begin{equation}
+  \mathbb{E}\left[(x_{n+m}-x_{n+m}^n)x_k\right]=0\text{, para } k=0,1,2,\ldots
+\tag{6.39}
+\end{equation}\]</span>
+donde <span class="math inline">\(x_0=1\)</span>.
+</div>
+
+<hr />
+<p>Las ecuaciones especificadas en <a href="modelos-arma.html#eq:eq-mejor-predictor-lineal">(6.39)</a> son llamadas ecuaciones de predicción, y son usadas para resolver los coeficientes <span class="math inline">\(\{\alpha_0,\alpha_1,\ldots,\alpha_n\}\)</span>. Si <span class="math inline">\(\mathbb{E}(x_t)=\mu\)</span>, la primera ecuación (<span class="math inline">\(k=0\)</span>) de <a href="modelos-arma.html#eq:eq-mejor-predictor-lineal">(6.39)</a> implica</p>
+<p><span class="math display">\[\mathbb{E}(x_{n+m}^n)=\mathbb{E}(x_{m+n})=\mu.\]</span></p>
+<p>Entonces, tomando valor esperado en <a href="modelos-arma.html#eq:eq-predictores">(6.38)</a>, tenemos</p>
+<p><span class="math display">\[\mu=\alpha_0+\sum_{k=1}^{n}\alpha_k\mu\text{  o   }\alpha_0=\mu\left(1-\sum_{k=1}^{n}\alpha_k\right).\]</span></p>
+<p>Por lo tanto, la forma del BLP es <span class="math display">\[x_{n+m}^n=\mu+\sum_{k=1}^{n}\alpha_k(x_k-\mu).\]</span></p>
+<p>Sin perdida de generalidad, podemos considerar el caso <span class="math inline">\(\mu=0\)</span> en cuyo caso, <span class="math inline">\(\alpha_0=0\)</span></p>
+<p>Consideremos primero la predicción de un paso. Esto es, dado <span class="math inline">\(\{x_1,x_2,\ldots,x_n\}\)</span>, queremos predecir el valor la serie temporal en tiempo <span class="math inline">\(t=n+1\)</span>, o sea <span class="math inline">\(x_{n+1}\)</span>. El BLP de <span class="math inline">\(x_{n+1}\)</span> es</p>
+<span class="math display" id="eq:eq-BLP-1-paso">\[\begin{equation}
+  x_{n+1}^n=\phi_{n1}x_n+\phi_{n2}x_{n-1}+\cdots+\phi_{nn}x_1
+\tag{6.40}
+\end{equation}\]</span>
+<p>donde, <span class="math inline">\(\alpha_k\)</span> en <a href="modelos-arma.html#eq:eq-predictores">(6.38)</a> lo escribiremos como <span class="math inline">\(\phi_{n,n+1-k}\)</span> en <a href="modelos-arma.html#eq:eq-BLP-1-paso">(6.40)</a>, para <span class="math inline">\(k=1,2,\ldots,n\)</span>. Usando la proposición <a href="modelos-arma.html#prp:propiedad-mejor-predictor-lineal">6.3</a>, los coeficientes <span class="math inline">\(\{\phi_{n1},\phi_{n2},\ldots,\phi_{nn}\}\)</span> satisfacen</p>
+<p><span class="math display">\[\mathbb{E}\left[\left(x_{n+1}-\sum_{j=1}^{n}\phi_{nj}x_{n+1-j}\right)x_{n+1-k}\right]=0\text{, para }k=1,2,\ldots,n\]</span></p>
+<p>o</p>
+<span class="math display" id="eq:eq-coeficientes-BLP">\[\begin{equation}
+  \sum_{j=1}^{n}\phi_{nj}\gamma(k-j)=\gamma(k)\text{, }k=1,2,\ldots,n
+\tag{6.41}
+\end{equation}\]</span>
+<p>Las ecuaciones de predicción <a href="modelos-arma.html#eq:eq-coeficientes-BLP">(6.41)</a> se pueden escribir en forma matricial como</p>
+<span class="math display" id="eq:eq-prediccion-BLP-matricial">\[\begin{equation}
+  \Gamma_n\vec{\phi}_n=\vec{\gamma}_n
+\tag{6.42}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(\Gamma_n=\{\gamma(k-j)\}_{j,k=1}^n\)</span> es una matriz <span class="math inline">\(n\times n\)</span>, <span class="math inline">\(\vec{\phi}_n=(\phi_{n1},\phi_{n2},\ldots,\phi_{nn})^t\)</span> es un vector <span class="math inline">\(n\times1\)</span> y <span class="math inline">\(\vec{\gamma}_n=(\gamma(1),\gamma(2),\ldots,\gamma(n))^t\)</span> es un vector <span class="math inline">\(n\times1\)</span>.</p>
+<p>La matriz <span class="math inline">\(\Gamma_n\)</span> es no-negativa definida. Si <span class="math inline">\(\Gamma_n\)</span> es singular, existen muchas soluciones de <a href="modelos-arma.html#eq:eq-prediccion-BLP-matricial">(6.42)</a>, pero por el Teorema de Proyección (véase Cramer &amp; Leadbetter (1967)) <span class="math inline">\(x_{n+1}^n\)</span> es único. Si <span class="math inline">\(\Gamma_n\)</span> es no singular, los elementos de <span class="math inline">\(\vec{\phi}_n\)</span> son únicos, y están dados por</p>
+<span class="math display" id="eq:eq-elementos-matriz-phi-n">\[\begin{equation}
+  \vec{\phi}_n=\Gamma_n^{-1}\vec{\gamma}_n.
+\tag{6.43}
+\end{equation}\]</span>
+<p>Para un modelo ARMA, el hecho de que <span class="math inline">\(\sigma_w^2&gt;0\)</span> y <span class="math inline">\(\gamma(h)\to0\)</span> cuando <span class="math inline">\(h\to\infty\)</span> es suficiente para asegurar que <span class="math inline">\(\Gamma_n\)</span> es positiva definida.</p>
+<p>A veces es conveniente escribir el pronóstico de un paso en forma vectorial</p>
+<span class="math display" id="eq:eq-BLP-1-paso-matricial">\[\begin{equation} 
+  x_{n+1}^n=\vec{\phi}^t_n\mathbf{x}
+\tag{6.44}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(\mathbf{x}=(x_1,x_2,\ldots,x_n)^t\)</span>. El error cuadrático medio de la predicción de un paso es</p>
+<span class="math display" id="eq:eq-ecm-prediccion-1-paso">\[\begin{equation}
+  P_{n+1}^n=\mathbb{E}(x_{n+1}-x_{n+1}^n)^2=\gamma(0)-\vec{\gamma}^t_n\Gamma_n^{-1}\vec{\gamma}_n.
+\tag{6.45}
+\end{equation}\]</span>
+<p>Para verificar <a href="modelos-arma.html#eq:eq-ecm-prediccion-1-paso">(6.45)</a>, usemos <a href="modelos-arma.html#eq:eq-elementos-matriz-phi-n">(6.43)</a> y <a href="modelos-arma.html#eq:eq-BLP-1-paso-matricial">(6.44)</a></p>
+<span class="math display">\[\begin{eqnarray*}
+  \mathbb{E}(x_{n+1}-x_{n+1}^n)^2 &amp;=&amp; \mathbb{E}(x_{n+1}-\vec{\phi}^t_n\mathbf{x})^2=\mathbb{E}(x_{n+1}-\vec{\gamma}^t_n\Gamma_n^{-1}\mathbf{x})^2 \\
+         &amp;=&amp; \mathbb{E}(x_{n+1}^2-2\vec{\gamma}^t_n\Gamma_n^{-1}\mathbf{x}x_{n+1}+\vec{\gamma}^t_n\Gamma_n^{-1}\mathbf{xx^t}\Gamma_n^{-1}\vec{\gamma}_n) \\
+         &amp;=&amp; \gamma(0)-2\vec{\gamma}^t_n\Gamma_n^{-1}\vec{\gamma}_n+\vec{\gamma}^t_n\Gamma_n^{-1}\Gamma_n\Gamma_n^{-1}\vec{\gamma}_n \\
+         &amp;=&amp; \gamma(0)-\vec{\gamma}^t_n\Gamma_n^{-1}\vec{\gamma}^t_n.
+\end{eqnarray*}\]</span>
+
+<div class="example">
+<p><span id="exm:ejem-prediccion-AR2" class="example"><strong>Ejemplo 6.8  (Predicción para un AR(2))  </strong></span> Suponga que tenemos un proceso AR(2) causal <span class="math inline">\(x_t=\phi_1x_{t-1}+\phi_2x_{t-2}+w_t\)</span>, y una observación <span class="math inline">\(x_1\)</span>. Entonces, usando la ecuación <a href="modelos-arma.html#eq:eq-elementos-matriz-phi-n">(6.43)</a>, la predicción de <span class="math inline">\(x_2\)</span> basada en <span class="math inline">\(x_1\)</span> es <span class="math display">\[x_2^1=\phi_{11}x_1=\frac{\gamma(1)}{\gamma(0)}x_1=\rho(1)x_1\]</span> Ahora, supóngase que deseamos la predicción de <span class="math inline">\(x_3\)</span> basado en dos observaciones <span class="math inline">\(x_1\)</span> y <span class="math inline">\(x_2\)</span>. Podemos usar <a href="modelos-arma.html#eq:eq-elementos-matriz-phi-n">(6.43)</a> de nuevo y resolver</p>
+<p><span class="math display">\[x_3^2=\phi_{21}x_2+\phi_{22}x_1=(\gamma(1),\gamma(2))\left(
+                                                         \begin{array}{cc}
+                                                           \gamma(0) &amp; \gamma(1) \\
+                                                           \gamma(1) &amp; \gamma(0) \\
+                                                         \end{array}
+                                                       \right)^{-1}\left(
+                                                                     \begin{array}{c}
+                                                                       x_2 \\
+                                                                       x_1 \\
+                                                                     \end{array}
+                                                                   \right)
+\]</span></p>
+<p>pero, debe quedar claro a partir del modelo que <span class="math inline">\(x_3^2=\phi_1x_2+\phi_2x_1\)</span>.</p>
+<p>Dado que <span class="math inline">\(\phi_1x_2+\phi_2x_1\)</span> satisface las ecuaciones de predicción <a href="modelos-arma.html#eq:eq-mejor-predictor-lineal">(6.39)</a></p>
+<span class="math display">\[\begin{eqnarray*}
+  \mathbb{E}\{[x_3-(\phi_1x_2+\phi_2x_1)]x_1\} &amp;=&amp; \mathbb{E}(w_3x_1)=0 \\
+  \mathbb{E}\{[x_3-(\phi_1x_2+\phi_2x_1)]x_2\} &amp;=&amp; \mathbb{E}(w_3x_2)=0
+\end{eqnarray*}\]</span>
+<p>De ello se deduce que, de hecho <span class="math inline">\(x_3^2=\phi_1x_2+\phi_2x_1\)</span>, y por la unicidad de los coeficientes en este caso, que <span class="math inline">\(\phi_{21}=\phi_1\)</span> y <span class="math inline">\(\phi_{22}=\phi_2\)</span>. Continuando de esta misma manera, es fácil verificar que para <span class="math inline">\(n\geq2\)</span></p>
+<p><span class="math display">\[x_{n+1}^n=\phi_1x_n+\phi_2x_{n-1}\]</span></p>
+Esto es, <span class="math inline">\(\phi_{n1}=\phi_1\)</span>, <span class="math inline">\(\phi_{n2}=\phi_2\)</span> y <span class="math inline">\(\phi_{nj}=0\)</span> para <span class="math inline">\(j=3,4,\ldots,n\)</span>
+</div>
+
+<hr />
+<p>Del ejemplo <a href="modelos-arma.html#exm:ejem-prediccion-AR2">6.8</a>, es claro que si la serie de tiempo es un proceso AR(p) causal, entonces para <span class="math inline">\(n\geq p\)</span></p>
+<span class="math display" id="eq:eq-predictor-ARp">\[\begin{equation}
+  x_{n+1}^n=\phi_1x_n+\phi_2x_{n-1}+\cdots+\phi_px_{n-p+1}.
+\tag{6.46}
+\end{equation}\]</span>
+<p>Para modelos ARMA en general, las ecuaciones de predicción no serán tan simple como en el caso AR puro. Además, para <span class="math inline">\(n\)</span> grande, el uso de <a href="modelos-arma.html#eq:eq-elementos-matriz-phi-n">(6.43)</a> es prohibitivo, ya que requiere la inversión de una matriz grande. Sin embargo, existen soluciones iterativas que no requieren ninguna inversión de matriz. En particular, utilizaremos la solución recursiva de Levinson (1947) y Durbin (1960).</p>
+
+<div class="proposition">
+<p><span id="prp:propiedad-algoritmo-durbin-levinson" class="proposition"><strong>Proposición 6.4  (Algoritmo de Durbin-Levinson)  </strong></span> Las ecuaciones <a href="modelos-arma.html#eq:eq-elementos-matriz-phi-n">(6.43)</a> y <a href="modelos-arma.html#eq:eq-ecm-prediccion-1-paso">(6.45)</a> se pueden resolver iterativamente como sigue:</p>
+<span class="math display" id="eq:eq-phi00-P10">\[\begin{equation}
+  \phi_{00}=0\text{, } P_1^0=\gamma(0)
+\tag{6.47}
+\end{equation}\]</span>
+<p>Para <span class="math inline">\(n\geq1\)</span></p>
+<span class="math display" id="eq:eq-phi-nn-P-n">\[\begin{equation}
+  \phi_{nn}=\frac{\rho(n)-\sum_{k=1}^{n-1}\phi_{n-1,k}\rho(n-k)}{1-\sum_{k=1}^{n-1}\phi_{n-1,k}\rho(k)}\text{, con }P_{n+1}^n=P_n^{n-1}(1-\phi_{nn}^2)
+\tag{6.48}
+\end{equation}\]</span>
+<p>donde, para <span class="math inline">\(n\geq2\)</span></p>
+<span class="math display" id="eq:eq-coeficientes-phi-durbin-levinson">\[\begin{equation}
+  \phi_{nk}=\phi_{n-1,k}-\phi_{nn}\phi_{n-1,k-1}\text{, para }k=1,2,\ldots,n-1
+\tag{6.49}
+\end{equation}\]</span>
+</div>
+
+<hr />
+
+<div class="example">
+<p><span id="exm:ejem-algoritmo-durbin-levinson" class="example"><strong>Ejemplo 6.9  (Uso del Algoritmo Durbin-Levinson)  </strong></span> Para usar el algoritmo, iniciemos con <span class="math inline">\(\phi_{00}=0, P_1^0=\gamma(0)\)</span>. Entonces, para <span class="math inline">\(n=1\)</span>,</p>
+<p><span class="math display">\[\phi_{11}=\rho(1)\text{ y }P_2^1=\gamma(0)[1-\phi_{11}^2].\]</span></p>
+<p>Para <span class="math inline">\(n=2\)</span></p>
+<span class="math display">\[\begin{eqnarray*}
+  \phi_{22} &amp;=&amp; \frac{\rho(2)-\phi_{11}\rho(1)}{1-\phi_{11}\rho(1)}=\frac{\rho(2)-\rho(1)^2}{1-\rho(1)^2} \\
+  \phi_{21} &amp;=&amp; \phi_{11}-\phi_{22}\phi_{11}=\rho(1)[1-\phi_{22}] \\
+  P_3^2 &amp;=&amp; \gamma(0)[1-\phi_{11}^2][1-\phi_{22}^2]
+\end{eqnarray*}\]</span>
+<p>Para <span class="math inline">\(n=3\)</span></p>
+<p><span class="math display">\[\phi_{33}=\frac{\rho(3)-\phi_{21}\rho(2)-\phi_{22}\rho(1)}{1-\phi_{21}\rho(1)-\phi_{22}\rho(2)}\]</span></p>
+y así sucesivamente.
+</div>
+
+<hr />
+<p>Una consecuencia importante del algoritmo de Durbin-Levinson es la siguiente propiedad.</p>
+
+<div class="proposition">
+<span id="prp:propiedad-solucion-iterativa-PACF" class="proposition"><strong>Proposición 6.5  (Solución Iterativa para la PACF)  </strong></span> La PACF de un proceso estacionario <span class="math inline">\(x_t\)</span>, se puede obtener via iteración de <span class="math display">\[\phi_{nn}=\frac{\rho(n)-\sum_{k=1}^{n-1}\phi_{n-1,k}\rho(n-k)}{1-\sum_{k=1}^{n-1}\phi_{n-1,k}\rho(k)}\text{, con }P_{n+1}^n=P_n^{n-1}(1-\phi_{nn}^2)\]</span> como <span class="math inline">\(\phi_{nn}\)</span>, para <span class="math inline">\(n=1,2,\ldots\)</span>
+</div>
+
+<hr />
+
+<div class="example">
+<p><span id="exm:ejem-PACF-AR2" class="example"><strong>Ejemplo 6.10  (La PACF de un AR(2))  </strong></span> Del ejemplo <a href="modelos-ar.html#exm:ejem-PACF-ARp-causal">4.4</a>, sabemos que para un AR(2), <span class="math inline">\(\phi_{hh}=0\)</span> para <span class="math inline">\(h&gt;2\)</span>, pero usaremos los resultados del ejemplo <a href="modelos-arma.html#exm:ejem-prediccion-AR2">6.8</a> y la proposición <a href="modelos-arma.html#prp:propiedad-solucion-iterativa-PACF">6.5</a> para calcular los primeros tres valores de la PACF. Recuerde (Ejemplo <a href="modelos-arma.html#exm:ejem-ACF-AR2">6.4</a>) que para un AR(2), <span class="math inline">\(\rho(1)=\phi_1/(1-\phi_2)\)</span> y en general <span class="math inline">\(\rho(h)-\phi_1\rho(h-1)-\phi_2\rho(h-2)=0\)</span> para <span class="math inline">\(h\geq2\)</span>. Entonces</p>
+<span class="math display">\[\begin{eqnarray*}
+  \phi_{11} &amp;=&amp; \rho(1)=\frac{\phi_1}{1-\phi_2} \\
+  \phi_{22} &amp;=&amp; \frac{\rho(2)-\rho(1)^2}{1-\rho(1)^2}=\frac{\left[\phi_1\left(\frac{\phi_1}{1-\phi_2}\right)+\phi_2\right]-\left(\frac{\phi_1}{1-\phi_2}\right)^2}{1-\left(\frac{\phi_1}{1-\phi_2}\right)^2}=\phi_2 \\
+  \phi_{21} &amp;=&amp; \phi_1 \\
+  \phi_{33} &amp;=&amp; \frac{\rho(3)-\phi_1\rho(2)-\phi_2\rho(1)}{1-\phi_1\rho(1)-\phi_2\rho(2)}=0.
+\end{eqnarray*}\]</span>
+</div>
+
+<hr />
+<p>Hasta ahora nos hemos concentrado en la predicción de un paso, pero la proposición <a href="modelos-arma.html#prp:propiedad-mejor-predictor-lineal">6.3</a> nos permite calcular el BLP de <span class="math inline">\(x_{n+m}\)</span> para cada <span class="math inline">\(m\geq1\)</span>. Dado los datos <span class="math inline">\(\{x_1,x_2,\ldots,x_n\}\)</span> el predictor de <span class="math inline">\(m\)</span> pasos es</p>
+<span class="math display" id="eq:eq-predictor-m-pasos">\[\begin{equation}
+  x_{n+m}^n=\phi_{n1}^{(m)}x_n+\phi_{n2}^{(m)}x_{n-1}+\cdots+\phi_{nn}^{(m)}x_1
+\tag{6.50}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(\{\phi_{n1}^{(m)},\phi_{n2}^{(m)},\ldots,\phi_{nn}^{(m)}\}\)</span> satisfacen las ecuaciones de predicción</p>
+<p><span class="math display">\[\sum_{j=1}^{n}\phi_{nj}^{(m)}\mathbb{E}(x_{n+1-j}x_{n+1-k})=\mathbb{E}(x_{n+m}x_{n+1-k})\text{, }k=1,2,\ldots,n\]</span></p>
+<p>o</p>
+<span class="math display" id="eq:eq-prediccion-m-pasos">\[\begin{equation}
+  \sum_{j=1}^{n}\phi_{nj}^{(m)}\gamma(k-j)=\gamma(m+k-1)\text{, }k=1,2,\ldots,n
+\tag{6.51}
+\end{equation}\]</span>
+<p>Las ecuaciones de predicción se pueden escribir nuevamente en forma matricial como</p>
+<span class="math display" id="eq:eq-prediccion-m-pasos-matricial">\[\begin{equation}
+  \Gamma_n\vec{\phi}_n^{(m)}=\vec{\gamma}_n^{(m)}
+\tag{6.52}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(\vec{\gamma}_n^{(m)}=(\gamma(m),\ldots,\gamma(m+n-1))^t\)</span> y <span class="math inline">\(\vec{\phi}_n^{(m)}=(\phi_{n1}^{(m)},\phi_{n2}^{(m)},\ldots,\phi_{nn}^{(m)})^t\)</span> son vectores <span class="math inline">\(n\times1\)</span>.</p>
+<p>El error cuadrático medio del predictor de <span class="math inline">\(m\)</span> pasos es</p>
+<span class="math display" id="eq:eq-ecm-prediccion-m-pasos">\[\begin{equation}
+  P_{n+m}^n=\mathbb{E}(x_{n+m}-x_{n+m}^n)^2=\gamma(0)-(\vec{\gamma}_n^{(m)})^t\Gamma_n^{-1}\vec{\gamma}_n^{(m)}
+\tag{6.53}
+\end{equation}\]</span>
+<p>Otro algoritmo útil para calcular pronósticos es dado por Brockwell &amp; Davis (1996)[]. Este algoritmo se obtiene por aplicación directa del Teorema de Proyección a <span class="math inline">\(x_t-x_t^{t-1}\)</span> para <span class="math inline">\(t=1,2,\ldots,n\)</span> usando el hecho de que <span class="math inline">\(x_t-x_t^{t-1}\)</span> y <span class="math inline">\(x_s-x_s^{s-1}\)</span> son no-correlacionados para <span class="math inline">\(s\neq t\)</span>. Presentamos el caso en el cual <span class="math inline">\(x_t\)</span> es una serie de tiempo estacionaria de media cero.</p>
+
+<div class="proposition">
+<p><span id="prp:propiedad-algoritmo-innovaciones" class="proposition"><strong>Proposición 6.6  (Algoritmo de Innovaciones)  </strong></span> Los predictores <span class="math inline">\(x_{t+1}^t\)</span> y sus errores cuadráticos medios <span class="math inline">\(P_{t+1}^t\)</span> se pueden calcular iterativamente como</p>
+<p><span class="math display">\[x_1^0=0\text{, }P_1^0=\gamma(0)\]</span></p>
+<span class="math display" id="eq:eq-interactiva-predictor-x">\[\begin{equation}\label{}
+  x_{t+1}^t=\sum_{j=1}^{t}\theta_{tj}(x_{t+1-j}-x_{t+1-j}^{t-j})\text{, } t=1,2,\ldots
+\tag{6.54}
+\end{equation}\]</span>
+<span class="math display" id="eq:eq-interactiva-ecm-x">\[\begin{equation}
+    P_{t+1}^t=\gamma(0)-\sum_{j=0}^{t-1}\theta_{t,t-j}^2P_{j+1}^j\text{, }t=1,2,\ldots
+\tag{6.55}
+\end{equation}\]</span>
+<p>donde, para <span class="math inline">\(j=0,1,\ldots,t-1\)</span>,</p>
+<span class="math display" id="eq:eq-coeficiente-innovacion">\[\begin{equation}
+  \theta_{t,t-j}=\left(\gamma(t-j)-\sum_{k=0}^{j-1}\theta_{j,j-k}\theta_{t,t-k}P_{k+1}^k\right)\left(P_{j+1}^j\right)^{-1}
+\tag{6.56}
+\end{equation}\]</span>
+</div>
+
+<hr />
+<p>Dado los datos <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span> el algoritmo de innovación se puede calcular sucesivamente para <span class="math inline">\(t=1\)</span>, luego <span class="math inline">\(t=2\)</span> y así hasta <span class="math inline">\(t=n\)</span>, en cuyo caso obtenemos el predictor <span class="math inline">\(x_{n+1}^n\)</span> y el error cuadrático medio <span class="math inline">\(P_{n+1}^n\)</span>. El predictor de <span class="math inline">\(m\)</span> pasos y el error cuadrático medio basado en el algoritmo de innovación son dados por</p>
+<span class="math display" id="eq:eq-interactiva-ecm-x-m-pasos" id="eq:eq-interactiva-predictor-x-m-pasos">\[\begin{eqnarray}
+  x_{n+m}^n &amp;=&amp; \sum_{j=m}^{n+m-1}\theta_{n+m-1,j}(x_{n+m-j}-x_{n+m-j}^{n+m-j-1})\tag{6.57} \\
+  P_{n+m}^n &amp;=&amp; \gamma(0)-\sum_{j=m}^{n+m-1}\theta_{n+m-1,j}^2P_{n+m-j}^{n+m-j-1}\tag{6.58}
+\end{eqnarray}\]</span>
+<p>donde los <span class="math inline">\(\theta_{n+m-1,j}\)</span> se obtienen por iteración continua de <a href="modelos-arma.html#eq:eq-coeficiente-innovacion">(6.56)</a>.</p>
+
+<div class="example">
+<p><span id="exm:ejem-prediccion-MA1" class="example"><strong>Ejemplo 6.11  (Predicción de un MA(1))  </strong></span> El algoritmo de innovación nos da un buen predictor para un proceso de promedio móvil. Considere un modelo MA(1), <span class="math inline">\(x_t=w_t+\theta x_{t-1}\)</span>. Recuerde que <span class="math inline">\(\gamma(0)=(1+\theta^2)\sigma_w^2, \gamma(1)=\theta\sigma_w^2\)</span> y <span class="math inline">\(\gamma(h)=0\)</span> para <span class="math inline">\(h&gt;1\)</span>. Entonces, usando la proposición <a href="modelos-arma.html#prp:propiedad-algoritmo-innovaciones">6.6</a>, tenemos,</p>
+<span class="math display">\[\begin{eqnarray*}
+  \theta_{n1} &amp;=&amp; \theta\sigma_w^2/P_n^{n-1} \\
+  \theta_{nj} &amp;=&amp; 0\text{, para }j=2,3,\ldots,n \\
+  P_1^0 &amp;=&amp; (1+\theta^2)\sigma_w^2 \\
+  P_{n+1}^n &amp;=&amp; (1+\theta^2-\theta\theta_{n1})\sigma_w^2
+\end{eqnarray*}\]</span>
+<p>Finalmente, de <a href="modelos-arma.html#eq:eq-interactiva-predictor-x">(6.54)</a> el predictor de un paso es</p>
+<span class="math display">\[x_{n+1}^n=\theta(x_n-x_n^{n-1})\sigma_w^2/P_n^{n-1}\]</span>
+</div>
+
+<div id="pronosticos-para-procesos-arma" class="section level3">
+<h3><span class="header-section-number">6.3.1</span> Pronósticos para procesos ARMA</h3>
+<p>Las ecuaciones de predicción general <a href="modelos-arma.html#eq:eq-mejor-predictor-lineal">(6.39)</a> nos dan una pequeña intuición en el pronóstico de los modelos ARMA en general. Hay diferentes maneras de expresar estos pronósticos, y cada uno ayuda a entender la estructura especial de la predicción ARMA. A través de toda esta sección asumiremos que <span class="math inline">\(x_t\)</span> es un proceso ARMA(p,q) causal e invertible <span class="math inline">\(\phi(B)x_t=\theta(B)w_t\)</span> donde <span class="math inline">\(w_t\sim\text{iid}N(0,\sigma_w^2)\)</span>. En el caso de media distinto de cero, <span class="math inline">\(\mathbb{E}(x_t)=\mu\)</span>, reemplazamos <span class="math inline">\(x_t\)</span> por <span class="math inline">\(x_t-\mu\)</span> en el modelo.</p>
+<p>Primero consideraremos dos tipos de pronósticos. Escribiremos el mínimo del error cuadrático medio del predictor <span class="math inline">\(x_{n+m}\)</span> como <span class="math inline">\(x_{n+m}^n\)</span> basado en los datos <span class="math inline">\(\{x_n,x_{n-1},\ldots,x_1\}\)</span>, esto es</p>
+<p><span class="math display">\[x_{n+m}^n=\mathbb{E}(x_{n+m}|x_n,x_{n-1},\ldots,x_1).\]</span></p>
+<p>Para un modelo ARMA, es fácil calcular el predictor de <span class="math inline">\(x_{n+m}\)</span> asumiendo que tenemos el historial completo del proceso <span class="math inline">\(\{x_n,x_{n-1},\ldots\}\)</span>. Denotaremos el predictor de <span class="math inline">\(x_{n+m}\)</span> basado en <em>infinitos valores pasados</em> como</p>
+<p><span class="math display">\[\tilde{x}_{n+m}=\mathbb{E}(x_{n+m}|x_n,x_{n-1},\ldots).\]</span></p>
+<p>La idea aquí, es que para muestra grandes <span class="math inline">\(\tilde{x}_{n+m}\)</span> proveerá una buena aproximación de <span class="math inline">\(x_{n+m}^n\)</span>.</p>
+<p>Ahora, escribamos <span class="math inline">\(x_{n+m}\)</span> en sus formas causal e invertible</p>
+<span class="math display" id="eq:eq-predictor-forma-invertible" id="eq:eq-predictor-forma-causal">\[\begin{eqnarray}
+  x_{n+m} &amp;=&amp; \sum_{j=0}^{\infty}\psi_jw_{n+m-j}\text{, }\psi_0=1 \tag{6.59} \\
+  w_{n+m} &amp;=&amp; \sum_{j=0}^{\infty}\pi_jx_{n+m-j}\text{, }\pi_0=1 \tag{6.60}
+\end{eqnarray}\]</span>
+<p>Entonces, tomando esperanza condicional en <a href="modelos-arma.html#eq:eq-predictor-forma-causal">(6.59)</a>, tenemos</p>
+<span class="math display" id="eq:eq-esperanza-predictor-causal">\[\begin{equation}
+  \tilde{x}_{n+m}=\sum_{j=0}^{\infty}\psi_j\tilde{w}_{n+m-j}=\sum_{j=m}^{\infty}\psi_jw_{n+m-j}
+\tag{6.61}
+\end{equation}\]</span>
+<p>ya que por <a href="modelos-arma.html#eq:eq-predictor-forma-invertible">(6.60)</a></p>
+<p><span class="math display">\[\tilde{w}_t\equiv\mathbb{E}(w_t|x_n,x_{n-1},\ldots)=\begin{cases}
+                    0,&amp; t&gt;n\\
+                    w_t,&amp; t\leq n
+                \end{cases}\]</span></p>
+<p>Similarmente, tomando esperanza condicional en <a href="modelos-arma.html#eq:eq-predictor-forma-invertible">(6.60)</a>, se tiene</p>
+<p><span class="math display">\[0=\tilde{x}_{n+m}+\sum_{j=1}^{\infty}\pi_j\tilde{x}_{n+m-j}\]</span></p>
+<p>o</p>
+<span class="math display" id="eq:eq-esperanza-predictor-invertible">\[\begin{equation}
+  \tilde{x}_{n+m}=-\sum_{j=1}^{m-1}\pi_j\tilde{x}_{n+m-j}-\sum_{j=m}^{\infty}\pi_jx_{n+m-j}
+\tag{6.62}
+\end{equation}\]</span>
+<p>usando el hecho de que <span class="math inline">\(\mathbb{E}(x_t|x_n,x_{n-1},\ldots)=x_t\)</span> para <span class="math inline">\(t\leq n\)</span>.</p>
+<p>La predicción se consigue recursivamente usando <a href="modelos-arma.html#eq:eq-esperanza-predictor-invertible">(6.62)</a> iniciando con un predictor de un paso <span class="math inline">\(m=1\)</span> y continuando para <span class="math inline">\(m=2,3,\ldots\)</span>. Usando <a href="modelos-arma.html#eq:eq-esperanza-predictor-invertible">(6.62)</a> podemos escribir</p>
+<p><span class="math display">\[x_{n+m}-\tilde{x}_{n+m}=\sum_{j=0}^{m-1}\psi_jw_{n+m-j}\]</span></p>
+<p>de modo que el error cuadrático medio de predicción se puede escribir como</p>
+<span class="math display" id="eq:eq-ecm-prediccion">\[\begin{equation}
+  P_{n+m}^n=\mathbb{E}(x_{n+m}-\tilde{x}_{n+m})^2=\sigma_w^2\sum_{j=0}^{m-1}\psi_j^2
+\tag{6.63}
+\end{equation}\]</span>
+<p>También, observe que para una muestra fija de tamaño <span class="math inline">\(n\)</span> los errores de predicción están correlacionados. Esto es, para <span class="math inline">\(k\geq1\)</span>,</p>
+<span class="math display" id="eq:eq-correlacion-ecm-prediccion">\[\begin{equation}
+  \mathbb{E}[(x_{n+m}-\tilde{x}_{n+m})(x_{n+m+k}-\tilde{x}_{n+m+k})]=\sigma_w^2\sum_{j=0}^{m-1}\psi_j\psi_{j+k}
+\tag{6.64}
+\end{equation}\]</span>
+
+<div class="example">
+<p><span id="exm:ejem-pronostico-largo-plazo" class="example"><strong>Ejemplo 6.12  (Pronóstico a largo plazo)  </strong></span> Consideremos el pronóstico para un proceso ARMA de media <span class="math inline">\(\mu\)</span>. Del caso de media cero en <a href="modelos-arma.html#eq:eq-esperanza-predictor-causal">(6.61)</a> podemos deducir que el pronóstico de <span class="math inline">\(m\)</span> pasos se puede escribir como</p>
+<span class="math display" id="eq:eq-pronostico-m-pasos">\[\begin{equation}
+    \tilde{x}_{n+m}=\mu+\sum_{j=m}^{\infty}\psi_jw_{n+m-j}
+\tag{6.65}
+\end{equation}\]</span>
+<p>Note que los <span class="math inline">\(\psi\)</span> pesos decrece a cero de forma exponencial, es claro entonces que</p>
+<p><span class="math display">\[\tilde{x}_{n+m}\to\mu\]</span></p>
+<p>exponencialmente (en el sentido de media cuadrado) cuando <span class="math inline">\(m\to\infty\)</span>. Más aún, por <a href="modelos-arma.html#eq:eq-ecm-prediccion">(6.63)</a> el error cuadrático medio de predicción</p>
+<span class="math display" id="eq:eq-convergencia-ecm-prediccion">\[\begin{equation}
+  P_{n+m}^n\to\sigma_w^2\sum_{j=0}^{\infty}\psi_j^2,
+\tag{6.66}
+\end{equation}\]</span>
+<p>exponencialmente cuando <span class="math inline">\(m\to\infty\)</span>.</p>
+Es claro de <a href="modelos-arma.html#eq:eq-pronostico-m-pasos">(6.65)</a> y <a href="modelos-arma.html#eq:eq-convergencia-ecm-prediccion">(6.66)</a> que el pronóstico de un proceso ARMA rápidamente se estabiliza a la media con un error de predicción constante a medida que el periodo de pronóstico <span class="math inline">\(m\)</span> crece.
+</div>
+
+<hr />
+<p>Cuando <span class="math inline">\(n\)</span> es pequeño, las ecuaciones generales de predicción <a href="modelos-arma.html#eq:eq-mejor-predictor-lineal">(6.39)</a> se puede usar fácilmente. Cuando <span class="math inline">\(n\)</span> es grande, usaremos <a href="modelos-arma.html#eq:eq-esperanza-predictor-causal">(6.61)</a> por truncamiento, porque solo tenemos disponibles las observaciones <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span>. En este caso truncamos <a href="modelos-arma.html#eq:eq-esperanza-predictor-causal">(6.61)</a> haciendo</p>
+<p><span class="math display">\[\sum_{j=n+m}^{\infty}\pi_jx_{n+m-j}=0\]</span></p>
+<p>El predictor truncado se escribe entonces como</p>
+<span class="math display" id="eq:eq-predictor-truncado">\[\begin{equation}
+  \tilde{x}_{n+m}^n=-\sum_{j=1}^{m-1}\pi_j\tilde{x}_{n+m-j}^n-\sum_{j=m}^{n+m-1}\pi_jx_{n+m-j}
+\tag{6.67}
+\end{equation}\]</span>
+<p>el cual es también calculado recursivamente para <span class="math inline">\(m=1,2,\ldots\)</span>. El error cuadrático medio de predicción, en este caso, se aproxima por <a href="modelos-arma.html#eq:eq-ecm-prediccion">(6.63)</a>.</p>
+<p>Para un modelo AR(p) y cuando <span class="math inline">\(n&gt;p\)</span> la ecuación <a href="modelos-arma.html#eq:eq-predictor-ARp">(6.46)</a> nos da el predictor exacto <span class="math inline">\(x_{n+m}^n\)</span> de <span class="math inline">\(x_{n+m}\)</span> y no hay necesidad de aproximación. Esto es, para <span class="math inline">\(n&gt;p\)</span>, <span class="math inline">\(\tilde{x}_{n+m}^n=\tilde{x}_{n+m}=x_{n+m}^n\)</span>.</p>
+<p>También, en este caso, el error de predicción de un paso es <span class="math inline">\(\mathbb{E}(x_{n+1}-x_{n+1}^n)^2=\sigma_w^2\)</span>. Para un modelo ARMA(p,q) en general, los predictores truncados para <span class="math inline">\(m=1,2,\ldots\)</span>, son</p>
+<span class="math display" id="eq:eq-predictor-truncado-ARMApq">\[\begin{equation}
+  \tilde{x}_{n+m}^n=\phi_1\tilde{x}_{n+m}^n+\cdots+\phi_p\tilde{x}_{n+m-p}^n+\theta_1\tilde{w}_{n+m-1}^n+\cdots+\theta_q\tilde{w}_{n+m-q}^n
+\tag{6.68}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(\tilde{x}_t^n=x_t\)</span> para <span class="math inline">\(1\leq t\leq n\)</span> y <span class="math inline">\(\tilde{x}_t^n=0\)</span> para <span class="math inline">\(t\leq0\)</span>. Los errores de predicción truncados están dados por:</p>
+<span class="math display">\[\begin{equation*}
+  \begin{cases}
+  \tilde{w}_t^n=0&amp;\text{ para }t\leq0\text{ ó }t&gt;n\\
+  \tilde{w}_t^n=\phi(B)\tilde{x}_t^n-\theta_1\tilde{w}_{t-1}^n-\cdots-\theta_q\tilde{w}_{t-q}^n&amp;\text{ para }1\leq t\leq n.
+  \end{cases}
+\end{equation*}\]</span>
+
+<div class="example">
+<p><span id="exm:ejem-pronostico-ARMA11" class="example"><strong>Ejemplo 6.13  (Pronóstico para una serie ARMA(1,1))  </strong></span> Dado los datos <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span> para propósito de pronósticos, escribiremos el modelo como</p>
+<p><span class="math display">\[x_{n+1}=\phi x_n+w_{n+1}+\theta w_n.\]</span></p>
+<p>Entonces, basado en <a href="modelos-arma.html#eq:eq-predictor-truncado-ARMApq">(6.68)</a>, el pronóstico truncado de un paso es</p>
+<p><span class="math display">\[\tilde{x}_{n+1}^n=\phi x_n+0+\theta\tilde{w}_n^n.\]</span></p>
+<p>Para <span class="math inline">\(m\geq2\)</span>, tenemos</p>
+<p><span class="math display">\[\tilde{x}_{n+m}^n=\phi\tilde{x}_{n+m-1}^n,\]</span></p>
+<p>el cual puede ser calculado recursivamente para <span class="math inline">\(m=1,2,\ldots\)</span>.</p>
+<p>Para calcular <span class="math inline">\(\tilde{w}_n^n\)</span>, que se necesitará para iniciar los pronósticos sucesivos, podemos escribir el modelo como <span class="math inline">\(w_t=x_t-\phi x_{t-1}-\theta w_{t-1}\)</span> para <span class="math inline">\(t=1,2,\ldots,n\)</span>. Para el pronóstico truncado, usando <a href="modelos-arma.html#eq:eq-predictor-truncado-ARMApq">(6.68)</a> hacemos <span class="math inline">\(\tilde{w}_0^n=0, \tilde{w}_1^n=x_1\)</span> y entonces iteramos el error</p>
+<p><span class="math display">\[\tilde{w}_t^n=x_t-\phi x_{t-1}-\theta\tilde{w}_{t-1}^n\text{, }t=2,3,\ldots,n.\]</span></p>
+<p>La varianza aproximada del pronóstico se calcula de <a href="modelos-arma.html#eq:eq-ecm-prediccion">(6.63)</a> usando los <span class="math inline">\(\psi\)</span> pesos determinados como en el ejemplo <a href="modelos-arma.html#exm:ejem-pesos-ARMA-causal">6.6</a>. En particular, los <span class="math inline">\(\psi\)</span> pesos satisfacen <span class="math inline">\(\psi_j=(\phi+\theta)\phi^{j-1}\)</span> para <span class="math inline">\(j\geq1\)</span>. Este resultado nos da</p>
+<span class="math display">\[\begin{eqnarray*}
+  P_{n+m}^n &amp;=&amp; \sigma_w^2\left[1+(\phi+\theta)^2\sum_{j=1}^{m-1}\phi^{2(j-1)}\right] \\
+            &amp;=&amp; \sigma_w^2\left[1+\frac{(\phi+\theta)^2(1-\phi^{2(m-1)})}{(1-\phi^2)}\right]
+\end{eqnarray*}\]</span>
+</div>
+
+<hr />
+<p>Para evaluar la precisión de los pronósticos, se calculan los intervalos de predicción junto con el pronóstico. En general, los <span class="math inline">\((1-\alpha)\)</span> intervalos de predicción son de la forma</p>
+<span class="math display" id="eq:eq-intervalos-prediccion">\[\begin{equation}
+  x_{n+m}^n\pm c_{\frac{\alpha}{2}}\sqrt{P_{n+m}^n}
+\tag{6.69}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(c_{\alpha/2}\)</span> se elige de manera de obtener el grado deseado de confidencia. Por ejemplo, si el proceso es gaussiano, entonces elegimos <span class="math inline">\(c_{\alpha/2}=2\)</span> los cual nos da un intervalo de predicción de aproximadamente 95% para <span class="math inline">\(x_{n+m}\)</span>. Si estamos interesados en establecer un intervalos de predicción sobre más de un periodo de tiempo, entonces <span class="math inline">\(c_{\alpha/2}\)</span> se ajustará apropiadamente, por ejemplo, usando la desigualdad de Bonferroni. (véase Shumway (2006), Capítulo 4)</p>
+
+<div class="example">
+<p><span id="exm:ejem-pronostico-serie-reclutamiento" class="example"><strong>Ejemplo 6.14  (Pronóstico para la serie de nuevos peces)  </strong></span> Usando los parámetros estimados como los valores actuales de los parámetros, la figura <a href="modelos-arma.html#fig:grafico-pronostico-serie-reclutamiento">6.3</a> muestra los resultados de la serie de nuevos peces dada en el ejemplo <a href="modelos-ar.html#exm:ejem-serie-nuevos-peces-AR2">4.5</a>, sobre un periodo de 24 meses <span class="math inline">\(m=1,2,\ldots,24\)</span>.</p>
+<p>Los pronósticos actuales se calculan como</p>
+<p><span class="math display">\[x_{n+m}^n=6.74+1.35x_{n+m-1}^n-0.46x_{n+m-2}^n\]</span></p>
+<p>para <span class="math inline">\(n=453\)</span> y <span class="math inline">\(m=1,2,\ldots,12\)</span>. Recuerde que <span class="math inline">\(x_t^s=x_t\)</span> cuando <span class="math inline">\(t\leq s\)</span>. Los errores de pronóstico <span class="math inline">\(P_{n+m}^n\)</span> se calculan usando <a href="modelos-arma.html#eq:eq-ecm-prediccion">(6.63)</a>. Recuerde que <span class="math inline">\(\hat{\sigma}_w^2=90.31\)</span>, y usando <a href="modelos-arma.html#eq:eq-diferencias-homogeneas-pesos">(6.28)</a> del ejemplo <a href="modelos-ar.html#exm:ejem-serie-nuevos-peces-AR2">4.5</a> tenemos <span class="math inline">\(\psi_j=1.35\psi_{j-1}-0.46\psi_{j-2}\)</span> para <span class="math inline">\(j\geq2\)</span>, donde <span class="math inline">\(\psi_0=1\)</span> y <span class="math inline">\(\psi_1=1.35\)</span>. Entonces para <span class="math inline">\(n=453\)</span></p>
+<span class="math display">\[\begin{eqnarray*}
+  P_{n+1}^n &amp;=&amp; 90.31 \\
+  P_{n+2}^n &amp;=&amp; 90.31(1+1.35^2) \\
+  P_{n+3}^n &amp;=&amp; 90.31(1+1.35^2+[1.35^2-0.46^2])
+\end{eqnarray*}\]</span>
+<p>y así sucesivamente.</p>
+<p>Note como el pronóstico se nivela rápidamente y los intervalos de predicción son amplios, aún cuando en este caso los límites están basados en un solo error estándar; esto es, <span class="math inline">\(x_{n+m}^n\pm\sqrt{P_{n+m}^n}\)</span>.</p>
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:grafico-pronostico-serie-reclutamiento"></span>
+<img src="images/Estimacion-Yule-Walker-serie-reclutamiento.png" alt="24 meses de pronósticos para la serie de reclutamientos (nuevos peces)" width="1310" />
+<p class="caption">
+Figura 6.3: 24 meses de pronósticos para la serie de reclutamientos (nuevos peces)
+</p>
+</div>
+<hr />
+<p>Completaremos está sección con una breve discusión de retroproyección. En retroproyección deseamos predecir <span class="math inline">\(x_{1-m}\)</span>, <span class="math inline">\(m=1,2,\ldots\)</span>, basado en los datos <span class="math inline">\(\{x_1,x_2,\ldots,x_n\}\)</span>.</p>
+<p>Escribamos la retroproyección como</p>
+<span class="math display" id="eq:eq-retroproyeccion">\[\begin{equation}
+  x_{1-m}^n=\sum_{j=1}^{n}\alpha_jx_j
+\tag{6.70}
+\end{equation}\]</span>
+<p>Análogamente a <a href="modelos-arma.html#eq:eq-prediccion-m-pasos">(6.51)</a>, las ecuaciones de predicción (asumiendo <span class="math inline">\(\mu=0\)</span>) son</p>
+<span class="math display" id="eq:eq-retroproyeccion-m-pasos-2" id="eq:eq-retroproyeccion-m-pasos-1">\[\begin{eqnarray}
+  \sum_{j=1}^{n}\alpha_j\mathbb{E}(x_jx_k) &amp;=&amp; \mathbb{E}(x_{1-m}x_k)\text{, }k=1,\ldots,n\text{ ó } \tag{6.71} \\
+  \sum_{j=1}^{n}\alpha_j\gamma(k-j) &amp;=&amp; \gamma(m+k-1)\text{, }k=1,\ldots,n \tag{6.72}
+\end{eqnarray}\]</span>
+<p>Estas ecuaciones son precisamente las ecuaciones de predicción para predicción a futuro. Estos es, <span class="math inline">\(\alpha_j\equiv\phi_{nj}^{(m)}\)</span> para <span class="math inline">\(j=1,\ldots,n\)</span> donde los <span class="math inline">\(\phi_{nj}^{(m)}\)</span> están dados por <a href="modelos-arma.html#eq:eq-prediccion-m-pasos-matricial">(6.52)</a>. Finalmente las retroproyecciones están dadas por</p>
+<span class="math display" id="eq:eq-retroproyeccion-final">\[\begin{equation}
+  x_{1-m}^n=\phi_{nj}^{(m)}x_1+\ldots+\phi_{nn}^{(m)}x_n\text{, con }m=1,2,\ldots
+\tag{6.73}
+\end{equation}\]</span>
+
+<div class="example">
+<p><span id="exm:ejem-retroproyeccion-ARMA11" class="example"><strong>Ejemplo 6.15  (Retroproyección de un proceso ARMA(1,1))  </strong></span> Considere un proceso ARMA(1,1) causal e invertible <span class="math inline">\(x_t=\phi x_{t-1}+\theta w_{t-1}+w_t\)</span>, llamaremos a este, modelo hacia adelante. Hemos visto que el mejor predictor lineal hacia atrás en el tiempo es el mismo predictor lineal hacia adelante en el tiempo para procesos estacionarios. Dado que estamos suponiendo que el modelo ARMA es gaussiano, tenemos que el mínimo error cuadrático medio de predicción hacia atrás es el mismo que hacia adelante para modelos ARMA. Entonces, el proceso se puede generar equivalentemente por un modelo hacia atrás <span class="math inline">\(x_t=\phi x_{t+1}+\theta v_{t+1}+v_t\)</span> donde <span class="math inline">\(\{v_t\}\)</span> es un ruido blanco gaussiano con varianza <span class="math inline">\(\sigma_w^2\)</span>. [^nota8]</p>
+<p>[^nota8:] En el caso estacionario gaussiano (a) la distribución de <span class="math inline">\(\{x_{n+1},x_n,\ldots,x_1\}\)</span> es la misma que (b) la distribución de <span class="math inline">\(\{x_0,x_1,\ldots,x_n\}\)</span>. En pronóstico usamos (a) para obtener <span class="math inline">\(\mathbb{E}(x_{n+1}|x_n,\ldots,x_1)\)</span>; en retroproyección usamos (b) para obtener <span class="math inline">\(\mathbb{E}(x_0|x_1,\ldots,x_n)\)</span>. Dado que (a) y (b) son iguales, los dos problemas son equivalentes.</p>
+<p>Escribiremos <span class="math inline">\(x_t=\sum_{j=0}^{\infty}\psi_jv_{t+j}\)</span> donde <span class="math inline">\(\psi_0=1\)</span>; esto significa que <span class="math inline">\(x_t\)</span> es no-correlacionado con <span class="math inline">\(\{v_{t-1},v_{t-2},\ldots\}\)</span>, en analogía con el modelo a futuro.</p>
+<p>Dado los datos <span class="math inline">\(\{x_1,x_2,\ldots,x_n\}\)</span>, truncamos <span class="math inline">\(v_t=\mathbb{E}(v_n|x_1,\ldots,x_n)\)</span> a cero. Esto es, hacemos <span class="math inline">\(\tilde{v}_n^n=0\)</span>, como aproximación inicial, y entonces generamos los errores</p>
+<p><span class="math display">\[\tilde{v}_t^n=x_t-\phi x_{t+1}+\theta\tilde{v}_{t+1}^n\text{, con }t=(n-1),(n-2),\ldots,1.\]</span></p>
+<p>Entonces</p>
+<p><span class="math display">\[\tilde{x}_0^n=\phi x_1+\theta\tilde{v}_1^n+\tilde{v}_0^n=\phi x_1+\theta\tilde{v}_1^n.\]</span></p>
+<p>porque <span class="math inline">\(\tilde{v}_t^n=0\)</span> para <span class="math inline">\(t\leq0\)</span>. Continuando, las retroproyecciones truncadas general están dadas por</p>
+<p><span class="math display">\[\tilde{x}_{1-m}^n=\phi\tilde{x}_{2-m}^n\text{, para }m=2,3,\ldots\]</span></p>
+</div>
+
+
+</div>
+</div>
+</div>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-78759535-1', 'auto');
+ga('send', 'pageview');  
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="modelos-ma.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="estimacion-de-parametros.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/synergyvision/Teoria-de-Portafolio/edit/master/bookdown/303-modelos-ARMA.Rmd",
+"text": "Edit"
+},
+"download": ["Serie-de-Tiempo-en-R.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

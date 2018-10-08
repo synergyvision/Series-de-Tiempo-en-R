@@ -411,7 +411,7 @@ En el caso de raíces distintas, la solución de la ecuación en diferencias hom
   u_n &=& z_1^{-n}\times(\text{un polinomio en } n \text{ de grado }m_1-1) \\
       &+& z_2^{-n}\times(\text{un polinomio en } n \text{ de grado }m_2-1)
 \end{eqnarray*}
-donde $m_1$ es la multiplicidad de la raíz $z_1$ y $m_2$ es la multiplicidad de la raíz $z_2$. En este ejemplo, se tiene $m_1=m_2=1$ y decimos que $c_1$ y $c_2 $ son polinomios de grado cero respectivamente.
+donde $m_1$ es la multiplicidad de la raíz $z_1$ y $m_2$ es la multiplicidad de la raíz $z_2$. En este ejemplo, se tiene $m_1=m_2=1$ y decimos que $c_1$ y $c_2$ son polinomios de grado cero respectivamente.
 
 En el caso de raíces repetidas, la solución es
 $$u_n=z_0^{-n}\times(\text{un polinomio en } n \text{ de grado }m_0-1),$$

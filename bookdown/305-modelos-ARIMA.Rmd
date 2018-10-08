@@ -288,13 +288,14 @@ $$x_t=\beta_0+\beta_1t+\beta_2t^2+\cdots+\beta_8t^8+w_t$$
 El modelo fijado, el cual es graficado hasta el año 2010, (linea continua roja), pasa a través de los 9 puntos. El modelo predice que la población de los EE.UU. estará cercana a cero en el año 2000, y cruzará el cero en algún mes del año 2002, lo cual es falso.
 ```
 
-```{rfig.cap="Población de los EE.UU (puntos azules) y modelos ajustado (linea roja continua) de 1910 hasta 2010",fig-sobreajuste-poblacion-usa}
+```{r, rfig.cap="Población de los EE.UU (puntos azules) y modelos ajustado (linea roja continua) de 1910 hasta 2010",fig-sobreajuste-poblacion-usa}
 uspop=read.table("data/USPOP2.txt", header = TRUE)
 fit.usp=lm(Pob~t+I(t^2)+I(t^3)+I(t^4)+I(t^5)+I(t^6)+I(t^7)+I(t^8),
            data=uspop)
 plot(uspop,type="p",lty=19,col="blue",xlim=c(1910,2010))
 lines(x = uspop$t, y=predict(fit.usp), col = "red", lwd = 2)
 ```
+
 ----
 
 El paso final en el ajuste de modelos es la elección del modelo. Esto es, debemos decidir que modelo mantendremos para la predicción. La técnica más popular es calcular los índices AIC, AICc y SIC (BIC), descritos en las definiciones \@ref(def:defi-AIC-2), \@ref(def:defi-AICc) y \@ref(def:defi-SIC).

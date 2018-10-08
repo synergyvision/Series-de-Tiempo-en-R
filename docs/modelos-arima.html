@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Series de Tiempo en R</title>
+  <meta name="description" content="Series de Tiempo en R">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Series de Tiempo en R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://synergy.vision/Series-de-Tiempo-en-R/" />
+  <meta property="og:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+  
+  <meta name="github-repo" content="synergyvision/Series-de-Tiempo-en-R/" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Series de Tiempo en R" />
+  
+  
+  <meta name="twitter:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+
+<meta name="author" content="Synergy Vision">
+
+
+<meta name="date" content="2018-10-08">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="estimacion-de-parametros.html">
+<link rel="next" href="modelos-arch-y-garch.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="https://cdn.datacamp.com/datacamp-light-latest.min.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="images/logovision-black.png" width="160"></img></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#por-que-leer-este-libro"><i class="fa fa-check"></i>¿Por qué leer este libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-libro"><i class="fa fa-check"></i>Estructura del libro</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#informacion-sobre-los-programas-y-convenciones"><i class="fa fa-check"></i>Información sobre los programas y convenciones</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#practicas-interactivas-con-r"><i class="fa fa-check"></i>Prácticas interactivas con R</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="acerca-del-autor.html"><a href="acerca-del-autor.html"><i class="fa fa-check"></i>Acerca del Autor</a></li>
+<li class="chapter" data-level="1" data-path="introduccion.html"><a href="introduccion.html"><i class="fa fa-check"></i><b>1</b> Introducción</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduccion.html"><a href="introduccion.html#conceptos-financieros-basicos"><i class="fa fa-check"></i><b>1.1</b> Conceptos financieros básicos</a></li>
+<li class="chapter" data-level="1.2" data-path="introduccion.html"><a href="introduccion.html#conceptos-basicos"><i class="fa fa-check"></i><b>1.2</b> Conceptos básicos</a></li>
+<li class="chapter" data-level="1.3" data-path="introduccion.html"><a href="introduccion.html#ejemplos"><i class="fa fa-check"></i><b>1.3</b> Ejemplos</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduccion.html"><a href="introduccion.html#clasificacion-de-las-series-de-tiempo"><i class="fa fa-check"></i><b>1.3.1</b> Clasificación de las series de tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduccion.html"><a href="introduccion.html#componentes-de-una-serie-de-tiempo"><i class="fa fa-check"></i><b>1.4</b> Componentes de una serie de tiempo</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduccion.html"><a href="introduccion.html#el-modelo-aditivo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.1</b> El Modelo Aditivo de Componentes de Series de Tiempo</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduccion.html"><a href="introduccion.html#el-modelo-multiplicativo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.2</b> El Modelo Multiplicativo de Componentes de Series de Tiempo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>2</b> Características de series de tiempo</a><ul>
+<li class="chapter" data-level="2.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#medidas-de-dependencia-para-series-de-tiempo"><i class="fa fa-check"></i><b>2.1</b> Medidas de dependencia para series de tiempo</a></li>
+<li class="chapter" data-level="2.2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia"><i class="fa fa-check"></i><b>2.2</b> Estimación de la Tendencia</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-en-ausencia-de-estacionalidad"><i class="fa fa-check"></i><b>2.2.1</b> Estimación de la tendencia en ausencia de estacionalidad</a></li>
+<li class="chapter" data-level="2.2.2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-y-la-estacionalidad"><i class="fa fa-check"></i><b>2.2.2</b> Estimación de la tendencia y la estacionalidad</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-por-regresion-clasica"><i class="fa fa-check"></i><b>2.3</b> Estimación de la tendencia por regresión clásica</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#regresion-clasica"><i class="fa fa-check"></i><b>2.3.1</b> Regresión Clásica</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>3</b> Modelos de series de tiempo</a><ul>
+<li class="chapter" data-level="3.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-estocasticos"><i class="fa fa-check"></i><b>3.1</b> Modelos Estocásticos</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#procesos-estocasticos"><i class="fa fa-check"></i><b>3.1.1</b> Procesos Estocásticos</a></li>
+<li class="chapter" data-level="3.1.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#momentos-varianza-covarianza-y-correlacion"><i class="fa fa-check"></i><b>3.1.2</b> Momentos, Varianza, Covarianza y Correlación</a></li>
+<li class="chapter" data-level="3.1.3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#variacion-de-un-proceso"><i class="fa fa-check"></i><b>3.1.3</b> Variación de un proceso</a></li>
+<li class="chapter" data-level="3.1.4" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#martingalas"><i class="fa fa-check"></i><b>3.1.4</b> Martingalas</a></li>
+<li class="chapter" data-level="3.1.5" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#propiedad-de-markov"><i class="fa fa-check"></i><b>3.1.5</b> Propiedad de Markov</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-lineales"><i class="fa fa-check"></i><b>3.2</b> Modelos lineales</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#proceso-de-ruido-blanco"><i class="fa fa-check"></i><b>3.2.1</b> Proceso de Ruido Blanco</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="modelos-ar.html"><a href="modelos-ar.html"><i class="fa fa-check"></i><b>4</b> Modelos AR</a><ul>
+<li class="chapter" data-level="4.1" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar1"><i class="fa fa-check"></i><b>4.1</b> Modelo AR(1)</a></li>
+<li class="chapter" data-level="4.2" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar2"><i class="fa fa-check"></i><b>4.2</b> Modelo AR(2)</a></li>
+<li class="chapter" data-level="4.3" data-path="modelos-ar.html"><a href="modelos-ar.html#procesos-arp"><i class="fa fa-check"></i><b>4.3</b> Procesos AR(p)</a></li>
+<li class="chapter" data-level="4.4" data-path="modelos-ar.html"><a href="modelos-ar.html#funcion-de-autocorrelacion-parcial"><i class="fa fa-check"></i><b>4.4</b> Función de Autocorrelación Parcial</a></li>
+<li class="chapter" data-level="4.5" data-path="modelos-ar.html"><a href="modelos-ar.html#criterios-de-informacion"><i class="fa fa-check"></i><b>4.5</b> Criterios de Información</a></li>
+<li class="chapter" data-level="4.6" data-path="modelos-ar.html"><a href="modelos-ar.html#estimacion-de-parametros."><i class="fa fa-check"></i><b>4.6</b> Estimación de Parámetros.</a></li>
+<li class="chapter" data-level="4.7" data-path="modelos-ar.html"><a href="modelos-ar.html#predicciones-con-modelos-ar"><i class="fa fa-check"></i><b>4.7</b> Predicciones con modelos AR</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-un-paso"><i class="fa fa-check"></i><b>4.7.1</b> Predicción de un paso</a></li>
+<li class="chapter" data-level="4.7.2" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-dos-pasos"><i class="fa fa-check"></i><b>4.7.2</b> Predicción de dos pasos</a></li>
+<li class="chapter" data-level="4.7.3" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-multiples-pasos"><i class="fa fa-check"></i><b>4.7.3</b> Predicción de múltiples pasos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="modelos-ma.html"><a href="modelos-ma.html"><i class="fa fa-check"></i><b>5</b> Modelos MA</a><ul>
+<li class="chapter" data-level="5.1" data-path="modelos-ma.html"><a href="modelos-ma.html#propiedades-de-los-modelos-ma"><i class="fa fa-check"></i><b>5.1</b> Propiedades de los modelos MA</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="modelos-ma.html"><a href="modelos-ma.html#estacionaridad"><i class="fa fa-check"></i><b>5.1.1</b> Estacionaridad</a></li>
+<li class="chapter" data-level="5.1.2" data-path="modelos-ma.html"><a href="modelos-ma.html#funcion-de-autocorrelacion-acf"><i class="fa fa-check"></i><b>5.1.2</b> Función de autocorrelación (ACF)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="modelos-ma.html"><a href="modelos-ma.html#identificacion-del-orden-de-un-ma"><i class="fa fa-check"></i><b>5.2</b> Identificación del orden de un MA</a></li>
+<li class="chapter" data-level="5.3" data-path="modelos-ma.html"><a href="modelos-ma.html#estimacion"><i class="fa fa-check"></i><b>5.3</b> Estimación</a></li>
+<li class="chapter" data-level="5.4" data-path="modelos-ma.html"><a href="modelos-ma.html#predicciones-usando-modelos-ma"><i class="fa fa-check"></i><b>5.4</b> Predicciones usando modelos MA</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="modelos-arma.html"><a href="modelos-arma.html"><i class="fa fa-check"></i><b>6</b> Modelos ARMA</a><ul>
+<li class="chapter" data-level="6.1" data-path="modelos-arma.html"><a href="modelos-arma.html#propiedades-de-los-modelos-armapq"><i class="fa fa-check"></i><b>6.1</b> Propiedades de los modelos ARMA(p,q)</a></li>
+<li class="chapter" data-level="6.2" data-path="modelos-arma.html"><a href="modelos-arma.html#ecuaciones-en-diferencias"><i class="fa fa-check"></i><b>6.2</b> Ecuaciones en Diferencias</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="modelos-arma.html"><a href="modelos-arma.html#funcion-de-autocorrelacion-acf-para-modelos-arma"><i class="fa fa-check"></i><b>6.2.1</b> Función de Autocorrelación (ACF) para modelos ARMA</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="modelos-arma.html"><a href="modelos-arma.html#pronosticos"><i class="fa fa-check"></i><b>6.3</b> Pronósticos</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="modelos-arma.html"><a href="modelos-arma.html#pronosticos-para-procesos-arma"><i class="fa fa-check"></i><b>6.3.1</b> Pronósticos para procesos ARMA</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html"><i class="fa fa-check"></i><b>7</b> Estimación de parámetros</a><ul>
+<li class="chapter" data-level="7.1" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#estimacion-1"><i class="fa fa-check"></i><b>7.1</b> Estimación</a></li>
+<li class="chapter" data-level="7.2" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#sect-EMV"><i class="fa fa-check"></i><b>7.2</b> Estimación por Máxima Verosimilitud y Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="7.3" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#estimacion-de-minimos-cuadrados-para-modelos-armapq"><i class="fa fa-check"></i><b>7.3</b> Estimación de mínimos cuadrados para modelos ARMA(p,q)</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="modelos-arima.html"><a href="modelos-arima.html"><i class="fa fa-check"></i><b>8</b> Modelos ARIMA</a><ul>
+<li class="chapter" data-level="8.1" data-path="modelos-arima.html"><a href="modelos-arima.html#construccion-de-modelos-arima"><i class="fa fa-check"></i><b>8.1</b> Construcción de modelos ARIMA</a></li>
+<li class="chapter" data-level="8.2" data-path="modelos-arima.html"><a href="modelos-arima.html#modelos-sarima"><i class="fa fa-check"></i><b>8.2</b> Modelos SARIMA</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html"><i class="fa fa-check"></i><b>9</b> Modelos ARCH y GARCH</a><ul>
+<li class="chapter" data-level="9.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estructura-de-los-modelos"><i class="fa fa-check"></i><b>9.1</b> Estructura de los Modelos</a></li>
+<li class="chapter" data-level="9.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-arch"><i class="fa fa-check"></i><b>9.2</b> Modelos ARCH</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimacion-de-un-modelo-archp"><i class="fa fa-check"></i><b>9.2.1</b> Estimación de un Modelo ARCH(p)</a></li>
+<li class="chapter" data-level="9.2.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#prediccion-con-modelos-arch"><i class="fa fa-check"></i><b>9.2.2</b> Predicción con modelos ARCH</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-garch"><i class="fa fa-check"></i><b>9.3</b> Modelos GARCH</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimacion-de-un-modelo-garch"><i class="fa fa-check"></i><b>9.3.1</b> Estimación de un Modelo GARCH</a></li>
+<li class="chapter" data-level="9.3.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#prediccion-con-modelos-garch"><i class="fa fa-check"></i><b>9.3.2</b> Predicción con modelos GARCH</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="analisis-espectral.html"><a href="analisis-espectral.html"><i class="fa fa-check"></i><b>10</b> Análisis Espectral</a><ul>
+<li class="chapter" data-level="10.1" data-path="analisis-espectral.html"><a href="analisis-espectral.html#comportamiento-ciclico-y-periodicidad"><i class="fa fa-check"></i><b>10.1</b> Comportamiento Cíclico y Periodicidad</a></li>
+<li class="chapter" data-level="10.2" data-path="analisis-espectral.html"><a href="analisis-espectral.html#la-densidad-espectral"><i class="fa fa-check"></i><b>10.2</b> La Densidad Espectral</a></li>
+<li class="chapter" data-level="10.3" data-path="analisis-espectral.html"><a href="analisis-espectral.html#periodograma-y-transformada-discreta-de-fourier"><i class="fa fa-check"></i><b>10.3</b> Periodograma y Transformada Discreta de Fourier</a></li>
+<li class="chapter" data-level="10.4" data-path="analisis-espectral.html"><a href="analisis-espectral.html#estimacion-espectral-no-parametrica"><i class="fa fa-check"></i><b>10.4</b> Estimación Espectral No-paramétrica</a></li>
+<li class="chapter" data-level="10.5" data-path="analisis-espectral.html"><a href="analisis-espectral.html#procesos-de-incremento-ortogonal-sobre--pipi"><i class="fa fa-check"></i><b>10.5</b> Procesos de Incremento Ortogonal sobre <span class="math inline">\([-\pi,\pi]\)</span></a></li>
+<li class="chapter" data-level="10.6" data-path="analisis-espectral.html"><a href="analisis-espectral.html#integracion-con-respecto-a-un-proceso-de-incremento-ortogonal"><i class="fa fa-check"></i><b>10.6</b> Integración con Respecto a un Proceso de Incremento Ortogonal</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="analisis-espectral.html"><a href="analisis-espectral.html#propiedades-de-la-integral-estocastica"><i class="fa fa-check"></i><b>10.6.1</b> Propiedades de la Integral Estocástica</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="analisis-espectral.html"><a href="analisis-espectral.html#la-representacion-espectral"><i class="fa fa-check"></i><b>10.7</b> La Representación Espectral</a></li>
+</ul></li>
+<li class="appendix"><span><b>Apéndice</b></span></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Series de Tiempo en R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="modelos-arima" class="section level1">
+<h1><span class="header-section-number">Capítulo 8</span> Modelos ARIMA</h1>
+<p>En este capítulo examinaremos el problema de encontrar un modelo apropiado para un conjunto determinado de observaciones <span class="math inline">\(\{x_1,\ldots,x_n\}\)</span> que no son necesariamente generados por una serie de tiempo estacionaria. Si los datos (a) no muestran desviaciones aparentes de la estacionariedad y (b) tienen una función de autocovarianza en rápida disminución, intentamos ajustar un modelo ARMA a los datos medios corregidos utilizando las técnicas desarrolladas en el capítulo de modelos ARMA. De lo contrario, buscamos primero una transformación de los datos que genere una nueva serie con las propiedades (a) y (b). Esto puede lograrse frecuentemente mediante la diferenciación, lo que nos lleva a considerar la clase de modelos ARIMA (siglas en inglés: autoregressive integrated moving-average).</p>
+<p>En muchas situaciones, las series de tiempo pueden pensarse o ver como la composición de dos componentes, una componente de tendencia no estacionaria y una componente estacionaria de media cero. Por ejemplo, consideremos el modelo</p>
+<span class="math display" id="eq:eq-modelo-base-1-diferencia">\[\begin{equation}
+x_t = \mu_t+y_t,
+\tag{8.1}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(\mu_t=\beta_0+\beta_1t\)</span> y <span class="math inline">\(y_t\)</span> es estacionario. Si diferenciamos este proceso, obtenemos un proceso estacionario, en efecto</p>
+<span class="math display">\[\begin{eqnarray*}
+\nabla x_t &amp;=&amp; x_t-x_{t-1} = (\mu_t+y_t)-(\mu_{t-1}+y_{t-1}) \\
+    &amp;=&amp; (\beta_0+\beta_1t+y_t)-(\beta_0+\beta_1(t-1)+y_{t-1}) \\
+    &amp;=&amp; \beta_1 + y_t-y_{t-1} \\
+    &amp;=&amp; \beta_1+\nabla y_t.
+\end{eqnarray*}\]</span>
+<p>El cual claramente es estacionario.</p>
+<p>Otro modelo que lleva a la primera diferenciación es el caso en el cual <span class="math inline">\(\mu_t\)</span> en la ecuación <a href="modelos-arima.html#eq:eq-modelo-base-1-diferencia">(8.1)</a>, es un proceso estocástico y que varía lentamente de acuerdo a un paseo laeatorio. Esto es,</p>
+<p><span class="math display">\[\mu_t=\mu_{t-1}+v_t,\]</span></p>
+<p>donde <span class="math inline">\(v_t\)</span> es estacionario. Tenemos entonces</p>
+<p><span class="math display">\[x_t=\mu_{t-1}+v_t+y_t.\]</span></p>
+<p>En este caso,</p>
+<span class="math display">\[\begin{eqnarray*}
+\nabla x_t &amp;=&amp; x_t-x_{t-1} \\
+    &amp;=&amp; (\mu_{t-1}+v_t+y_t)-(\mu_{t-2}+v_{t-1}+y_{t-1}) \\
+    &amp;=&amp; v_t+\nabla y_t,
+\end{eqnarray*}\]</span>
+<p>es estacionario. Si <span class="math inline">\(\mu_t\)</span> en <a href="modelos-arima.html#eq:eq-modelo-base-1-diferencia">(8.1)</a> es un polinomio de grado <span class="math inline">\(k\)</span>, <span class="math inline">\(\mu_t=\sum_{i=0}^k\beta_it^i\)</span>, entonces la serie diferenciada <span class="math inline">\(\nabla^ky_t\)</span> es estacinaia. Por ejemplo, sea <span class="math inline">\(\mu_t=\beta_0+\beta_1t+\beta_2t^2\)</span>, luego</p>
+<p><span class="math display">\[x_t=\mu_t+y_t = \beta_0+\beta_1t+\beta_2t^2+y_t.\]</span></p>
+<p>Diferenciando una vez se tiene</p>
+<span class="math display">\[\begin{eqnarray*}
+\nabla x_t &amp;=&amp; (\mu_t+y_t)-(\mu_{t-1}+y_{t-1}) \\
+    &amp;=&amp; (\beta_0+\beta_1t+\beta_2t^2+y_t) - (\beta_0+\beta_1(t-1)+\beta_2(t-1)^2+y_{t-1}) \\
+    &amp;=&amp; \beta_0+\beta_1t+\beta_2t^2+y_t-\beta_0-\beta_1t-\beta_1-\beta_2(t^2-2t+1)-y_{t-1} \\
+    &amp;=&amp; \beta_1+\beta_2+2\beta_2t+\nabla y_t.
+\end{eqnarray*}\]</span>
+<p>Volvemos a diferenciar</p>
+<span class="math display">\[\begin{eqnarray*}
+\nabla(\nabla x_t) &amp;=&amp; (\beta_1+\beta_2+2\beta_2t+(y_t-y_{t-1})) - (\beta_1+\beta_2+2\beta_2(t-1)+(y_{t-1}-y_{t-2})) \\
+    &amp;=&amp; \beta_1+\beta_2+2\beta_2t+y_t-y_{t-1}-\beta_1-\beta_2-2\beta_2t+2\beta_2-y_{t-1}+y_{t-2} \\
+    &amp;=&amp; 2\beta_2+\nabla(\nabla y_t) \\
+    &amp;=&amp; 2\beta_2+\nabla^2y_t.
+\end{eqnarray*}\]</span>
+<p>El cual es estacionario. Los modelos estocásticos con tendencia llevan a diferenciaciones de orden superior. Por ejemplo, supongamos</p>
+<p><span class="math display">\[\mu_t=\mu_{t-1}+v_t\text{ y }v_t=v_{t-1}+e_t\]</span></p>
+<p>donde <span class="math inline">\(e_t\)</span> es estacionario. Entonces <span class="math inline">\(\nabla x_t = v_t+\nabla y_t\)</span> no es estacionario, pero</p>
+<p><span class="math display">\[\nabla^2x_t = e_t+\nabla^2y_t,\]</span></p>
+<p>si es estacionario.</p>
+<p>Los modelos ARMA integrados o modelos ARIMA, es una extensión de los modelos ARMA que incluyen diferenciación. Formalmente, tenemos la siguiente definición.</p>
+
+<div class="definition">
+<p><span id="def:defi-modelo-ARIMA" class="definition"><strong>Definición 8.1  </strong></span>Un proceso <span class="math inline">\(x_t\)</span> es un proceso ARIMA(p,d,q) si</p>
+<p><span class="math display">\[\nabla^dx_t = (1-B)^dx_t\]</span></p>
+<p>es un proceso ARMA(p,q). En general, escribimos el modelo como</p>
+<span class="math display" id="eq:eq-modelo-ARIMA">\[\begin{equation}
+  \phi(B)(1-B)^dx_t = \theta(B)w_t.
+\tag{8.2}
+\end{equation}\]</span>
+<p>Si <span class="math inline">\(\mathbb{E}(\nabla^dx_t)=\mu\)</span>, escribimos el modelo como</p>
+<p><span class="math display">\[\phi(B)(1-B)^dx_t=\delta+\theta(B)w_t,\]</span></p>
+donde <span class="math inline">\(\delta=\mu(1-\phi_1-\cdots-\phi_p)\)</span>.
+</div>
+
+<hr />
+<p>Debido a la no estacionaridad, debemosser cuidadosos cuando realizamos predicciones.</p>
+<div id="construccion-de-modelos-arima" class="section level2">
+<h2><span class="header-section-number">8.1</span> Construcción de modelos ARIMA</h2>
+<p>Hay algunos pasos básicos para ajustar modelos ARIMA a series de tiempo:</p>
+<ul>
+<li><p>Gráfico de los datos.</p></li>
+<li><p>Posible transformación de los datos (diferenciación, logaritmo, etc.).</p></li>
+<li><p>Identificación del orden de dependencia del modelo.</p></li>
+<li><p>Estimación del (los) parámetro(s).</p></li>
+<li><p>Diagnóstico.</p></li>
+<li><p>Elección del modelo.</p></li>
+</ul>
+<p>Primero, como en todo análisis de datos, debemos realizar un gráfico de serie de tiempo de los datos e inspeccionar el mismo para ver cualquier anomalía. Si, por ejemplo, la variabilidad crece en el tiempo, será necesario que transformemos los datos para estabilizar la varianza. En este caso, las transformaciones de potencia de la clase Box-Cox resultan útiles. Por ejemplo, supongamos un proceso que evoluciona como un cambio porcentual bastante pequeño, como una inversión. Supongamos que</p>
+<p><span class="math display">\[x_t=(1+p_t)x_{t-1},\]</span></p>
+<p>donde <span class="math inline">\(x_t\)</span> es el valor de la inversión en tiempo <span class="math inline">\(t\)</span> y <span class="math inline">\(p_t\)</span> es el porcentaje de cambio del periodo <span class="math inline">\(t-1\)</span> al <span class="math inline">\(t\)</span>, el cual puede ser negativo. Tomando logaritmo tenemos</p>
+<p><span class="math display">\[\ln(x_t) = \ln(1+p_t)+\ln(x_{t-1})\]</span></p>
+<p>o</p>
+<p><span class="math display">\[\nabla\ln(x_t) = \ln(1+p_t).\]</span></p>
+<p>Si el porcentaje de cambio <span class="math inline">\(p_t\)</span> se mantiene relativamente pequeño en magnitud, entonces <span class="math inline">\(\ln(1+p_t)\approx p_t\)</span><a href="#fn12" class="footnoteRef" id="fnref12"><sup>12</sup></a> y entonces</p>
+<p><span class="math display">\[\nabla\ln(x_t)\approx p_t,\]</span></p>
+<p>será un proceso relativamente estable. A menudo <span class="math inline">\(\nabla\ln(x_t)\)</span> se llama el retorno o tasa de crecimiento. Después de una transformación apropiada de los datos, el siguiente paso es identificar los valores preliminares del orden autoregresivo <span class="math inline">\(p\)</span>, el orden de diferenciación <span class="math inline">\(d\)</span> y el orden de promedio móvil <span class="math inline">\(q\)</span>.</p>
+<p>Ya hemos abordado en parte el problema de la elección del orden de diferenciación. El gráfico de la serie de tiempo nos ayudará a deterinar si hace falta una diferenciación. Si se requiere una diferenciación, entonces diferenciamos los datos una vez <span class="math inline">\((d=1)\)</span>, e inspeccionamos el gráfico de <span class="math inline">\(\nabla x_t\)</span>. Si hace falta otra diferenciación, entonces volvemos a diferenciar <span class="math inline">\((d=2)\)</span> e inspeccionamos nuevamente el gráfico, esta vez el de <span class="math inline">\(\nabla^2x_t\)</span>. Debemos tener cuidado de no sobre diferenciar pues esto puede introducir dependencia donde no la hay. Por ejemplo, <span class="math inline">\(x_t=w_t\)</span> es no correlacionado, pero <span class="math inline">\(\nabla x_t=w_t-w_{t-1}\)</span> es un proceso <span class="math inline">\(MA(1)\)</span>. Además del gráfico de la serie de tiempo, la ACF muestral nos puede ayudar a ver si es necesaria una diferenciación. Dado que el polinomio <span class="math inline">\(\phi(z)(1-z)^d\)</span> tiene raíz unitaria, la ACF muestral <span class="math inline">\(\hat{\rho}(h)\)</span>, no decaerá a cero tan rápido cuando <span class="math inline">\(h\)</span> crece. Entonces, un lento decaimiento en <span class="math inline">\(\hat{\rho}(h)\)</span> es un indicativo de que se necesitará una diferenciación.</p>
+<p>Una vez que hemos establecido el valor preliminar de <span class="math inline">\(d\)</span>, el siguiente paso es ver la ACF y PACF muestrales de <span class="math inline">\(\nabla^dx_t\)</span> para el valor de <span class="math inline">\(d\)</span> elegido. Usando la tabla resumen para la elección de modelos ARMA (véase la tabla al final de la sección <a href="modelos-arma.html#propiedades-de-los-modelos-armapq">Propiedades de los modelos ARMA(p,q)</a>) como guía, escogemos los valores preliminares de <span class="math inline">\(p\)</span> y <span class="math inline">\(q\)</span>.</p>
+<p>Dado que estamos trabajando con estimaciones, dos modelos que luzcan diferentes pueden ser de hecho bastante similares, por lo tanto, nodebemos preocuparnos, de momento, en ser muy precisos al ajustar un modelo. En este punto, unos pocos valores preliminares de <span class="math inline">\(p,d\)</span> y <span class="math inline">\(q\)</span> serán suficientes y nos permitirán iniciar las estimaciones de los parámetros. A continuación daremos un ejemplo de uso de los pasos previamente descritos.</p>
+
+<div class="example">
+<span id="exm:ejem-gnp-data" class="example"><strong>Ejemplo 8.1  (Análisis de datos G.N.P.)  </strong></span>Consideremos los datos del Producto Nacional Bruto trimestral de EE.UU en miles de millónes de dólares, desde el primer trimestre de 1947 hasta el tercer trimestre de 2002. Son <span class="math inline">\(n=223\)</span> observaciones, losdatos han sido ajustados estacionalmente. El archivo de datos es “gnp96.txt”, y fueron obtenidos del <em>Federal Reserve Bank of St. Louis</em> (<a href="http://research.stlouisfed.org/" class="uri">http://research.stlouisfed.org/</a>). El gráfico <a href="modelos-arima.html#fig:fig-gnp-data">8.1</a> muestra la serie de tiempo correspondiente.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Lectura de los datos</span>
+gnp=<span class="kw">read.table</span>(<span class="st">&quot;data/gnp96.txt&quot;</span>)
+<span class="co"># Grafico de la serie</span>
+<span class="kw">plot</span>(gnp,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Años&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;G.N.P.&quot;</span>,<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<div class="figure"><span id="fig:fig-gnp-data"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-gnp-data-1.svg" alt="Producto Nacional Bruto trimestral de EE.UU (en miles de millónes de dólares), desde el 1er trimestre de 1947 hasta el 3er trimestre de 2002."  />
+<p class="caption">
+Figura 8.1: Producto Nacional Bruto trimestral de EE.UU (en miles de millónes de dólares), desde el 1er trimestre de 1947 hasta el 3er trimestre de 2002.
+</p>
+</div>
+<p>Dado que la serie presenta una fuerte tendencia creciente, no es claro si la varianza crece con el tiempo. Por lo tanto para propósito de demostrar como usar la ACF muestral, en la figura <a href="modelos-arima.html#fig:fig-acf-gnp">8.2</a> mostramos la misma. Como el decaimiento es lento, esto nos sugiere que una diferenciación es posible.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ACF muestral de GNP</span>
+<span class="kw">acf</span>(gnp[,<span class="dv">2</span>], <span class="dv">50</span>)</code></pre></div>
+<div class="figure"><span id="fig:fig-acf-gnp"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-acf-gnp-1.svg" alt="ACF muestral para la serie de datos G.N.P."  />
+<p class="caption">
+Figura 8.2: ACF muestral para la serie de datos G.N.P.
+</p>
+</div>
+<p>La figura <a href="modelos-arima.html#fig:fig-gnp-dif-1">8.3</a> muestra la primera diferenciación, allí podemos observar que la variabilidad en la segunda mitad de datos es mayor que en la primera mitad. Además, parece que la tendencia creciente todavía está presente, porlo tanto, tomando en cuenta los pasos descritos al inicio de esta sección primero transformamos losdatos y luego diferenciamos, así obtenemos <span class="math inline">\(y_t=\nabla\ln(x_t)\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Primera diferencia</span>
+gnpdif=<span class="kw">diff</span>(gnp[,<span class="dv">2</span>])
+<span class="kw">plot</span>(gnp[<span class="dv">2</span><span class="op">:</span><span class="dv">223</span>,<span class="dv">1</span>],gnpdif, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;Años&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;diff(G.N.P.)&quot;</span>,
+     <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<div class="figure"><span id="fig:fig-gnp-dif-1"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-gnp-dif-1-1.svg" alt="Primera diferenciación de la serie de tiempo G.N.P."  />
+<p class="caption">
+Figura 8.3: Primera diferenciación de la serie de tiempo G.N.P.
+</p>
+</div>
+<p>La figura <a href="modelos-arima.html#fig:fig-gnp-log-dif-1">8.4</a> muestra la serie transformada y diferenciada, podemos ver allí que el proceso parece ser estable. Más aún, podemos interpretar los valores de <span class="math inline">\(y_t\)</span> como el porcentaje de crecimiento trimestral del Producto Nacional Bruto de EE.UU.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Transformacion y primera diferencia</span>
+gnpgr =<span class="st"> </span><span class="kw">diff</span>(<span class="kw">log</span>(gnp[,<span class="dv">2</span>]))
+<span class="kw">plot</span>(gnp[<span class="dv">2</span><span class="op">:</span><span class="dv">223</span>,<span class="dv">1</span>],gnpgr,<span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;Años&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;diff(G.N.P.)&quot;</span>,
+     <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<div class="figure"><span id="fig:fig-gnp-log-dif-1"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-gnp-log-dif-1-1.svg" alt="Serie de tiempo de G.N.P. transformada (log) y diferenciada una vez"  />
+<p class="caption">
+Figura 8.4: Serie de tiempo de G.N.P. transformada (log) y diferenciada una vez
+</p>
+</div>
+<p>Graficamos ahora las ACF y PACF muestral de <span class="math inline">\(y_t\)</span>. Observando las ACF y PACF parece que la ACF se corta en paso 2 y la PACF decae, lo que nos sugiere un modelo <span class="math inline">\(MA(2)\)</span> para la tasa de crecimiento del P.N.B., o un modelo ARIMA(0,1,2) para <span class="math inline">\(y_t\)</span>. Pero en lugar de enfocarnos en un solo modelo, si detallamos las ACF y PACF muestral, parece sugerir que la ACF decrece y la PACF se corta en paso 1, lo que sugiere un modelo <span class="math inline">\(AR(1)\)</span> para la tasa de cambio o un modelo ARIMA(1,1,0) para <span class="math inline">\(y_t\)</span>. Podemos decir entonces que un modelo ARIMA(1,1,2) es una primera elección de ajuste.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ACF y PACF de la transformacion</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))
+<span class="kw">acf</span>(gnpgr, <span class="dv">24</span>)
+<span class="kw">pacf</span>(gnpgr,<span class="dv">24</span>)</code></pre></div>
+<div class="figure"><span id="fig:fig-acf-pacf-gnp"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-acf-pacf-gnp-1.svg" alt="ACF y PACF muestrales para las serie de tiempo G.N.P., transformada y diferenciada"  />
+<p class="caption">
+Figura 8.5: ACF y PACF muestrales para las serie de tiempo G.N.P., transformada y diferenciada
+</p>
+</div>
+<p>A modo de entrenamiento vamos a realizar primeramente los ajustes de los modelos <span class="math inline">\(MA(2)\)</span> y <span class="math inline">\(AR(1)\)</span> por separado. Para ello nos valemos de R, usaremos la función ‘sarima’ del paquete ‘astsa’. Iniciamos con el modelo <span class="math inline">\(AR(1)\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gnpgr.ar=<span class="kw">arima</span>(gnpgr, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>)) <span class="co"># AR(1)</span></code></pre></div>
+<p>El modelo <span class="math inline">\(AR(1)\)</span> estimado es <span class="math inline">\(x_t=\mu(1-\phi_1)+\phi_1x_{t-1}+\hat{w}_t\)</span></p>
+<span class="math display" id="eq:eq-modelo-AR1-gnp">\[\begin{equation}
+x_t = 0.0083_{(0.001)}(1-0.3467)+0.3467_{(0.063)}x_{t-1}+\hat{w}_t
+\tag{8.3}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(\hat{\sigma}_w=0.0095\)</span> con 220 grados de libertad; note que la constante en <a href="modelos-arima.html#eq:eq-modelo-AR1-gnp">(8.3)</a> es <span class="math inline">\(0.0083(1-0.3467)=0.005\)</span>. Los valores entre parentesis son los errores estándar estimados.</p>
+<p>Ahora usando EMV fijamos un modelo <span class="math inline">\(MA(2)\)</span> para la tasa de crecimiento <span class="math inline">\(x_t\)</span>, siendo el modelo estimado</p>
+<span class="math display" id="eq:eq-modelo-MA2-gnp">\[\begin{equation}
+x_t = 0.008_{(0.001)}+0.303_{(0.065)}\hat{w}_{t-1}+0204_{(0.064)}\hat{w}_{t-2}+\hat{w}_t
+\tag{8.4}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(\hat{\sigma}_w=0.0094\)</span> con 219 grados de libertad. Los valores entre parentesis corresponden a los errores estándar estimados. Aunque la constante es muy pequeña, su valor es significativo, no incluir una constante lleva a conclusiones erróneas sobre la naturaleza de la economía estadounidense. Si no incluimos una constane, asumiríamos que la tasa de crecimiento trimestral promedio es cero, mientras que en realidad la tasa de crecimiento trimestral promedio del P.N.B. de EE.UU es de alrededor del 1% (véase la gráfica <a href="modelos-arima.html#fig:fig-gnp-data">8.1</a>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gnpgr.ma2=<span class="kw">arima</span>(gnpgr, <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">2</span>)) <span class="co"># MA(2)</span>
+<span class="co"># Psi-pesos</span>
+<span class="kw">ARMAtoMA</span>(<span class="dt">ar=</span>.<span class="dv">3467</span>, <span class="dt">ma=</span><span class="dv">0</span>, <span class="dv">10</span>) <span class="co"># prints psi-weights</span></code></pre></div>
+<pre><code>##  [1] 3.467e-01 1.202e-01 4.167e-02 1.445e-02 5.009e-03
+##  [6] 1.737e-03 6.021e-04 2.088e-04 7.237e-05 2.509e-05</code></pre>
+<hr />
+<p>El siguiente paso en el ajuste de modelos es el diagnóstico. Esta investigación incluye el análisis de residuales así como la comparación de modelos. De nuevo, el primer paso envuelve un gráfico de las innovaciones (o residuales) <span class="math inline">\(x_t-\hat{x}_t^{t-1}\)</span> o de las innovaciones estandarizadas</p>
+<span class="math display" id="eq:eq-innovaciones-estandar">\[\begin{equation}
+ e_t = (x_t-\hat{x}_t^{t-1})/\sqrt{\hat{P}_t^{t-1}}
+\tag{8.5}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(\hat{x}_t^{t-1}\)</span> es la predicción de un paso de <span class="math inline">\(x_t\)</span> basado en el modelo ajustado y <span class="math inline">\(\hat{P}_t^{t-1}\)</span> es varianza del error estimado de un paso. Si el modelo se ajusta bien, el residual estandarizado debe comportarse como una sucesión iid de media cero y varianza uno, así que debemos observar bien el gráfico de la serie de tiempo para ver si hay desviación evidente de esta suposición. Por ejemplo, es posible en el caso no-gaussiano tener un proceso no-correlacionado para el cual valores contiguos en tiempo sean altamente dependientes. Como ejemplo, podemos mencionar la familia de modelos GARCH que discutiremos en el capítulo siguiente.</p>
+<p>Para determinar o investigar sobre la normaidad marginal nos valemos del histograma de los residuales, así visualmente podemos ver si el mismo se parece o ajusta a la curva de densidad normal. Además de esto, un gráfico de probabilidad normal o un gráfico de cuantiles (qq-plot) nos puede ayudar a identificar la desviación de la normalidad.</p>
+<p>También podemos inspeccionar la autocorrelación muestral de los residuales <span class="math inline">\(\hat{\rho}_e(h)\)</span>, para ver algún patrón o valores grandes. Recordemos que, para un ruido blanco, las autocorrelaciones muestrales son aproximadamente independientes y normalmente distribuidas con media cero y varianza <span class="math inline">\(1/n\)</span>. Por consiguiente, una buena forma de inspeccionar la estructura de correlación de los residuales es graficar <span class="math inline">\(\hat{\rho}_e(h)\)</span> vs <span class="math inline">\(h\)</span> junto con las cotas de error <span class="math inline">\(\pm2/\sqrt{n}\)</span>. Tome en cuenta, sin embargo, que los residuales de un modelo ajustado, no tendrán necesariamente las propiedades de un ruido blanco y la varianza de <span class="math inline">\(\hat{\rho}_e(h)\)</span> puede ser mucho menor que <span class="math inline">\(1/n\)</span>.</p>
+<p>Además de graficar <span class="math inline">\(\hat{\rho}_e(h)\)</span>, podemos realizar una prueba de hipótesis general que tome en consideración las magnitudes de <span class="math inline">\(\hat{\rho}_e(h)\)</span> como grupo. Por ejemplo, puede ser el caso que individualmente cada <span class="math inline">\(\hat{\rho}_e(h)\)</span> sea pequeño en magnitud, digamos menr que <span class="math inline">\(2/\sqrt{n}\)</span> en magnitud, es decir <span class="math inline">\(|\hat{\rho}_e(h)|&lt;2/\sqrt{n}\)</span>, pero colectivamente, los valores sean grandes. El estadístico de Ljung-Box-Pierce dado por</p>
+<span class="math display" id="eq:eq-estadistico-ljung-box-pierce">\[\begin{equation}
+ Q = n(n+2)\sum_{h=1}^H\frac{\hat{\rho}_e^2(h)}{n-h}
+ \tag{8.6}
+\end{equation}\]</span>
+<p>es útil para realizar esta prueba de hipótesis. El valor <span class="math inline">\(H\)</span> en <a href="modelos-arima.html#eq:eq-estadistico-ljung-box-pierce">(8.6)</a> se elige de manera arbitraria, en general se usa <span class="math inline">\(H=20\)</span>. Bajo la hipótesis nula de que el modelo es adecuado, asintóticamente, (cuando <span class="math inline">\(n\to\infty\)</span>), <span class="math inline">\(Q\)</span> se distribuye como una chi-cuadrado con <span class="math inline">\(H-p-q\)</span> grados de libertad, esto es <span class="math inline">\(Q\sim\chi_{H-p-q}^2\)</span>. Entonces, rechazamos la hipótesis nula a nivel <span class="math inline">\(\alpha\)</span> si el valor de <span class="math inline">\(Q\)</span> es mayor que la <span class="math inline">\(\chi_{H-p-q}^2(1-\alpha)\)</span>.</p>
+
+<div class="example">
+<span id="exm:ejem-diagnostico-tasa-crecimiento-gnp" class="example"><strong>Ejemplo 8.2  (Diagnóstico para la tasa de crecimiento del P.N.B)  </strong></span>Enfoquémonos en el modelo <span class="math inline">\(MA(2)\)</span> ajustado del ejemplo <a href="modelos-arima.html#exm:ejem-gnp-data">8.1</a>, el análisis de los residuales de <span class="math inline">\(AR(1)\)</span> es similar. La figura <a href="#fig:fig-modelo-arima002-gnp"><strong>??</strong></a> muestra el gráfico de los residuales estandarizados (parte superior), la ACF de los residuales (parte media izquierda) (Note que R incluye la correlación en paso cero que siempre es uno) y los valores del estadístico <span class="math inline">\(Q\)</span>, dado en <a href="modelos-arima.html#eq:eq-estadistico-ljung-box-pierce">(8.6)</a> desde paso <span class="math inline">\(H=1\)</span> hasta <span class="math inline">\(H=20\)</span> (parte inferior).
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tsdiag</span>(gnpgr.ma2,<span class="dt">gof.lag=</span><span class="dv">20</span>)</code></pre></div>
+<div class="figure"><span id="fig:fig-diagnostico-residual-MA2-gnp"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-diagnostico-residual-MA2-gnp-1.svg" alt="Diagnóstico de los residuales con el modelo MA(2) de la serie P.N.B."  />
+<p class="caption">
+Figura 8.6: Diagnóstico de los residuales con el modelo MA(2) de la serie P.N.B.
+</p>
+</div>
+<p>Observando el gráfico de los residuales estandarizados en <a href="modelos-arima.html#fig:fig-diagnostico-residual-MA2-gnp">8.6</a>, no muestran un patrón obvio. Note que no hay valores atípicos pero si algunos pocos valores mayores que 3 desviaciones estándar. La ACF de los residuales no muestra una aparente desviación de la suposición del modelo, y el estadístico <span class="math inline">\(Q\)</span> no es significativo para los primeros 20 pasos calculados.</p>
+<p>Finalmente la figura <a href="modelos-arima.html#fig:fig-histograma-qq-plot-residual-gnp">8.7</a> muestra un histograma de los residuales (parte superior) y un gráfico qq-plot de los residuales (parte inferior). En la misma podemos observar que los residuales están cercanos a la normalidad excepto para algunos valores extremos en la cola.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))
+<span class="kw">hist</span>(gnpgr.ma2<span class="op">$</span>resid,<span class="dt">br=</span><span class="dv">12</span>)
+<span class="kw">qqnorm</span>(gnpgr.ma2<span class="op">$</span>resid)</code></pre></div>
+<div class="figure"><span id="fig:fig-histograma-qq-plot-residual-gnp"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-histograma-qq-plot-residual-gnp-1.svg" alt="Histograma de los residuales para P.N.B. (parte superior), y qq-plot de los residuales (parte inferior), para el modelo MA(2)"  />
+<p class="caption">
+Figura 8.7: Histograma de los residuales para P.N.B. (parte superior), y qq-plot de los residuales (parte inferior), para el modelo MA(2)
+</p>
+</div>
+<p>Para concluir, realizamos la prueba de Shapiro-Wilk (referencia), la cual nos da un <span class="math inline">\(p\)</span>-valor de 0.003, lo que indica que los residuales no son normal. Por lo tanto, el modelo parece ajustarse bien salvo que debemos usar una distribución con una cola más pesada que la distribución normal. El comando en R para la prueba de Shapiro-Wilk es</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(gnpgr.ma2<span class="op">$</span>resid)</code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  gnpgr.ma2$resid
+## W = 0.98, p-value = 0.003</code></pre>
+<hr />
+<p>Podemos hacer lo mismo ahora para el modelo ARIMA(1,1,2)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gnpgr.arima=<span class="kw">arima</span>(gnpgr,<span class="dt">order=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">tsdiag</span>(gnpgr.arima,<span class="dt">gof.lag=</span><span class="dv">20</span>)</code></pre></div>
+<div class="figure"><span id="fig:fig-diagnostico-gnp-arima"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-diagnostico-gnp-arima-1.svg" alt="Diagnóstico para el modelo ARIMA de B.N.P"  />
+<p class="caption">
+Figura 8.8: Diagnóstico para el modelo ARIMA de B.N.P
+</p>
+</div>
+<p>Nuevamente, observando el gráfico de los residuales estandarizados, estos no muestran un patrón obvio. Note que tampoco hay valores atípicos pero si algunos pocos valores mayores que 3 desviaciones estándar. La ACF de los residuales no muestra una aparente desviación de la suposición del modelo, y el estadístico <span class="math inline">\(Q\)</span> no es significativo para los primeros 20 pasos calculados.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))
+<span class="kw">hist</span>(gnpgr.arima<span class="op">$</span>resid)
+<span class="kw">qqnorm</span>(gnpgr.arima<span class="op">$</span>resid)</code></pre></div>
+<div class="figure"><span id="fig:fig-histograma-qq-plot-residual-gnp-arima"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-histograma-qq-plot-residual-gnp-arima-1.svg" alt="Histograma de los residuales para P.N.B. (parte superior), y qq-plot de los residuales (parte inferior), para el modelo ARIMA(1,1,2)"  />
+<p class="caption">
+Figura 8.9: Histograma de los residuales para P.N.B. (parte superior), y qq-plot de los residuales (parte inferior), para el modelo ARIMA(1,1,2)
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(gnpgr.arima<span class="op">$</span>resid)</code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  gnpgr.arima$resid
+## W = 0.98, p-value = 0.001</code></pre>
+<p>La figura <a href="modelos-arima.html#fig:fig-histograma-qq-plot-residual-gnp-arima">8.9</a> muestra un histograma de los residuales (parte superior) y un gráfico qq-plot de los residuales (parte inferior). En la misma, de manera similar al modelo <span class="math inline">\(MA(2)\)</span> podemos observar que los residuales están cercanos a la normalidad excepto para algunos valores extremos en la cola. Por último, realizamos la prueba de Shapiro-Wilk, la cual nos da un <span class="math inline">\(p\)</span>-valor de 0.001, lo que indica que los residuales no son normales. Por lo tanto, de nuevo, este modelo parece también ajustarse bien salvo que debemos usar una distribución con una cola más pesada que la distribución normal.</p>
+<hr />
+<p>Como explicamos previamente, debemos tener cuidado con sobreajustar un modelo; no siempre es el caso que más es mejor. Sobreajustar nos lleva a estimadores menos preciso, y agregar más parámetros puede ajustar mejor los datos pero puede llevar a malas predicciones. Este resultado se ilustra en el ejemplo siguiente.</p>
+
+<div class="example">
+<p><span id="exm:ejem-problema-sobreajuste" class="example"><strong>Ejemplo 8.3  (Un problema de sobreajuste)  </strong></span>La figura <a href="#fig:fig-sobreajuste-poblacion-usa"><strong>??</strong></a>, muestra la población de los EE.UU., según el censo oficial cada 10 años de 1910 hasta 1990 (puntos azules). Si usamos estos nueve puntos para predecir la población a futuro de los EE.UU. podemos usar un polinomio de grado 8 para ajustar las 9 observaciones; lo cual como se observa en la gráfica es perfecta. El modelo en este caso es</p>
+<p><span class="math display">\[x_t=\beta_0+\beta_1t+\beta_2t^2+\cdots+\beta_8t^8+w_t\]</span></p>
+El modelo fijado, el cual es graficado hasta el año 2010, (linea continua roja), pasa a través de los 9 puntos. El modelo predice que la población de los EE.UU. estará cercana a cero en el año 2000, y cruzará el cero en algún mes del año 2002, lo cual es falso.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">uspop=<span class="kw">read.table</span>(<span class="st">&quot;data/USPOP2.txt&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
+fit.usp=<span class="kw">lm</span>(Pob<span class="op">~</span>t<span class="op">+</span><span class="kw">I</span>(t<span class="op">^</span><span class="dv">2</span>)<span class="op">+</span><span class="kw">I</span>(t<span class="op">^</span><span class="dv">3</span>)<span class="op">+</span><span class="kw">I</span>(t<span class="op">^</span><span class="dv">4</span>)<span class="op">+</span><span class="kw">I</span>(t<span class="op">^</span><span class="dv">5</span>)<span class="op">+</span><span class="kw">I</span>(t<span class="op">^</span><span class="dv">6</span>)<span class="op">+</span><span class="kw">I</span>(t<span class="op">^</span><span class="dv">7</span>)<span class="op">+</span><span class="kw">I</span>(t<span class="op">^</span><span class="dv">8</span>),
+           <span class="dt">data=</span>uspop)
+<span class="kw">plot</span>(uspop,<span class="dt">type=</span><span class="st">&quot;p&quot;</span>,<span class="dt">lty=</span><span class="dv">19</span>,<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">1910</span>,<span class="dv">2010</span>))
+<span class="kw">lines</span>(<span class="dt">x =</span> uspop<span class="op">$</span>t, <span class="dt">y=</span><span class="kw">predict</span>(fit.usp), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/fig-sobreajuste-poblacion-usa-1.svg" /><!-- --></p>
+<hr />
+<p>El paso final en el ajuste de modelos es la elección del modelo. Esto es, debemos decidir que modelo mantendremos para la predicción. La técnica más popular es calcular los índices AIC, AICc y SIC (BIC), descritos en las definiciones <a href="modelos-ar.html#def:defi-AIC-2">4.3</a>, <a href="modelos-ar.html#def:defi-AICc">4.4</a> y <a href="modelos-ar.html#def:defi-SIC">4.5</a>.</p>
+
+<div class="example">
+<span id="exm:ejem-eleccion-modelo-gnp" class="example"><strong>Ejemplo 8.4  (Elección del modelo para la serie P.N.B. de EE.UU.)  </strong></span>Volviendo al análisis del P.N.B. de EE.UU., visto en los ejemplos <a href="modelos-arima.html#exm:ejem-gnp-data">8.1</a> y <a href="modelos-arima.html#exm:ejem-diagnostico-tasa-crecimiento-gnp">8.2</a>, recordemos que los modelos son AR(1), MA(2) y ARIMA(1,1,2). Para escoger el modelo final, comparemos los valores del AIC, AICc y SIC para los 3 modelos
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n=<span class="kw">length</span>(gnpgr)
+<span class="co"># Modelos AR</span>
+kar=<span class="kw">length</span>(gnpgr.ar<span class="op">$</span>coef)
+sar=gnpgr.ar<span class="op">$</span>sigma2
+<span class="co"># Modelos MA</span>
+kma=<span class="kw">length</span>(gnpgr.ma2<span class="op">$</span>coef)
+sma=gnpgr.ma2<span class="op">$</span>sigma2
+<span class="co"># Modelo ARIMA</span>
+karima=<span class="kw">length</span>(gnpgr.arima<span class="op">$</span>coef)
+sarima=gnpgr.arima<span class="op">$</span>sigma2
+<span class="co"># AIC</span>
+<span class="kw">log</span>(sar)<span class="op">+</span>(n<span class="op">+</span><span class="dv">2</span><span class="op">*</span>kar)<span class="op">/</span>n</code></pre></div>
+<pre><code>## [1] -8.294</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>(sma)<span class="op">+</span>(n<span class="op">+</span><span class="dv">2</span><span class="op">*</span>kma)<span class="op">/</span>n</code></pre></div>
+<pre><code>## [1] -8.298</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>(sarima)<span class="op">+</span>(n<span class="op">+</span><span class="dv">2</span><span class="op">*</span>karima)<span class="op">/</span>n</code></pre></div>
+<pre><code>## [1] -8.285</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># AICc</span>
+<span class="kw">log</span>(sar)<span class="op">+</span>(n<span class="op">+</span>kar)<span class="op">/</span>(n<span class="op">-</span>kar<span class="op">-</span><span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] -8.285</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>(sma)<span class="op">+</span>(n<span class="op">+</span>kma)<span class="op">/</span>(n<span class="op">-</span>kma<span class="op">-</span><span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] -8.288</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>(sarima)<span class="op">+</span>(n<span class="op">+</span>karima)<span class="op">/</span>(n<span class="op">-</span>karima<span class="op">-</span><span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] -8.275</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># BIC (SIC)</span>
+<span class="kw">log</span>(sar)<span class="op">+</span>kar<span class="op">*</span><span class="kw">log</span>(n)<span class="op">/</span>n</code></pre></div>
+<pre><code>## [1] -9.264</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>(sma)<span class="op">+</span>kma<span class="op">*</span><span class="kw">log</span>(n)<span class="op">/</span>n</code></pre></div>
+<pre><code>## [1] -9.252</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>(sarima)<span class="op">+</span>karima<span class="op">*</span><span class="kw">log</span>(n)<span class="op">/</span>n</code></pre></div>
+<pre><code>## [1] -9.239</code></pre>
+<hr />
+</div>
+<div id="modelos-sarima" class="section level2">
+<h2><span class="header-section-number">8.2</span> Modelos SARIMA</h2>
+<p>En esta sección vamos a introducir diversas modificaciones a los modelos ARIMA para que se ajusten a comportamiento estacional y no-estacionario. A menudo, la dependencia del pasado tiende a ocurrir más fuertemente en múltiplos de algún paso estacinal <span class="math inline">\(s\)</span> oculto. Por ejemplo, con datos económicos mensuales, existe una fuerte componente anual con pasos que son múltiplos de <span class="math inline">\(s=12\)</span>, debido a la fuerte conexión de todas las actividades al calendario anual. Los datos tomados trimestralmente exhibirán un período repetitivo para <span class="math inline">\(s=4\)</span>. Los fenómenos naturales tales como temperatura, lluvia, etc., también presentan una fuerte componente correspondiente a la estación del año. Por consiguiente, la variabilidad natural de muchos fenómenos físicos, biológicos y procesos económicos tienden a comportarse según las fluctuaciones estacionales. Debido a esto, es apropiado introducir polinomios autorregresivo de promedio móvil que se identifiquen con los rezagos estacionales.</p>
+
+<div class="definition">
+<p><span id="def:defi-modelo-sarma" class="definition"><strong>Definición 8.2  </strong></span>El <strong>modelo autorregresivo de promedio móvil estacional puro</strong> denotado <span class="math inline">\(ARMA(P,Q)_s\)</span> tiene la forma</p>
+<span class="math display" id="eq:eq-modelo-sarma">\[\begin{equation}
+\Phi_P(B^s)x_t=\Theta_Q(B^s)w_t,
+\tag{8.7}
+\end{equation}\]</span>
+<p>donde los operadores</p>
+<span class="math display" id="eq:eq-operador-AR-estacional">\[\begin{equation}
+\Phi_P(B^s) = 1-\Phi_1B^s-\Phi_2B^{2s}-\cdots-\Phi_PB^{Ps}
+\tag{8.8}
+\end{equation}\]</span>
+<p>y</p>
+<span class="math display" id="eq:eq-operador-MA-estacional">\[\begin{equation}
+\Theta_Q(B^s) = 1+\Theta_1B^s+\Theta_2B^{2s}+\cdots+\Theta_QB^{Qs},
+\tag{8.9}
+\end{equation}\]</span>
+<p>son los <em>operadores autorreggresivo estacional</em> y de <em>promedio móvil estacional</em> de ordenes <span class="math inline">\(P\)</span> y <span class="math inline">\(Q\)</span> respectivamente, con período estacional <span class="math inline">\(s\)</span>.</p>
+Análogo a las propiedades de los modelos <span class="math inline">\(ARMA\)</span> no-estacionales, el modelo <span class="math inline">\(ARMA(P,Q)_s\)</span> puro es <em>causal</em> sólo cuando las raíces de <span class="math inline">\(\Phi_P(z^s)\)</span> están fuera del círculo unitario y es <em>invertible</em> cuando las raíces de <span class="math inline">\(\Theta_Q(z^s)\)</span> están fuera del círculo unitario.
+</div>
+
+<hr />
+
+<div class="example">
+<p><span id="exm:ejem-serie-AR-estacional" class="example"><strong>Ejemplo 8.5  (Una serie AR estacional)  </strong></span>Una serie autorregresiva estacional de primer orden que podría durar meses la podemos escribir como</p>
+<p><span class="math display">\[(1-\Phi B^{12})x_t=w_t\]</span></p>
+<p>o</p>
+<p><span class="math display">\[x_t=\phi x_{t-12}+w_t.\]</span></p>
+<p>Este modelo exhibe la serie <span class="math inline">\(x_t\)</span> en términos de saltos o rezagos múltiplos del periodo estacional anual <span class="math inline">\(s=12\)</span> meses.</p>
+<p>De la forma anterior se desprende cláramente que la estimación y el pronóstico para tal proceso sólo implica modificaciones directas del cso de rezago unitario que ya tratamos. En particular, la condición causal requiere <span class="math inline">\(|\Phi|&lt;1\)</span>.</p>
+Simulamos 3 años de datos de este modelo con <span class="math inline">\(\Phi=0.9\)</span> y mostramos las ACF y PACF teóricas del modelo. Véase la figura <a href="modelos-arima.html#fig:fig-modelo-AR1-estacional">8.10</a>
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">666</span>)
+phi=<span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">11</span>),<span class="fl">0.9</span>)
+sAR=<span class="kw">arima.sim</span>(<span class="kw">list</span>(<span class="dt">order=</span><span class="kw">c</span>(<span class="dv">12</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="dt">ar=</span>phi),<span class="dt">n=</span><span class="dv">37</span>)
+sAR =<span class="st"> </span><span class="kw">ts</span>(sAR, <span class="dt">freq=</span><span class="dv">12</span>)
+<span class="kw">layout</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>, <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>), <span class="dt">nc=</span><span class="dv">2</span>))
+<span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="dt">mgp=</span><span class="kw">c</span>(<span class="fl">1.6</span>,.<span class="dv">6</span>,<span class="dv">0</span>))
+<span class="kw">plot</span>(sAR, <span class="dt">axes=</span><span class="ot">FALSE</span>, <span class="dt">main=</span><span class="st">&#39;Serie AR(1) estacional&#39;</span>, <span class="dt">xlab=</span><span class="st">&quot;años&quot;</span>, <span class="dt">type=</span><span class="st">&#39;c&#39;</span>)
+Months =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;E&quot;</span>,<span class="st">&quot;F&quot;</span>,<span class="st">&quot;M&quot;</span>,<span class="st">&quot;A&quot;</span>,<span class="st">&quot;M&quot;</span>,<span class="st">&quot;J&quot;</span>,<span class="st">&quot;J&quot;</span>,<span class="st">&quot;A&quot;</span>,<span class="st">&quot;S&quot;</span>,<span class="st">&quot;O&quot;</span>,<span class="st">&quot;N&quot;</span>,<span class="st">&quot;D&quot;</span>)
+<span class="kw">points</span>(sAR, <span class="dt">pch=</span>Months, <span class="dt">cex=</span><span class="fl">1.25</span>, <span class="dt">font=</span><span class="dv">4</span>, <span class="dt">col=</span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)
+<span class="kw">axis</span>(<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>); <span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="kw">gray</span>(.<span class="dv">7</span>))
+<span class="kw">axis</span>(<span class="dv">2</span>); <span class="kw">box</span>()
+ACF =<span class="st"> </span><span class="kw">ARMAacf</span>(<span class="dt">ar=</span>phi, <span class="dt">ma=</span><span class="dv">0</span>, <span class="dv">100</span>)
+PACF =<span class="st"> </span><span class="kw">ARMAacf</span>(<span class="dt">ar=</span>phi, <span class="dt">ma=</span><span class="dv">0</span>, <span class="dv">100</span>, <span class="dt">pacf=</span><span class="ot">TRUE</span>)
+<span class="kw">plot</span>(ACF,<span class="dt">type=</span><span class="st">&quot;h&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Rezago&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span>.<span class="dv">1</span>,<span class="dv">1</span>)); <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>)
+<span class="kw">plot</span>(PACF, <span class="dt">type=</span><span class="st">&quot;h&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Rezago&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span>.<span class="dv">1</span>,<span class="dv">1</span>)); <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>)</code></pre></div>
+<div class="figure"><span id="fig:fig-modelo-AR1-estacional"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-modelo-AR1-estacional-1.svg" alt="Datos generados de un modelo estaconal AR(1), con s=12 y las funciones ACF y PACF del modelo x_t=0.9x_{t-12}+w_t"  />
+<p class="caption">
+Figura 8.10: Datos generados de un modelo estaconal AR(1), con s=12 y las funciones ACF y PACF del modelo x_t=0.9x_{t-12}+w_t
+</p>
+</div>
+<hr />
+<p>Para un modelo <span class="math inline">\(MA(1)\)</span> estacional con <span class="math inline">\(s=12\)</span>, <span class="math inline">\(x_t=w_t+\Theta w_{t-12}\)</span>, es fácil verificar que</p>
+<span class="math display">\[\begin{eqnarray*}
+  \gamma(0) &amp;=&amp; (1+\Theta^2)\sigma^2 \\
+  \gamma(\pm12) &amp;=&amp; \Theta\sigma^2 \\
+  \gamma(h) &amp;=&amp; 0 \text{, cualquier otro caso.}
+\end{eqnarray*}\]</span>
+<p>Entonces, la única correlación no cero, aparte del paso 0 es</p>
+<p><span class="math display">\[\rho(\pm12) = \Theta/(1+\Theta^2).\]</span></p>
+<p>Para un modelo <span class="math inline">\(AR(1)\)</span> estacional con <span class="math inline">\(s=12\)</span>, usando las técnicas para el modelo <span class="math inline">\(AR(1)\)</span> no-estacional, tenemos</p>
+<span class="math display">\[\begin{eqnarray*}
+  \gamma(0) &amp;=&amp; \sigma^2/(1-\Phi^2) \\
+  \gamma(\pm12) &amp;=&amp; \sigma^2\Phi^k/(1-\Phi^2), k=1,2,\ldots \\
+  \gamma(h) &amp;=&amp; 0 \text{, cualquier otro caso.}
+\end{eqnarray*}\]</span>
+<p>En este caso, las únicas correlaciones no cero son</p>
+<p><span class="math display">\[\rho(\pm12) = \Phi^k, k=0,1,2,\ldots.\]</span> Estos resultados se pueden verificar usando el resultado general</p>
+<p><span class="math display">\[\gamma(h) = \Phi\gamma(h-12)\text{, para }h\geq1.\]</span> Por ejemplo, cuando <span class="math inline">\(h=1\)</span>, <span class="math inline">\(\gamma(1)=\Phi\gamma(11)\)</span>, pero para <span class="math inline">\(h=11\)</span>, se tiene que <span class="math inline">\(\gamma(11)=\Phi\gamma(1)\)</span>, lo que implica que <span class="math inline">\(\gamma(1)=\gamma(11)=0\)</span>. Adicional a estos resultados, la PACF tiene extensión análoga del modelo no-estacional al estacional. Estos resultados se observan en la figura <a href="modelos-arima.html#fig:fig-modelo-AR1-estacional">8.10</a>.</p>
+<p>Como un criterio de diagnóstico inicial, podemos usar las propiedades de una serie autorregresiva de promedio móvil estacional puro que se muestran en la tabla siguiente. Estas propiedades las podemos considerar como una generalización de las propiedades para modelos no estacionales que presentamos en la sección (<em>referencia</em>)</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">AR(P)s</th>
+<th align="center">MA(Q)s</th>
+<th align="center">ARMA(P,Q)s</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ACF*</td>
+<td align="center">Cola fuera en</td>
+<td align="center">Corte después</td>
+<td align="center">Cola fuera en</td>
+</tr>
+<tr class="even">
+<td></td>
+<td align="center">paso k, k=1,2,…</td>
+<td align="center">de paso Q</td>
+<td align="center">paso k</td>
+</tr>
+<tr class="odd">
+<td>PACF*</td>
+<td align="center">Corte después</td>
+<td align="center">Cola fuera en</td>
+<td align="center">Cola fuera en</td>
+</tr>
+<tr class="even">
+<td></td>
+<td align="center">de paso P</td>
+<td align="center">paso k, k=1,2,…</td>
+<td align="center">paso k</td>
+</tr>
+</tbody>
+</table>
+<p>*Los valores en paso no-estacional <span class="math inline">\(h\neq k\)</span>, para <span class="math inline">\(k=1,2,\ldots\)</span> son cero.</p>
+<p>En general, podemos combinar los operadores no estacionales y estacionales en un solo modelo.</p>
+
+<div class="definition">
+<p><span id="def:defi-modelo-sarma-multiplicativo" class="definition"><strong>Definición 8.3  </strong></span>Un modelo <strong>multiplicativo autorregresivo de promedio móvil estacional</strong> denotado por <span class="math inline">\(ARMA(p,q)\times(P,Q)_s\)</span> tiene la forma</p>
+<span class="math display" id="eq:eq-sarma-multiplicativo">\[\begin{equation}
+\Phi_P(B^s)\phi(B)x_t = \Theta_Q(B^s)\theta(B)w_t
+\tag{8.10}
+\end{equation}\]</span>
+</div>
+
+<hr />
+<p>Aunque las propiedades de diagnóstico en la tabla anterior no son estrictamente ciertas para el modelo general mixto, el comportamiento de las ACF y PACF tienden a mostrar patrones aproximados de la forma indicada. De hecho, para modelos mixtos, podemos ver una mezcla de las propiedades listadas en las tablas mencionadas.</p>
+<p>Al ajustar tales modelos, nos centraremos primero en los componentes estacionales autorregresivo de promedio móvil estacional, lo que en general nos conduce a resultados más satisfactorios.</p>
+
+<div class="example">
+<p><span id="exm:ejem-modelo-estacional-mixto" class="example"><strong>Ejemplo 8.6  (Un modelo estacional mixto)  </strong></span>Consideremos un modelo <span class="math inline">\(ARMA(0,1)\times(1,0)_{12}\)</span></p>
+<p><span class="math display">\[x_t = \Phi x_{t-12}+w_t+\theta w_{t-1},\]</span></p>
+<p>donde <span class="math inline">\(|\Phi|&lt;1\)</span> y <span class="math inline">\(|\theta|&lt;1\)</span>. Entonces, dado que <span class="math inline">\(x_{t-12}, w_t\)</span> y <span class="math inline">\(w_{t-1}\)</span> son no-correlacionados, y <span class="math inline">\(x_t\)</span> es estacionario <span class="math inline">\(\gamma(0)=\Phi^2\gamma(0)+\sigma_w^2+\theta^2\\sigma_w^2\)</span> o</p>
+<p><span class="math display">\[\gamma(0) = \frac{1+\theta^2}{1-\Phi^2}\sigma_w^2.\]</span></p>
+<p>Además, multiplicando el modelo por <span class="math inline">\(x_{t-h}, h&gt;0\)</span>, y tomando valor esperado, tenemos <span class="math inline">\(\gamma(1)=\Phi\gamma(11)+\theta\sigma_w^2\)</span>, y <span class="math inline">\(\gamma(h)=\Phi\gamma(h-12)\)</span> para <span class="math inline">\(h\geq2\)</span>. Entonces, la ACF para este modelo es</p>
+<span class="math display">\[\begin{eqnarray*}
+  \rho(12h) &amp;=&amp; \Phi^h, h=1,2,\ldots\\
+  \rho(12h-1) &amp;=&amp; \rho(12h+1) = \frac{\theta}{1+\theta^2}\Phi^h, h=0,1,2,\ldots \\
+  \rho(h) &amp;=&amp; 0 \text{, en otro caso.}
+\end{eqnarray*}\]</span>
+Las ACF y PACF para este modelo, con <span class="math inline">\(\Phi=0.8\)</span> y <span class="math inline">\(\theta=-0.5\)</span> se muestran en la Figura <a href="modelos-arima.html#fig:fig-modelo-sarma-multiplicativo">8.11</a>. Los comandos en <span class="math inline">\(R\)</span> para reproducir la Figura <a href="modelos-arima.html#fig:fig-modelo-sarma-multiplicativo">8.11</a> son los siguientes.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phi =<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">11</span>),.<span class="dv">8</span>)
+ACF =<span class="st"> </span><span class="kw">ARMAacf</span>(<span class="dt">ar=</span>phi, <span class="dt">ma=</span><span class="op">-</span>.<span class="dv">5</span>, <span class="dv">50</span>)[<span class="op">-</span><span class="dv">1</span>] <span class="co"># [-1] remueve el rezago 0</span>
+PACF =<span class="st"> </span><span class="kw">ARMAacf</span>(<span class="dt">ar=</span>phi, <span class="dt">ma=</span><span class="op">-</span>.<span class="dv">5</span>, <span class="dv">50</span>, <span class="dt">pacf=</span><span class="ot">TRUE</span>)
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(ACF, <span class="dt">type=</span><span class="st">&quot;h&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Rezago&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span>.<span class="dv">4</span>,.<span class="dv">8</span>)); <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>)
+<span class="kw">plot</span>(PACF, <span class="dt">type=</span><span class="st">&quot;h&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Rezago&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span>.<span class="dv">4</span>,.<span class="dv">8</span>)); <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>)</code></pre></div>
+<div class="figure"><span id="fig:fig-modelo-sarma-multiplicativo"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-modelo-sarma-multiplicativo-1.svg" alt="ACF y PACF de un modelo ARMA estacional mixto"  />
+<p class="caption">
+Figura 8.11: ACF y PACF de un modelo ARMA estacional mixto
+</p>
+</div>
+<hr />
+<p>La persistencia estacional ocurre cuando el proceso es casi periódico en la temporada. Por ejemplo, con promedios de temperaturas mensuales sobre los años, cada enero será aproximadamente igual, cada febrero será aproximadamente el mismo, y así sucesivamente. En este caso, podemos pensar que la temperatura promedio mensual <span class="math inline">\(x_t\)</span> es modelada como</p>
+<p><span class="math display">\[x_t = S_t+w+t,\]</span></p>
+<p>donde <span class="math inline">\(S_t\)</span> es una componente estacional que varia poco de un año a otro de acuerdo a un paseo aleatorio</p>
+<p><span class="math display">\[S_t = S_{t-12}+v_t.\]</span></p>
+<p>En este modelo, <span class="math inline">\(w_t\)</span> y <span class="math inline">\(v_t\)</span> son ruidos blancos no-correlacionados. La tendencia de los datos que sigue este tipo de modelos se exhibe en la ACF muestral que es grande y decae muy lentamente en los rezagos <span class="math inline">\(h=12k\)</span> para <span class="math inline">\(k=1,2,\ldots\)</span>. Si sustraemos el efecto de años sucesivos el uno del otro, encontramos que</p>
+<p><span class="math display">\[(1-B^{12})x_t = x_t-x_{t-12} = v_t+w_t-w_{t-12}.\]</span></p>
+<p>Este modelo es un modelo <span class="math inline">\(MA(1)_{12}\)</span> estacionario y su ACF tendrá un pico solo en paso 12. En general, la diferenciación estacional puede ser indicada cuando la ACF decae lentamente en múltiplos de algún período estacional <span class="math inline">\(s\)</span>, pero es despreciable entre los períodos.</p>
+
+<div class="definition">
+<p><span id="def:defi-diferencia-estacional-D" class="definition"><strong>Definición 8.4  </strong></span>La <strong>diferencia estacional de orden <span class="math inline">\(D\)</span></strong> se define como</p>
+<span class="math display" id="eq:eq-diferencia-estacional-D">\[\begin{equation}
+\nabla_s^Dx_t=(1-B^2)^Dx_t
+\tag{8.11}
+\end{equation}\]</span>
+</div>
+
+<hr />
+<p>Normalmente, <span class="math inline">\(D=1\)</span>, es suficiente para obtener estacionaridad estacional. incorporando estas ideas al modelo general nos lleva a la siguiente definición.</p>
+
+<div class="definition">
+<p><span id="def:defi-modelo-sarima" class="definition"><strong>Definición 8.5  </strong></span>Un modelo <strong>autorregresivo integrado de promedio móvil estacional multiplicativo</strong> o modelo <span class="math inline">\(SARIMA\)</span> está dado por</p>
+<span class="math display" id="eq:eq-modelo-sarima">\[\begin{equation}
+\Phi_P(B^s)\phi(B)\nabla_s^D\nabla^dx_t = \delta+\Theta_Q(B^s)\theta(B)w_t,
+\tag{8.12}
+\end{equation}\]</span>
+donde <span class="math inline">\(w_t\)</span> es un ruido blanco gaussiano. El modelo general es denotado como <span class="math inline">\(ARIMA(p,d,q)\times(P,D,Q)_s\)</span>. Las componentes autorregresiva y de promedio móvil ordinarias son representadas por <span class="math inline">\(\phi(B)\)</span> y <span class="math inline">\(\theta(B)\)</span> de órdenes <span class="math inline">\(p\)</span> y <span class="math inline">\(q\)</span> respectivamente, y las componentes autorregresivas y de promedio móvil estacionales por <span class="math inline">\(\Phi_P(B^s)\)</span> y <span class="math inline">\(\Theta_Q(B^s)\)</span> de órdenes <span class="math inline">\(P\)</span> y <span class="math inline">\(Q\)</span>, y las componentes de diferencias ordinarias y estacionales <span class="math inline">\(\nabla^d=(1-B)^d\)</span> y <span class="math inline">\(\nabla_s^D=(1-B^s)^D\)</span>.
+</div>
+
+<hr />
+
+<div class="example">
+<p><span id="exm:ejem-modelo-sarima" class="example"><strong>Ejemplo 8.7  (Un modelo SARIMA)  </strong></span>Consideremos el siguiente modelo, el cual a menudo provee una representación razonable para seires econométricas estacionales y no estacionarias. Mostramos la ecuación para el modelo, denotado por <span class="math inline">\(ARIMA(0,1,1)\times(0,1,1)_{12}\)</span> en la notación de la definición anterior (Definición <a href="modelos-arima.html#def:defi-modelo-sarima">8.5</a>), donde las fluctuaciones estacionales ocurren cada 12 meses. Entonces con <span class="math inline">\(\delta=0\)</span>, el modelo <a href="modelos-arima.html#eq:eq-modelo-sarima">(8.12)</a> llega a ser</p>
+<p><span class="math display">\[\nabla_{12}\nabla x_t=\Theta(B^{12})\theta(B)w_t,\]</span></p>
+<p>o</p>
+<span class="math display" id="eq:eq-modelo-sarima-p12">\[\begin{equation}
+(1-B^{12})(1-B)x_t = (1+\Theta B^{12})(1+\theta B)w_t.
+\tag{8.13}
+\end{equation}\]</span>
+<p>Expandiendo ambos lados de <a href="modelos-arima.html#eq:eq-modelo-sarima-p12">(8.13)</a>, obtenemos la representación</p>
+<p><span class="math display">\[(1-B-B^{12}+B^{13})x_t = (1+\theta B+\Theta B^{12}+\Theta\theta B^{13})w_t,\]</span></p>
+<p>o en la forma de ecuaciones en diferencias</p>
+<p><span class="math display">\[x_t = x_{t-1}+x_{t-12}-x_{t-13}+w_t+\theta w_{t-1}+\Theta w_{t-12}+\Theta\theta w_{t-13}.\]</span></p>
+Note que la naturaleza multiplicativa del modelo implica que el coeficiente de <span class="math inline">\(w_{t-13}\)</span> es el producto de los coeficientes de <span class="math inline">\(w_t\)</span> y <span class="math inline">\(w_{t-12}\)</span>, en lugar de un parámetro libre. El supuesto del modelo multiplicativo parece funcionar bien con muchos conjuntos de datos de series de tiempo estacionales a la vez que reduce el número de parámetros que debemos estimar.
+</div>
+
+<hr />
+<p>Seleccionar el modelo apropiado para un conjunto de datos dado entre todos los posibles modelos representados por la ecuación <a href="modelos-arima.html#eq:eq-modelo-sarima">(8.12)</a> es una tarea desalentadora, y generalmente pensamos primero en términos de encontrar operadores de diferencia que producen una serie más o menos estacionaria y luego en términos de encontrar un modelo autorregresivo de promedio móvil simple o un modelo ARMA multiplicativo estacional para adaptarlo a la serie de residuales resultante.</p>
+<p>Primero aplicamos operaciones de diferenciación y luego construimos los residuos a partir de una serie de tamaño reducido. A continuación, evaluamos las ACF y PACF de estos residuos. Los picos que aparecen en estas funciones a menudo pueden eliminarse fjando o ajustando una componente autorregresiva o una componente de promedio móvil de acuerdo con las propiedades de las Tablas para las funciones ACF y PACF. Al considerar si el modelo es satisfactorio podemos aplicar las técnicas de diagnóstico discutidas en la Sección <a href="modelos-arima.html#construccion-de-modelos-arima">Construcción de modelos ARIMA</a>.</p>
+
+<div class="example">
+<span id="exm:ejem-pasajeros-aereos" class="example"><strong>Ejemplo 8.8  (Pasajeros aéreos)  </strong></span>Consideremos el conjunto de datos de <span class="math inline">\(R\)</span> “AirPassengers”, que son los totales mensuales de pasajeros de lineas aereas internacionales de 1949 a 1960. En la Figura <a href="modelos-arima.html#fig:fig-serie-pasajeros-transformados">8.12</a> mostramos la serie de datos así como 3 transformaciones de los mismos. Primero una transformación logarítmica, luego una diferenciación de un paso sobre esta, y finalmente una diferenciación adicional de orden 12. Las instrucciones en <span class="math inline">\(R\)</span> son:
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span>AirPassengers
+lx =<span class="st"> </span><span class="kw">log</span>(x); dlx =<span class="st"> </span><span class="kw">diff</span>(lx); ddlx =<span class="st"> </span><span class="kw">diff</span>(dlx, <span class="dv">12</span>)
+<span class="kw">plot.ts</span>(<span class="kw">cbind</span>(x,lx,dlx,ddlx), <span class="dt">main=</span><span class="st">&quot;&quot;</span>)</code></pre></div>
+<div class="figure"><span id="fig:fig-serie-pasajeros-transformados"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-serie-pasajeros-transformados-1.svg" alt="Serie de tiempo AirPassengers, x, (parte superior), el cual es los totales mensuales de pasajeros de lineas aéreas internacionales de 1949 a 1960; y los datos transformados lx=log x_t (segundo cuadro); dlx=diff(log x_t) (tercer cuadro) y ddlx=diff_12 diff(log x_t) (cuadro inferior)"  />
+<p class="caption">
+Figura 8.12: Serie de tiempo AirPassengers, x, (parte superior), el cual es los totales mensuales de pasajeros de lineas aéreas internacionales de 1949 a 1960; y los datos transformados lx=log x_t (segundo cuadro); dlx=diff(log x_t) (tercer cuadro) y ddlx=diff_12 diff(log x_t) (cuadro inferior)
+</p>
+</div>
+<p>Observe que la serie original <span class="math inline">\(x\)</span> muestra tendencia y varianza crecientes; en <span class="math inline">\(lx\)</span> están los datos transformados logarítmicamente y en estso la varianza se estabiliza. Luego diferenciamos la serie transformada para eliminar la tendencia, y la guardamos en <span class="math inline">\(dlx\)</span>. Se observa claramente la persistencia estacional (i.e., <span class="math inline">\(dlx_t\approx dlx_{t-12}\)</span>) de modo que aplicamos una diferenciación de orden 12. Los datos transformados parecen ser estacionarios, así que estamos listos para fijar un modelo inicial a los mismos.</p>
+<p>Las ACF y PACF muestrales de <span class="math inline">\(ddlx (\nabla_{12}\nabla\log x_t)\)</span> los mostramos en la Figura <a href="modelos-arima.html#fig:fig-acf-pacf-pasajeros">8.13</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">acf2</span>(ddlx,<span class="dv">50</span>)</code></pre></div>
+<div class="figure"><span id="fig:fig-acf-pacf-pasajeros"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-acf-pacf-pasajeros-1.svg" alt="ACF y PACF muestrales de ddlx"  />
+<p class="caption">
+Figura 8.13: ACF y PACF muestrales de ddlx
+</p>
+</div>
+<pre><code>##         ACF  PACF
+##  [1,] -0.34 -0.34
+##  [2,]  0.11 -0.01
+##  [3,] -0.20 -0.19
+##  [4,]  0.02 -0.13
+##  [5,]  0.06  0.03
+##  [6,]  0.03  0.03
+##  [7,] -0.06 -0.06
+##  [8,]  0.00 -0.02
+##  [9,]  0.18  0.23
+## [10,] -0.08  0.04
+## [11,]  0.06  0.05
+## [12,] -0.39 -0.34
+## [13,]  0.15 -0.11
+## [14,] -0.06 -0.08
+## [15,]  0.15 -0.02
+## [16,] -0.14 -0.14
+## [17,]  0.07  0.03
+## [18,]  0.02  0.11
+## [19,] -0.01 -0.01
+## [20,] -0.12 -0.17
+## [21,]  0.04  0.13
+## [22,] -0.09 -0.07
+## [23,]  0.22  0.14
+## [24,] -0.02 -0.07
+## [25,] -0.10 -0.10
+## [26,]  0.05 -0.01
+## [27,] -0.03  0.04
+## [28,]  0.05 -0.09
+## [29,] -0.02  0.05
+## [30,] -0.05  0.00
+## [31,] -0.05 -0.10
+## [32,]  0.20 -0.02
+## [33,] -0.12  0.01
+## [34,]  0.08 -0.02
+## [35,] -0.15  0.02
+## [36,] -0.01 -0.16
+## [37,]  0.05 -0.03
+## [38,]  0.03  0.01
+## [39,] -0.02  0.05
+## [40,] -0.03 -0.08
+## [41,] -0.07 -0.17
+## [42,]  0.10  0.07
+## [43,] -0.09 -0.10
+## [44,]  0.03 -0.06
+## [45,] -0.04 -0.03
+## [46,] -0.04 -0.12
+## [47,]  0.11 -0.01
+## [48,] -0.05 -0.05
+## [49,]  0.11  0.09
+## [50,] -0.02  0.13</code></pre>
+<p><em>Componente estacional</em>: Parece que en la estacionalidad, la ACF se corta en paso <span class="math inline">\(1s\)</span> (<span class="math inline">\(s=12\)</span>), mientras que la PACF se rezaga en pasos <span class="math inline">\(1s,2s,3s,4s,\ldots\)</span>. Estos resultados implican un <span class="math inline">\(SMA(1), P=0,Q=1\)</span>, en la componente estacional (s=12).</p>
+<p><em>Componente no-estacional</em>: Inspeccionando las ACf y PACF muestrales en los primeros pasos, parece que ambas colas decaen. Esto sugiere un modelo <span class="math inline">\(ARMA(1,1)\)</span>, dentor de las estaciones, <span class="math inline">\(p=q=1\)</span>.</p>
+<p>Entonces podemos empear con el modelo <span class="math inline">\(ARIMA(1,1,1)\times(0,1,1)_{12}\)</span> sobre la serie <span class="math inline">\(lx\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sarima</span>(lx, <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>, <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">12</span>)</code></pre></div>
+<pre><code>## initial  value -3.085211 
+## iter   2 value -3.225399
+## iter   3 value -3.276697
+## iter   4 value -3.276902
+## iter   5 value -3.282134
+## iter   6 value -3.282524
+## iter   7 value -3.282990
+## iter   8 value -3.286319
+## iter   9 value -3.286413
+## iter  10 value -3.288141
+## iter  11 value -3.288262
+## iter  12 value -3.288394
+## iter  13 value -3.288768
+## iter  14 value -3.288969
+## iter  15 value -3.289089
+## iter  16 value -3.289094
+## iter  17 value -3.289100
+## iter  17 value -3.289100
+## iter  17 value -3.289100
+## final  value -3.289100 
+## converged
+## initial  value -3.288388 
+## iter   2 value -3.288459
+## iter   3 value -3.288530
+## iter   4 value -3.288649
+## iter   5 value -3.288753
+## iter   6 value -3.288781
+## iter   7 value -3.288784
+## iter   7 value -3.288784
+## iter   7 value -3.288784
+## final  value -3.288784 
+## converged</code></pre>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-60-1.svg" /><!-- --></p>
+<pre><code>## $fit
+## 
+## Call:
+## stats::arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, 
+##     Q), period = S), include.mean = !no.constant, optim.control = list(trace = trc, 
+##     REPORT = 1, reltol = tol))
+## 
+## Coefficients:
+##         ar1     ma1    sma1
+##       0.196  -0.578  -0.564
+## s.e.  0.247   0.213   0.075
+## 
+## sigma^2 estimated as 0.00134:  log likelihood = 244.9,  aic = -481.9
+## 
+## $degrees_of_freedom
+## [1] 128
+## 
+## $ttable
+##      Estimate     SE t.value p.value
+## ar1    0.1960 0.2475  0.7921  0.4298
+## ma1   -0.5784 0.2132 -2.7127  0.0076
+## sma1  -0.5643 0.0747 -7.5544  0.0000
+## 
+## $AIC
+## [1] -5.573
+## 
+## $AICc
+## [1] -5.557
+## 
+## $BIC
+## [1] -6.511</code></pre>
+<p>Sin embargo, el parámetro <span class="math inline">\(AR\)</span> no es significativo, así que intentamos eliminando un parámetro de la parte dentro de las estaciones. En este caso probaremos con los modelos <span class="math inline">\(ARIMA(0,1,1)\times(0,1,1)_{12}\)</span> y <span class="math inline">\(ARIMA(1,1,0)\times(0,1,1)_{12}\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sarima</span>(lx, <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>, <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">12</span>)</code></pre></div>
+<pre><code>## initial  value -3.086228 
+## iter   2 value -3.267980
+## iter   3 value -3.279950
+## iter   4 value -3.285996
+## iter   5 value -3.289332
+## iter   6 value -3.289665
+## iter   7 value -3.289672
+## iter   8 value -3.289676
+## iter   8 value -3.289676
+## iter   8 value -3.289676
+## final  value -3.289676 
+## converged
+## initial  value -3.286464 
+## iter   2 value -3.286855
+## iter   3 value -3.286872
+## iter   4 value -3.286874
+## iter   4 value -3.286874
+## iter   4 value -3.286874
+## final  value -3.286874 
+## converged</code></pre>
+<div class="figure"><span id="fig:fig-residuales-pasajeros"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-residuales-pasajeros-1.svg" alt="Análisis de residuales para el modelo ARIMA(0,1,1)x(0,1,1)_12 ajustado a la serie lx de pasajeros aéreos"  />
+<p class="caption">
+Figura 8.14: Análisis de residuales para el modelo ARIMA(0,1,1)x(0,1,1)_12 ajustado a la serie lx de pasajeros aéreos
+</p>
+</div>
+<pre><code>## $fit
+## 
+## Call:
+## stats::arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, 
+##     Q), period = S), include.mean = !no.constant, optim.control = list(trace = trc, 
+##     REPORT = 1, reltol = tol))
+## 
+## Coefficients:
+##          ma1    sma1
+##       -0.402  -0.557
+## s.e.   0.090   0.073
+## 
+## sigma^2 estimated as 0.00135:  log likelihood = 244.7,  aic = -483.4
+## 
+## $degrees_of_freedom
+## [1] 129
+## 
+## $ttable
+##      Estimate     SE t.value p.value
+## ma1   -0.4018 0.0896  -4.482       0
+## sma1  -0.5569 0.0731  -7.619       0
+## 
+## $AIC
+## [1] -5.581
+## 
+## $AICc
+## [1] -5.566
+## 
+## $BIC
+## [1] -6.54</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sarima</span>(lx, <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">12</span>)</code></pre></div>
+<pre><code>## initial  value -3.085211 
+## iter   2 value -3.259459
+## iter   3 value -3.262637
+## iter   4 value -3.275171
+## iter   5 value -3.277007
+## iter   6 value -3.277205
+## iter   7 value -3.277208
+## iter   8 value -3.277209
+## iter   8 value -3.277209
+## iter   8 value -3.277209
+## final  value -3.277209 
+## converged
+## initial  value -3.279535 
+## iter   2 value -3.279580
+## iter   3 value -3.279586
+## iter   3 value -3.279586
+## iter   3 value -3.279586
+## final  value -3.279586 
+## converged</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-61"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-61-1.svg" alt="Análisis de residuales para el modelo ARIMA(1,1,0)x(0,1,1)_12 ajustado a la serie lx de pasajeros aéreos"  />
+<p class="caption">
+Figura 8.15: Análisis de residuales para el modelo ARIMA(1,1,0)x(0,1,1)_12 ajustado a la serie lx de pasajeros aéreos
+</p>
+</div>
+<pre><code>## $fit
+## 
+## Call:
+## stats::arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, 
+##     Q), period = S), include.mean = !no.constant, optim.control = list(trace = trc, 
+##     REPORT = 1, reltol = tol))
+## 
+## Coefficients:
+##          ar1    sma1
+##       -0.340  -0.562
+## s.e.   0.082   0.075
+## 
+## sigma^2 estimated as 0.00137:  log likelihood = 243.7,  aic = -481.5
+## 
+## $degrees_of_freedom
+## [1] 129
+## 
+## $ttable
+##      Estimate     SE t.value p.value
+## ar1   -0.3395 0.0822  -4.130   1e-04
+## sma1  -0.5619 0.0748  -7.511   0e+00
+## 
+## $AIC
+## [1] -5.567
+## 
+## $AICc
+## [1] -5.552
+## 
+## $BIC
+## [1] -6.526</code></pre>
+<p>Todos los criterios de información prefieren el modelo <span class="math inline">\(ARIMA(0,1,1)\times(0,1,1)_{12}\)</span>. En la Figura <a href="modelos-arima.html#fig:fig-residuales-pasajeros">8.14</a> mostramos los diagnósticos para los residuales y excepto para uno o dos datos atípicos, el modelo parece ajustarse bien.</p>
+<p>Finalmente, el pronóstico para 12 meses de los datos con la transformación logarítmica lo mostramo en la Figura <a href="modelos-arima.html#fig:fig-pronostico-pasajeros">8.16</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sarima.for</span>(lx, <span class="dv">12</span>, <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>, <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">12</span>)</code></pre></div>
+<div class="figure"><span id="fig:fig-pronostico-pasajeros"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-pronostico-pasajeros-1.svg" alt="Pronóstico de 12 meses usando el modelo ARIMA(0,1,1)x(0,1,1)_12 de los datos transformados de pasajeros aéreos"  />
+<p class="caption">
+Figura 8.16: Pronóstico de 12 meses usando el modelo ARIMA(0,1,1)x(0,1,1)_12 de los datos transformados de pasajeros aéreos
+</p>
+</div>
+<pre><code>## $pred
+##        Jan   Feb   Mar   Apr   May   Jun   Jul   Aug
+## 1961 6.110 6.054 6.172 6.199 6.233 6.369 6.507 6.503
+##        Sep   Oct   Nov   Dec
+## 1961 6.325 6.209 6.063 6.168
+## 
+## $se
+##          Jan     Feb     Mar     Apr     May     Jun
+## 1961 0.03672 0.04278 0.04809 0.05287 0.05725 0.06132
+##          Jul     Aug     Sep     Oct     Nov     Dec
+## 1961 0.06513 0.06873 0.07216 0.07543 0.07856 0.08157</code></pre>
+<hr />
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="12">
+<li id="fn12"><p><span class="math inline">\(\ln(1+p)=p-\frac{p^2}{2}+\frac{p^3}{3}-\cdots\)</span> para <span class="math inline">\(-1&lt;p\leq1\)</span>. Si <span class="math inline">\(p\)</span> es un porcentaje de cambio pequeño, entonces los términos de orden superior en el desarrollo son despreciables.<a href="modelos-arima.html#fnref12">↩</a></p></li>
+</ol>
+</div>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-78759535-1', 'auto');
+ga('send', 'pageview');  
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="estimacion-de-parametros.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="modelos-arch-y-garch.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/synergyvision/Teoria-de-Portafolio/edit/master/bookdown/305-modelos-ARIMA.Rmd",
+"text": "Edit"
+},
+"download": ["Serie-de-Tiempo-en-R.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
