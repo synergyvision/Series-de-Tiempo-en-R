@@ -4,7 +4,7 @@
 title: "Series de Tiempo en R"
 subtitle: "Ciencia de los Datos Financieros"
 author: "Synergy Vision"
-date: "2018-12-07"
+date: "2020-01-31"
 knit: "bookdown::render_book"
 documentclass: krantz
 bibliography: [book.bib, packages.bib]
@@ -6111,8 +6111,8 @@ sarima(lx, 1,1,1, 0,1,1,12)
 ## 
 ## Call:
 ## stats::arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, 
-##     Q), period = S), include.mean = !no.constant, optim.control = list(trace = trc, 
-##     REPORT = 1, reltol = tol))
+##     Q), period = S), include.mean = !no.constant, transform.pars = trans, fixed = fixed, 
+##     optim.control = list(trace = trc, REPORT = 1, reltol = tol))
 ## 
 ## Coefficients:
 ##         ar1     ma1    sma1
@@ -6131,13 +6131,13 @@ sarima(lx, 1,1,1, 0,1,1,12)
 ## sma1  -0.5643 0.0747 -7.5544  0.0000
 ## 
 ## $AIC
-## [1] -5.573
+## [1] -3.394
 ## 
 ## $AICc
-## [1] -5.557
+## [1] -3.392
 ## 
 ## $BIC
-## [1] -6.511
+## [1] -3.313
 ```
 
 Sin embargo, el parámetro $AR$ no es significativo, así que intentamos eliminando un parámetro de la parte dentro de las estaciones. En este caso probaremos con los modelos $ARIMA(0,1,1)\times(0,1,1)_{12}$ y $ARIMA(1,1,0)\times(0,1,1)_{12}$.
@@ -6180,8 +6180,8 @@ sarima(lx, 0,1,1, 0,1,1,12)
 ## 
 ## Call:
 ## stats::arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, 
-##     Q), period = S), include.mean = !no.constant, optim.control = list(trace = trc, 
-##     REPORT = 1, reltol = tol))
+##     Q), period = S), include.mean = !no.constant, transform.pars = trans, fixed = fixed, 
+##     optim.control = list(trace = trc, REPORT = 1, reltol = tol))
 ## 
 ## Coefficients:
 ##          ma1    sma1
@@ -6199,13 +6199,13 @@ sarima(lx, 0,1,1, 0,1,1,12)
 ## sma1  -0.5569 0.0731  -7.619       0
 ## 
 ## $AIC
-## [1] -5.581
+## [1] -3.404
 ## 
 ## $AICc
-## [1] -5.566
+## [1] -3.404
 ## 
 ## $BIC
-## [1] -6.54
+## [1] -3.343
 ```
 
 
@@ -6245,8 +6245,8 @@ sarima(lx, 1,1,0, 0,1,1,12)
 ## 
 ## Call:
 ## stats::arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, 
-##     Q), period = S), include.mean = !no.constant, optim.control = list(trace = trc, 
-##     REPORT = 1, reltol = tol))
+##     Q), period = S), include.mean = !no.constant, transform.pars = trans, fixed = fixed, 
+##     optim.control = list(trace = trc, REPORT = 1, reltol = tol))
 ## 
 ## Coefficients:
 ##          ar1    sma1
@@ -6264,13 +6264,13 @@ sarima(lx, 1,1,0, 0,1,1,12)
 ## sma1  -0.5619 0.0748  -7.511   0e+00
 ## 
 ## $AIC
-## [1] -5.567
+## [1] -3.391
 ## 
 ## $AICc
-## [1] -5.552
+## [1] -3.39
 ## 
 ## $BIC
-## [1] -6.526
+## [1] -3.33
 ```
 
 Todos los criterios de información prefieren el modelo $ARIMA(0,1,1)\times(0,1,1)_{12}$. En la Figura \@ref(fig:fig-residuales-pasajeros) mostramos los diagnósticos para los residuales y excepto para uno o dos datos atípicos, el modelo parece ajustarse bien.
@@ -6795,6 +6795,14 @@ En el siguiente script, la función 'fraccdiff.sim' genera una realizaci'pon de 
 
 ```r
 library(fracdiff)
+```
+
+```
+## Warning: package 'fracdiff' was built under R version
+## 3.5.2
+```
+
+```r
 set.seed(1)
 fds.sim=fracdiff.sim(10000,ar=0.9,d=0.4)
 x=fds.sim$series
@@ -7356,7 +7364,7 @@ $$r_{6t}=\beta_0+\beta_1r_{3t}+\varepsilon,$$
   
 donde $r_{6t}$ y $r_{3t}$ son las series ya descritas y $\varepsilon_t$ el término de error.
 
-La gráfica \@ref(fig:hp) muestra las dos series de tipo de interés, en azul con vencimiento a 3 meses yen rojo con vencimiento a 6 meses.</div>\EndKnitrBlock{example}
+La gráfica \@ref(fig:fig-euribor-interes) muestra las dos series de tipo de interés, en azul con vencimiento a 3 meses yen rojo con vencimiento a 6 meses.</div>\EndKnitrBlock{example}
 
 
 ```r
@@ -7368,7 +7376,7 @@ plot(r3t$V2, type = "l", col="blue", ylab = "Precio", xlab = "tiempo", ylim=c(-0
 lines(r6t$V2, col="red")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/hp-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/fig-euribor-interes-1.svg)<!-- -->
 
 El modelo resultante del ajuste es el siguiente
 

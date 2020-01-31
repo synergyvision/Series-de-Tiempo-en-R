@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Series de Tiempo en R</title>
-  <meta name="description" content="Series de Tiempo en R">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <title>Capítulo 10 Modelos lineales estacionales y modelos no-estacionarios | Series de Tiempo en R</title>
+  <meta name="description" content="Capítulo 10 Modelos lineales estacionales y modelos no-estacionarios | Series de Tiempo en R">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Series de Tiempo en R" />
+  <meta property="og:title" content="Capítulo 10 Modelos lineales estacionales y modelos no-estacionarios | Series de Tiempo en R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="http://synergy.vision/Series-de-Tiempo-en-R/" />
   <meta property="og:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="synergyvision/Series-de-Tiempo-en-R/" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Series de Tiempo en R" />
+  <meta name="twitter:title" content="Capítulo 10 Modelos lineales estacionales y modelos no-estacionarios | Series de Tiempo en R" />
   
   
   <meta name="twitter:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Synergy Vision">
 
 
-<meta name="date" content="2018-12-07">
+<meta name="date" content="2020-01-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +36,7 @@
 <link rel="next" href="analisis-espectral.html">
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
@@ -364,8 +365,10 @@ x_t = [\phi(B)]^{-1}\psi(B)(1-B)^{-d}w_t.
 <div id="ajuste-de-datos-simulados" class="section level3">
 <h3><span class="header-section-number">10.2.2</span> Ajuste de datos simulados</h3>
 <p>En el siguiente script, la función ‘fraccdiff.sim’ genera una realizaci’pon de un proceso <span class="math inline">\(FARIMA\)</span>. El primer parámetro es la longitud de larealización, los parámetros <span class="math inline">\(AR\)</span> y <span class="math inline">\(MA\)</span> los podemos especificar usando la función ‘c()’ si hay más de uno para cada un de ellos, el siguiente parámetro es el valor de <span class="math inline">\(d\)</span>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(fracdiff)
-<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(fracdiff)</code></pre></div>
+<pre><code>## Warning: package &#39;fracdiff&#39; was built under R version
+## 3.5.2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
 fds.sim=<span class="kw">fracdiff.sim</span>(<span class="dv">10000</span>,<span class="dt">ar=</span><span class="fl">0.9</span>,<span class="dt">d=</span><span class="fl">0.4</span>)
 x=fds.sim<span class="op">$</span>series
 fds.fit=<span class="kw">fracdiff</span>(x,<span class="dt">nar =</span> <span class="dv">1</span>)</code></pre></div>
@@ -799,7 +802,7 @@ y_t=\beta_0+\beta_1x_{1t}+\cdots+\beta_kx_{kt}+\varepsilon_t = x_t^t\vec{\beta}+
 <p>Para estas series podemos considerar el siguiente modelo de regresión</p>
 <p><span class="math display">\[r_{6t}=\beta_0+\beta_1r_{3t}+\varepsilon,\]</span></p>
 <p>donde <span class="math inline">\(r_{6t}\)</span> y <span class="math inline">\(r_{3t}\)</span> son las series ya descritas y <span class="math inline">\(\varepsilon_t\)</span> el término de error.</p>
-La gráfica <a href="#fig:hp"><strong>??</strong></a> muestra las dos series de tipo de interés, en azul con vencimiento a 3 meses yen rojo con vencimiento a 6 meses.
+La gráfica <a href="#fig:fig-euribor-interes"><strong>??</strong></a> muestra las dos series de tipo de interés, en azul con vencimiento a 3 meses yen rojo con vencimiento a 6 meses.
 </div>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Series EURIBOR a 3 y 6 meses de plazo</span>
@@ -808,7 +811,7 @@ r6t=<span class="kw">read.table</span>(<span class="st">&quot;data/EURIBOR-6m.tx
 <span class="co"># Grafico</span>
 <span class="kw">plot</span>(r3t<span class="op">$</span>V2, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Precio&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;tiempo&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="fl">0.35</span>,<span class="fl">0.5</span>))
 <span class="kw">lines</span>(r6t<span class="op">$</span>V2, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="Serie-de-Tiempo-en-R_files/figure-html/hp-1.svg" /><!-- --></p>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/fig-euribor-interes-1.svg" /><!-- --></p>
 <p>El modelo resultante del ajuste es el siguiente</p>
 <p><span class="math display">\[r_{6t}=0.0919+1.0608r_{3t}+\varepsilon_t,\hspace{0.5cm}\hat{\sigma}_{\varepsilon}=0.0204,\]</span></p>
 <p>con <span class="math inline">\(R^2=0.9937\)</span>. En la tabla siguiente mostramos un resumen del modelo</p>
@@ -974,7 +977,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -986,6 +989,10 @@ gitbook.start({
 "edit": {
 "link": "https://github.com/synergyvision/Teoria-de-Portafolio/edit/master/bookdown/307-Modelos-estacionales-no-estacionarios.Rmd",
 "text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
 },
 "download": ["Serie-de-Tiempo-en-R.pdf"],
 "toc": {
@@ -1001,7 +1008,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;
