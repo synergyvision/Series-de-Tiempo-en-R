@@ -4,7 +4,11 @@
 title: "Series de Tiempo en R"
 subtitle: "Ciencia de los Datos Financieros"
 author: "Synergy Vision"
+<<<<<<< HEAD
+date: "2022-11-12"
+=======
 date: "2020-01-31"
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 knit: "bookdown::render_book"
 documentclass: krantz
 bibliography: [book.bib, packages.bib]
@@ -381,7 +385,7 @@ A continuación mostramos dos series del EURIBOR. La primera es la evolución hi
 
 ```r
 EURIBORa<-read_excel("data/EURIBOR-anual.xlsx")
-plot(EURIBORa,type="l", col = "blue", xlab = "Periodo", 
+plot(EURIBORa$Año,EURIBORa$Índice,type="l", col = "blue", xlab = "Periodo", 
      main="Serie EURIBOR anual (1999-2018)")
 grid(col = "gray")
 ```
@@ -2523,10 +2527,17 @@ d) $x_t=-0.2x_{t-1}+0.35x_{t-2}+w_t$
 
 <div class="figure">
 <img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-45-1.svg" alt="ACF de 4 procesos estacionarios AR(2)"  />
+<<<<<<< HEAD
+<p class="caption">(\#fig:unnamed-chunk-451)ACF de 4 procesos estacionarios AR(2)</p>
+</div><div class="figure">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-45-2.svg" alt="ACF de 4 procesos estacionarios AR(2)"  />
+<p class="caption">(\#fig:unnamed-chunk-452)ACF de 4 procesos estacionarios AR(2)</p>
+=======
 <p class="caption">(\#fig:unnamed-chunk-45)ACF de 4 procesos estacionarios AR(2)</p>
 </div><div class="figure">
 <img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-45-2.svg" alt="ACF de 4 procesos estacionarios AR(2)"  />
 <p class="caption">(\#fig:unnamed-chunk-45)ACF de 4 procesos estacionarios AR(2)</p>
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 </div>
 
 La serie (b) tiene raíces características complejas, en efecto 
@@ -3570,7 +3581,11 @@ En el caso de raíces distintas, la solución de la ecuación en diferencias hom
   u_n &=& z_1^{-n}\times(\text{un polinomio en } n \text{ de grado }m_1-1) \\
       &+& z_2^{-n}\times(\text{un polinomio en } n \text{ de grado }m_2-1)
 \end{eqnarray*}
+<<<<<<< HEAD
+donde $m_1$ es la multiplicidad de la raíz $z_1$ y $m_2$ es la multiplicidad de la raíz $z_2$. En este ejemplo, se tiene $m_1=m_2=1$ y decimos que $c_1$ y $c_2 $ son polinomios de grado cero respectivamente.
+=======
 donde $m_1$ es la multiplicidad de la raíz $z_1$ y $m_2$ es la multiplicidad de la raíz $z_2$. En este ejemplo, se tiene $m_1=m_2=1$ y decimos que $c_1$ y $c_2$ son polinomios de grado cero respectivamente.
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 
 En el caso de raíces repetidas, la solución es
 $$u_n=z_0^{-n}\times(\text{un polinomio en } n \text{ de grado }m_0-1),$$
@@ -4665,7 +4680,11 @@ Si en \@ref(eq:eq-funcion-verosimilitud-AR1) tomamos logaritmo, reemplazamos $\s
 
 Esto es, $l(\mu,\phi)\propto-2\ln L(\mu,\phi,\hat{\sigma}_w^2)$. [^nota11]
 
+<<<<<<< HEAD
+[^nota11:] La función de criterio a veces es llamada perfil de verosimilitud.
+=======
 [^nota11]: La función de criterio a veces es llamada perfil de verosimilitud.
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 
 Dado que \@ref(eq:eq-S-AR1) o \@ref(eq:eq-funcion-criterio-AR1) son funciones complicadas de los parámetros, la minimización de $l(\mu,\phi)$ o $S(\mu,\phi)$ se hace numéricamente. En el caso de modelos AR, tenemos la ventaja que, condicionando los valores inicial, ellos son modelos lineales. Esto es, podemos eliminar el término en la verosimilitud que causa la no-linealidad.
 
@@ -4836,7 +4855,11 @@ Cuando $n$ es grande, condicionando sobre unos pocos valores iniciales tendremos
 
 La suma de cuadrados incondicional se puede escribir de varias maneras. Una de las maneras es la siguiente forma [^nota12]
 
+<<<<<<< HEAD
+[^nota12:] Para detalles, véase Box, G.E.P., Jenkins, G.M. and Reinsel, G.C. (1994). *Time Series Analysis, Forecasting and Control, 3rd ed.* Englewood Cliffs, NJ: Prentice Hall. Apéndice A7.3.
+=======
 [^nota12]: Para detalles, véase Box, G.E.P., Jenkins, G.M. and Reinsel, G.C. (1994). *Time Series Analysis, Forecasting and Control, 3rd ed.* Englewood Cliffs, NJ: Prentice Hall. Apéndice A7.3.
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 
 $$S(\mathbf{\beta})=\sum_{t=-\infty}^{n}\hat{w}_t^2(\mathbf{\beta})$$
 
@@ -5647,17 +5670,24 @@ $$x_t=\beta_0+\beta_1t+\beta_2t^2+\cdots+\beta_8t^8+w_t$$
 
 El modelo fijado, el cual es graficado hasta el año 2010, (linea continua roja), pasa a través de los 9 puntos. El modelo predice que la población de los EE.UU. estará cercana a cero en el año 2000, y cruzará el cero en algún mes del año 2002, lo cual es falso.</div>\EndKnitrBlock{example}
 
+<<<<<<< HEAD
+```{rfig.cap="Población de los EE.UU (puntos azules) y modelos ajustado (linea roja continua) de 1910 hasta 2010",fig-sobreajuste-poblacion-usa}
+=======
 
 ```r
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 uspop=read.table("data/USPOP2.txt", header = TRUE)
 fit.usp=lm(Pob~t+I(t^2)+I(t^3)+I(t^4)+I(t^5)+I(t^6)+I(t^7)+I(t^8),
            data=uspop)
 plot(uspop,type="p",lty=19,col="blue",xlim=c(1910,2010))
 lines(x = uspop$t, y=predict(fit.usp), col = "red", lwd = 2)
 ```
+<<<<<<< HEAD
+=======
 
 ![](Serie-de-Tiempo-en-R_files/figure-html/fig-sobreajuste-poblacion-usa-1.svg)<!-- -->
 
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ----
 
 El paso final en el ajuste de modelos es la elección del modelo. Esto es, debemos decidir que modelo mantendremos para la predicción. La técnica más popular es calcular los índices AIC, AICc y SIC (BIC), descritos en las definiciones \@ref(def:defi-AIC-2), \@ref(def:defi-AICc) y \@ref(def:defi-SIC).
@@ -6005,6 +6035,29 @@ acf2(ddlx,50)
 </div>
 
 ```
+<<<<<<< HEAD
+##       [,1]  [,2]  [,3]  [,4] [,5] [,6]  [,7]  [,8]
+## ACF  -0.34  0.11 -0.20  0.02 0.06 0.03 -0.06  0.00
+## PACF -0.34 -0.01 -0.19 -0.13 0.03 0.03 -0.06 -0.02
+##      [,9] [,10] [,11] [,12] [,13] [,14] [,15] [,16]
+## ACF  0.18 -0.08  0.06 -0.39  0.15 -0.06  0.15 -0.14
+## PACF 0.23  0.04  0.05 -0.34 -0.11 -0.08 -0.02 -0.14
+##      [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24]
+## ACF   0.07  0.02 -0.01 -0.12  0.04 -0.09  0.22 -0.02
+## PACF  0.03  0.11 -0.01 -0.17  0.13 -0.07  0.14 -0.07
+##      [,25] [,26] [,27] [,28] [,29] [,30] [,31] [,32]
+## ACF   -0.1  0.05 -0.03  0.05 -0.02 -0.05 -0.05  0.20
+## PACF  -0.1 -0.01  0.04 -0.09  0.05  0.00 -0.10 -0.02
+##      [,33] [,34] [,35] [,36] [,37] [,38] [,39] [,40]
+## ACF  -0.12  0.08 -0.15 -0.01  0.05  0.03 -0.02 -0.03
+## PACF  0.01 -0.02  0.02 -0.16 -0.03  0.01  0.05 -0.08
+##      [,41] [,42] [,43] [,44] [,45] [,46] [,47] [,48]
+## ACF  -0.07  0.10 -0.09  0.03 -0.04 -0.04  0.11 -0.05
+## PACF -0.17  0.07 -0.10 -0.06 -0.03 -0.12 -0.01 -0.05
+##      [,49] [,50]
+## ACF   0.11 -0.02
+## PACF  0.09  0.13
+=======
 ##         ACF  PACF
 ##  [1,] -0.34 -0.34
 ##  [2,]  0.11 -0.01
@@ -6056,6 +6109,7 @@ acf2(ddlx,50)
 ## [48,] -0.05 -0.05
 ## [49,]  0.11  0.09
 ## [50,] -0.02  0.13
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ```
 
 *Componente estacional*: Parece que en la estacionalidad, la ACF se corta en paso $1s$ ($s=12$), mientras que la PACF se rezaga en pasos $1s,2s,3s,4s,\ldots$. Estos resultados implican un $SMA(1), P=0,Q=1$, en la componente estacional (s=12).
@@ -6110,9 +6164,15 @@ sarima(lx, 1,1,1, 0,1,1,12)
 ## $fit
 ## 
 ## Call:
+<<<<<<< HEAD
+## arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, Q), period = S), 
+##     include.mean = !no.constant, transform.pars = trans, fixed = fixed, optim.control = list(trace = trc, 
+##         REPORT = 1, reltol = tol))
+=======
 ## stats::arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, 
 ##     Q), period = S), include.mean = !no.constant, transform.pars = trans, fixed = fixed, 
 ##     optim.control = list(trace = trc, REPORT = 1, reltol = tol))
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ## 
 ## Coefficients:
 ##         ar1     ma1    sma1
@@ -6131,6 +6191,15 @@ sarima(lx, 1,1,1, 0,1,1,12)
 ## sma1  -0.5643 0.0747 -7.5544  0.0000
 ## 
 ## $AIC
+<<<<<<< HEAD
+## [1] -3.679
+## 
+## $AICc
+## [1] -3.677
+## 
+## $BIC
+## [1] -3.591
+=======
 ## [1] -3.394
 ## 
 ## $AICc
@@ -6138,6 +6207,7 @@ sarima(lx, 1,1,1, 0,1,1,12)
 ## 
 ## $BIC
 ## [1] -3.313
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ```
 
 Sin embargo, el parámetro $AR$ no es significativo, así que intentamos eliminando un parámetro de la parte dentro de las estaciones. En este caso probaremos con los modelos $ARIMA(0,1,1)\times(0,1,1)_{12}$ y $ARIMA(1,1,0)\times(0,1,1)_{12}$.
@@ -6179,9 +6249,15 @@ sarima(lx, 0,1,1, 0,1,1,12)
 ## $fit
 ## 
 ## Call:
+<<<<<<< HEAD
+## arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, Q), period = S), 
+##     include.mean = !no.constant, transform.pars = trans, fixed = fixed, optim.control = list(trace = trc, 
+##         REPORT = 1, reltol = tol))
+=======
 ## stats::arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, 
 ##     Q), period = S), include.mean = !no.constant, transform.pars = trans, fixed = fixed, 
 ##     optim.control = list(trace = trc, REPORT = 1, reltol = tol))
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ## 
 ## Coefficients:
 ##          ma1    sma1
@@ -6199,6 +6275,15 @@ sarima(lx, 0,1,1, 0,1,1,12)
 ## sma1  -0.5569 0.0731  -7.619       0
 ## 
 ## $AIC
+<<<<<<< HEAD
+## [1] -3.69
+## 
+## $AICc
+## [1] -3.689
+## 
+## $BIC
+## [1] -3.624
+=======
 ## [1] -3.404
 ## 
 ## $AICc
@@ -6206,6 +6291,7 @@ sarima(lx, 0,1,1, 0,1,1,12)
 ## 
 ## $BIC
 ## [1] -3.343
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ```
 
 
@@ -6241,6 +6327,227 @@ sarima(lx, 1,1,0, 0,1,1,12)
 </div>
 
 ```
+<<<<<<< HEAD
+## $fit
+## 
+## Call:
+## arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, Q), period = S), 
+##     include.mean = !no.constant, transform.pars = trans, fixed = fixed, optim.control = list(trace = trc, 
+##         REPORT = 1, reltol = tol))
+## 
+## Coefficients:
+##          ar1    sma1
+##       -0.340  -0.562
+## s.e.   0.082   0.075
+## 
+## sigma^2 estimated as 0.00137:  log likelihood = 243.7,  aic = -481.5
+## 
+## $degrees_of_freedom
+## [1] 129
+## 
+## $ttable
+##      Estimate     SE t.value p.value
+## ar1   -0.3395 0.0822  -4.130   1e-04
+## sma1  -0.5619 0.0748  -7.511   0e+00
+## 
+## $AIC
+## [1] -3.675
+## 
+## $AICc
+## [1] -3.675
+## 
+## $BIC
+## [1] -3.61
+```
+
+Todos los criterios de información prefieren el modelo $ARIMA(0,1,1)\times(0,1,1)_{12}$. En la Figura \@ref(fig:fig-residuales-pasajeros) mostramos los diagnósticos para los residuales y excepto para uno o dos datos atípicos, el modelo parece ajustarse bien.
+
+Finalmente, el pronóstico para 12 meses de los datos con la transformación logarítmica lo mostramo en la Figura \@ref(fig:fig-pronostico-pasajeros).
+
+
+```r
+sarima.for(lx, 12, 0,1,1, 0,1,1,12)
+```
+
+<div class="figure">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-pronostico-pasajeros-1.svg" alt="Pronóstico de 12 meses usando el modelo ARIMA(0,1,1)x(0,1,1)_12 de los datos transformados de pasajeros aéreos"  />
+<p class="caption">(\#fig:fig-pronostico-pasajeros)Pronóstico de 12 meses usando el modelo ARIMA(0,1,1)x(0,1,1)_12 de los datos transformados de pasajeros aéreos</p>
+</div>
+
+```
+## $pred
+##        Jan   Feb   Mar   Apr   May   Jun   Jul   Aug
+## 1961 6.110 6.054 6.172 6.199 6.233 6.369 6.507 6.503
+##        Sep   Oct   Nov   Dec
+## 1961 6.325 6.209 6.063 6.168
+## 
+## $se
+##          Jan     Feb     Mar     Apr     May     Jun
+## 1961 0.03672 0.04278 0.04809 0.05287 0.05725 0.06132
+##          Jul     Aug     Sep     Oct     Nov     Dec
+## 1961 0.06513 0.06873 0.07216 0.07543 0.07856 0.08157
+```
+
+----
+
+
+<!--chapter:end:305-modelos-ARIMA.Rmd-->
+
+# Modelos ARCH y GARCH
+
+Antes de comenzar, es necesario precisar el concepto de volatilidad en
+el contexto del análisis financiero. Se denomina volatilidad a la tasa relativa a la que un activo experimenta una drástica disminución o aumento de su precio dentro de un período predeterminado de tiempo. La
+volatilidad se determina mediante el cálculo de la desviación estándar
+anualizada de la variación diaria del precio. Si el precio de la acción aumenta y disminuye rápidamente durante cortos períodos de tiempo,
+entonces se dice que tiene una volatilidad alta. Si el precio se mantiene casi siempre en el mismo valor entonces se dice que tiene volatilidad baja. Los inversores evalúan la volatilidad de las acciones antes de tomar una decisión en, la compra de una oferta de acciones nuevas, la adquisición de acciones adicionales de un activo ya presente en una cartera, o en la venta de acciones que actualmente est án en poder del inversionista. La idea detrás de la comprensión del comportamiento de la volatilidad de los activos es organizar las inversiones para obtener el máximo rendimiento con el mínimo de oportunidades de pérdida.
+
+En esta sección se discutirán algunos de los modelos estadísticos y econométricos mas importantes para la modelización de la volatilidad de series de tiempo de rentabilidades de activos. A diferencia del análisis de series de tiempo tradicional, el cual se enfoca principalmente en la modelización del momento condicional de primer orden, los denominados modelos de heterocedasticidad condicional buscan captar la dependencia dentro del momento condicional de segundo orden, en otras palabras, el objetivo ahora es modelizar la volatilidad. La incertidumbre o riesgo constituye uno de los temas de investigación principales en el análisis financiero. Como se mencion´o, la volatilidad es un factor importante en las finanzas puesto que proporciona un método simple para calcular el valor en riesgo de una situación financiera en la gestión de riesgos. Por otra parte, la modelización de la volatilidad de una serie de tiempo puede mejorar la eficiencia en la estimación de parámetros y la exactitud en los intervalos de predicción. En esta sección se discutirán los modelos univariados de la volatilidad entre los que se incluyen el modelo autorregresivo de heterocedasticidad condicional (*ARCH*) de Engle
+(1982), el modelo generalizado ARCH (*GARCH*) de Bollerslev (1986), entre otros.
+
+La volatilidad tiene la particularidad de que no es posible su observación directa. Aún cuando esto no es posible, la volatilidad tiene algunas características que pueden ser observadas en las series de rentabilidad de activos entre los que se pueden destacar,
+
+- Agrupamiento de la volatilidad (cluster). En otras palabras, períodos
+de volatilidades altas y períodos de volatilidades bajas.
+
+- Evolución continua de la volatilidad en el tiempo.
+
+- Las variaciones de la volatilidad se presentan en un rango fijo,
+es decir, no diverge al infinito. En términos estadísticos, se puede
+decir que la volatilidad es a menudo estacionaria.
+
+- La volatilidad parece reaccionar de manera diferente a un incremento
+elevado de los precios o una disminución sustancial de los precios. Este efecto es conocido con el nombre de apalancamiento o efecto palanca.
+
+Tales propiedades descritas anteriormente juegan un papel importante
+en el desarrollo de los modelos usados para caracterizar la volatilidad.
+
+## Estructura de los Modelos
+
+Como se analizó en secciones previas, más precisamente en la sección de modelos lineales, una serie de tiempo $x_t$ se puede escribir como la suma de dos componentes,
+
+\begin{equation}
+x_t=\mu_t+w_t = \mathbb{E}(x_t|\mathcal{F}_{t-1})
+(\#eq:eq-modelos-xt-2-componentes)
+\end{equation}
+
+donde $\mathcl{F}_{t-1}$ representa la información disponible hasta el tiempo $t-1$. Usualmente, $\mathcal{F}_{t-1}$ consiste de todas la funciones lineales del pasado de $x_t$. El objetivo de los proceso descritos por \@ref(eq:eq-modelos-xt-2-componentes) es la modelización de $\mu_t=\mathbb{E}(x_t|\mathcal{F}_{t-1})$, con la suposición de que $w_t$ sea un ruido blanco condicionalmente homocedástico, es decir,
+
+\begin{equation}
+\mathbb{E}(w_t^2) = \mathbb{E}(w_t^2|\mathcal{F}_{t-1}) = \sigma_w^2.
+(\#eq:eq-ruido-blanco-homocedastico)
+\end{equation}
+
+Los modelos de heterocedasticidad condicional suponen que el segundo momento condicional depende del tiempo, es decir,
+
+\begin{equation}
+\sigma_t^2=Var(x_t|\mathcal{F}_{t-1})=\mathbb{E}((x_t-\mu_t)^2|\mathcal{F}_{t-1})=\mathbb{E}(w_t^2|\mathcal{F}_{t-1})=h_t,
+(\#eq:eq-varianza-heterocedastica)
+\end{equation}
+
+siendo $h_t$ una función no negtiva, $h_t=h_t(\mathcal{F}_{t-1})$. A través de este capítulo discutiremos algunas de las posibles funciones para $h_t$.
+
+La forma en que $h_t$ evoluciona respecto del tiempo distinguirá una forma de otra. Ya que nuestro objetivo esel estudio de modelos que nos permitan caracterizar series de tiempo financieras, consideraremos de forma general que $x_t$ representa la serie de rentabilidades de activos. Así mismo, haremos referencia de $w_t$ como la *rentabilidad corregida en media* o *impulso* del activo.
+
+Los modelos de heterocedasticidad condicional los podemos clasificar en dos categorías generales
+
+1) La primera categoría, agrupa los modelos que usan una función exacta que rige la evolución de $\sigma_t^2=h_t$.
+
+2) La segunda categoría, agrupa los modelos que usan una ecuación estocástica para describir $\sigma_t^2=h_t$.
+
+Los modelos GARCH pertenecen a la primera categoría, mientras que los modelos de volatilidad estocástica están en la segunda categoría.
+
+
+## Modelos ARCH
+
+El primer modelo que proporciona un enfoque sistemático para el modelado de la volatilidad es el modelo *Autorregresivo de Heterocedasticidad Condicional* denotado por sus sigla en inglés $ARCH$ (Autoregressive Conditional Heteroscedasticity), introducido por Engle (1982). un modelo $ARCH(p)$ tiene la forma
+
+\begin{eqnarray}
+w_t^2 &=& \nu_t\sqrt{h_t} \nonumber \\
+h_t   &=& \alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2.
+(\#eq:eq-modelo-ARCHp)
+\end{eqnarray}
+
+Donde $\{\nu_t\}$ es una sucesión de variables aleatorias iid con media 0 y varianza 1, $\alpha_0>0,\alpha_p>0$ y $\alpha_i\geq0, i=1,\ldots,p-1$. La condición de no negatividad sobre los coeficinetes $\alpha_i$ garantizan que la varianza condicional $h_t$ sea positiva.
+
+\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota. </em></span>  \fi{}Algunos autores usan $\sigma_t^2$ para denotar la varianza condicional en la ecuación \@ref(eq:eq-modelos-ARCHp) en lugar de $h_t$ tal como lo denotamos. Así pues, el modelo $ARCH(p)$ también lo podemos escirbir de la siguiente manera:
+
+\begin{eqnarray*}
+w_t &=& \nu_t\sigma_t \\
+\sigma_t^2 &=& \alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2.
+\end{eqnarray*}
+
+Sin embargo, en lo que sigue y por razones prácticas, usareos la primera notación que describimos en la ecuación \@ref(eq:eq-modelos-ARCHp).</div>\EndKnitrBlock{remark}
+
+El modelo $ARCH(P)$ lo podemos escribir como un modelo $AR(p)$ para $w_t^2$. En efecto,
+
+\begin{equation}
+w_t^2=\alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2+\eta_t,
+(\#eq:eq-modelo-AR-wt2)
+\end{equation}
+
+donde $\eta_t=w_t^2-h_t$. Recordando la teoría de los modelos $AR$, si las raíces de la ecuación característica del proceso $AR$ están fuera del círculo unitario, entonces el proceso es estacionario y además podemos calcular la varianza incondicional de $w_t$, como
+
+$$Var(w_t^2) = \sigma_w^2 = \mathbb{E}(w_t^2) = \frac{\alpha_0}{1-\alpha_1-\cdots-\alpha_p}$$
+
+siempre y cuando $1-\alpha_1-\cdots-\alpha_p>0$. Tomando en cuenta la ecuación \@ref(eq:eq-modelo-ARCHp), podemos ver la razón por la cual los modelos $ARCH$ pueden describir el agrupamiento de la volatilidad. El mmodelo establece que la varianza condicional $h_t$ es una función creciente de $w_{t-1}^2$ para $i=1,\ldots,p$. Por lo tanto, valores grandes de $w_{t-1}$ (en módulo) dan lugar a valores grandes de $h_t$. Por consiguiente, $w_t$ también tiende a asumirvalores grandes (en módulo).
+
+Además de capturar el agrupamiento de la volatilidad, los modelos $ARCH$ tambie'n reflejan el exceso de kurtosis estándar de las series de rentabilidad. Para estudiar esta y otras propiedades, consideraremos por simplicidad el modelo $ARCH(1)$, que asume la forma siguiente:
+
+\begin{eqnarray*}
+w_t &=& \nu_t\sqrt{h_t} \nonumber\\
+h_t &=& \alpha_0+\alpha_1w_{t-1}^2. 
+(\#eq:eq-modelo-ARCH1)
+\end{equation}
+
+Entonces, tenemos que 
+
+$$\mathbb{E}(w_t) = \mathbb{E}[\mathbb{E}(w_t|\mathcal{F}_{t-1})] = \mathbb{E}(\sqrt{h_t}\mathbb{E}(\nu_t)) = 0.$$
+
+Por otro lado, suponiendo estacionaridad de la serie, la varianza incondicional de $w_t$ es 
+
+$$\sigma_w^2=\mathbb{E}(w_t^2) = \frac{\alpha_0}{1-\alpha_1},$$
+
+con $0\leq\alpha_1<1$. Suponiendo normalidad en $\nu_t$, tenemos
+
+$$\mathbb{E}(w_t^4|\mathcal{F}_{t-1}) = 3(\alpha_0+\alpha_1w_{t-1}^2)^2,$$
+
+y por lo tanto
+
+$$\mathbb{E}(w_t^4) = \mathbb{E}(\mathbb{E}(w_t^4|\mathcal{F}_{t-1})) = 3\mathbb{E}(\alpha_0^2+2\alpha_0\alpha_1w_{t-1}^2+\alpha_1^2w_{t-1}^4).$$
+
+Entonces si $w_t$ es estacionario de cuarto orden con $\mu_4=\mathbb{E}(w_t^4)$, tenemos que
+
+$$\mu_4 = 3(\alpha_0^2+2\alpha_0\alpha_1Var(w_t)+\alpha_1^2\mu_4) = 3\alpha_0^2\left(1+2\frac{\alpha_1}{1-\alpha_1}\right)+3\alpha_1^2\mu_4.$$
+
+Despejando, obtenemos
+
+$$\mu_4 = \frac{3\alpha_0^2(1+\alpha_1)}{(1-\alpha_1)(1-3\alpha_1^2)}.$$
+
+Con la condición $0\leq\alpha_1^2<\frac{1}{3}$, para asegurar que $\mu_4>0$. or otra parte, la kurtosis incondicional de $w_t$ es 
+
+$$k = \frac{\mathbb{E}(w_t^4)}{[Var(w_t)]^2} = 3\frac{1-\alpha_1^2}{1-3\alpha_1^2} > 3.$$
+
+En esta última ecuación vemos reflejado el exceso de kurtosis de $w_t$.
+
+El modelo $ARCH$ tiene múltiles propiedades que en cierta forma pueden mejorar el modelado de series de tiempo financieras, en epsecial si queremos modeloar o simular la volatilidad.Sin embargo, este modelo como los ya vistos presentan limitaciones a la hora de modelar series de rentabilidad de activos financieros. Es habitual que períodos de rentabilidades negativas sean seguidos por períodos de gran volatilidad. Así, los modelos $ARCH$ no tienen la capacidad de captar esta característica debido a que la volatilidad responde igualmente ante impulsos negativos y positivos, pues dependen del cuadrado de los mismos. 
+
+Por otro lado, las condiciones para la existencia de momentos de orden mayor, implica colocar restricciones muy estrictas sobre los parámetros del modelo. Como ya mencionamos, para un modelo $ARCH(1)$ con momento de cuarto orden finito exigimos que $0\leq\alpha_1^2<1/3$, de modo que para un modelo $ARCH$ de mayor orden las restricciones tienden a complicarse.
+
+
+### Estimación de un Modelo ARCH(p)
+
+### Predicción con modelos ARCH
+
+## Modelos GARCH
+
+### Estimación de un Modelo GARCH
+
+### Predicción con modelos GARCH
+
+
+
+<!--chapter:end:306-Modelos-ARCH-GARCH.Rmd-->
+=======
 ## $fit
 ## 
 ## Call:
@@ -7537,6 +7844,7 @@ $$w_j = 1-\frac{j}{l+1}.$$
 
 
 <!--chapter:end:307-Modelos-estacionales-no-estacionarios.Rmd-->
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 
 # Análisis Espectral
 
@@ -8289,6 +8597,19 @@ Los comandos en R para calcular los periodogramas y generar los gráficos son lo
 
 
 ```r
+<<<<<<< HEAD
+#soi=scan('data/soi.txt')
+#rec=scan('data/recruit.txt')
+#par(mfrow=c(2,1)) 
+#soi.per=spec.pgram(soi,taper=0,log='no')
+#abline(v=1/12,lty='dotted') 
+#abline(v=1/48,lty='dotted') 
+#rec.per=spec.pgram(rec,taper=0,log='no') 
+#abline(v=1/12,lty='dotted') 
+#abline(v=1/48,lty='dotted')
+```
+
+=======
 soi=scan('data/soi.txt')
 rec=scan('data/recruit.txt')
 par(mfrow=c(2,1)) 
@@ -8305,10 +8626,19 @@ abline(v=1/48,lty='dotted')
 <p class="caption">(\#fig:fig-periodograma-SOI)Periodograma de SOI y Reclutamiento (nuevos peces)</p>
 </div>
 
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 Los intervalos de confianza de la serie SOI para el ciclo anual $w=1/12=40/480$ y los posibles ciclos de cuatro años de El Niño con $w=1/48=10/480$ se pueden calcular en Matlab y R con los siguientes comandos:
 
 
 ```r
+<<<<<<< HEAD
+#li=qchisq(0.975,2) 
+#ls=qchisq(0.025,2) 
+#2*soi.per$spec[10]/li
+#2*soi.per$spec[10]/ls
+#2*soi.per$spec[40]/li 
+#2*soi.per$spec[40]/ls
+=======
 li=qchisq(0.975,2) 
 ls=qchisq(0.025,2) 
 2*soi.per$spec[10]/li
@@ -8340,6 +8670,7 @@ ls=qchisq(0.025,2)
 
 ```
 ## [1] 460.8
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ```
 
 ---
@@ -8426,10 +8757,14 @@ Podemos realizar también una prueba de hipótesis relativa a la igualdad del es
 
 \BeginKnitrBlock{example}\iffalse{-91-80-101-114-105-111-100-111-103-114-97-109-97-32-115-117-97-118-105-122-97-100-111-32-100-101-32-108-97-115-32-115-101-114-105-101-115-32-83-79-73-32-121-32-114-101-99-108-117-116-97-109-105-101-110-116-111-32-40-110-117-101-118-111-115-32-112-101-99-101-115-41-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-periodograma-suavizado-SOI"><strong>(\#exm:ejem-periodograma-suavizado-SOI)  \iffalse (Periodograma suavizado de las series SOI y reclutamiento (nuevos peces)) \fi{} </strong></span>En la Figura \@ref(fig:fig-periodograma-SOI) graficamos los periodogramas para las series SOI y Reclutamiento (nuevos peces). En la gráfica se puede notar una frecuencia baja en el efecto El Niño, lo que sugiere que un suavizado nos permitirá identificar las frecuencias dominantes sobre todos los periodos. La elección del valor de $L=9$ luce razonable para el suavizado. El ancho de banda en este caso es $B_w=9/480=0.01875$ ciclos por meses para el espectro estimado. La Figura \@ref(fig:fig-periodograma-suavizado-SOI) muestra los periodogramas suavizados de ambas series. Allí se puede notar, (líneas punteadas) las cuatro frecuencias dominantes, estas son $\omega_j=1/12,2/12,3/12$ y $1/48$. También puede observar el ancho de banda que es $B_w=0.00541$.</div>\EndKnitrBlock{example}
 
+<<<<<<< HEAD
+
+=======
 <div class="figure" style="text-align: center">
 <img src="images/ejemplo4p10.png" alt="Periodograma suavizado de las series SOI y Reclutamiento"  />
 <p class="caption">(\#fig:fig-periodograma-suavizado-SOI)Periodograma suavizado de las series SOI y Reclutamiento</p>
 </div>
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 
 ---
 
@@ -8437,6 +8772,16 @@ Podemos realizar también una prueba de hipótesis relativa a la igualdad del es
 
 
 ```r
+<<<<<<< HEAD
+# SP=matrix(scan("data/station14401.txt"), byrow=TRUE, ncol=2)
+# m<-matrix(c(1,1:3),2,2,byrow=TRUE)
+# layout(m)
+# plot(SP[,1]/0.78,SP[,2],type="l", xlab="Tiempo (seg)",ylab="Alturas (m)", main="Altura de olas, Estacion 431, St. Petersburg, FL")
+# I1=spectrum(SP[,2],spans=3,log="no", main="Periodograma suavizado estacion 144")
+# I2=spectrum(SP[,2],log="no", main="Periodograma estacion 144")
+```
+
+=======
 SP=matrix(scan("data/station14401.txt"), byrow=TRUE, ncol=2)
 m<-matrix(c(1,1:3),2,2,byrow=TRUE)
 layout(m)
@@ -8450,12 +8795,25 @@ I2=spectrum(SP[,2],log="no", main="Periodograma estacion 144")
 <p class="caption">(\#fig:fig-periodograma-altura-olas)Periodograma para las alturas de olas, Estación 144, St. Petersburg, FL.</p>
 </div>
 
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ---
 
 \BeginKnitrBlock{example}\iffalse{-91-80-101-114-105-111-100-111-103-114-97-109-97-115-32-112-97-114-97-32-108-97-115-32-115-101-114-105-101-115-32-100-101-32-84-101-114-114-101-109-111-116-111-115-32-121-32-69-120-112-108-111-115-105-111-110-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-periodograma-terremoto-explosiones"><strong>(\#exm:ejem-periodograma-terremoto-explosiones)  \iffalse (Periodogramas para las series de Terremotos y Explosiones) \fi{} </strong></span>La Figura \@ref(fig:fig-periodograma-terremoto-explosiones) muestra el espectro calculado por separado de las dos fases del terremoto y explosión en la Figura 2.7 del capítulo 2.</div>\EndKnitrBlock{example}
 
 
 ```r
+<<<<<<< HEAD
+# x=matrix(scan("data/eq5exp6.txt"),ncol=2)
+# eqP=x[1:1024,1]; eqS=x[1025:2048,1]
+# exP=x[1:1024,2]; exS=x[1025:2048,2]
+# par(mfrow=c(2,2))
+# eqPs=spectrum(eqP, main="Espectro del sismo (fase P)", log="no", xlim=c(0,0.25), ylim=c(0,0.04))
+# eqSs=spectrum(eqS, main="Espectro del sismo (fase S)", log="no", xlim=c(0,0.25), ylim=c(0,0.4))
+# exPs=spectrum(exP, main="Espectro de explosiones (fase P)", log="no", xlim=c(0,0.25), ylim=c(0,0.04))
+# exSs=spectrum(exS, main="Espectro de explosiones (fase S)", log="no", xlim=c(0,0.25), ylim=c(0,0.4))
+```
+
+=======
 x=matrix(scan("data/eq5exp6.txt"),ncol=2)
 eqP=x[1:1024,1]; eqS=x[1025:2048,1]
 exP=x[1:1024,2]; exS=x[1025:2048,2]
@@ -8471,6 +8829,7 @@ exSs=spectrum(exS, main="Espectro de explosiones (fase S)", log="no", xlim=c(0,0
 <p class="caption">(\#fig:fig-periodograma-terremoto-explosiones)Periodogramas para las series de Terremotos y Explosiones</p>
 </div>
 
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ---
 
 ## Procesos de Incremento Ortogonal sobre $[-\pi,\pi]$

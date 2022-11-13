@@ -56,5 +56,9 @@
     <rect x='59.04' y='59.04' width='414.72' height='227.52' />
   </clipPath>
 </defs>
+<<<<<<< HEAD
+<line x1='59.04' y1='280.52' x2='473.76' y2='280.52' style='stroke-width: 0.075; stroke: #BEBEBE;' clip-path='url(#cpNTkuMDR8NDczLjc2fDI4Ni41Nnw1OS4wNA==)' />
+=======
 <line x1='59.04' y1='280.52' x2='473.76' y2='280.52' style='stroke-width: 0.07; stroke: #BEBEBE;' clip-path='url(#cpNTkuMDR8NDczLjc2fDI4Ni41Nnw1OS4wNA==)' />
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 </svg>
