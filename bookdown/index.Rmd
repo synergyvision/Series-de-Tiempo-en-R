@@ -37,7 +37,7 @@ library(ggplot2)
 library(grid)
 library(gridExtra)
 library(readxl)
-library(tutorial)
+#library(tutorial)
 library(stats)
 library(png)
 library(jpeg)
@@ -46,7 +46,7 @@ library(astsa)
 ```
 
 ```{r include=FALSE}
-tutorial::go_interactive(greedy=FALSE)
+#tutorial::go_interactive(greedy=FALSE)
 ```
 
 # Prefacio {-}
@@ -97,9 +97,9 @@ a
 ```
 
 ```{r tut=TRUE,ex="create_a", type="sct"}
-test_object("a")
-test_output_contains("a", incorrect_msg = "Aseg&uacute;rate de mostrar el valor de `a`.")
-success_msg("Excelente!")
+#test_object("a")
+#test_output_contains("a", incorrect_msg = "Aseg&uacute;rate de mostrar el valor de `a`.")
+#success_msg("Excelente!")
 ```
 
 ## Agradecimientos {-}
