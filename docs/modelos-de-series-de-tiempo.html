@@ -142,7 +142,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#por-qué-leer-este-libro"><i class="fa fa-check"></i>¿Por qué leer este libro?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-libro"><i class="fa fa-check"></i>Estructura del libro</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#información-sobre-los-programas-y-convenciones"><i class="fa fa-check"></i>Información sobre los programas y convenciones</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prácticas-interactivas-con-r"><i class="fa fa-check"></i>Prácticas interactivas con R</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="acerca-del-autor.html"><a href="acerca-del-autor.html"><i class="fa fa-check"></i>Acerca del Autor</a></li>
@@ -397,7 +396,7 @@ Decimos que es una <strong>supermartingala</strong> si
 <span class="math display">\[\mathbb{E}(X_t|\mathcal{F}_s)\leq X_s \text{ c.s.}\]</span></p>
 </div>
 <div class="example">
-<p><span id="exm:unnamed-chunk-36" class="example"><strong>Ejemplo 3.1  </strong></span>Sean <span class="math inline">\(X_0,X_1,\ldots,X_n\)</span> variables aleatorias iid tal que <span class="math inline">\(\mathbb{E}(X_1)=\mu\)</span> y sean
+<p><span id="exm:unnamed-chunk-32" class="example"><strong>Ejemplo 3.1  </strong></span>Sean <span class="math inline">\(X_0,X_1,\ldots,X_n\)</span> variables aleatorias iid tal que <span class="math inline">\(\mathbb{E}(X_1)=\mu\)</span> y sean
 <span class="math display">\[\begin{eqnarray*}
 M_0 &amp;=&amp; X_0 \\
 M_1 &amp;=&amp; X_0+X_1 \\
@@ -409,14 +408,14 @@ La sucesión de variables aleatorias <span class="math inline">\(M_n\)</span> se
 <span class="math display">\[M_{n+1}=M_n+X_{n+1}\]</span>
 y que <span class="math inline">\(M_n\)</span> y <span class="math inline">\(X_{n+1}\)</span> son independientes. Podemos generar tal proceso en <strong>R</strong>.</p>
 </div>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="modelos-de-series-de-tiempo.html#cb42-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="dv">100</span></span>
-<span id="cb42-2"><a href="modelos-de-series-de-tiempo.html#cb42-2" aria-hidden="true" tabindex="-1"></a>mu<span class="ot">=</span><span class="dv">0</span></span>
-<span id="cb42-3"><a href="modelos-de-series-de-tiempo.html#cb42-3" aria-hidden="true" tabindex="-1"></a>sigma<span class="ot">=</span><span class="dv">1</span></span>
-<span id="cb42-4"><a href="modelos-de-series-de-tiempo.html#cb42-4" aria-hidden="true" tabindex="-1"></a>X<span class="ot">=</span><span class="fu">rnorm</span>(n,mu,sigma)</span>
-<span id="cb42-5"><a href="modelos-de-series-de-tiempo.html#cb42-5" aria-hidden="true" tabindex="-1"></a>M<span class="ot">=</span><span class="fu">cumsum</span>(X)</span>
-<span id="cb42-6"><a href="modelos-de-series-de-tiempo.html#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(M,<span class="at">type =</span> <span class="st">&quot;l&quot;</span>,<span class="at">xlab =</span> <span class="st">&quot;t&quot;</span>,<span class="at">ylab =</span> <span class="st">&quot;M_n&quot;</span>)</span></code></pre></div>
-<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-37-1.svg" /><!-- -->
-::: {.example #unnamed-chunk-38 name=“Precio de acciones”}
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="modelos-de-series-de-tiempo.html#cb37-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="dv">100</span></span>
+<span id="cb37-2"><a href="modelos-de-series-de-tiempo.html#cb37-2" aria-hidden="true" tabindex="-1"></a>mu<span class="ot">=</span><span class="dv">0</span></span>
+<span id="cb37-3"><a href="modelos-de-series-de-tiempo.html#cb37-3" aria-hidden="true" tabindex="-1"></a>sigma<span class="ot">=</span><span class="dv">1</span></span>
+<span id="cb37-4"><a href="modelos-de-series-de-tiempo.html#cb37-4" aria-hidden="true" tabindex="-1"></a>X<span class="ot">=</span><span class="fu">rnorm</span>(n,mu,sigma)</span>
+<span id="cb37-5"><a href="modelos-de-series-de-tiempo.html#cb37-5" aria-hidden="true" tabindex="-1"></a>M<span class="ot">=</span><span class="fu">cumsum</span>(X)</span>
+<span id="cb37-6"><a href="modelos-de-series-de-tiempo.html#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(M,<span class="at">type =</span> <span class="st">&quot;l&quot;</span>,<span class="at">xlab =</span> <span class="st">&quot;t&quot;</span>,<span class="at">ylab =</span> <span class="st">&quot;M_n&quot;</span>)</span></code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-33-1.svg" /><!-- -->
+::: {.example #unnamed-chunk-34 name=“Precio de acciones”}
 Sean <span class="math inline">\(Y_0,Y_1,\ldots,Y_n\)</span> variables aleatorias independientes y positivas. Supongamos que una acción tiene precio <span class="math inline">\(M_0\)</span> a tiempo <span class="math inline">\(t=0\)</span>.
 :::</p>
 <p>Un modelo común para modelar el precio de la acción en tiempo <span class="math inline">\(t=n\)</span> es</p>
@@ -500,31 +499,31 @@ Calculemos la función de autocovarianza de <span class="math inline">\(w_t\)</s
 \end{eqnarray*}\]</span>
 La última igualdad se sigue del hecho de que <span class="math inline">\(w_s\)</span> y <span class="math inline">\(w_t\)</span> son no-correlacionados para <span class="math inline">\(s\neq t\)</span> por lo que <span class="math inline">\(\mathbb{E}(w_sw_t) = \mathbb{E}(w_s)\mathbb{E}(w_t)=0\)</span>.</p>
 <div class="example">
-<p><span id="exm:unnamed-chunk-39" class="example"><strong>Ejemplo 3.2  (Estacionaridad de un ruido blanco) </strong></span>La función de autocovarianza de un ruido blanco es fácil de evaluar como
+<p><span id="exm:unnamed-chunk-35" class="example"><strong>Ejemplo 3.2  (Estacionaridad de un ruido blanco) </strong></span>La función de autocovarianza de un ruido blanco es fácil de evaluar como
 <span class="math display">\[\gamma_w(h) = \mathbb{E}(w_{t+h}w_t) = \begin{cases}
                                           \sigma_w^2,&amp;\text{ si }h=0\\
                                           0,&amp;\text{ si }h\neq0
                                          \end{cases}\]</span>
 donde <span class="math inline">\(\sigma_w^2\)</span> es la varianza del ruido blanco. Esto significa que la serie es <em>débilmente estacionaria</em> o <em>estacionaria</em>. Si las variables de ruido blanco también son gaussianas, el proceso es <em>estrictamente estacionario</em>, como se pueder ver evaluando (2.10) usando la relación (2.2).</p>
 </div>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="modelos-de-series-de-tiempo.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#-----------------------------------------</span></span>
-<span id="cb43-2"><a href="modelos-de-series-de-tiempo.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Ruidos blancos</span></span>
-<span id="cb43-3"><a href="modelos-de-series-de-tiempo.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co">#-----------------------------------------</span></span>
-<span id="cb43-4"><a href="modelos-de-series-de-tiempo.html#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Uniforme [0,1]</span></span>
-<span id="cb43-5"><a href="modelos-de-series-de-tiempo.html#cb43-5" aria-hidden="true" tabindex="-1"></a>wu<span class="ot">=</span><span class="fu">runif</span>(<span class="dv">500</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb43-6"><a href="modelos-de-series-de-tiempo.html#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Gaussiano</span></span>
-<span id="cb43-7"><a href="modelos-de-series-de-tiempo.html#cb43-7" aria-hidden="true" tabindex="-1"></a>wn<span class="ot">=</span><span class="fu">rnorm</span>(<span class="dv">500</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb43-8"><a href="modelos-de-series-de-tiempo.html#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficos</span></span>
-<span id="cb43-9"><a href="modelos-de-series-de-tiempo.html#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))</span>
-<span id="cb43-10"><a href="modelos-de-series-de-tiempo.html#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(wu,<span class="at">type =</span> <span class="st">&quot;l&quot;</span>,<span class="at">xlab =</span> <span class="st">&quot;Num. de observaciones&quot;</span>,</span>
-<span id="cb43-11"><a href="modelos-de-series-de-tiempo.html#cb43-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Ruido blanco uniforme en [0,1]&quot;</span>)</span>
-<span id="cb43-12"><a href="modelos-de-series-de-tiempo.html#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(wn,<span class="at">type =</span> <span class="st">&quot;l&quot;</span>,<span class="at">xlab =</span> <span class="st">&quot;Num. de observaciones&quot;</span>,</span>
-<span id="cb43-13"><a href="modelos-de-series-de-tiempo.html#cb43-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Ruido blanco gaussiano&quot;</span>)</span></code></pre></div>
-<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-40-1.svg" /><!-- --></p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="modelos-de-series-de-tiempo.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Funciones de autocovarianza (ACF)</span></span>
-<span id="cb44-2"><a href="modelos-de-series-de-tiempo.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(wu)</span>
-<span id="cb44-3"><a href="modelos-de-series-de-tiempo.html#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(wn)</span></code></pre></div>
-<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-40-2.svg" /><!-- --></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="modelos-de-series-de-tiempo.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#-----------------------------------------</span></span>
+<span id="cb38-2"><a href="modelos-de-series-de-tiempo.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Ruidos blancos</span></span>
+<span id="cb38-3"><a href="modelos-de-series-de-tiempo.html#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co">#-----------------------------------------</span></span>
+<span id="cb38-4"><a href="modelos-de-series-de-tiempo.html#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Uniforme [0,1]</span></span>
+<span id="cb38-5"><a href="modelos-de-series-de-tiempo.html#cb38-5" aria-hidden="true" tabindex="-1"></a>wu<span class="ot">=</span><span class="fu">runif</span>(<span class="dv">500</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb38-6"><a href="modelos-de-series-de-tiempo.html#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Gaussiano</span></span>
+<span id="cb38-7"><a href="modelos-de-series-de-tiempo.html#cb38-7" aria-hidden="true" tabindex="-1"></a>wn<span class="ot">=</span><span class="fu">rnorm</span>(<span class="dv">500</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb38-8"><a href="modelos-de-series-de-tiempo.html#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficos</span></span>
+<span id="cb38-9"><a href="modelos-de-series-de-tiempo.html#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))</span>
+<span id="cb38-10"><a href="modelos-de-series-de-tiempo.html#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(wu,<span class="at">type =</span> <span class="st">&quot;l&quot;</span>,<span class="at">xlab =</span> <span class="st">&quot;Num. de observaciones&quot;</span>,</span>
+<span id="cb38-11"><a href="modelos-de-series-de-tiempo.html#cb38-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Ruido blanco uniforme en [0,1]&quot;</span>)</span>
+<span id="cb38-12"><a href="modelos-de-series-de-tiempo.html#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(wn,<span class="at">type =</span> <span class="st">&quot;l&quot;</span>,<span class="at">xlab =</span> <span class="st">&quot;Num. de observaciones&quot;</span>,</span>
+<span id="cb38-13"><a href="modelos-de-series-de-tiempo.html#cb38-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Ruido blanco gaussiano&quot;</span>)</span></code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-36-1.svg" /><!-- --></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="modelos-de-series-de-tiempo.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Funciones de autocovarianza (ACF)</span></span>
+<span id="cb39-2"><a href="modelos-de-series-de-tiempo.html#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(wu)</span>
+<span id="cb39-3"><a href="modelos-de-series-de-tiempo.html#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(wn)</span></code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-36-2.svg" /><!-- --></p>
 <div class="example">
 <p><span id="exm:ejem-promedio-movil-ruido-blanco" class="example"><strong>Ejemplo 3.3  </strong></span>Podemos reemplazar las series de ruido blanco <span class="math inline">\(w_t\)</span> por un promedio móvil que suavice la serie. Por ejemplo, consideremos la serie <span class="math inline">\(w_t\)</span> en la ecuación ( ) y reemplacémosla por un promedio móvil de 3 puntos, dado por
 <span class="math display" id="eq:eq-promedio-movil-ruido-blanco">\[\begin{equation}
@@ -533,21 +532,21 @@ v_t = \frac{1}{3}(w_{t-1}+w_t+w_{t+1})
 \end{equation}\]</span>
 lo cual nos da una serie suavizada. Tomando la serie del ejemplo anterior y usando la función ‘filter’ de <strong>R</strong> se obtienen los gráficos siguientes:</p>
 </div>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="modelos-de-series-de-tiempo.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">#------------------------------------------</span></span>
-<span id="cb45-2"><a href="modelos-de-series-de-tiempo.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Promedio movil</span></span>
-<span id="cb45-3"><a href="modelos-de-series-de-tiempo.html#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co">#------------------------------------------</span></span>
-<span id="cb45-4"><a href="modelos-de-series-de-tiempo.html#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Uniforme</span></span>
-<span id="cb45-5"><a href="modelos-de-series-de-tiempo.html#cb45-5" aria-hidden="true" tabindex="-1"></a>vu<span class="ot">=</span><span class="fu">filter</span>(wu,<span class="at">sides =</span> <span class="dv">2</span>,<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">3</span>))</span>
-<span id="cb45-6"><a href="modelos-de-series-de-tiempo.html#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>),<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>))<span class="co">#</span></span>
-<span id="cb45-7"><a href="modelos-de-series-de-tiempo.html#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(wu,<span class="at">xlab=</span><span class="st">&quot; &quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Ruido blanco unif.&quot;</span>)</span>
-<span id="cb45-8"><a href="modelos-de-series-de-tiempo.html#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(vu,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">ylab=</span><span class="st">&quot;Promedio móvil&quot;</span>)</span></code></pre></div>
-<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-41-1.svg" /><!-- --></p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="modelos-de-series-de-tiempo.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gaussiano</span></span>
-<span id="cb46-2"><a href="modelos-de-series-de-tiempo.html#cb46-2" aria-hidden="true" tabindex="-1"></a>vn<span class="ot">=</span><span class="fu">filter</span>(wn,<span class="at">sides =</span> <span class="dv">2</span>,<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">3</span>))</span>
-<span id="cb46-3"><a href="modelos-de-series-de-tiempo.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>),<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>))</span>
-<span id="cb46-4"><a href="modelos-de-series-de-tiempo.html#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(wn,<span class="at">xlab=</span><span class="st">&quot; &quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Ruido blanco gauss.&quot;</span>)</span>
-<span id="cb46-5"><a href="modelos-de-series-de-tiempo.html#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(vn,<span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>),<span class="at">ylab=</span><span class="st">&quot;Promedio móvil&quot;</span>)</span></code></pre></div>
-<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-41-2.svg" /><!-- -->
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="modelos-de-series-de-tiempo.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#------------------------------------------</span></span>
+<span id="cb40-2"><a href="modelos-de-series-de-tiempo.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Promedio movil</span></span>
+<span id="cb40-3"><a href="modelos-de-series-de-tiempo.html#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co">#------------------------------------------</span></span>
+<span id="cb40-4"><a href="modelos-de-series-de-tiempo.html#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Uniforme</span></span>
+<span id="cb40-5"><a href="modelos-de-series-de-tiempo.html#cb40-5" aria-hidden="true" tabindex="-1"></a>vu<span class="ot">=</span><span class="fu">filter</span>(wu,<span class="at">sides =</span> <span class="dv">2</span>,<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">3</span>))</span>
+<span id="cb40-6"><a href="modelos-de-series-de-tiempo.html#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>),<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>))<span class="co">#</span></span>
+<span id="cb40-7"><a href="modelos-de-series-de-tiempo.html#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(wu,<span class="at">xlab=</span><span class="st">&quot; &quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Ruido blanco unif.&quot;</span>)</span>
+<span id="cb40-8"><a href="modelos-de-series-de-tiempo.html#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(vu,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">ylab=</span><span class="st">&quot;Promedio móvil&quot;</span>)</span></code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-37-1.svg" /><!-- --></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="modelos-de-series-de-tiempo.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gaussiano</span></span>
+<span id="cb41-2"><a href="modelos-de-series-de-tiempo.html#cb41-2" aria-hidden="true" tabindex="-1"></a>vn<span class="ot">=</span><span class="fu">filter</span>(wn,<span class="at">sides =</span> <span class="dv">2</span>,<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">3</span>))</span>
+<span id="cb41-3"><a href="modelos-de-series-de-tiempo.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>),<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>))</span>
+<span id="cb41-4"><a href="modelos-de-series-de-tiempo.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(wn,<span class="at">xlab=</span><span class="st">&quot; &quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Ruido blanco gauss.&quot;</span>)</span>
+<span id="cb41-5"><a href="modelos-de-series-de-tiempo.html#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(vn,<span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>),<span class="at">ylab=</span><span class="st">&quot;Promedio móvil&quot;</span>)</span></code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-37-2.svg" /><!-- -->
 En la parte superior de cada uno se observan los ruidos blancos y en la parte inferior los respectivos promedios móviles. Podemos notar que las series de promedio móvil suavizan el comportamiento de las series originales, si tomamos más puntos en el promedio mayor será el suavizado.</p>
 <div class="example">
 <p><span id="exm:ejem-funcion-media-MA" class="example"><strong>Ejemplo 3.4  (Función de media de un promedio móvil) </strong></span>Si <span class="math inline">\(w_t\)</span> denota una serie de ruido blanco, entonces <span class="math inline">\(\mu_{wt}=\mathbb{E}(w_t)=0\)</span> para todo <span class="math inline">\(t\)</span>. Luego para el promedio móvil de 3 puntos se tiene
@@ -606,15 +605,15 @@ X_t = \delta t+\sum_{j=1}^Nw_j
 para <span class="math inline">\(t=1,2,\ldots.\)</span>
 A continuación generaremos un camino aleatorio usando <strong>R</strong></p>
 </div>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="modelos-de-series-de-tiempo.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">154</span>)</span>
-<span id="cb47-2"><a href="modelos-de-series-de-tiempo.html#cb47-2" aria-hidden="true" tabindex="-1"></a>w<span class="ot">=</span><span class="fu">rnorm</span>(<span class="dv">500</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb47-3"><a href="modelos-de-series-de-tiempo.html#cb47-3" aria-hidden="true" tabindex="-1"></a>X<span class="ot">=</span><span class="fu">cumsum</span>(w)</span>
-<span id="cb47-4"><a href="modelos-de-series-de-tiempo.html#cb47-4" aria-hidden="true" tabindex="-1"></a>wd<span class="ot">=</span>w<span class="fl">+0.2</span>; Xd<span class="ot">=</span><span class="fu">cumsum</span>(wd)</span>
-<span id="cb47-5"><a href="modelos-de-series-de-tiempo.html#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(Xd,<span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">40</span>,<span class="dv">80</span>))</span>
-<span id="cb47-6"><a href="modelos-de-series-de-tiempo.html#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(X,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
-<span id="cb47-7"><a href="modelos-de-series-de-tiempo.html#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fl">0.2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">500</span>),<span class="at">lty=</span><span class="st">&quot;dashed&quot;</span>,<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-42"></span>
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-42-1.svg" alt="Gráficos de caminos aleatorios: con tendencia (negro), sin tendencia (rojo)"  />
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="modelos-de-series-de-tiempo.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">154</span>)</span>
+<span id="cb42-2"><a href="modelos-de-series-de-tiempo.html#cb42-2" aria-hidden="true" tabindex="-1"></a>w<span class="ot">=</span><span class="fu">rnorm</span>(<span class="dv">500</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb42-3"><a href="modelos-de-series-de-tiempo.html#cb42-3" aria-hidden="true" tabindex="-1"></a>X<span class="ot">=</span><span class="fu">cumsum</span>(w)</span>
+<span id="cb42-4"><a href="modelos-de-series-de-tiempo.html#cb42-4" aria-hidden="true" tabindex="-1"></a>wd<span class="ot">=</span>w<span class="fl">+0.2</span>; Xd<span class="ot">=</span><span class="fu">cumsum</span>(wd)</span>
+<span id="cb42-5"><a href="modelos-de-series-de-tiempo.html#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(Xd,<span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">40</span>,<span class="dv">80</span>))</span>
+<span id="cb42-6"><a href="modelos-de-series-de-tiempo.html#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(X,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb42-7"><a href="modelos-de-series-de-tiempo.html#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fl">0.2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">500</span>),<span class="at">lty=</span><span class="st">&quot;dashed&quot;</span>,<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-38"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-38-1.svg" alt="Gráficos de caminos aleatorios: con tendencia (negro), sin tendencia (rojo)"  />
 <p class="caption">
 Figura 3.1: Gráficos de caminos aleatorios: con tendencia (negro), sin tendencia (rojo)
 </p>

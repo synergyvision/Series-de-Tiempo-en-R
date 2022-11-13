@@ -142,7 +142,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#por-qué-leer-este-libro"><i class="fa fa-check"></i>¿Por qué leer este libro?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-libro"><i class="fa fa-check"></i>Estructura del libro</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#información-sobre-los-programas-y-convenciones"><i class="fa fa-check"></i>Información sobre los programas y convenciones</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prácticas-interactivas-con-r"><i class="fa fa-check"></i>Prácticas interactivas con R</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="acerca-del-autor.html"><a href="acerca-del-autor.html"><i class="fa fa-check"></i>Acerca del Autor</a></li>
@@ -438,17 +437,17 @@ donde <span class="math inline">\(w_t\sim iid N(0,1)\)</span>. Para estos datos,
 <p>Las instrucciones R para realizar la estimación de Yule-Walker y generar la figura <a href="estimación-de-parámetros.html#fig:grafico-pronostico-serie-reclutamiento-yw">7.1</a> son:</p>
 </div>
 <hr />
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="estimación-de-parámetros.html#cb64-1" aria-hidden="true" tabindex="-1"></a>rec<span class="ot">=</span><span class="fu">scan</span>(<span class="st">&quot;data/recruit.txt&quot;</span>)</span>
-<span id="cb64-2"><a href="estimación-de-parámetros.html#cb64-2" aria-hidden="true" tabindex="-1"></a>rec.yw<span class="ot">=</span><span class="fu">ar.yw</span>(rec, <span class="at">order=</span><span class="dv">2</span>)</span>
-<span id="cb64-3"><a href="estimación-de-parámetros.html#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------</span></span>
-<span id="cb64-4"><a href="estimación-de-parámetros.html#cb64-4" aria-hidden="true" tabindex="-1"></a>rec.pr<span class="ot">=</span><span class="fu">predict</span>(rec.yw, <span class="at">n.ahead=</span><span class="dv">24</span>) </span>
-<span id="cb64-5"><a href="estimación-de-parámetros.html#cb64-5" aria-hidden="true" tabindex="-1"></a>U<span class="ot">=</span>rec.pr<span class="sc">$</span>pred<span class="sc">+</span>rec.pr<span class="sc">$</span>se </span>
-<span id="cb64-6"><a href="estimación-de-parámetros.html#cb64-6" aria-hidden="true" tabindex="-1"></a>L<span class="ot">=</span>rec.pr<span class="sc">$</span>pred<span class="sc">-</span>rec.pr<span class="sc">$</span>se </span>
-<span id="cb64-7"><a href="estimación-de-parámetros.html#cb64-7" aria-hidden="true" tabindex="-1"></a>meses<span class="ot">=</span><span class="dv">360</span><span class="sc">:</span><span class="dv">453</span> </span>
-<span id="cb64-8"><a href="estimación-de-parámetros.html#cb64-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(meses,rec[meses], <span class="at">type=</span><span class="st">&quot;o&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">360</span>,<span class="dv">480</span>),<span class="at">ylab=</span><span class="st">&quot;Nuevos peces&quot;</span>, <span class="at">main=</span><span class="st">&quot;Estimación de Yule-Walker para la serie de nuevos peces&quot;</span>)</span>
-<span id="cb64-9"><a href="estimación-de-parámetros.html#cb64-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(rec.pr<span class="sc">$</span>pred, <span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">type=</span><span class="st">&quot;o&quot;</span>) </span>
-<span id="cb64-10"><a href="estimación-de-parámetros.html#cb64-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(U, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>,<span class="at">lty=</span><span class="st">&quot;dashed&quot;</span>)</span>
-<span id="cb64-11"><a href="estimación-de-parámetros.html#cb64-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(L, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>,<span class="at">lty=</span><span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="estimación-de-parámetros.html#cb59-1" aria-hidden="true" tabindex="-1"></a>rec<span class="ot">=</span><span class="fu">scan</span>(<span class="st">&quot;data/recruit.txt&quot;</span>)</span>
+<span id="cb59-2"><a href="estimación-de-parámetros.html#cb59-2" aria-hidden="true" tabindex="-1"></a>rec.yw<span class="ot">=</span><span class="fu">ar.yw</span>(rec, <span class="at">order=</span><span class="dv">2</span>)</span>
+<span id="cb59-3"><a href="estimación-de-parámetros.html#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------</span></span>
+<span id="cb59-4"><a href="estimación-de-parámetros.html#cb59-4" aria-hidden="true" tabindex="-1"></a>rec.pr<span class="ot">=</span><span class="fu">predict</span>(rec.yw, <span class="at">n.ahead=</span><span class="dv">24</span>) </span>
+<span id="cb59-5"><a href="estimación-de-parámetros.html#cb59-5" aria-hidden="true" tabindex="-1"></a>U<span class="ot">=</span>rec.pr<span class="sc">$</span>pred<span class="sc">+</span>rec.pr<span class="sc">$</span>se </span>
+<span id="cb59-6"><a href="estimación-de-parámetros.html#cb59-6" aria-hidden="true" tabindex="-1"></a>L<span class="ot">=</span>rec.pr<span class="sc">$</span>pred<span class="sc">-</span>rec.pr<span class="sc">$</span>se </span>
+<span id="cb59-7"><a href="estimación-de-parámetros.html#cb59-7" aria-hidden="true" tabindex="-1"></a>meses<span class="ot">=</span><span class="dv">360</span><span class="sc">:</span><span class="dv">453</span> </span>
+<span id="cb59-8"><a href="estimación-de-parámetros.html#cb59-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(meses,rec[meses], <span class="at">type=</span><span class="st">&quot;o&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">360</span>,<span class="dv">480</span>),<span class="at">ylab=</span><span class="st">&quot;Nuevos peces&quot;</span>, <span class="at">main=</span><span class="st">&quot;Estimación de Yule-Walker para la serie de nuevos peces&quot;</span>)</span>
+<span id="cb59-9"><a href="estimación-de-parámetros.html#cb59-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(rec.pr<span class="sc">$</span>pred, <span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">type=</span><span class="st">&quot;o&quot;</span>) </span>
+<span id="cb59-10"><a href="estimación-de-parámetros.html#cb59-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(U, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>,<span class="at">lty=</span><span class="st">&quot;dashed&quot;</span>)</span>
+<span id="cb59-11"><a href="estimación-de-parámetros.html#cb59-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(L, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>,<span class="at">lty=</span><span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:grafico-pronostico-serie-reclutamiento-yw"></span>
 <img src="Serie-de-Tiempo-en-R_files/figure-html/grafico-pronostico-serie-reclutamiento-yw-1.svg" alt="Estimación de Yule-Walker para la serie de nuevos peces"  />
 <p class="caption">
@@ -588,8 +587,8 @@ Figura 7.1: Estimación de Yule-Walker para la serie de nuevos peces
 <div class="example">
 <p><span id="exm:ejem-EMV-serie-reclutamiento" class="example"><strong>Ejemplo 7.5  (EMV para la serie de nuevos peces) </strong></span>En el ejemplo <a href="estimación-de-parámetros.html#exm:ejem-estimacion-yule-walker-serie-reclutamiento">7.2</a> fijamos un modelo AR(2) para la serie de nuevos peces usando las ecuaciones de Yule-Walker. El siguiente comando en R fija el modelo AR(2) via máxima verosimilitud. Pueden comparar estos resultados con los obtenidos en el ejemplo <a href="estimación-de-parámetros.html#exm:ejem-estimacion-yule-walker-serie-reclutamiento">7.2</a>.</p>
 </div>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="estimación-de-parámetros.html#cb65-1" aria-hidden="true" tabindex="-1"></a>rec.mle<span class="ot">=</span><span class="fu">ar.mle</span>(rec,<span class="at">order=</span><span class="dv">2</span>)</span>
-<span id="cb65-2"><a href="estimación-de-parámetros.html#cb65-2" aria-hidden="true" tabindex="-1"></a>rec.mle</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="estimación-de-parámetros.html#cb60-1" aria-hidden="true" tabindex="-1"></a>rec.mle<span class="ot">=</span><span class="fu">ar.mle</span>(rec,<span class="at">order=</span><span class="dv">2</span>)</span>
+<span id="cb60-2"><a href="estimación-de-parámetros.html#cb60-2" aria-hidden="true" tabindex="-1"></a>rec.mle</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## ar.mle(x = rec, order.max = 2)
@@ -677,11 +676,11 @@ Figura 7.1: Estimación de Yule-Walker para la serie de nuevos peces
 <p><span class="math display">\[-0.442; -0.624; -0.717;-0.750;-0.763;-0.768;-0.771;-0.772;-0.772;\]</span></p>
 <p>para <span class="math inline">\(\theta_{(1)},\ldots,\theta_{(9)}\)</span>, y la varianza estimada del error es <span class="math inline">\(\hat{\sigma}_w^2=0.236\)</span>. Usando el valor final de <span class="math inline">\(\hat{\theta}=\theta_{(9)}=-0.772\)</span> y el vector <span class="math inline">\(z_t\)</span> de derivadas parciales en <a href="estimación-de-parámetros.html#eq:eq-derivada-error-truncado-MA1-2">(7.29)</a> nos da un error estándar de <span class="math inline">\(0.025\)</span> y un <span class="math inline">\(t\)</span>-valor de <span class="math inline">\(-0.772/0.025=-30.88\)</span> con <span class="math inline">\(632\)</span> grados de libertad (se pierde uno con las diferencias).</p>
 </div>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="estimación-de-parámetros.html#cb67-1" aria-hidden="true" tabindex="-1"></a>varva<span class="ot">=</span><span class="fu">scan</span>(<span class="st">&quot;data/varve.txt&quot;</span>)</span>
-<span id="cb67-2"><a href="estimación-de-parámetros.html#cb67-2" aria-hidden="true" tabindex="-1"></a>dv<span class="ot">=</span><span class="fu">log</span>(varva[<span class="dv">2</span><span class="sc">:</span><span class="dv">634</span>]<span class="sc">/</span>varva[<span class="dv">1</span><span class="sc">:</span><span class="dv">633</span>]);</span>
-<span id="cb67-3"><a href="estimación-de-parámetros.html#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))</span>
-<span id="cb67-4"><a href="estimación-de-parámetros.html#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(dv,<span class="dv">30</span>) </span>
-<span id="cb67-5"><a href="estimación-de-parámetros.html#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pacf</span>(dv,<span class="dv">30</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="estimación-de-parámetros.html#cb62-1" aria-hidden="true" tabindex="-1"></a>varva<span class="ot">=</span><span class="fu">scan</span>(<span class="st">&quot;data/varve.txt&quot;</span>)</span>
+<span id="cb62-2"><a href="estimación-de-parámetros.html#cb62-2" aria-hidden="true" tabindex="-1"></a>dv<span class="ot">=</span><span class="fu">log</span>(varva[<span class="dv">2</span><span class="sc">:</span><span class="dv">634</span>]<span class="sc">/</span>varva[<span class="dv">1</span><span class="sc">:</span><span class="dv">633</span>]);</span>
+<span id="cb62-3"><a href="estimación-de-parámetros.html#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))</span>
+<span id="cb62-4"><a href="estimación-de-parámetros.html#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(dv,<span class="dv">30</span>) </span>
+<span id="cb62-5"><a href="estimación-de-parámetros.html#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pacf</span>(dv,<span class="dv">30</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:grafico-ACF-PACF-varvas-glaciares"></span>
 <img src="Serie-de-Tiempo-en-R_files/figure-html/grafico-ACF-PACF-varvas-glaciares-1.svg" alt="ACF y PACF de la serie varvas glaciares"  />
 <p class="caption">
@@ -824,8 +823,8 @@ Resolviendo, hallamos <span class="math inline">\(\gamma_{xy}(0)=\sigma_w^2/(1+\
 <p><span class="math display">\[f_{w_t}(w)=\frac{1}{2\beta}\exp[-|w|/\beta]\text{ con }-\infty&lt;w&lt;\infty\]</span></p>
 <p>En este ejemplo, <span class="math inline">\(\mathbb{E}(w_t)=0\)</span> y <span class="math inline">\(\text{var}(w_t)=2\beta^2=8\)</span>. La figura <a href="estimación-de-parámetros.html#fig:grafico-modelo-estacionario-causal-n-100">7.3</a> muestra <span class="math inline">\(n=100\)</span> observaciones simuladas de este proceso.</p>
 </div>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="estimación-de-parámetros.html#cb68-1" aria-hidden="true" tabindex="-1"></a>boot<span class="ot">=</span><span class="fu">scan</span>(<span class="st">&quot;data/ar1boot.txt&quot;</span>)</span>
-<span id="cb68-2"><a href="estimación-de-parámetros.html#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boot,<span class="at">type=</span><span class="st">&quot;b&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;Tiempo&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="estimación-de-parámetros.html#cb63-1" aria-hidden="true" tabindex="-1"></a>boot<span class="ot">=</span><span class="fu">scan</span>(<span class="st">&quot;data/ar1boot.txt&quot;</span>)</span>
+<span id="cb63-2"><a href="estimación-de-parámetros.html#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boot,<span class="at">type=</span><span class="st">&quot;b&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;Tiempo&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:grafico-modelo-estacionario-causal-n-100"></span>
 <img src="Serie-de-Tiempo-en-R_files/figure-html/grafico-modelo-estacionario-causal-n-100-1.svg" alt="Modelo causal estacionario, n=100"  />
 <p class="caption">
@@ -834,11 +833,11 @@ Figura 7.3: Modelo causal estacionario, n=100
 </div>
 <p>Esta realización en particular es interesante, ya que los datos lucen como si fuesen generados de un proceso no-estacionario con tres diferentes niveles de media. De hecho, los datos fueron generados por un modelo estacionario y causal de buen comportamiento, aunque no normal. Para mostrar las ventajas del bootstrap, procederemos como si no conociéramos la distribución del error y procederemos como si este fuera normal; por supuesto, esto significa, por ejemplo, que los EMV de <span class="math inline">\(\phi\)</span> basados en una normal no serán los EMV reales porque los datos no son normales.</p>
 <p>Usando los datos mostrado en la figura @ref{fig:grafico-modelo-estacionario-causal-n-100), obtenemos los estimadores de Yule-Walker <span class="math inline">\(\hat{\mu}=40.0483, \hat{\phi}=0.9572\)</span> y <span class="math inline">\(s_w^2=15.55\)</span>, donde <span class="math inline">\(s_w^2\)</span> es el estimado de <span class="math inline">\(\text{var}(w_t)\)</span>.</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="estimación-de-parámetros.html#cb69-1" aria-hidden="true" tabindex="-1"></a>m<span class="ot">=</span><span class="fu">mean</span>(boot)</span>
-<span id="cb69-2"><a href="estimación-de-parámetros.html#cb69-2" aria-hidden="true" tabindex="-1"></a>m</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="estimación-de-parámetros.html#cb64-1" aria-hidden="true" tabindex="-1"></a>m<span class="ot">=</span><span class="fu">mean</span>(boot)</span>
+<span id="cb64-2"><a href="estimación-de-parámetros.html#cb64-2" aria-hidden="true" tabindex="-1"></a>m</span></code></pre></div>
 <pre><code>## [1] 40.05</code></pre>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="estimación-de-parámetros.html#cb71-1" aria-hidden="true" tabindex="-1"></a>fit<span class="ot">=</span><span class="fu">ar.yw</span>(boot,<span class="at">order=</span><span class="dv">1</span>)</span>
-<span id="cb71-2"><a href="estimación-de-parámetros.html#cb71-2" aria-hidden="true" tabindex="-1"></a>fit</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="estimación-de-parámetros.html#cb66-1" aria-hidden="true" tabindex="-1"></a>fit<span class="ot">=</span><span class="fu">ar.yw</span>(boot,<span class="at">order=</span><span class="dv">1</span>)</span>
+<span id="cb66-2"><a href="estimación-de-parámetros.html#cb66-2" aria-hidden="true" tabindex="-1"></a>fit</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## ar.yw.default(x = boot, order.max = 1)
@@ -848,21 +847,21 @@ Figura 7.3: Modelo causal estacionario, n=100
 ## 0.957  
 ## 
 ## Order selected 1  sigma^2 estimated as  15.6</code></pre>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="estimación-de-parámetros.html#cb73-1" aria-hidden="true" tabindex="-1"></a>phi<span class="ot">=</span>fit<span class="sc">$</span>ar</span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="estimación-de-parámetros.html#cb68-1" aria-hidden="true" tabindex="-1"></a>phi<span class="ot">=</span>fit<span class="sc">$</span>ar</span></code></pre></div>
 <p>Basándonos en la proposición <a href="estimación-de-parámetros.html#prp:propie-distribucion-estimadores-muestras-grandes">7.3</a>, diremos que <span class="math inline">\(\hat{\phi}\)</span> es aproximadamente normal con media <span class="math inline">\(\phi\)</span> y varianza <span class="math inline">\((1-\phi^2)/100\)</span>, la cual es aproximada por <span class="math inline">\((1-0.957^2)/100=0.029^2\)</span>.</p>
 <p>Para evaluar la distribución muestral finita de <span class="math inline">\(\hat{\phi}\)</span> cuando <span class="math inline">\(n=100\)</span>, simularemos 1000 realizaciones de este proceso AR(1) y estimaremos los parámetros vía Yule-Walker. La densidad muestral finita del estimador Yule-Walker de <span class="math inline">\(\phi\)</span> basado en 1000 simulaciones se muestra en la figura <a href="estimación-de-parámetros.html#fig:grafico-densidad-muestral-estimadores-yule-walker">7.4</a>. Claramente la distribución muestral no está cerca a la normalidad para este tamaño muestral. La media de la distribución mostrada es <span class="math inline">\(0.8638\)</span> y la varianza es <span class="math inline">\(0.122^2\)</span> estos valores son muy distintos de los valores asintóticos.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="estimación-de-parámetros.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Densidad del estimador de Yule-Walker de phi</span></span>
-<span id="cb74-2"><a href="estimación-de-parámetros.html#cb74-2" aria-hidden="true" tabindex="-1"></a>phi.est<span class="ot">=</span><span class="dv">0</span></span>
-<span id="cb74-3"><a href="estimación-de-parámetros.html#cb74-3" aria-hidden="true" tabindex="-1"></a>x.sim<span class="ot">=</span>boot[<span class="dv">1</span>]</span>
-<span id="cb74-4"><a href="estimación-de-parámetros.html#cb74-4" aria-hidden="true" tabindex="-1"></a>wt<span class="ot">=</span><span class="fu">rexp</span>(<span class="dv">100</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb74-5"><a href="estimación-de-parámetros.html#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>)</span>
-<span id="cb74-6"><a href="estimación-de-parámetros.html#cb74-6" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb74-7"><a href="estimación-de-parámetros.html#cb74-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">100</span>)</span>
-<span id="cb74-8"><a href="estimación-de-parámetros.html#cb74-8" aria-hidden="true" tabindex="-1"></a>  {x.sim[j]<span class="ot">=</span><span class="dv">50</span><span class="fl">+0.95</span><span class="sc">*</span>(x.sim[j<span class="dv">-1</span>]<span class="sc">-</span><span class="dv">50</span>)<span class="sc">+</span>wt[j]}</span>
-<span id="cb74-9"><a href="estimación-de-parámetros.html#cb74-9" aria-hidden="true" tabindex="-1"></a>  fit.est<span class="ot">=</span><span class="fu">ar.yw</span>(x.sim,<span class="at">order=</span><span class="dv">1</span>)</span>
-<span id="cb74-10"><a href="estimación-de-parámetros.html#cb74-10" aria-hidden="true" tabindex="-1"></a>  phi.est[i]<span class="ot">=</span>fit.est<span class="sc">$</span>ar}</span>
-<span id="cb74-11"><a href="estimación-de-parámetros.html#cb74-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-12"><a href="estimación-de-parámetros.html#cb74-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(phi.est),<span class="at">main=</span><span class="st">&quot;Densidad muestral finita de los estimadores de Yule-Walker de phi&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="estimación-de-parámetros.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Densidad del estimador de Yule-Walker de phi</span></span>
+<span id="cb69-2"><a href="estimación-de-parámetros.html#cb69-2" aria-hidden="true" tabindex="-1"></a>phi.est<span class="ot">=</span><span class="dv">0</span></span>
+<span id="cb69-3"><a href="estimación-de-parámetros.html#cb69-3" aria-hidden="true" tabindex="-1"></a>x.sim<span class="ot">=</span>boot[<span class="dv">1</span>]</span>
+<span id="cb69-4"><a href="estimación-de-parámetros.html#cb69-4" aria-hidden="true" tabindex="-1"></a>wt<span class="ot">=</span><span class="fu">rexp</span>(<span class="dv">100</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb69-5"><a href="estimación-de-parámetros.html#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>)</span>
+<span id="cb69-6"><a href="estimación-de-parámetros.html#cb69-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb69-7"><a href="estimación-de-parámetros.html#cb69-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">100</span>)</span>
+<span id="cb69-8"><a href="estimación-de-parámetros.html#cb69-8" aria-hidden="true" tabindex="-1"></a>  {x.sim[j]<span class="ot">=</span><span class="dv">50</span><span class="fl">+0.95</span><span class="sc">*</span>(x.sim[j<span class="dv">-1</span>]<span class="sc">-</span><span class="dv">50</span>)<span class="sc">+</span>wt[j]}</span>
+<span id="cb69-9"><a href="estimación-de-parámetros.html#cb69-9" aria-hidden="true" tabindex="-1"></a>  fit.est<span class="ot">=</span><span class="fu">ar.yw</span>(x.sim,<span class="at">order=</span><span class="dv">1</span>)</span>
+<span id="cb69-10"><a href="estimación-de-parámetros.html#cb69-10" aria-hidden="true" tabindex="-1"></a>  phi.est[i]<span class="ot">=</span>fit.est<span class="sc">$</span>ar}</span>
+<span id="cb69-11"><a href="estimación-de-parámetros.html#cb69-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-12"><a href="estimación-de-parámetros.html#cb69-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(phi.est),<span class="at">main=</span><span class="st">&quot;Densidad muestral finita de los estimadores de Yule-Walker de phi&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:grafico-densidad-muestral-estimadores-yule-walker"></span>
 <img src="Serie-de-Tiempo-en-R_files/figure-html/grafico-densidad-muestral-estimadores-yule-walker-1.svg" alt="Densidad muestral finita de los estimadores de Yule-Walker de phi"  />
 <p class="caption">
@@ -965,23 +964,23 @@ Figura 7.4: Densidad muestral finita de los estimadores de Yule-Walker de phi
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="estimación-de-parámetros.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Booststrap</span></span>
-<span id="cb75-2"><a href="estimación-de-parámetros.html#cb75-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-3"><a href="estimación-de-parámetros.html#cb75-3" aria-hidden="true" tabindex="-1"></a>nboot<span class="ot">=</span><span class="dv">200</span></span>
-<span id="cb75-4"><a href="estimación-de-parámetros.html#cb75-4" aria-hidden="true" tabindex="-1"></a>resids<span class="ot">=</span>fit<span class="sc">$</span>resid</span>
-<span id="cb75-5"><a href="estimación-de-parámetros.html#cb75-5" aria-hidden="true" tabindex="-1"></a>resids<span class="ot">=</span>resids[<span class="dv">2</span><span class="sc">:</span><span class="dv">100</span>]</span>
-<span id="cb75-6"><a href="estimación-de-parámetros.html#cb75-6" aria-hidden="true" tabindex="-1"></a>boot.star<span class="ot">=</span>boot</span>
-<span id="cb75-7"><a href="estimación-de-parámetros.html#cb75-7" aria-hidden="true" tabindex="-1"></a>phi.star<span class="ot">=</span><span class="fu">matrix</span>(<span class="dv">0</span>,nboot,<span class="dv">1</span>)</span>
-<span id="cb75-8"><a href="estimación-de-parámetros.html#cb75-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nboot){</span>
-<span id="cb75-9"><a href="estimación-de-parámetros.html#cb75-9" aria-hidden="true" tabindex="-1"></a>  resid.star<span class="ot">=</span><span class="fu">sample</span>(resids,<span class="at">replace=</span><span class="cn">TRUE</span>)</span>
-<span id="cb75-10"><a href="estimación-de-parámetros.html#cb75-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">99</span>){</span>
-<span id="cb75-11"><a href="estimación-de-parámetros.html#cb75-11" aria-hidden="true" tabindex="-1"></a>    boot.star[t<span class="sc">+</span><span class="dv">1</span>]<span class="ot">=</span>boot<span class="sc">+</span>phi<span class="sc">*</span>(boot.star[t]<span class="sc">-</span>boot)<span class="sc">+</span>resid.star[t]</span>
-<span id="cb75-12"><a href="estimación-de-parámetros.html#cb75-12" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb75-13"><a href="estimación-de-parámetros.html#cb75-13" aria-hidden="true" tabindex="-1"></a>  phi.star[i]<span class="ot">=</span><span class="fu">ar.yw</span>(boot.star,<span class="at">order=</span><span class="dv">1</span>)<span class="sc">$</span>ar</span>
-<span id="cb75-14"><a href="estimación-de-parámetros.html#cb75-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb75-15"><a href="estimación-de-parámetros.html#cb75-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Histograma</span></span>
-<span id="cb75-16"><a href="estimación-de-parámetros.html#cb75-16" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(phi.star,<span class="at">breaks=</span><span class="dv">15</span>,<span class="at">col =</span> <span class="st">&quot;lightblue&quot;</span>,</span>
-<span id="cb75-17"><a href="estimación-de-parámetros.html#cb75-17" aria-hidden="true" tabindex="-1"></a><span class="at">main=</span><span class="st">&quot;Histograma de frecuencia para phi estimado con bootstrap&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="estimación-de-parámetros.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Booststrap</span></span>
+<span id="cb70-2"><a href="estimación-de-parámetros.html#cb70-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-3"><a href="estimación-de-parámetros.html#cb70-3" aria-hidden="true" tabindex="-1"></a>nboot<span class="ot">=</span><span class="dv">200</span></span>
+<span id="cb70-4"><a href="estimación-de-parámetros.html#cb70-4" aria-hidden="true" tabindex="-1"></a>resids<span class="ot">=</span>fit<span class="sc">$</span>resid</span>
+<span id="cb70-5"><a href="estimación-de-parámetros.html#cb70-5" aria-hidden="true" tabindex="-1"></a>resids<span class="ot">=</span>resids[<span class="dv">2</span><span class="sc">:</span><span class="dv">100</span>]</span>
+<span id="cb70-6"><a href="estimación-de-parámetros.html#cb70-6" aria-hidden="true" tabindex="-1"></a>boot.star<span class="ot">=</span>boot</span>
+<span id="cb70-7"><a href="estimación-de-parámetros.html#cb70-7" aria-hidden="true" tabindex="-1"></a>phi.star<span class="ot">=</span><span class="fu">matrix</span>(<span class="dv">0</span>,nboot,<span class="dv">1</span>)</span>
+<span id="cb70-8"><a href="estimación-de-parámetros.html#cb70-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nboot){</span>
+<span id="cb70-9"><a href="estimación-de-parámetros.html#cb70-9" aria-hidden="true" tabindex="-1"></a>  resid.star<span class="ot">=</span><span class="fu">sample</span>(resids,<span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb70-10"><a href="estimación-de-parámetros.html#cb70-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">99</span>){</span>
+<span id="cb70-11"><a href="estimación-de-parámetros.html#cb70-11" aria-hidden="true" tabindex="-1"></a>    boot.star[t<span class="sc">+</span><span class="dv">1</span>]<span class="ot">=</span>boot<span class="sc">+</span>phi<span class="sc">*</span>(boot.star[t]<span class="sc">-</span>boot)<span class="sc">+</span>resid.star[t]</span>
+<span id="cb70-12"><a href="estimación-de-parámetros.html#cb70-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb70-13"><a href="estimación-de-parámetros.html#cb70-13" aria-hidden="true" tabindex="-1"></a>  phi.star[i]<span class="ot">=</span><span class="fu">ar.yw</span>(boot.star,<span class="at">order=</span><span class="dv">1</span>)<span class="sc">$</span>ar</span>
+<span id="cb70-14"><a href="estimación-de-parámetros.html#cb70-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb70-15"><a href="estimación-de-parámetros.html#cb70-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Histograma</span></span>
+<span id="cb70-16"><a href="estimación-de-parámetros.html#cb70-16" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(phi.star,<span class="at">breaks=</span><span class="dv">15</span>,<span class="at">col =</span> <span class="st">&quot;lightblue&quot;</span>,</span>
+<span id="cb70-17"><a href="estimación-de-parámetros.html#cb70-17" aria-hidden="true" tabindex="-1"></a><span class="at">main=</span><span class="st">&quot;Histograma de frecuencia para phi estimado con bootstrap&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:grafico-histograma-bootstrap"></span>
 <img src="Serie-de-Tiempo-en-R_files/figure-html/grafico-histograma-bootstrap-1.svg" alt="Histograma bootstrap de phi basado en 200 iteraciones."  />
 <p class="caption">

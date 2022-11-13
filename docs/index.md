@@ -45,42 +45,6 @@ La versión en línea de este libro se comparte bajo la licencia [Creative Commo
 
 Este libro es posible gracias a una gran cantidad de desarrolladores que contribuyen en la construcción de herramientas para generar documentos enriquecidos e interactivos. En particular al autor de los paquetes Yihui Xie xie2015.
 
-## Prácticas interactivas con R {-}
-
-Vamos a utilizar el paquete [Datacamp Tutorial](https://github.com/datacamp/tutorial) que utiliza la librería en JavaScript [Datacamp Light](https://github.com/datacamp/datacamp-light) para crear ejercicios y prácticas con `R`. De esta forma el libro es completamente interactivo y con prácticas incluidas. De esta forma estamos creando una experiencia única de aprendizaje en línea.
-
-
-```r
-b <- 5
-```
-
-
-```r
-# Crea una variable a, igual a 5
-
-
-# Muestra el valor de a
-```
-
-
-```r
-# Crea una variable a, igual a 5
-a <- 5
-
-# Muestra el valor de a
-a
-```
-
-```
-## [1] 5
-```
-
-
-```r
-#test_object("a")
-#test_output_contains("a", incorrect_msg = "Aseg&uacute;rate de mostrar el valor de `a`.")
-#success_msg("Excelente!")
-```
 
 ## Agradecimientos {-}
 
@@ -348,8 +312,8 @@ plot(jj, type="l",ylab="Beneficios por acción trimestrales")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-8-1.svg" alt="Beneficios por acción trimestrales para la compañía Johnson y Johnson"  />
-<p class="caption">(\#fig:unnamed-chunk-8)Beneficios por acción trimestrales para la compañía Johnson y Johnson</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-4-1.svg" alt="Beneficios por acción trimestrales para la compañía Johnson y Johnson"  />
+<p class="caption">(\#fig:unnamed-chunk-4)Beneficios por acción trimestrales para la compañía Johnson y Johnson</p>
 </div>
 
 ::: {.example #reservas-internacionales}
@@ -366,8 +330,8 @@ plot.ts(reservas[,2], xlab="Año",ylab="Monto",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-9-1.svg" alt="Reservas Internacionales de Venezuela (millones $) 1996-2017"  />
-<p class="caption">(\#fig:unnamed-chunk-9)Reservas Internacionales de Venezuela (millones $) 1996-2017</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-5-1.svg" alt="Reservas Internacionales de Venezuela (millones $) 1996-2017"  />
+<p class="caption">(\#fig:unnamed-chunk-5)Reservas Internacionales de Venezuela (millones $) 1996-2017</p>
 </div>
 
 
@@ -385,8 +349,8 @@ plot.ts(petroleo[,2], xlab="Año",ylab="Monto",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-10-1.svg" alt="Precio promedio del petróleo venezolano (en dolares $) 2006-2017"  />
-<p class="caption">(\#fig:unnamed-chunk-10)Precio promedio del petróleo venezolano (en dolares $) 2006-2017</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-6-1.svg" alt="Precio promedio del petróleo venezolano (en dolares $) 2006-2017"  />
+<p class="caption">(\#fig:unnamed-chunk-6)Precio promedio del petróleo venezolano (en dolares $) 2006-2017</p>
 </div>
 
 
@@ -403,8 +367,8 @@ plot.ts(DJ[,-1], xlab="Días",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-11-1.svg" alt="Índice Dow-Jones desde enero 1930 hasta octubre 2017"  />
-<p class="caption">(\#fig:unnamed-chunk-11)Índice Dow-Jones desde enero 1930 hasta octubre 2017</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-7-1.svg" alt="Índice Dow-Jones desde enero 1930 hasta octubre 2017"  />
+<p class="caption">(\#fig:unnamed-chunk-7)Índice Dow-Jones desde enero 1930 hasta octubre 2017</p>
 </div>
 
 
@@ -419,8 +383,8 @@ plot(NYSE,xlab="Tiempo",ylab="Porcentaje de cambio, NYSE")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-12-1.svg" alt="Porcentaje de cambio de la bolsa de New York"  />
-<p class="caption">(\#fig:unnamed-chunk-12)Porcentaje de cambio de la bolsa de New York</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-8-1.svg" alt="Porcentaje de cambio de la bolsa de New York"  />
+<p class="caption">(\#fig:unnamed-chunk-8)Porcentaje de cambio de la bolsa de New York</p>
 </div>
 
 ::: {.example #euribor}
@@ -438,8 +402,8 @@ grid(col = "gray")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-13-1.svg" alt="Evolución anual del EURIBOR (1999-2018)"  />
-<p class="caption">(\#fig:unnamed-chunk-13)Evolución anual del EURIBOR (1999-2018)</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-9-1.svg" alt="Evolución anual del EURIBOR (1999-2018)"  />
+<p class="caption">(\#fig:unnamed-chunk-9)Evolución anual del EURIBOR (1999-2018)</p>
 </div>
 
 
@@ -452,8 +416,8 @@ grid(col = "gray")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-14-1.svg" alt="Evolución mensual del EURIBOR (2007-2018)"  />
-<p class="caption">(\#fig:unnamed-chunk-14)Evolución mensual del EURIBOR (2007-2018)</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-10-1.svg" alt="Evolución mensual del EURIBOR (2007-2018)"  />
+<p class="caption">(\#fig:unnamed-chunk-10)Evolución mensual del EURIBOR (2007-2018)</p>
 </div>
 
 ::: {.example #cambio-dolar-euro}
@@ -485,8 +449,8 @@ plot(Cambio$Fecha,Cambio$Volumen, col="blue", type = "l",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-15-1.svg" alt="Histórico de cambio del USD vs. EUR (01/05/2017 al 26/04/2018)"  />
-<p class="caption">(\#fig:unnamed-chunk-15)Histórico de cambio del USD vs. EUR (01/05/2017 al 26/04/2018)</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-11-1.svg" alt="Histórico de cambio del USD vs. EUR (01/05/2017 al 26/04/2018)"  />
+<p class="caption">(\#fig:unnamed-chunk-11)Histórico de cambio del USD vs. EUR (01/05/2017 al 26/04/2018)</p>
 </div>
 
 
@@ -562,7 +526,7 @@ En la Figura \ref{grafica-tema3-modelo-aditivo} se muestra la idea de la descomp
 
 <div class="figure" style="text-align: center">
 <img src="images/Grafica-tema3-modelo-aditivo.png" alt="Modelo aditivo de series de tiempo" width="585" />
-<p class="caption">(\#fig:unnamed-chunk-16)Modelo aditivo de series de tiempo</p>
+<p class="caption">(\#fig:unnamed-chunk-12)Modelo aditivo de series de tiempo</p>
 </div>
 
 Asumiendo el modelo aditivo, el análisis de series de tiempo consiste en modelar y estimar $T_t$ y $E_t$ y luego extraerlas de $X_t$ para obtener $\hat{\epsilon}_t = X_t - \hat{T}_t - \hat{E}_t$. La serie $\hat{\epsilon}_t$ se modela y estima para finalmente reconstruir $X_t$, $\hat{X}_t = \hat{T}_t+\hat{E}_t+\hat{\epsilon}_t$, y poder realizar el pronóstico $\hat{X}_{t+h}=\hat{T}_{t+h}+\hat{E}_{t+h}+\hat{\epsilon}_{t+h}$, utilizando la información disponible $X_t,\ldots,X_n$ con $h=1,2,\ldots,m$. Sin embargo, puede suceder que la serie $\hat{\epsilon}_t$ sea incorrelacionada, es decir, $Corr(\hat{\epsilon}_t,\hat{\epsilon}_{t+s}) = 0$, para $s\neq0$. En este caso $\hat{\epsilon}_{t+h}=0$ para todo $h>0$.
@@ -575,8 +539,8 @@ plot(decompose(jj, type = "additive", filter = NULL))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-17-1.svg" alt="Descomposición aditiva de la serie Johnson y Johnson"  />
-<p class="caption">(\#fig:unnamed-chunk-17)Descomposición aditiva de la serie Johnson y Johnson</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-13-1.svg" alt="Descomposición aditiva de la serie Johnson y Johnson"  />
+<p class="caption">(\#fig:unnamed-chunk-13)Descomposición aditiva de la serie Johnson y Johnson</p>
 </div>
 
 La función *stl()* es más sofisticada que *decompose()*, la misma usa la descomposición de estacionalidad y tendencia de Loess (Seasonal and Trend decomposition using Loess) el cual es un método robusto y versátil para la descomposición de series de tiempo. El método STL fue desarrollado por Cleveland et al. (1990). A continuación mostramos la misma serie de beneficios de acciones de Johnson y Johnson usando esta función.
@@ -588,8 +552,8 @@ plot(stl(jj,s.window="periodic"), col="blue",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-18-1.svg" alt="Descomposición de la serie Johnson y Johnson usando la descomposición de Loess (STL)"  />
-<p class="caption">(\#fig:unnamed-chunk-18)Descomposición de la serie Johnson y Johnson usando la descomposición de Loess (STL)</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-14-1.svg" alt="Descomposición de la serie Johnson y Johnson usando la descomposición de Loess (STL)"  />
+<p class="caption">(\#fig:unnamed-chunk-14)Descomposición de la serie Johnson y Johnson usando la descomposición de Loess (STL)</p>
 </div>
 
 ### El Modelo Multiplicativo de Componentes de Series de Tiempo
@@ -618,8 +582,8 @@ plot(decompose(jj, type = "multiplicative", filter = NULL))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-19-1.svg" alt="Descomposición multiplicativa de la serie Johnson y Johnson"  />
-<p class="caption">(\#fig:unnamed-chunk-19)Descomposición multiplicativa de la serie Johnson y Johnson</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-15-1.svg" alt="Descomposición multiplicativa de la serie Johnson y Johnson"  />
+<p class="caption">(\#fig:unnamed-chunk-15)Descomposición multiplicativa de la serie Johnson y Johnson</p>
 </div>
 
 
@@ -1119,7 +1083,7 @@ pop=window(uspop,start=1790)
 plot(pop,type="o",ylab="Poblacion (millones)")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-21-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-17-1.svg)<!-- -->
 
 Podemos notar del gráfico que la tendencia es creciente y parece tener un comportamiento cuadrático, por lo que ajustando una función de la forma \@ref(eq:eq-modelo-cuadratico) para la población de los datos USPOP para $1790\leq t\leq1980$ nos da los parámetros estimados
 
@@ -1166,7 +1130,7 @@ plot(pop,type="o",xlab="Años",ylab="Poblacion (millones)")
 lines(reg$fitted.values,col="red")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-22-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-18-1.svg)<!-- -->
 
 ---
 
@@ -1255,7 +1219,7 @@ summary(modelo)
 lines(t,modelo$fitted.values,col="red")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-23-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-19-1.svg)<!-- -->
 La curva punteada en azul corresponde a los datos originales, la curva en rojo corresponde al ajuste mediante el modelo cúbico.
 
 ---
@@ -1304,7 +1268,7 @@ plot(H[,1],y,xlab="años",ylab="Residuales",type='b',
      main = "Residuales e_t=X_t-T_t")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-24-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-20-1.svg)<!-- -->
 
 ---
 
@@ -1357,7 +1321,7 @@ Dx=diff(uspop,difference=2)
 plot(Dx,type="b",xlab="Año", ylab="Diferencias")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-25-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-21-1.svg)<!-- -->
 
 ---
 
@@ -1445,7 +1409,7 @@ X<-read.table("data/Accidentes3.txt", header = TRUE)
 
 En la figura podemos observar que los datos presentan claramente una componente estacional con periodo $d=12$.
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-28-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-24-1.svg)<!-- -->
 
 Será conveniente para el primer método indexar los datos por mes y año. Entonces $X_{j,k}, j=1,\ldots,12, k=1,\ldots,6$ denotará el número de muertes accidentales reportados para el $j$-ésimo mes del $k$-ésimo año, $(1972+k)$. En otras palabras, definimos
 $$X_{j,k}=X_{j+12(k-1)},\quad j=1,\ldots,12; k=1,\ldots,6.$$
@@ -1501,7 +1465,7 @@ plot(V-Tk,type = "l",xlab = "Meses",ylab = "Num. de accidentes",
      main = "Accidentes mortales mensuales con la tendencia T_k removida")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-29-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-25-1.svg)<!-- -->
 
 ```r
 # Estimacion de la estacionalidad
@@ -1523,7 +1487,7 @@ plot(Ej,type = "l",xlab = "Meses",ylab = "Num. de accidentes",
      main = "Estacionalidad de los accidentes mortales mensuales")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-29-2.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-25-2.svg)<!-- -->
 
 ```r
 # Estimacion del error
@@ -1534,7 +1498,7 @@ plot(error,type = "l",xlab = "Meses",ylab = "Error estimado",
 grid(col = "darkgray")     
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-29-3.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-25-3.svg)<!-- -->
 
 2) **Método E2: Estimación por promedio móvil**. El siguiente método es preferible al Método E1 ya que no se basa en la suposición de que $T_t$ es casi constante sobre cada ciclo de estacionalidad.
 
@@ -1585,7 +1549,7 @@ plot(T.est,type = "l",xlab = "Meses", ylab = "Num. de accidentes")
 lines(Tk,col="blue")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-30-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-26-1.svg)<!-- -->
 
 El segundo paso, es estimar la componente estacional. Para cada $k=1,\ldots,d$, calculamos el promedio $w_k$ de las desviaciones $\{(X_{k+jd}-\hat{T}_{k+jd}):q<k+jd\leq n-q\}$. Dado que este promedio de desviaciones no necesariamente suma cero, estimamos la componente estacional $E_k$ como
 \begin{equation}
@@ -1632,7 +1596,7 @@ NdX=diff(V,lag=12)
 plot(NdX,type = "l")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-31-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-27-1.svg)<!-- -->
 
 La componente estacional evidente en la  Figura~\ref{Grafico-tema3-accidentes-USA} está ausente en la Figura de $\nabla_{12}X_t,13\leq t\leq72$. Sin embargo todavía parece haber una tendencia decreciente. Si ahora aplicamos el operador $\nabla$ a $\nabla_{12}X_t$ y graficamos las diferencias $\nabla\nabla_{12}X_t,t=14,\ldots,72$ obtenemos el gráfico mostrado en la Figura siguiente, la cual no tiene una aparente tendencia o componente estacional.
 
@@ -1642,7 +1606,7 @@ DNdX=diff(NdX)
 plot(DNdX,type = "l")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-32-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-28-1.svg)<!-- -->
 
 ## Estimación de la tendencia por regresión clásica
 
@@ -1807,7 +1771,7 @@ plot(globtemp[,1],globtemp[,2],type = "l",col = "red", xlab = "Años",
 grid(col = "darkgray")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-33-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-29-1.svg)<!-- -->
 
 Ajustemos una regresión simple de la forma 
 $$x_t+\beta_1+\beta_2t+w_t\text{, con }t=1900,1901,\ldots,1997.$$
@@ -1860,7 +1824,7 @@ abline(fit, col = "blue")
 grid(col="darkgray")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-34-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-30-1.svg)<!-- -->
  
 Podemos ver los residuales de la temperatura global $e_t=x_t-\hat{x}_t$, así como la ACF de los mismos. En las gráficas siguientes se muestran los mismo. En el gráfico para la ACF podemos observar que existe una correlación importante entre $x_t$ y $x_{t-1}$, y también cierta correlación entre $x_t$ y $x_{t-4},x_{t-5}$ y $x_{t-6}$. En el capítulo de modelos $AR$ veremos más sobre esta relación.
 
@@ -1871,14 +1835,14 @@ e.temp=gtemp-fit$fitted.values
 plot(e.temp, xlab="Años", main="Residuales de la temperatura global")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-35-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-31-1.svg)<!-- -->
 
 ```r
 # ACF de los residuales
 acf(e.temp, main="ACF de los residuales de la temperatura global")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-35-2.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-31-2.svg)<!-- -->
  
 ---
 
@@ -2115,7 +2079,7 @@ Decimos que es una **supermartingala** si
 $$\mathbb{E}(X_t|\mathcal{F}_s)\leq X_s \text{ c.s.}$$
 :::
 
-::: {.example #unnamed-chunk-36}
+::: {.example #unnamed-chunk-32}
 Sean $X_0,X_1,\ldots,X_n$ variables aleatorias iid tal que $\mathbb{E}(X_1)=\mu$ y sean 
 \begin{eqnarray*}
 M_0 &=& X_0 \\
@@ -2140,8 +2104,8 @@ M=cumsum(X)
 plot(M,type = "l",xlab = "t",ylab = "M_n")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-37-1.svg)<!-- -->
-::: {.example #unnamed-chunk-38 name="Precio de acciones"}
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-33-1.svg)<!-- -->
+::: {.example #unnamed-chunk-34 name="Precio de acciones"}
 Sean $Y_0,Y_1,\ldots,Y_n$ variables aleatorias independientes y positivas. Supongamos que una acción tiene precio $M_0$ a tiempo $t=0$. 
 :::
 
@@ -2245,7 +2209,7 @@ Calculemos la función de autocovarianza de $w_t$
 \end{eqnarray*}
 La última igualdad se sigue del hecho de que $w_s$ y $w_t$ son no-correlacionados para $s\neq t$ por lo que $\mathbb{E}(w_sw_t) = \mathbb{E}(w_s)\mathbb{E}(w_t)=0$.
 
-::: {.example #unnamed-chunk-39 name="Estacionaridad de un ruido blanco"}
+::: {.example #unnamed-chunk-35 name="Estacionaridad de un ruido blanco"}
 La función de autocovarianza de un ruido blanco es fácil de evaluar como 
 $$\gamma_w(h) = \mathbb{E}(w_{t+h}w_t) = \begin{cases}
                                           \sigma_w^2,&\text{ si }h=0\\
@@ -2271,7 +2235,7 @@ plot(wn,type = "l",xlab = "Num. de observaciones",
      main = "Ruido blanco gaussiano")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-40-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-36-1.svg)<!-- -->
 
 ```r
 # Funciones de autocovarianza (ACF)
@@ -2279,7 +2243,7 @@ acf(wu)
 acf(wn)
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-40-2.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-36-2.svg)<!-- -->
 
 ::: {.example #ejem-promedio-movil-ruido-blanco}
 Podemos reemplazar las series de ruido blanco $w_t$ por un promedio móvil que suavice la serie. Por ejemplo, consideremos la serie $w_t$ en la ecuación ( ) y reemplacémosla por un promedio móvil de 3 puntos, dado por 
@@ -2302,7 +2266,7 @@ plot.ts(wu,xlab=" ",ylab="Ruido blanco unif.")
 plot.ts(vu,ylim=c(0,1),ylab="Promedio móvil")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-41-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-37-1.svg)<!-- -->
 
 ```r
 # Gaussiano
@@ -2312,7 +2276,7 @@ plot.ts(wn,xlab=" ",ylab="Ruido blanco gauss.")
 plot.ts(vn,ylim=c(-3,3),ylab="Promedio móvil")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-41-2.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-37-2.svg)<!-- -->
 En la parte superior de cada uno se observan los ruidos blancos y en la parte inferior los respectivos promedios móviles. Podemos notar que las series de promedio móvil suavizan el comportamiento de las series originales, si tomamos más puntos en el promedio mayor será el suavizado.
 
 ::: {.example #ejem-funcion-media-MA name="Función de media de un promedio móvil"}
@@ -2389,8 +2353,8 @@ lines(0.2*(1:500),lty="dashed",col="blue")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-42-1.svg" alt="Gráficos de caminos aleatorios: con tendencia (negro), sin tendencia (rojo)"  />
-<p class="caption">(\#fig:unnamed-chunk-42)Gráficos de caminos aleatorios: con tendencia (negro), sin tendencia (rojo)</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-38-1.svg" alt="Gráficos de caminos aleatorios: con tendencia (negro), sin tendencia (rojo)"  />
+<p class="caption">(\#fig:unnamed-chunk-38)Gráficos de caminos aleatorios: con tendencia (negro), sin tendencia (rojo)</p>
 </div>
 
 
@@ -2538,8 +2502,8 @@ plot.ts(ar1_4, col="blue",type = "l",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-43-1.svg" alt="Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de phi"  />
-<p class="caption">(\#fig:unnamed-chunk-43)Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de phi</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-39-1.svg" alt="Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de phi"  />
+<p class="caption">(\#fig:unnamed-chunk-39)Simulaciones de procesos autoregresivos de orden 1, AR(1), para distintos valores de phi</p>
 </div>
 
 A continuación mostramos las funciones de autocovarianzas de las series AR(1) simuladas anteriormente
@@ -2554,8 +2518,8 @@ acf(ar1_4,type = "covariance", main="ACF de la Serie AR(1) con phi=-0.5")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-44-1.svg" alt="Funciones de autocovarianzas para las series AR(1) simuladas"  />
-<p class="caption">(\#fig:unnamed-chunk-44)Funciones de autocovarianzas para las series AR(1) simuladas</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-40-1.svg" alt="Funciones de autocovarianzas para las series AR(1) simuladas"  />
+<p class="caption">(\#fig:unnamed-chunk-40)Funciones de autocovarianzas para las series AR(1) simuladas</p>
 </div>
 
 
@@ -2673,11 +2637,11 @@ c) $x_t=0.2x_{t-1}+0.35x_{t-2}+w_t$
 d) $x_t=-0.2x_{t-1}+0.35x_{t-2}+w_t$
 
 <div class="figure">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-45-1.svg" alt="ACF de 4 procesos estacionarios AR(2)"  />
-<p class="caption">(\#fig:unnamed-chunk-45-1)ACF de 4 procesos estacionarios AR(2)</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-41-1.svg" alt="ACF de 4 procesos estacionarios AR(2)"  />
+<p class="caption">(\#fig:unnamed-chunk-41-1)ACF de 4 procesos estacionarios AR(2)</p>
 </div><div class="figure">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-45-2.svg" alt="ACF de 4 procesos estacionarios AR(2)"  />
-<p class="caption">(\#fig:unnamed-chunk-45-2)ACF de 4 procesos estacionarios AR(2)</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-41-2.svg" alt="ACF de 4 procesos estacionarios AR(2)"  />
+<p class="caption">(\#fig:unnamed-chunk-41-2)ACF de 4 procesos estacionarios AR(2)</p>
 </div>
 
 La serie (b) tiene raíces características complejas, en efecto 
@@ -2738,7 +2702,7 @@ plot(xt,type="l",main="Proceso AR(3)")
 acf(xt)
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-46-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-42-1.svg)<!-- -->
 
 ----
 
@@ -2905,7 +2869,7 @@ acf(rec,48)
 pacf(rec,48)
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-47-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-43-1.svg)<!-- -->
 
 
 ## Estimación de Parámetros.
@@ -3023,7 +2987,7 @@ lines(fore$pred+fore$se,lty = "dashed",col=4)
 lines(fore$pred-fore$se,lty = "dashed",col=4)
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-48-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-44-1.svg)<!-- -->
 
 <!--chapter:end:301-modelos-AR.Rmd-->
 
@@ -3164,8 +3128,8 @@ plot(arima.sim(list(order=c(0,0,1),ma=-0.5),n=100),ylab="x2",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-49-1.svg" alt="Simulación de dos modelos MA(1)"  />
-<p class="caption">(\#fig:unnamed-chunk-49)Simulación de dos modelos MA(1)</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-45-1.svg" alt="Simulación de dos modelos MA(1)"  />
+<p class="caption">(\#fig:unnamed-chunk-45)Simulación de dos modelos MA(1)</p>
 </div>
 
 ### Función de autocorrelación (ACF)
@@ -3209,8 +3173,8 @@ acf(arima.sim(list(order=c(0,0,1),ma=-0.5),n=100),ylab="x2",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-50-1.svg" alt="ACF para dos modelos MA(1)"  />
-<p class="caption">(\#fig:unnamed-chunk-50)ACF para dos modelos MA(1)</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-46-1.svg" alt="ACF para dos modelos MA(1)"  />
+<p class="caption">(\#fig:unnamed-chunk-46)ACF para dos modelos MA(1)</p>
 </div>
 
 Podemos notar en cada una de las ACF, que efectivamente tienen un corte en paso 1. Para la serie con $\theta_1=0.5$, la correlación es positiva y para la serie con $\theta=-0.5$ la correlación es negativa.
@@ -3274,8 +3238,8 @@ La ACF es muy útil para identificar el orden de un modelo $MA$. Para una serie 
 $$x_t=c_0+w_t-\theta_1w_{t-1}-\theta_2w_{t-2}-\theta_5w_{t-5}$$
 
 <div class="figure" style="text-align: center">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-51-1.svg" alt="Serie de tiempo y función de autocorrelación de los porcentajes de cambio diario de la Bolsa de Valores de New York, desde el 2 de febrero de 1984 hasta el 31 de diciembre de 1991"  />
-<p class="caption">(\#fig:unnamed-chunk-51)Serie de tiempo y función de autocorrelación de los porcentajes de cambio diario de la Bolsa de Valores de New York, desde el 2 de febrero de 1984 hasta el 31 de diciembre de 1991</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-47-1.svg" alt="Serie de tiempo y función de autocorrelación de los porcentajes de cambio diario de la Bolsa de Valores de New York, desde el 2 de febrero de 1984 hasta el 31 de diciembre de 1991"  />
+<p class="caption">(\#fig:unnamed-chunk-47)Serie de tiempo y función de autocorrelación de los porcentajes de cambio diario de la Bolsa de Valores de New York, desde el 2 de febrero de 1984 hasta el 31 de diciembre de 1991</p>
 </div>
 
 ## Estimación
@@ -3941,8 +3905,8 @@ plot(ARMAtoMA(ar=0.9,ma=0.5,50))
 ```
 
 <div class="figure">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-54-1.svg" alt="psi-pesos para el modelo ARMA,  x_t=0.9x_{t-1}+0.5w_{t-1}+w_t"  />
-<p class="caption">(\#fig:unnamed-chunk-54)psi-pesos para el modelo ARMA,  x_t=0.9x_{t-1}+0.5w_{t-1}+w_t</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-50-1.svg" alt="psi-pesos para el modelo ARMA,  x_t=0.9x_{t-1}+0.5w_{t-1}+w_t"  />
+<p class="caption">(\#fig:unnamed-chunk-50)psi-pesos para el modelo ARMA,  x_t=0.9x_{t-1}+0.5w_{t-1}+w_t</p>
 </div>
 
 ----
@@ -6345,7 +6309,7 @@ sarima(lx, 1,1,1, 0,1,1,12)
 ## converged
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-60-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-56-1.svg)<!-- -->
 
 ```
 ## $fit
@@ -6477,8 +6441,8 @@ sarima(lx, 1,1,0, 0,1,1,12)
 ```
 
 <div class="figure">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-61-1.svg" alt="Análisis de residuales para el modelo ARIMA(1,1,0)x(0,1,1)_12 ajustado a la serie lx de pasajeros aéreos"  />
-<p class="caption">(\#fig:unnamed-chunk-61)Análisis de residuales para el modelo ARIMA(1,1,0)x(0,1,1)_12 ajustado a la serie lx de pasajeros aéreos</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-57-1.svg" alt="Análisis de residuales para el modelo ARIMA(1,1,0)x(0,1,1)_12 ajustado a la serie lx de pasajeros aéreos"  />
+<p class="caption">(\#fig:unnamed-chunk-57)Análisis de residuales para el modelo ARIMA(1,1,0)x(0,1,1)_12 ajustado a la serie lx de pasajeros aéreos</p>
 </div>
 
 ```
@@ -6741,7 +6705,7 @@ En general, para la predicción de $k$ pasos, tenemos
 $$\hat{h}_t(k)=\alpha_0+\alpha_1\hat{h}_t(k-1)+\cdots+\alpha_p\hat{h}_t(k-p),$$
 donde $\hat{h}_t(k-i)=w_{t+k-i}^2$ con $i=1,\ldots,p$, si $k-i\leq0$.
 
-::: {.example #unnamed-chunk-63}
+::: {.example #unnamed-chunk-59}
 Ejemplo ....
 :::
 
@@ -7084,7 +7048,7 @@ plot(as.ts(x), ylab = "x", xlab="Tiempo", col="blue")
 acf(x) ; acf(y) ; acf(z)
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-68-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-64-1.svg)<!-- -->
 
 La figura muestra una realización $\{x_t\}$ del proceso fraccionadamente diferenciado $FARIMA(1,0.4,0)$ (parte superior izquierda) con parámetro $AR$, $\phi=0.9$. Los valores estimados para $d$ y $\phi$ son 0.429 y 0.8839 respectivamente. En la parte superio derecha observamos la ACF para la realización $\{x_t\}$, y en la parte inferior izquierda la PACF para la serie fraccionadamente diferenciada $\{y_t\}$, como podemos notar, ambas funciones decaen lentamente, lo que indica la memoria larga. En la parte inferior derecha de la misma figura se mmuestra la ACF para los residuales de $y_t$. Con la función 'summary()' podemos ver los valores de los parámetros del modelo, así como algunos estadísticos.
 
@@ -7202,8 +7166,8 @@ acf(Nilo.resid^2, main="ACF de los residuales cuadrados")
 ```
 
 <div class="figure">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-71-1.svg" alt="Nivéles del río Nilo (serie de tiempo) y tendencia (superior izquierda); ACF de la serie de tiempo sin tendencia (superior derecha); serie simulada con un proceso $FARIMA(1,0.342,0)$ (medio izquierda); ACF para la serie fraccionadamente diferenciada (medio izquierda); ACF de los residuales del modelo $AR(1)$ (inferior izquierda) y la ACF de los residuales al cuadrado (inferior derecha)"  />
-<p class="caption">(\#fig:unnamed-chunk-71)Nivéles del río Nilo (serie de tiempo) y tendencia (superior izquierda); ACF de la serie de tiempo sin tendencia (superior derecha); serie simulada con un proceso $FARIMA(1,0.342,0)$ (medio izquierda); ACF para la serie fraccionadamente diferenciada (medio izquierda); ACF de los residuales del modelo $AR(1)$ (inferior izquierda) y la ACF de los residuales al cuadrado (inferior derecha)</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-67-1.svg" alt="Nivéles del río Nilo (serie de tiempo) y tendencia (superior izquierda); ACF de la serie de tiempo sin tendencia (superior derecha); serie simulada con un proceso $FARIMA(1,0.342,0)$ (medio izquierda); ACF para la serie fraccionadamente diferenciada (medio izquierda); ACF de los residuales del modelo $AR(1)$ (inferior izquierda) y la ACF de los residuales al cuadrado (inferior derecha)"  />
+<p class="caption">(\#fig:unnamed-chunk-67)Nivéles del río Nilo (serie de tiempo) y tendencia (superior izquierda); ACF de la serie de tiempo sin tendencia (superior derecha); serie simulada con un proceso $FARIMA(1,0.342,0)$ (medio izquierda); ACF para la serie fraccionadamente diferenciada (medio izquierda); ACF de los residuales del modelo $AR(1)$ (inferior izquierda) y la ACF de los residuales al cuadrado (inferior derecha)</p>
 </div>
 
 ----
@@ -7224,7 +7188,7 @@ hist(bits)
 hist(bits.t)
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-72-1.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-68-1.svg)<!-- -->
 
 ```r
 # Ajuste de un modelo FARIMA con d=48
@@ -7313,7 +7277,7 @@ acf(bits.resid[27:4000], main="ACF de los residuales ")
 acf(bits.resid[27:4000]^2, main="ACF de los residuales cuadrado")
 ```
 
-![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-72-2.svg)<!-- -->
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-68-2.svg)<!-- -->
 
 ----
 
@@ -7416,8 +7380,8 @@ acf(tasa.resid[18:707]^2, main="ACF de los residuales cuadrado")
 ```
 
 <div class="figure">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-73-1.svg" alt="Serie de tiempo de tasa de prestamos bancario (superior izquierda); ACF de la tasa de prestamo bancario (superior derecha); Serie con un proceso FARIMA(30,0.00012,0) (medio izquierda); ACF de la serie fraccionada diferenciada (medio derecha); ACF de los residuales (inferior izquierda); ACF de los residuales cuadrados (inferior derecha)."  />
-<p class="caption">(\#fig:unnamed-chunk-73)Serie de tiempo de tasa de prestamos bancario (superior izquierda); ACF de la tasa de prestamo bancario (superior derecha); Serie con un proceso FARIMA(30,0.00012,0) (medio izquierda); ACF de la serie fraccionada diferenciada (medio derecha); ACF de los residuales (inferior izquierda); ACF de los residuales cuadrados (inferior derecha).</p>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-69-1.svg" alt="Serie de tiempo de tasa de prestamos bancario (superior izquierda); ACF de la tasa de prestamo bancario (superior derecha); Serie con un proceso FARIMA(30,0.00012,0) (medio izquierda); ACF de la serie fraccionada diferenciada (medio derecha); ACF de los residuales (inferior izquierda); ACF de los residuales cuadrados (inferior derecha)."  />
+<p class="caption">(\#fig:unnamed-chunk-69)Serie de tiempo de tasa de prestamos bancario (superior izquierda); ACF de la tasa de prestamo bancario (superior derecha); Serie con un proceso FARIMA(30,0.00012,0) (medio izquierda); ACF de la serie fraccionada diferenciada (medio derecha); ACF de los residuales (inferior izquierda); ACF de los residuales cuadrados (inferior derecha).</p>
 </div>
 
 ----
