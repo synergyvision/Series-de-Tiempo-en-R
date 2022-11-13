@@ -1,18 +1,16 @@
 <!DOCTYPE html>
-<html >
-
+<html lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Capítulo 9 Modelos ARCH y GARCH | Series de Tiempo en R</title>
-  <meta name="description" content="Capítulo 9 Modelos ARCH y GARCH | Series de Tiempo en R">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="Capítulo 9 Modelos ARCH y GARCH | Series de Tiempo en R" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Capítulo 9 Modelos ARCH y GARCH | Series de Tiempo en R" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="http://synergy.vision/Series-de-Tiempo-en-R/" />
-  <meta property="og:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+  <meta property="og:image" content="http://synergy.vision/Series-de-Tiempo-en-R//images/cover.png" />
   
   <meta name="github-repo" content="synergyvision/Series-de-Tiempo-en-R/" />
 
@@ -20,27 +18,29 @@
   <meta name="twitter:title" content="Capítulo 9 Modelos ARCH y GARCH | Series de Tiempo en R" />
   
   
-  <meta name="twitter:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+  <meta name="twitter:image" content="http://synergy.vision/Series-de-Tiempo-en-R//images/cover.png" />
 
-<meta name="author" content="Synergy Vision">
+<meta name="author" content="Synergy Vision" />
 
 
-<meta name="date" content="2020-01-31">
+<meta name="date" content="2022-11-12" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="modelos-arima.html">
-<link rel="next" href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html">
-<script src="libs/jquery/jquery.min.js"></script>
+<link rel="prev" href="modelos-arima.html"/>
+<link rel="next" href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -48,46 +48,78 @@
 
 
 
+
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
 <script src="https://cdn.datacamp.com/datacamp-light-latest.min.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
@@ -105,124 +137,151 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="./"><img src="images/logovision-black.png" width="160"></img></a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#por-que-leer-este-libro"><i class="fa fa-check"></i>¿Por qué leer este libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#por-qué-leer-este-libro"><i class="fa fa-check"></i>¿Por qué leer este libro?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-libro"><i class="fa fa-check"></i>Estructura del libro</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#informacion-sobre-los-programas-y-convenciones"><i class="fa fa-check"></i>Información sobre los programas y convenciones</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#practicas-interactivas-con-r"><i class="fa fa-check"></i>Prácticas interactivas con R</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#información-sobre-los-programas-y-convenciones"><i class="fa fa-check"></i>Información sobre los programas y convenciones</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prácticas-interactivas-con-r"><i class="fa fa-check"></i>Prácticas interactivas con R</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="acerca-del-autor.html"><a href="acerca-del-autor.html"><i class="fa fa-check"></i>Acerca del Autor</a></li>
-<li class="chapter" data-level="1" data-path="introduccion.html"><a href="introduccion.html"><i class="fa fa-check"></i><b>1</b> Introducción</a><ul>
-<li class="chapter" data-level="1.1" data-path="introduccion.html"><a href="introduccion.html#conceptos-financieros-basicos"><i class="fa fa-check"></i><b>1.1</b> Conceptos financieros básicos</a></li>
-<li class="chapter" data-level="1.2" data-path="introduccion.html"><a href="introduccion.html#conceptos-basicos"><i class="fa fa-check"></i><b>1.2</b> Conceptos básicos</a></li>
-<li class="chapter" data-level="1.3" data-path="introduccion.html"><a href="introduccion.html#ejemplos"><i class="fa fa-check"></i><b>1.3</b> Ejemplos</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="introduccion.html"><a href="introduccion.html#clasificacion-de-las-series-de-tiempo"><i class="fa fa-check"></i><b>1.3.1</b> Clasificación de las series de tiempo</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introducción.html"><a href="introducción.html#conceptos-financieros-básicos"><i class="fa fa-check"></i><b>1.1</b> Conceptos financieros básicos</a></li>
+<li class="chapter" data-level="1.2" data-path="introducción.html"><a href="introducción.html#conceptos-básicos"><i class="fa fa-check"></i><b>1.2</b> Conceptos básicos</a></li>
+<li class="chapter" data-level="1.3" data-path="introducción.html"><a href="introducción.html#ejemplos"><i class="fa fa-check"></i><b>1.3</b> Ejemplos</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introducción.html"><a href="introducción.html#clasificación-de-las-series-de-tiempo"><i class="fa fa-check"></i><b>1.3.1</b> Clasificación de las series de tiempo</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="introduccion.html"><a href="introduccion.html#componentes-de-una-serie-de-tiempo"><i class="fa fa-check"></i><b>1.4</b> Componentes de una serie de tiempo</a><ul>
-<li class="chapter" data-level="1.4.1" data-path="introduccion.html"><a href="introduccion.html#el-modelo-aditivo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.1</b> El Modelo Aditivo de Componentes de Series de Tiempo</a></li>
-<li class="chapter" data-level="1.4.2" data-path="introduccion.html"><a href="introduccion.html#el-modelo-multiplicativo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.2</b> El Modelo Multiplicativo de Componentes de Series de Tiempo</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>2</b> Características de series de tiempo</a><ul>
-<li class="chapter" data-level="2.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#medidas-de-dependencia-para-series-de-tiempo"><i class="fa fa-check"></i><b>2.1</b> Medidas de dependencia para series de tiempo</a></li>
-<li class="chapter" data-level="2.2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia"><i class="fa fa-check"></i><b>2.2</b> Estimación de la Tendencia</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-en-ausencia-de-estacionalidad"><i class="fa fa-check"></i><b>2.2.1</b> Estimación de la tendencia en ausencia de estacionalidad</a></li>
-<li class="chapter" data-level="2.2.2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-y-la-estacionalidad"><i class="fa fa-check"></i><b>2.2.2</b> Estimación de la tendencia y la estacionalidad</a></li>
-</ul></li>
-<li class="chapter" data-level="2.3" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-por-regresion-clasica"><i class="fa fa-check"></i><b>2.3</b> Estimación de la tendencia por regresión clásica</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#regresion-clasica"><i class="fa fa-check"></i><b>2.3.1</b> Regresión Clásica</a></li>
+<li class="chapter" data-level="1.4" data-path="introducción.html"><a href="introducción.html#componentes-de-una-serie-de-tiempo"><i class="fa fa-check"></i><b>1.4</b> Componentes de una serie de tiempo</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="introducción.html"><a href="introducción.html#el-modelo-aditivo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.1</b> El Modelo Aditivo de Componentes de Series de Tiempo</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introducción.html"><a href="introducción.html#el-modelo-multiplicativo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.2</b> El Modelo Multiplicativo de Componentes de Series de Tiempo</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>3</b> Modelos de series de tiempo</a><ul>
-<li class="chapter" data-level="3.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-estocasticos"><i class="fa fa-check"></i><b>3.1</b> Modelos Estocásticos</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#procesos-estocasticos"><i class="fa fa-check"></i><b>3.1.1</b> Procesos Estocásticos</a></li>
-<li class="chapter" data-level="3.1.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#momentos-varianza-covarianza-y-correlacion"><i class="fa fa-check"></i><b>3.1.2</b> Momentos, Varianza, Covarianza y Correlación</a></li>
-<li class="chapter" data-level="3.1.3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#variacion-de-un-proceso"><i class="fa fa-check"></i><b>3.1.3</b> Variación de un proceso</a></li>
+<li class="chapter" data-level="2" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>2</b> Características de series de tiempo</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#medidas-de-dependencia-para-series-de-tiempo"><i class="fa fa-check"></i><b>2.1</b> Medidas de dependencia para series de tiempo</a></li>
+<li class="chapter" data-level="2.2" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia"><i class="fa fa-check"></i><b>2.2</b> Estimación de la Tendencia</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia-en-ausencia-de-estacionalidad"><i class="fa fa-check"></i><b>2.2.1</b> Estimación de la tendencia en ausencia de estacionalidad</a></li>
+<li class="chapter" data-level="2.2.2" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia-y-la-estacionalidad"><i class="fa fa-check"></i><b>2.2.2</b> Estimación de la tendencia y la estacionalidad</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia-por-regresión-clásica"><i class="fa fa-check"></i><b>2.3</b> Estimación de la tendencia por regresión clásica</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#regresión-clásica"><i class="fa fa-check"></i><b>2.3.1</b> Regresión Clásica</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>3</b> Modelos de series de tiempo</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-estocásticos"><i class="fa fa-check"></i><b>3.1</b> Modelos Estocásticos</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#procesos-estocásticos"><i class="fa fa-check"></i><b>3.1.1</b> Procesos Estocásticos</a></li>
+<li class="chapter" data-level="3.1.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#momentos-varianza-covarianza-y-correlación"><i class="fa fa-check"></i><b>3.1.2</b> Momentos, Varianza, Covarianza y Correlación</a></li>
+<li class="chapter" data-level="3.1.3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#variación-de-un-proceso"><i class="fa fa-check"></i><b>3.1.3</b> Variación de un proceso</a></li>
 <li class="chapter" data-level="3.1.4" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#martingalas"><i class="fa fa-check"></i><b>3.1.4</b> Martingalas</a></li>
 <li class="chapter" data-level="3.1.5" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#propiedad-de-markov"><i class="fa fa-check"></i><b>3.1.5</b> Propiedad de Markov</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-lineales"><i class="fa fa-check"></i><b>3.2</b> Modelos lineales</a><ul>
+<li class="chapter" data-level="3.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-lineales"><i class="fa fa-check"></i><b>3.2</b> Modelos lineales</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#proceso-de-ruido-blanco"><i class="fa fa-check"></i><b>3.2.1</b> Proceso de Ruido Blanco</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="modelos-ar.html"><a href="modelos-ar.html"><i class="fa fa-check"></i><b>4</b> Modelos AR</a><ul>
+<li class="chapter" data-level="4" data-path="modelos-ar.html"><a href="modelos-ar.html"><i class="fa fa-check"></i><b>4</b> Modelos AR</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar1"><i class="fa fa-check"></i><b>4.1</b> Modelo AR(1)</a></li>
 <li class="chapter" data-level="4.2" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar2"><i class="fa fa-check"></i><b>4.2</b> Modelo AR(2)</a></li>
 <li class="chapter" data-level="4.3" data-path="modelos-ar.html"><a href="modelos-ar.html#procesos-arp"><i class="fa fa-check"></i><b>4.3</b> Procesos AR(p)</a></li>
-<li class="chapter" data-level="4.4" data-path="modelos-ar.html"><a href="modelos-ar.html#funcion-de-autocorrelacion-parcial"><i class="fa fa-check"></i><b>4.4</b> Función de Autocorrelación Parcial</a></li>
-<li class="chapter" data-level="4.5" data-path="modelos-ar.html"><a href="modelos-ar.html#criterios-de-informacion"><i class="fa fa-check"></i><b>4.5</b> Criterios de Información</a></li>
-<li class="chapter" data-level="4.6" data-path="modelos-ar.html"><a href="modelos-ar.html#estimacion-de-parametros."><i class="fa fa-check"></i><b>4.6</b> Estimación de Parámetros.</a></li>
-<li class="chapter" data-level="4.7" data-path="modelos-ar.html"><a href="modelos-ar.html#predicciones-con-modelos-ar"><i class="fa fa-check"></i><b>4.7</b> Predicciones con modelos AR</a><ul>
-<li class="chapter" data-level="4.7.1" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-un-paso"><i class="fa fa-check"></i><b>4.7.1</b> Predicción de un paso</a></li>
-<li class="chapter" data-level="4.7.2" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-dos-pasos"><i class="fa fa-check"></i><b>4.7.2</b> Predicción de dos pasos</a></li>
-<li class="chapter" data-level="4.7.3" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-multiples-pasos"><i class="fa fa-check"></i><b>4.7.3</b> Predicción de múltiples pasos</a></li>
+<li class="chapter" data-level="4.4" data-path="modelos-ar.html"><a href="modelos-ar.html#función-de-autocorrelación-parcial"><i class="fa fa-check"></i><b>4.4</b> Función de Autocorrelación Parcial</a></li>
+<li class="chapter" data-level="4.5" data-path="modelos-ar.html"><a href="modelos-ar.html#criterios-de-información"><i class="fa fa-check"></i><b>4.5</b> Criterios de Información</a></li>
+<li class="chapter" data-level="4.6" data-path="modelos-ar.html"><a href="modelos-ar.html#estimación-de-parámetros."><i class="fa fa-check"></i><b>4.6</b> Estimación de Parámetros.</a></li>
+<li class="chapter" data-level="4.7" data-path="modelos-ar.html"><a href="modelos-ar.html#predicciones-con-modelos-ar"><i class="fa fa-check"></i><b>4.7</b> Predicciones con modelos AR</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="modelos-ar.html"><a href="modelos-ar.html#predicción-de-un-paso"><i class="fa fa-check"></i><b>4.7.1</b> Predicción de un paso</a></li>
+<li class="chapter" data-level="4.7.2" data-path="modelos-ar.html"><a href="modelos-ar.html#predicción-de-dos-pasos"><i class="fa fa-check"></i><b>4.7.2</b> Predicción de dos pasos</a></li>
+<li class="chapter" data-level="4.7.3" data-path="modelos-ar.html"><a href="modelos-ar.html#predicción-de-múltiples-pasos"><i class="fa fa-check"></i><b>4.7.3</b> Predicción de múltiples pasos</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="modelos-ma.html"><a href="modelos-ma.html"><i class="fa fa-check"></i><b>5</b> Modelos MA</a><ul>
-<li class="chapter" data-level="5.1" data-path="modelos-ma.html"><a href="modelos-ma.html#propiedades-de-los-modelos-ma"><i class="fa fa-check"></i><b>5.1</b> Propiedades de los modelos MA</a><ul>
+<li class="chapter" data-level="5" data-path="modelos-ma.html"><a href="modelos-ma.html"><i class="fa fa-check"></i><b>5</b> Modelos MA</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="modelos-ma.html"><a href="modelos-ma.html#propiedades-de-los-modelos-ma"><i class="fa fa-check"></i><b>5.1</b> Propiedades de los modelos MA</a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="modelos-ma.html"><a href="modelos-ma.html#estacionaridad"><i class="fa fa-check"></i><b>5.1.1</b> Estacionaridad</a></li>
-<li class="chapter" data-level="5.1.2" data-path="modelos-ma.html"><a href="modelos-ma.html#funcion-de-autocorrelacion-acf"><i class="fa fa-check"></i><b>5.1.2</b> Función de autocorrelación (ACF)</a></li>
+<li class="chapter" data-level="5.1.2" data-path="modelos-ma.html"><a href="modelos-ma.html#función-de-autocorrelación-acf"><i class="fa fa-check"></i><b>5.1.2</b> Función de autocorrelación (ACF)</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="modelos-ma.html"><a href="modelos-ma.html#identificacion-del-orden-de-un-ma"><i class="fa fa-check"></i><b>5.2</b> Identificación del orden de un MA</a></li>
-<li class="chapter" data-level="5.3" data-path="modelos-ma.html"><a href="modelos-ma.html#estimacion"><i class="fa fa-check"></i><b>5.3</b> Estimación</a></li>
+<li class="chapter" data-level="5.2" data-path="modelos-ma.html"><a href="modelos-ma.html#identificación-del-orden-de-un-ma"><i class="fa fa-check"></i><b>5.2</b> Identificación del orden de un MA</a></li>
+<li class="chapter" data-level="5.3" data-path="modelos-ma.html"><a href="modelos-ma.html#estimación"><i class="fa fa-check"></i><b>5.3</b> Estimación</a></li>
 <li class="chapter" data-level="5.4" data-path="modelos-ma.html"><a href="modelos-ma.html#predicciones-usando-modelos-ma"><i class="fa fa-check"></i><b>5.4</b> Predicciones usando modelos MA</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="modelos-arma.html"><a href="modelos-arma.html"><i class="fa fa-check"></i><b>6</b> Modelos ARMA</a><ul>
+<li class="chapter" data-level="6" data-path="modelos-arma.html"><a href="modelos-arma.html"><i class="fa fa-check"></i><b>6</b> Modelos ARMA</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="modelos-arma.html"><a href="modelos-arma.html#propiedades-de-los-modelos-armapq"><i class="fa fa-check"></i><b>6.1</b> Propiedades de los modelos ARMA(p,q)</a></li>
-<li class="chapter" data-level="6.2" data-path="modelos-arma.html"><a href="modelos-arma.html#ecuaciones-en-diferencias"><i class="fa fa-check"></i><b>6.2</b> Ecuaciones en Diferencias</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="modelos-arma.html"><a href="modelos-arma.html#funcion-de-autocorrelacion-acf-para-modelos-arma"><i class="fa fa-check"></i><b>6.2.1</b> Función de Autocorrelación (ACF) para modelos ARMA</a></li>
+<li class="chapter" data-level="6.2" data-path="modelos-arma.html"><a href="modelos-arma.html#ecuaciones-en-diferencias"><i class="fa fa-check"></i><b>6.2</b> Ecuaciones en Diferencias</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="modelos-arma.html"><a href="modelos-arma.html#función-de-autocorrelación-acf-para-modelos-arma"><i class="fa fa-check"></i><b>6.2.1</b> Función de Autocorrelación (ACF) para modelos ARMA</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="modelos-arma.html"><a href="modelos-arma.html#pronosticos"><i class="fa fa-check"></i><b>6.3</b> Pronósticos</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="modelos-arma.html"><a href="modelos-arma.html#pronosticos-para-procesos-arma"><i class="fa fa-check"></i><b>6.3.1</b> Pronósticos para procesos ARMA</a></li>
+<li class="chapter" data-level="6.3" data-path="modelos-arma.html"><a href="modelos-arma.html#pronósticos"><i class="fa fa-check"></i><b>6.3</b> Pronósticos</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="modelos-arma.html"><a href="modelos-arma.html#pronósticos-para-procesos-arma"><i class="fa fa-check"></i><b>6.3.1</b> Pronósticos para procesos ARMA</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html"><i class="fa fa-check"></i><b>7</b> Estimación de parámetros</a><ul>
-<li class="chapter" data-level="7.1" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#estimacion-1"><i class="fa fa-check"></i><b>7.1</b> Estimación</a></li>
-<li class="chapter" data-level="7.2" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#sect-EMV"><i class="fa fa-check"></i><b>7.2</b> Estimación por Máxima Verosimilitud y Mínimos Cuadrados</a></li>
-<li class="chapter" data-level="7.3" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#estimacion-de-minimos-cuadrados-para-modelos-armapq"><i class="fa fa-check"></i><b>7.3</b> Estimación de mínimos cuadrados para modelos ARMA(p,q)</a></li>
+<li class="chapter" data-level="7" data-path="estimación-de-parámetros.html"><a href="estimación-de-parámetros.html"><i class="fa fa-check"></i><b>7</b> Estimación de parámetros</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="estimación-de-parámetros.html"><a href="estimación-de-parámetros.html#estimación-1"><i class="fa fa-check"></i><b>7.1</b> Estimación</a></li>
+<li class="chapter" data-level="7.2" data-path="estimación-de-parámetros.html"><a href="estimación-de-parámetros.html#sect-EMV"><i class="fa fa-check"></i><b>7.2</b> Estimación por Máxima Verosimilitud y Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="7.3" data-path="estimación-de-parámetros.html"><a href="estimación-de-parámetros.html#estimación-de-mínimos-cuadrados-para-modelos-armapq"><i class="fa fa-check"></i><b>7.3</b> Estimación de mínimos cuadrados para modelos ARMA(p,q)</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="modelos-arima.html"><a href="modelos-arima.html"><i class="fa fa-check"></i><b>8</b> Modelos ARIMA</a><ul>
-<li class="chapter" data-level="8.1" data-path="modelos-arima.html"><a href="modelos-arima.html#construccion-de-modelos-arima"><i class="fa fa-check"></i><b>8.1</b> Construcción de modelos ARIMA</a></li>
+<li class="chapter" data-level="8" data-path="modelos-arima.html"><a href="modelos-arima.html"><i class="fa fa-check"></i><b>8</b> Modelos ARIMA</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="modelos-arima.html"><a href="modelos-arima.html#construcción-de-modelos-arima"><i class="fa fa-check"></i><b>8.1</b> Construcción de modelos ARIMA</a></li>
 <li class="chapter" data-level="8.2" data-path="modelos-arima.html"><a href="modelos-arima.html#modelos-sarima"><i class="fa fa-check"></i><b>8.2</b> Modelos SARIMA</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html"><i class="fa fa-check"></i><b>9</b> Modelos ARCH y GARCH</a><ul>
+<li class="chapter" data-level="9" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html"><i class="fa fa-check"></i><b>9</b> Modelos ARCH y GARCH</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estructura-de-los-modelos"><i class="fa fa-check"></i><b>9.1</b> Estructura de los Modelos</a></li>
-<li class="chapter" data-level="9.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-arch"><i class="fa fa-check"></i><b>9.2</b> Modelos ARCH</a><ul>
-<li class="chapter" data-level="9.2.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimacion-de-un-modelo-archp"><i class="fa fa-check"></i><b>9.2.1</b> Estimación de un Modelo ARCH(p)</a></li>
-<li class="chapter" data-level="9.2.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#prediccion-con-modelos-arch"><i class="fa fa-check"></i><b>9.2.2</b> Predicción con modelos ARCH</a></li>
+<li class="chapter" data-level="9.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-arch"><i class="fa fa-check"></i><b>9.2</b> Modelos ARCH</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimación-de-un-modelo-archp"><i class="fa fa-check"></i><b>9.2.1</b> Estimación de un Modelo ARCH(p)</a></li>
+<li class="chapter" data-level="9.2.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#predicción-con-modelos-arch"><i class="fa fa-check"></i><b>9.2.2</b> Predicción con modelos ARCH</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-garch"><i class="fa fa-check"></i><b>9.3</b> Modelos GARCH</a><ul>
-<li class="chapter" data-level="9.3.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimacion-de-un-modelo-garch"><i class="fa fa-check"></i><b>9.3.1</b> Estimación de un Modelo GARCH</a></li>
-<li class="chapter" data-level="9.3.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#prediccion-con-modelos-garch"><i class="fa fa-check"></i><b>9.3.2</b> Predicción con modelos GARCH</a></li>
+<li class="chapter" data-level="9.3" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-garch"><i class="fa fa-check"></i><b>9.3</b> Modelos GARCH</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimación-de-un-modelo-garch"><i class="fa fa-check"></i><b>9.3.1</b> Estimación de un Modelo GARCH</a></li>
+<li class="chapter" data-level="9.3.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#predicción-con-modelos-garch"><i class="fa fa-check"></i><b>9.3.2</b> Predicción con modelos GARCH</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><i class="fa fa-check"></i><b>10</b> Modelos lineales estacionales y modelos no-estacionarios</a><ul>
+<li class="chapter" data-level="10" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><i class="fa fa-check"></i><b>10</b> Modelos lineales estacionales y modelos no-estacionarios</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-estacionales"><i class="fa fa-check"></i><b>10.1</b> Modelos Estacionales</a></li>
-<li class="chapter" data-level="10.2" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-de-memoria-larga"><i class="fa fa-check"></i><b>10.2</b> Modelos de memoria larga</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#diferenciacion-fraccionada"><i class="fa fa-check"></i><b>10.2.1</b> Diferenciación fraccionada</a></li>
+<li class="chapter" data-level="10.2" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-de-memoria-larga"><i class="fa fa-check"></i><b>10.2</b> Modelos de memoria larga</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#diferenciación-fraccionada"><i class="fa fa-check"></i><b>10.2.1</b> Diferenciación fraccionada</a></li>
 <li class="chapter" data-level="10.2.2" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#ajuste-de-datos-simulados"><i class="fa fa-check"></i><b>10.2.2</b> Ajuste de datos simulados</a></li>
-<li class="chapter" data-level="10.2.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#evaluacion-de-las-pruebas-de-dependencia-a-largo-plazo"><i class="fa fa-check"></i><b>10.2.3</b> Evaluación de las pruebas de dependencia a largo plazo</a></li>
-<li class="chapter" data-level="10.2.4" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#simulacion"><i class="fa fa-check"></i><b>10.2.4</b> Simulación</a></li>
+<li class="chapter" data-level="10.2.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#evaluación-de-las-pruebas-de-dependencia-a-largo-plazo"><i class="fa fa-check"></i><b>10.2.3</b> Evaluación de las pruebas de dependencia a largo plazo</a></li>
+<li class="chapter" data-level="10.2.4" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#simulación"><i class="fa fa-check"></i><b>10.2.4</b> Simulación</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-no-estacionarios"><i class="fa fa-check"></i><b>10.3</b> Modelos no estacionarios</a><ul>
+<li class="chapter" data-level="10.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-no-estacionarios"><i class="fa fa-check"></i><b>10.3</b> Modelos no estacionarios</a>
+<ul>
 <li class="chapter" data-level="10.3.1" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#no-estacionarios-en-varianza"><i class="fa fa-check"></i><b>10.3.1</b> No estacionarios en Varianza</a></li>
 <li class="chapter" data-level="10.3.2" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#no-estacionarios-en-media"><i class="fa fa-check"></i><b>10.3.2</b> No estacionarios en Media</a></li>
-<li class="chapter" data-level="10.3.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#test-de-raiz-unitaria"><i class="fa fa-check"></i><b>10.3.3</b> Test de raíz unitaria</a></li>
+<li class="chapter" data-level="10.3.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#test-de-raíz-unitaria"><i class="fa fa-check"></i><b>10.3.3</b> Test de raíz unitaria</a></li>
 </ul></li>
-<li class="chapter" data-level="10.4" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-de-regresion"><i class="fa fa-check"></i><b>10.4</b> Modelos de regresión</a></li>
-<li class="chapter" data-level="10.5" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#estimacion-consistente-de-la-matriz-de-covarianza"><i class="fa fa-check"></i><b>10.5</b> Estimación consistente de la matriz de covarianza</a></li>
+<li class="chapter" data-level="10.4" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-de-regresión"><i class="fa fa-check"></i><b>10.4</b> Modelos de regresión</a></li>
+<li class="chapter" data-level="10.5" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#estimación-consistente-de-la-matriz-de-covarianza"><i class="fa fa-check"></i><b>10.5</b> Estimación consistente de la matriz de covarianza</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="analisis-espectral.html"><a href="analisis-espectral.html"><i class="fa fa-check"></i><b>11</b> Análisis Espectral</a><ul>
-<li class="chapter" data-level="11.1" data-path="analisis-espectral.html"><a href="analisis-espectral.html#comportamiento-ciclico-y-periodicidad"><i class="fa fa-check"></i><b>11.1</b> Comportamiento Cíclico y Periodicidad</a></li>
-<li class="chapter" data-level="11.2" data-path="analisis-espectral.html"><a href="analisis-espectral.html#la-densidad-espectral"><i class="fa fa-check"></i><b>11.2</b> La Densidad Espectral</a></li>
-<li class="chapter" data-level="11.3" data-path="analisis-espectral.html"><a href="analisis-espectral.html#periodograma-y-transformada-discreta-de-fourier"><i class="fa fa-check"></i><b>11.3</b> Periodograma y Transformada Discreta de Fourier</a></li>
-<li class="chapter" data-level="11.4" data-path="analisis-espectral.html"><a href="analisis-espectral.html#estimacion-espectral-no-parametrica"><i class="fa fa-check"></i><b>11.4</b> Estimación Espectral No-paramétrica</a></li>
-<li class="chapter" data-level="11.5" data-path="analisis-espectral.html"><a href="analisis-espectral.html#procesos-de-incremento-ortogonal-sobre--pipi"><i class="fa fa-check"></i><b>11.5</b> Procesos de Incremento Ortogonal sobre <span class="math inline">\([-\pi,\pi]\)</span></a></li>
-<li class="chapter" data-level="11.6" data-path="analisis-espectral.html"><a href="analisis-espectral.html#integracion-con-respecto-a-un-proceso-de-incremento-ortogonal"><i class="fa fa-check"></i><b>11.6</b> Integración con Respecto a un Proceso de Incremento Ortogonal</a><ul>
-<li class="chapter" data-level="11.6.1" data-path="analisis-espectral.html"><a href="analisis-espectral.html#propiedades-de-la-integral-estocastica"><i class="fa fa-check"></i><b>11.6.1</b> Propiedades de la Integral Estocástica</a></li>
+<li class="chapter" data-level="11" data-path="análisis-espectral.html"><a href="análisis-espectral.html"><i class="fa fa-check"></i><b>11</b> Análisis Espectral</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="análisis-espectral.html"><a href="análisis-espectral.html#comportamiento-cíclico-y-periodicidad"><i class="fa fa-check"></i><b>11.1</b> Comportamiento Cíclico y Periodicidad</a></li>
+<li class="chapter" data-level="11.2" data-path="análisis-espectral.html"><a href="análisis-espectral.html#la-densidad-espectral"><i class="fa fa-check"></i><b>11.2</b> La Densidad Espectral</a></li>
+<li class="chapter" data-level="11.3" data-path="análisis-espectral.html"><a href="análisis-espectral.html#periodograma-y-transformada-discreta-de-fourier"><i class="fa fa-check"></i><b>11.3</b> Periodograma y Transformada Discreta de Fourier</a></li>
+<li class="chapter" data-level="11.4" data-path="análisis-espectral.html"><a href="análisis-espectral.html#estimación-espectral-no-paramétrica"><i class="fa fa-check"></i><b>11.4</b> Estimación Espectral No-paramétrica</a></li>
+<li class="chapter" data-level="11.5" data-path="análisis-espectral.html"><a href="análisis-espectral.html#procesos-de-incremento-ortogonal-sobre--pipi"><i class="fa fa-check"></i><b>11.5</b> Procesos de Incremento Ortogonal sobre <span class="math inline">\([-\pi,\pi]\)</span></a></li>
+<li class="chapter" data-level="11.6" data-path="análisis-espectral.html"><a href="análisis-espectral.html#integración-con-respecto-a-un-proceso-de-incremento-ortogonal"><i class="fa fa-check"></i><b>11.6</b> Integración con Respecto a un Proceso de Incremento Ortogonal</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="análisis-espectral.html"><a href="análisis-espectral.html#propiedades-de-la-integral-estocástica"><i class="fa fa-check"></i><b>11.6.1</b> Propiedades de la Integral Estocástica</a></li>
 </ul></li>
-<li class="chapter" data-level="11.7" data-path="analisis-espectral.html"><a href="analisis-espectral.html#la-representacion-espectral"><i class="fa fa-check"></i><b>11.7</b> La Representación Espectral</a></li>
+<li class="chapter" data-level="11.7" data-path="análisis-espectral.html"><a href="análisis-espectral.html#la-representación-espectral"><i class="fa fa-check"></i><b>11.7</b> La Representación Espectral</a></li>
 </ul></li>
 <li class="appendix"><span><b>Apéndice</b></span></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
@@ -246,35 +305,41 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="modelos-arch-y-garch" class="section level1">
-<h1><span class="header-section-number">Capítulo 9</span> Modelos ARCH y GARCH</h1>
+<div id="modelos-arch-y-garch" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Capítulo 9</span> Modelos ARCH y GARCH<a href="modelos-arch-y-garch.html#modelos-arch-y-garch" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Antes de comenzar, es necesario precisar el concepto de volatilidad en el contexto del análisis financiero. Se denomina volatilidad a la tasa relativa a la que un activo experimenta una drástica disminución o aumento de su precio dentro de un período predeterminado de tiempo. La volatilidad se determina mediante el cálculo de la desviación estándar anualizada de la variación diaria del precio. Si el precio de la acción aumenta y disminuye rápidamente durante cortos períodos de tiempo, entonces se dice que tiene una volatilidad alta. Si el precio se mantiene casi siempre en el mismo valor entonces se dice que tiene volatilidad baja. Los inversores evalúan la volatilidad de las acciones antes de tomar una decisión en, la compra de una oferta de acciones nuevas, la adquisición de acciones adicionales de un activo ya presente en una cartera, o en la venta de acciones que actualmente est án en poder del inversionista. La idea detrás de la comprensión del comportamiento de la volatilidad de los activos es organizar las inversiones para obtener el máximo rendimiento con el mínimo de oportunidades de pérdida.</p>
-<p>En esta sección se discutirán algunos de los modelos estadísticos y econométricos mas importantes para la modelización de la volatilidad de series de tiempo de rentabilidades de activos. A diferencia del análisis de series de tiempo tradicional, el cual se enfoca principalmente en la modelización del momento condicional de primer orden, los denominados modelos de heterocedasticidad condicional buscan captar la dependencia dentro del momento condicional de segundo orden, en otras palabras, el objetivo ahora es modelizar la volatilidad. La incertidumbre o riesgo constituye uno de los temas de investigación principales en el análisis financiero. Como se mencion´o, la volatilidad es un factor importante en las finanzas puesto que proporciona un método simple para calcular el valor en riesgo de una situación financiera en la gestión de riesgos. Por otra parte, la modelización de la volatilidad de una serie de tiempo puede mejorar la eficiencia en la estimación de parámetros y la exactitud en los intervalos de predicción. En esta sección se discutirán los modelos univariados de la volatilidad entre los que se incluyen el modelo autorregresivo de heterocedasticidad condicional (<em>ARCH</em>) de Engle (1982), el modelo generalizado ARCH (<em>GARCH</em>) de Bollerslev (1986), entre otros.</p>
+<p>En esta sección se discutirán algunos de los modelos estadísticos y econométricos mas importantes para la modelización de la volatilidad de series de tiempo de rentabilidades de activos. A diferencia del análisis de series de tiempo tradicional, el cual se enfoca principalmente en la modelización del momento condicional de primer orden, los denominados modelos de heterocedasticidad condicional buscan captar la dependencia dentro del momento condicional de segundo orden, en otras palabras, el objetivo ahora es modelizar la volatilidad. La incertidumbre o riesgo constituye uno de los temas de investigación principales en el análisis financiero. Como se mencion´o, la volatilidad es un factor importante en las finanzas puesto que proporciona un método simple para calcular el valor en riesgo de una situación financiera en la gestión de riesgos. Por otra parte, la modelización de la volatilidad de una serie de tiempo puede mejorar la eficiencia en la estimación de parámetros y la exactitud en los intervalos de predicción. En esta sección se discutirán los modelos univariados de la volatilidad entre los que se incluyen el modelo autorregresivo de heterocedasticidad condicional (<em>ARCH</em>) de Engle
+(1982), el modelo generalizado ARCH (<em>GARCH</em>) de Bollerslev (1986), entre otros.</p>
 <p>La volatilidad tiene la particularidad de que no es posible su observación directa. Aún cuando esto no es posible, la volatilidad tiene algunas características que pueden ser observadas en las series de rentabilidad de activos entre los que se pueden destacar,</p>
 <ul>
-<li><p>Agrupamiento de la volatilidad (cluster). En otras palabras, períodos de volatilidades altas y períodos de volatilidades bajas.</p></li>
+<li><p>Agrupamiento de la volatilidad (cluster). En otras palabras, períodos
+de volatilidades altas y períodos de volatilidades bajas.</p></li>
 <li><p>Evolución continua de la volatilidad en el tiempo.</p></li>
-<li><p>Las variaciones de la volatilidad se presentan en un rango fijo, es decir, no diverge al infinito. En términos estadísticos, se puede decir que la volatilidad es a menudo estacionaria.</p></li>
-<li><p>La volatilidad parece reaccionar de manera diferente a un incremento elevado de los precios o una disminución sustancial de los precios. Este efecto es conocido con el nombre de apalancamiento o efecto palanca.</p></li>
+<li><p>Las variaciones de la volatilidad se presentan en un rango fijo,
+es decir, no diverge al infinito. En términos estadísticos, se puede
+decir que la volatilidad es a menudo estacionaria.</p></li>
+<li><p>La volatilidad parece reaccionar de manera diferente a un incremento
+elevado de los precios o una disminución sustancial de los precios. Este efecto es conocido con el nombre de apalancamiento o efecto palanca.</p></li>
 </ul>
-<p>Tales propiedades descritas anteriormente juegan un papel importante en el desarrollo de los modelos usados para caracterizar la volatilidad.</p>
-<div id="estructura-de-los-modelos" class="section level2">
-<h2><span class="header-section-number">9.1</span> Estructura de los Modelos</h2>
+<p>Tales propiedades descritas anteriormente juegan un papel importante
+en el desarrollo de los modelos usados para caracterizar la volatilidad.</p>
+<div id="estructura-de-los-modelos" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Estructura de los Modelos<a href="modelos-arch-y-garch.html#estructura-de-los-modelos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Como se analizó en secciones previas, más precisamente en la sección de modelos lineales, una serie de tiempo <span class="math inline">\(x_t\)</span> se puede escribir como la suma de dos componentes,</p>
-<span class="math display" id="eq:eq-modelos-xt-2-componentes">\[\begin{equation}
+<p><span class="math display" id="eq:eq-modelos-xt-2-componentes">\[\begin{equation}
 x_t=\mu_t+w_t = \mathbb{E}(x_t|\mathcal{F}_{t-1})
 \tag{9.1}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>donde <span class="math inline">\(\mathcal{F}_{t-1}\)</span> representa la información disponible hasta el tiempo <span class="math inline">\(t-1\)</span>. Usualmente, <span class="math inline">\(\mathcal{F}_{t-1}\)</span> consiste de todas la funciones lineales del pasado de <span class="math inline">\(x_t\)</span>. El objetivo de los proceso descritos por <a href="modelos-arch-y-garch.html#eq:eq-modelos-xt-2-componentes">(9.1)</a> es la modelización de <span class="math inline">\(\mu_t=\mathbb{E}(x_t|\mathcal{F}_{t-1})\)</span>, con la suposición de que <span class="math inline">\(w_t\)</span> sea un ruido blanco condicionalmente homocedástico, es decir,</p>
-<span class="math display" id="eq:eq-ruido-blanco-homocedastico">\[\begin{equation}
+<p><span class="math display" id="eq:eq-ruido-blanco-homocedastico">\[\begin{equation}
 \mathbb{E}(w_t^2) = \mathbb{E}(w_t^2|\mathcal{F}_{t-1}) = \sigma_w^2.
 \tag{9.2}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>Los modelos de heterocedasticidad condicional suponen que el segundo momento condicional depende del tiempo, es decir,</p>
-<span class="math display" id="eq:eq-varianza-heterocedastica">\[\begin{equation}
+<p><span class="math display" id="eq:eq-varianza-heterocedastica">\[\begin{equation}
 \sigma_t^2=Var(x_t|\mathcal{F}_{t-1})=\mathbb{E}((x_t-\mu_t)^2|\mathcal{F}_{t-1})=\mathbb{E}(w_t^2|\mathcal{F}_{t-1})=h_t,
 \tag{9.3}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>siendo <span class="math inline">\(h_t\)</span> una función no negtiva, <span class="math inline">\(h_t=h_t(\mathcal{F}_{t-1})\)</span>. A través de este capítulo discutiremos algunas de las posibles funciones para <span class="math inline">\(h_t\)</span>.</p>
 <p>La forma en que <span class="math inline">\(h_t\)</span> evoluciona respecto del tiempo distinguirá una forma de otra. Ya que nuestro objetivo esel estudio de modelos que nos permitan caracterizar series de tiempo financieras, consideraremos de forma general que <span class="math inline">\(x_t\)</span> representa la serie de rentabilidades de activos. Así mismo, haremos referencia de <span class="math inline">\(w_t\)</span> como la <em>rentabilidad corregida en media</em> o <em>impulso</em> del activo.</p>
 <p>Los modelos de heterocedasticidad condicional los podemos clasificar en dos categorías generales</p>
@@ -284,40 +349,38 @@ x_t=\mu_t+w_t = \mathbb{E}(x_t|\mathcal{F}_{t-1})
 </ol>
 <p>Los modelos GARCH pertenecen a la primera categoría, mientras que los modelos de volatilidad estocástica están en la segunda categoría.</p>
 </div>
-<div id="modelos-arch" class="section level2">
-<h2><span class="header-section-number">9.2</span> Modelos ARCH</h2>
+<div id="modelos-arch" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Modelos ARCH<a href="modelos-arch-y-garch.html#modelos-arch" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>El primer modelo que proporciona un enfoque sistemático para el modelado de la volatilidad es el modelo <em>Autorregresivo de Heterocedasticidad Condicional</em> denotado por sus sigla en inglés <span class="math inline">\(ARCH\)</span> (Autoregressive Conditional Heteroscedasticity), introducido por Engle (1982). un modelo <span class="math inline">\(ARCH(p)\)</span> tiene la forma</p>
-<span class="math display" id="eq:eq-modelos-ARCHp">\[\begin{eqnarray}
+<p><span class="math display" id="eq:eq-modelos-ARCHp">\[\begin{eqnarray}
 w_t^2 &amp;=&amp; \nu_t\sqrt{h_t} \nonumber \\
 h_t   &amp;=&amp; \alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2.
 \tag{9.4}
-\end{eqnarray}\]</span>
+\end{eqnarray}\]</span></p>
 <p>Donde <span class="math inline">\(\{\nu_t\}\)</span> es una sucesión de variables aleatorias iid con media 0 y varianza 1, <span class="math inline">\(\alpha_0&gt;0,\alpha_p&gt;0\)</span> y <span class="math inline">\(\alpha_i\geq0, i=1,\ldots,p-1\)</span>. La condición de no negatividad sobre los coeficinetes <span class="math inline">\(\alpha_i\)</span> garantizan que la varianza condicional <span class="math inline">\(h_t\)</span> sea positiva.</p>
-
 <div class="remark">
-<p> <span class="remark"><em>Nota. </em></span> Algunos autores usan <span class="math inline">\(\sigma_t^2\)</span> para denotar la varianza condicional en la ecuación <a href="modelos-arch-y-garch.html#eq:eq-modelos-ARCHp">(9.4)</a> en lugar de <span class="math inline">\(h_t\)</span> tal como lo denotamos. Así pues, el modelo <span class="math inline">\(ARCH(p)\)</span> también lo podemos escirbir de la siguiente manera:</p>
-<span class="math display">\[\begin{eqnarray}
+<p><span id="unlabeled-div-4" class="remark"><em>Nota</em>. </span>Algunos autores usan <span class="math inline">\(\sigma_t^2\)</span> para denotar la varianza condicional en la ecuación <a href="modelos-arch-y-garch.html#eq:eq-modelos-ARCHp">(9.4)</a> en lugar de <span class="math inline">\(h_t\)</span> tal como lo denotamos. Así pues, el modelo <span class="math inline">\(ARCH(p)\)</span> también lo podemos escirbir de la siguiente manera:</p>
+<p><span class="math display">\[\begin{eqnarray}
 w_t &amp;=&amp; \nu_t\sigma_t \\
 \sigma_t^2 &amp;=&amp; \alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2.
-\end{eqnarray}\]</span>
-Sin embargo, en lo que sigue y por razones prácticas, usareos la primera notación que describimos en la ecuación <a href="modelos-arch-y-garch.html#eq:eq-modelos-ARCHp">(9.4)</a>.
+\end{eqnarray}\]</span></p>
+<p>Sin embargo, en lo que sigue y por razones prácticas, usareos la primera notación que describimos en la ecuación <a href="modelos-arch-y-garch.html#eq:eq-modelos-ARCHp">(9.4)</a>.</p>
 </div>
-
 <hr />
 <p>El modelo <span class="math inline">\(ARCH(P)\)</span> lo podemos escribir como un modelo <span class="math inline">\(AR(p)\)</span> para <span class="math inline">\(w_t^2\)</span>. En efecto,</p>
-<span class="math display" id="eq:eq-modelo-AR-wt2">\[\begin{equation}
+<p><span class="math display" id="eq:eq-modelo-AR-wt2">\[\begin{equation}
 w_t^2=\alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2+\eta_t,
 \tag{9.5}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>donde <span class="math inline">\(\eta_t=w_t^2-h_t\)</span>. Recordando la teoría de los modelos <span class="math inline">\(AR\)</span>, si las raíces de la ecuación característica del proceso <span class="math inline">\(AR\)</span> están fuera del círculo unitario, entonces el proceso es estacionario y además podemos calcular la varianza incondicional de <span class="math inline">\(w_t\)</span>, como</p>
 <p><span class="math display">\[Var(w_t^2) = \sigma_w^2 = \mathbb{E}(w_t^2) = \frac{\alpha_0}{1-\alpha_1-\cdots-\alpha_p}\]</span></p>
 <p>siempre y cuando <span class="math inline">\(1-\alpha_1-\cdots-\alpha_p&gt;0\)</span>. Tomando en cuenta la ecuación <a href="modelos-arch-y-garch.html#eq:eq-modelos-ARCHp">(9.4)</a>, podemos ver la razón por la cual los modelos <span class="math inline">\(ARCH\)</span> pueden describir el agrupamiento de la volatilidad. El mmodelo establece que la varianza condicional <span class="math inline">\(h_t\)</span> es una función creciente de <span class="math inline">\(w_{t-1}^2\)</span> para <span class="math inline">\(i=1,\ldots,p\)</span>. Por lo tanto, valores grandes de <span class="math inline">\(w_{t-1}\)</span> (en módulo) dan lugar a valores grandes de <span class="math inline">\(h_t\)</span>. Por consiguiente, <span class="math inline">\(w_t\)</span> también tiende a asumirvalores grandes (en módulo).</p>
 <p>Además de capturar el agrupamiento de la volatilidad, los modelos <span class="math inline">\(ARCH\)</span> tambie’n reflejan el exceso de kurtosis estándar de las series de rentabilidad. Para estudiar esta y otras propiedades, consideraremos por simplicidad el modelo <span class="math inline">\(ARCH(1)\)</span>, que asume la forma siguiente:</p>
-<span class="math display" id="eq:eq-modelo-ARCH1">\[\begin{eqnarray}
+<p><span class="math display" id="eq:eq-modelo-ARCH1">\[\begin{eqnarray}
 w_t &amp;=&amp; \nu_t\sqrt{h_t} \nonumber\\
-h_t &amp;=&amp; \alpha_0+\alpha_1w_{t-1}^2. 
+h_t &amp;=&amp; \alpha_0+\alpha_1w_{t-1}^2.
 \tag{9.6}
-\end{eqnarray}\]</span>
+\end{eqnarray}\]</span></p>
 <p>Entonces, tenemos que</p>
 <p><span class="math display">\[\mathbb{E}(w_t) = \mathbb{E}[\mathbb{E}(w_t|\mathcal{F}_{t-1})] = \mathbb{E}(\sqrt{h_t}\mathbb{E}(\nu_t)) = 0.\]</span></p>
 <p>Por otro lado, suponiendo estacionaridad de la serie, la varianza incondicional de <span class="math inline">\(w_t\)</span> es</p>
@@ -335,137 +398,137 @@ h_t &amp;=&amp; \alpha_0+\alpha_1w_{t-1}^2.
 <p>En esta última ecuación vemos reflejado el exceso de kurtosis de <span class="math inline">\(w_t\)</span>.</p>
 <p>El modelo <span class="math inline">\(ARCH\)</span> tiene múltiles propiedades que en cierta forma pueden mejorar el modelado de series de tiempo financieras, en epsecial si queremos modeloar o simular la volatilidad.Sin embargo, este modelo como los ya vistos presentan limitaciones a la hora de modelar series de rentabilidad de activos financieros. Es habitual que períodos de rentabilidades negativas sean seguidos por períodos de gran volatilidad. Así, los modelos <span class="math inline">\(ARCH\)</span> no tienen la capacidad de captar esta característica debido a que la volatilidad responde igualmente ante impulsos negativos y positivos, pues dependen del cuadrado de los mismos.</p>
 <p>Por otro lado, las condiciones para la existencia de momentos de orden mayor, implica colocar restricciones muy estrictas sobre los parámetros del modelo. Como ya mencionamos, para un modelo <span class="math inline">\(ARCH(1)\)</span> con momento de cuarto orden finito exigimos que <span class="math inline">\(0\leq\alpha_1^2&lt;1/3\)</span>, de modo que para un modelo <span class="math inline">\(ARCH\)</span> de mayor orden las restricciones tienden a complicarse.</p>
-<div id="estimacion-de-un-modelo-archp" class="section level3">
-<h3><span class="header-section-number">9.2.1</span> Estimación de un Modelo ARCH(p)</h3>
+<div id="estimación-de-un-modelo-archp" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Estimación de un Modelo ARCH(p)<a href="modelos-arch-y-garch.html#estimación-de-un-modelo-archp" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Los estimadores que se usan con más frecuencia para estimar los modelos <span class="math inline">\(ARCH\)</span> son los que se obtienen de la función de máxima verosimilitud gaussiana condicional. Consideremos el modelo <span class="math inline">\(ARCH(p)\)</span> dado en la ecuación <a href="modelos-arch-y-garch.html#eq:eq-modelos-ARCHp">(9.4)</a>. Bao la hipótesis de normalidad de <span class="math inline">\(\nu_t\)</span>, tenemos que la distribución de <span class="math inline">\(w_t\)</span> condicionado a <span class="math inline">\(\mathcal{F}_{t-1}\)</span>, tiene una distribución normal co media <span class="math inline">\(\mu=0\)</span> y varianza <span class="math inline">\(h_t=0\)</span>, y la función de máxima verosimilitud adopta la forma</p>
-<span class="math display" id="eq:eq-FMV-ARCH">\[\begin{eqnarray}
+<p><span class="math display" id="eq:eq-FMV-ARCH">\[\begin{eqnarray}
 f(w_1,\ldots,w_T|\vec{\alpha}) &amp;=&amp; f(w_T|\mathcal{F}_{T-1})f(w_T-1|\mathcal{F}_{T-2})\cdots f(w_{p+1}|\mathcal{F}_p)f(w_1,\ldots,w_p|\vec{\alpha}) \nonumber\\
   \prod_{t=p+1}^T\frac{1}{\sqrt{2\pi h_t}}\exp\left(\frac{-w_t^2}{2h_t}\right)f(w_1,\ldots,w_p|\vec{\alpha})
   \tag{9.7}
-\end{eqnarray}\]</span>
+\end{eqnarray}\]</span></p>
 <p>donde <span class="math inline">\(\vec{\alpha}=(\alpha_0,\alpha_1,\ldots,\alpha_p)^T\)</span> y <span class="math inline">\(f(w_1,\ldots,w_p|\vec{\alpha})\)</span> es la función de densidad conjunta de <span class="math inline">\(w_1,\ldots,w_p\)</span>. Dado que la forma exacta de esta densidad es difícil de calcular, consideraremos la función de verosimilitud condicionada siguiente:</p>
-<span class="math display" id="eq:eq-FMV-ARCH-2">\[\begin{equation}
+<p><span class="math display" id="eq:eq-FMV-ARCH-2">\[\begin{equation}
 f(w_{p+1},\ldots,w_T|\vec{\alpha},w_1,\ldots,w_p) = \prod_{t=p+1}^T\frac{1}{\sqrt{2\pi h_t}}\exp\left(\frac{-w_t^2}{2h_t}\right).
 \tag{9.8}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>Ya que maximizar la función de verosimilitud <a href="modelos-arch-y-garch.html#eq:eq-FMV-ARCH-2">(9.8)</a> equivales= a maximizar su logaritmo, consideremos entonces</p>
 <p><span class="math display">\[L(\alpha_0,\vec{\alpha}) = \ln(f(w_{p+1},\ldots,w_T|\vec{\alpha},w_1,\ldots,w_p)) = \sum_{t=p+1}^T\frac{1}{2}\left[\ln(2\pi)+\ln(h_t)+\frac{w_t^2}{h_t}\right].\]</span></p>
 <p>ahora bien, dado que el primer término de la suma no depende de ningún parámetro, los estimadores de máxima verosimilitud condicional de <span class="math inline">\(\alpha_0\)</span> y <span class="math inline">\(\vec{\alpha}=(\alpha_1,\ldots,\alpha_p)^T\)</span> obtenemos maximizando</p>
 <p><span class="math display">\[L(\alpha_0,\vec{\alpha}) = -\sum_{t=p+1}^T\frac{1}{2}\ln\left[\ln(h_t)+\frac{w_t^2}{h_t}\right],\]</span></p>
 <p>donde <span class="math inline">\(h_t=\alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2\)</span> lo podemos evaluar recursivamente.</p>
 </div>
-<div id="prediccion-con-modelos-arch" class="section level3">
-<h3><span class="header-section-number">9.2.2</span> Predicción con modelos ARCH</h3>
+<div id="predicción-con-modelos-arch" class="section level3 hasAnchor" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> Predicción con modelos ARCH<a href="modelos-arch-y-garch.html#predicción-con-modelos-arch" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Sean <span class="math inline">\(x_1,\ldots,x_h\)</span> observaciones de una serie de tiempo <span class="math inline">\(\{x_t\}\)</span>. Queremos predecir la observación <span class="math inline">\(x_{h+k}\)</span> para algún horizonte de predicción <span class="math inline">\(k&gt;0\)</span>, a partir de las observaciones disponibles dadas. Denotemos por <span class="math inline">\(\hat{x}_h(k)\)</span> el estimador de mínimos cuadrados de <span class="math inline">\(x_h(k)\)</span>, esto es</p>
-<p><span class="math display">\[\hat{x}_h(k)=\arg\inf_f\mathbb{E}(x_{h+k}-f)^2\]</span> donde el ínfimo se considera sobre las funciones medibles de <span class="math inline">\(x_1,\ldots,x_h\)</span>. Podemos ver que bajo estas condiciones,</p>
+<p><span class="math display">\[\hat{x}_h(k)=\arg\inf_f\mathbb{E}(x_{h+k}-f)^2\]</span>
+donde el ínfimo se considera sobre las funciones medibles de <span class="math inline">\(x_1,\ldots,x_h\)</span>. Podemos ver que bajo estas condiciones,</p>
 <p><span class="math display">\[\hat{x}_h(k) = \mathbb{E}(x_{h+k}|x_1,\ldots,x_h).\]</span></p>
 <p>Teniendo en cuenta este resultado, las predicciones de <span class="math inline">\(h_t\)</span> para los modelos <span class="math inline">\(ARCH\)</span> los obtenemos recursivamente a partir de la ecuación de la volatilidad dada por <a href="modelos-arch-y-garch.html#eq:eq-modelos-ARCHp">(9.4)</a>, bajo la suposición de que conocemos la serie de tiempo hasta el instante <span class="math inline">\(t\)</span>, así la predicción de <span class="math inline">\(h_{t+1}\)</span> está dada por</p>
 <p><span class="math display">\[\hat{h}_t(1) = \alpha_0+\alpha_1w_t^2+\cdots+\alpha_pw_{t+1-p}^2.\]</span></p>
 <p>Ahora bien, tomando <span class="math inline">\(\hat{w}_t^2(1)=\hat{h}_t(1)\)</span>, la predicción a dos pasos es</p>
-<span class="math display">\[\begin{eqnarray*}
+<p><span class="math display">\[\begin{eqnarray*}
 \hat{h}_t(2) &amp;=&amp; \alpha_0+\alpha_1\hat{w}_t^2(1)+\alpha_2w_t^2+\cdots+\alpha_pw_{t+2-p}^2 \\
     &amp;=&amp; \alpha_0+\alpha_1\hat{h}_t(1)+\alpha_2w_t^2+\cdots+\alpha_pw_{t+2-p}^2.
-\end{eqnarray*}\]</span>
+\end{eqnarray*}\]</span></p>
 <p>En general, para la predicción de <span class="math inline">\(k\)</span> pasos, tenemos</p>
-<p><span class="math display">\[\hat{h}_t(k)=\alpha_0+\alpha_1\hat{h}_t(k-1)+\cdots+\alpha_p\hat{h}_t(k-p),\]</span> donde <span class="math inline">\(\hat{h}_t(k-i)=w_{t+k-i}^2\)</span> con <span class="math inline">\(i=1,\ldots,p\)</span>, si <span class="math inline">\(k-i\leq0\)</span>.</p>
-
+<p><span class="math display">\[\hat{h}_t(k)=\alpha_0+\alpha_1\hat{h}_t(k-1)+\cdots+\alpha_p\hat{h}_t(k-p),\]</span>
+donde <span class="math inline">\(\hat{h}_t(k-i)=w_{t+k-i}^2\)</span> con <span class="math inline">\(i=1,\ldots,p\)</span>, si <span class="math inline">\(k-i\leq0\)</span>.</p>
 <div class="example">
-<span id="exm:unnamed-chunk-63" class="example"><strong>Ejemplo 9.1  </strong></span>Ejemplo ….
-</div>
-
+<p><span id="exm:unnamed-chunk-63" class="example"><strong>Ejemplo 9.1  </strong></span>Ejemplo ….</p>
 </div>
 </div>
-<div id="modelos-garch" class="section level2">
-<h2><span class="header-section-number">9.3</span> Modelos GARCH</h2>
+</div>
+<div id="modelos-garch" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Modelos GARCH<a href="modelos-arch-y-garch.html#modelos-garch" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Cuando se consideran modelos <span class="math inline">\(ARCH\)</span> para caracterizar el comportamiento dinámico de la volatilidad suele ocurrir que el orden <span class="math inline">\(p\)</span> sea significativamente alto. Esto conlleva a que las restricciones sobre los parámetros, para garantizar la no negatividad de la varianza y la no estacionaridad del proceso, sea muy fuerte. Bollerslev (1986) propuso como solución alternativa los <em>modelos generalizados autoregresivos de heterocedasticidad condicional</em> y denotados como <span class="math inline">\(GARCH\)</span> (Generalized <span class="math inline">\(ARCH\)</span>). Para estos modelos, la varianza condicional en un instante depende, no solo de los valores pasados de los impulsos la cuadrado, sino también de sus propios retardos. Así, un modelo <span class="math inline">\(GARCH(p,q)\)</span> tiene la siguiente expresión</p>
-<span class="math display" id="eq:eq-modelo-GARCHpq">\[\begin{eqnarray}
+<p><span class="math display" id="eq:eq-modelo-GARCHpq">\[\begin{eqnarray}
 w_t &amp;=&amp; \nu_t\sqrt{h_t} \nonumber \\
 h_t &amp;=&amp; \alpha_0+\sum_{i=1}^p\alpha_iw_{t-i}^2+\sum_{j=1}^q\beta_jh_{t-j}
 \tag{9.9}
-\end{eqnarray}\]</span>
+\end{eqnarray}\]</span></p>
 <p>donde <span class="math inline">\(\nu_t\)</span> es una sucesión de variables aleatorias iid con media 0 y varianza 1, independientes de <span class="math inline">\(\{w_{t-k}\}_{k\geq1}\)</span> para todo <span class="math inline">\(t\)</span>. Para garantizar la no negatividad de la varianza condicional <span class="math inline">\(h_t\)</span> hacemos <span class="math inline">\(\alpha_0&gt;0,\alpha_i\geq0\)</span> y <span class="math inline">\(\beta_j\geq0\)</span> con <span class="math inline">\(i=1,\ldots,p, j=1,\ldots,q\)</span>.</p>
 <p>Se puede demostrar que el proceso es estrictamente estacionario con <span class="math inline">\(\mathbb{E}(w_t^2)&lt;\infty\)</span> si y solo si <span class="math inline">\(\sum_{i=1}^p\alpha_i+\sum_{j=1}^q\beta_j&lt;1\)</span>. En este caso, <span class="math inline">\(\mathbb{E}(w_t)=0\)</span> y la varianza incondicional de <span class="math inline">\(w_t\)</span> toma el valor</p>
 <p><span class="math display">\[\sigma_w^2 = \mathbb{E}(w_t^2) = \frac{\alpha_0}{1-(\sum_{i=1}^p\alpha_i+\sum_{j=1}^q\beta_j)}.\]</span></p>
 <p>En efecto, bajo la suposición de estacionaridad se tiene</p>
-<span class="math display">\[\begin{eqnarray*}
+<p><span class="math display">\[\begin{eqnarray*}
 \mathbb{E}(w_t^2) &amp;=&amp; \mathbb{E}(h_t) \\
     &amp;=&amp; \alpha_0+\sum_{i=1}^p\alpha_i\mathbb{E}(w_{t-i}^2)+\sum_{j=1}^q\beta_j\mathbb{E}(h_{t-j}) \\
     &amp;=&amp; \alpha_0+\sum_{i=1}^p\mathbb{E}(w_t^2)+\sum_{j=1}^q\beta_j\mathbb{E}(w_t^2),
-\end{eqnarray*}\]</span>
+\end{eqnarray*}\]</span></p>
 <p>y despejando <span class="math inline">\(\mathbb{E}(w_t^2)\)</span> se obtiene la expresión dada para la varianza incondicional.</p>
 <p>Por otro lado, el modelo <span class="math inline">\(GARCH(p,q)\)</span> puede representarse alternativamente mediante un modelo <span class="math inline">\(ARMA(m,q)\)</span> para <span class="math inline">\(w_t^2\)</span>, siendo <span class="math inline">\(m=\max(p,q)\)</span>. Sea <span class="math inline">\(\eta_t=w_t^2-h_t\)</span>. Sustituyendo <span class="math inline">\(h_t=w_t^2-h_t\)</span> en <a href="modelos-arch-y-garch.html#eq:eq-modelo-GARCHpq">(9.9)</a>se tiene</p>
-<span class="math display" id="eq:eq-modelo-GARCH-alterno">\[\begin{equation}
+<p><span class="math display" id="eq:eq-modelo-GARCH-alterno">\[\begin{equation}
 w_t^2 = \alpha_0+\sum_{i=1}^m(\alpha_i+\beta_i)w_{t-1}^2-\sum_{j=1}^q\beta_j\eta_{t-j},
 \tag{9.10}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>donde <span class="math inline">\(\alpha_{p+j}=\beta_{q+j}=0\)</span> para <span class="math inline">\(j\geq1\)</span>.</p>
-
 <div class="remark">
- <span class="remark"><em>Nota. </em></span> Se puede demostrar que el modelo <span class="math inline">\(GARCH\)</span> definido como un modelo <span class="math inline">\(ARMA\)</span> satisface <span class="math inline">\(\mathbb{E}(\eta_t)=0\)</span> y <span class="math inline">\(Cov(\eta_t,\eta_{t-j})=0\)</span> para <span class="math inline">\(j\geq1\)</span>. Sin embargo ${_j} no es, en general, una sucesión variables iid.
+<p><span id="unlabeled-div-5" class="remark"><em>Nota</em>. </span>Se puede demostrar que el modelo <span class="math inline">\(GARCH\)</span> definido como un modelo <span class="math inline">\(ARMA\)</span> satisface <span class="math inline">\(\mathbb{E}(\eta_t)=0\)</span> y <span class="math inline">\(Cov(\eta_t,\eta_{t-j})=0\)</span> para <span class="math inline">\(j\geq1\)</span>. Sin embargo ${_j} no es, en general, una sucesión variables iid.</p>
 </div>
-
 <p>Similar a las consideraciones anteriores de los modelos de series de tiempo, consideraremos, por simplicidad el modelo <span class="math inline">\(GARCH(1,1)\)</span> para estudiar sus propiedades y que luego podemos generalizar.</p>
 <p>Consideremos el modelo <span class="math inline">\(GARCH(1,1)\)</span> dado por</p>
-<span class="math display" id="eq:eq-modelo-GARCH11">\[\begin{eqnarray}
+<p><span class="math display" id="eq:eq-modelo-GARCH11">\[\begin{eqnarray}
 w_t &amp;=&amp; \nu_t\sqrt{h_t} \nonumber\\
 h_t &amp;=&amp; \alpha_0+\alpha_1w_{t-1}^2+\beta_1h_{t-1}
 \tag{9.11}
-\end{eqnarray}\]</span>
+\end{eqnarray}\]</span></p>
 <p>En primer lugar veremos como se puede reducir el númeor de retardos de los impulsos al cuadrado al hacer la volatilidad de sus valores pasados. El modelo <a href="modelos-arch-y-garch.html#eq:eq-modelo-GARCH11">(9.11)</a> lo podemos escribir como</p>
-<p><span class="math display">\[h_t=\alpha_0+\alpha_1w_{t-1}^2+\beta_1(\alpha_0+\alpha_1w_{t-1}^2+\beta_1h_{t-2}),\]</span> y de forma recursiva obtenemos</p>
-<span class="math display" id="eq:eq-modelo-GRACH11-recursivo">\[\begin{equation}
+<p><span class="math display">\[h_t=\alpha_0+\alpha_1w_{t-1}^2+\beta_1(\alpha_0+\alpha_1w_{t-1}^2+\beta_1h_{t-2}),\]</span>
+y de forma recursiva obtenemos</p>
+<p><span class="math display" id="eq:eq-modelo-GRACH11-recursivo">\[\begin{equation}
 h_t = \alpha_0\sum_{i=0}^{\infty}\beta_1^i+\alpha_1\sum_{i=0}^{\infty}\beta_1^{i-1}w_{t-i}^2.
 \tag{9.12}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>Esto quiere decir, que el modelo <span class="math inline">\(GARCH(1,1)\)</span> admite una representación <span class="math inline">\(ARCH(\infty)\)</span>. De <a href="modelos-arch-y-garch.html#eq:eq-modelo-GARCH11">(9.11)</a> se deduce que valores grandes de <span class="math inline">\(w_t^2\)</span> o <span class="math inline">\(h_{t-1}\)</span> dan lugar a valores grandes de <span class="math inline">\(h_t\)</span>. Esto significa que grandes valores de <span class="math inline">\(w_{t-1}^2\)</span> tienden a ir seguidos de grandes valores de <span class="math inline">\(w_t^2\)</span>, dando lugar así al característico agrupamiento de la volatilidad de las series financieras. Por otra parte, si imponemos condiciones de existencia del momento de cuarto orden de <span class="math inline">\(w_t\)</span> y suponiendo normalidad en <span class="math inline">\(\nu_t\)</span>, obtenemos</p>
 <p><span class="math display">\[\mathbb{E}(w_t^4) = 3\mathbb{E}(\alpha_0+\alpha_1w_{t-1}^2+\beta_1h_{t-1})^2.\]</span></p>
 <p>Desarrrollando la expresión anterior y despejando <span class="math inline">\(\mu_4\)</span> obtenemos</p>
 <p><span class="math display">\[\mu_4 = \frac{3\alpha_0^2[1+2(\alpha_1+\beta_1)]}{[1-(\alpha_1+\beta_1)][1-(\alpha_1+\beta_1)^2-2\alpha_1^2]}.\]</span></p>
 <p>Por lo tanto, la kurtosis de un proceso <span class="math inline">\(GARCH(1,1)\)</span> será</p>
-<span class="math display" id="eq:eq-kurtosis-GARCH11">\[\begin{equation}
+<p><span class="math display" id="eq:eq-kurtosis-GARCH11">\[\begin{equation}
 K = \frac{\mathbb{E}(w_t^4)}{[\mathbb{E}(w_t^2)]^2} = \frac{3[1-(\alpha_1+\beta_1)^2]}{1-(\alpha_1+\beta_1)^2-2\alpha_1^2} &gt;3.
 \tag{9.13}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>En consecuencia, <span class="math inline">\(1-(\alpha_1+\beta_1)^2-2\alpha_1^2&gt;0\)</span>. Así, de la ecuación <a href="modelos-arch-y-garch.html#eq:eq-kurtosis-GARCH11">(9.13)</a> tenemos que la distribución de las colas de un proceso <span class="math inline">\(GARCH(1,1)\)</span> es más pesada que la de una distribución normal. Por lo tanto, el modelo también es capaz de reflejar el exceso de kurtosis característico de las series de rentabilidades. Sin embargo, similar a lo que ocurre con los modelos <span class="math inline">\(ARCH\)</span>, los modelos <span class="math inline">\(GARCH\)</span> responden de igual forma ante los impulsos independientemente de su signo y por este motivo no pueden reflejar los efectos asimétricos de las rentabilidades negativas o positivas.</p>
-<div id="estimacion-de-un-modelo-garch" class="section level3">
-<h3><span class="header-section-number">9.3.1</span> Estimación de un Modelo GARCH</h3>
+<div id="estimación-de-un-modelo-garch" class="section level3 hasAnchor" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> Estimación de un Modelo GARCH<a href="modelos-arch-y-garch.html#estimación-de-un-modelo-garch" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>De manera similar al procedimiento que realizamos para el modelo <span class="math inline">\(ARCH\)</span> y suponiendo que <span class="math inline">\(\nu_t\)</span> sigue una distribución normal, obtenemos una expresión para la función de verosimilitud gaussiana (condicional) dada por</p>
-<span class="math display" id="eq:eq-verosimilitud-gaussiana-GARCH">\[\begin{equation}
+<p><span class="math display" id="eq:eq-verosimilitud-gaussiana-GARCH">\[\begin{equation}
 L(w_{p+1},\ldots,w_T|\vec{\alpha},\vec{\beta},w_1,\ldots,w_p) = -\sum_{t=p+1}^T\frac{1}{2}\left[ctte+\ln(h_t)+\frac{w_t^2}{h_t}\right],
 \tag{9.14}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>con <span class="math inline">\(h_t=\alpha_0+\sum_{i=1}^p\alpha_iw_{t-i}^2+\sum_{j=1}^q\beta_jh_{t-j}\)</span>. En esta situación la varianza condicional <span class="math inline">\(h_t\)</span> no la podemos expresar en términos de un número finito de observaciones pasadas de <span class="math inline">\(w_t\)</span>, tal como sucede con los modelos <span class="math inline">\(ARCH\)</span>. Para solucionar este inconveniente, sustituimos en la función de verosimilitud a <span class="math inline">\(h_t\)</span> por una versión truncada de la misma, llamémosla <span class="math inline">\(\tilde{h}_t\)</span>. Los estimadores de máxima verosimilitud condicional de <span class="math inline">\(\alpha_0, \vec{\alpha}=(\alpha_1,\ldots,\alpha_p)^t\)</span> y <span class="math inline">\(\vec{\beta}=(\beta_1,\ldots,\beta_p)^T\)</span> los obtenemos al maximizar la función</p>
-<p><span class="math display">\[L(\alpha_0,\vec{\alpha},\vec{\beta}) = -\sum_{t=k}^T\frac{1}{2}\left[\ln(\tilde{h}_t)+\frac{w_t^2}{\tilde{h}_t}\right],\]</span> donde <span class="math inline">\(k\)</span> es un entero (<span class="math inline">\(k&gt;p\)</span>).</p>
+<p><span class="math display">\[L(\alpha_0,\vec{\alpha},\vec{\beta}) = -\sum_{t=k}^T\frac{1}{2}\left[\ln(\tilde{h}_t)+\frac{w_t^2}{\tilde{h}_t}\right],\]</span>
+donde <span class="math inline">\(k\)</span> es un entero (<span class="math inline">\(k&gt;p\)</span>).</p>
 <p>Hasta ahora hemos asumido que las innovaciones <span class="math inline">\(\nu_t\)</span> siguen una distribución normal, lo cual implica que la distribución condicional de <span class="math inline">\(w_t\)</span> es una normal con meda cero y varianza <span class="math inline">\(h_t\)</span>. Por otro lado, la distribución incondicional de <span class="math inline">\(\nu_t\)</span> en los modelos <span class="math inline">\(GARCH\)</span> no es normal. Por ejemplo, para un modelo <span class="math inline">\(GARCH(1,1)\)</span>, la kurtosis y la kurtosis incondicional de <span class="math inline">\(w_t\)</span> es mayor que la kurtosis de una normal.</p>
 <p>En aplicaciones prácticas en series de tiempo de alta frecuencia, es usual observar que la kurtosis incondicional de <span class="math inline">\(w_t\)</span> en un modelo <span class="math inline">\(GARCH(1,1)\)</span> dada por <a href="modelos-arch-y-garch.html#eq:eq-kurtosis-GARCH11">(9.13)</a>, es menor que la de la serie observada, es decir, el modelo <span class="math inline">\(GARCH(1,1)\)</span> con <span class="math inline">\(\nu_t\)</span> con distribución normal, no tiene la capacidad de recoger todo el peso de las colas de la distribución incondicional de <span class="math inline">\(w_t\)</span>. Una manera de resolver este problema es considerar que <span class="math inline">\(\nu_t\)</span> tiene una distribución distinta de la normal. También se han desarrollado nuevos modelos para lidiar con este problema que suelen ser muy útiles.</p>
 <p>Una distribución comúnmente usada para <span class="math inline">\(\nu\)</span>, es la <span class="math inline">\(t\)</span>-de Student estandarizada con <span class="math inline">\(v\)</span> grados de libertad, motivado al hecho de que tiene propiedades relacionadas cn las colas pesadas. Sea</p>
-<p><span class="math display">\[f(\nu_t) = \frac{\Gamma\left(\frac{v+1}{2}\right)}{\Gamma\left(\frac{v}{2}\right)}\frac{1}{\sqrt{\pi(v-2)}}\left(1+\frac{\nu_t^2}{v-2}\right)^{-\frac{v+1}{2}},\]</span> con <span class="math inline">\(v&gt;2\)</span>, donde <span class="math inline">\(\Gamma(\cdot)\)</span> es la función Gamma.</p>
+<p><span class="math display">\[f(\nu_t) = \frac{\Gamma\left(\frac{v+1}{2}\right)}{\Gamma\left(\frac{v}{2}\right)}\frac{1}{\sqrt{\pi(v-2)}}\left(1+\frac{\nu_t^2}{v-2}\right)^{-\frac{v+1}{2}},\]</span>
+con <span class="math inline">\(v&gt;2\)</span>, donde <span class="math inline">\(\Gamma(\cdot)\)</span> es la función Gamma.</p>
 <p>La función de verosimilitud en este caso se expresa como</p>
 <p><span class="math display">\[f(w_{p+1},\ldots,w_T|\vec{\alpha},\vec{\beta},w_1,\ldots,w_p) = \prod_{t=p+1}^T\frac{1}{\sqrt{h_t}}\frac{\Gamma\left(\frac{v+1}{2}\right)}{\Gamma\left(\frac{v}{2}\right)}\frac{1}{\sqrt{\pi(v-2)}}\left(1+\frac{\nu_t^2}{v-2}\right)^{-\frac{v+1}{2}}.\]</span></p>
 <p>Como antes, maximizar <span class="math inline">\(f\)</span> es equivalente a maximizar el <span class="math inline">\(\ln f(\cdot)=L(\cdot)\)</span>,</p>
 <p><span class="math display">\[L(\alpha_0,\vec{\alpha},\vec{\beta},v) = -\sum_{t=p+1}^T\frac{1}{2}\left[\ln(h_t)-\ln\left(\frac{\Gamma\left(\frac{v+1}{2}\right)}{\Gamma\left(\frac{v}{2}\right)}\right)+\ln(\pi(v-2))+(v+1)\ln\left(1+\frac{\nu_t^2}{v-2}\right)\right].\]</span></p>
 <p>En este caso, la kurtosis incondicional de <span class="math inline">\(w_t\)</span> es mayor que la obtenida cuando se asume que la disribución de <span class="math inline">\(\nu_t\)</span> es normal.</p>
-
 <div class="remark">
- <span class="remark"><em>Nota. </em></span> Los grados de libertad de la distribución <span class="math inline">\(t\)</span>-de Student pueden ser especificados a priori o se pueden estimar con el resto de parámetros a partir de la función de verosimilitud.
+<p><span id="unlabeled-div-6" class="remark"><em>Nota</em>. </span>Los grados de libertad de la distribución <span class="math inline">\(t\)</span>-de Student pueden ser especificados a priori o se pueden estimar con el resto de parámetros a partir de la función de verosimilitud.</p>
 </div>
-
 </div>
-<div id="prediccion-con-modelos-garch" class="section level3">
-<h3><span class="header-section-number">9.3.2</span> Predicción con modelos GARCH</h3>
+<div id="predicción-con-modelos-garch" class="section level3 hasAnchor" number="9.3.2">
+<h3><span class="header-section-number">9.3.2</span> Predicción con modelos GARCH<a href="modelos-arch-y-garch.html#predicción-con-modelos-garch" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Tal como discutimos para los modelos <span class="math inline">\(ARCH\)</span>, de forma análoga podemos calcular de manera recursiva las predicciones para la varianza condicional en los procesos <span class="math inline">\(GARCH\)</span>. Sea el modelo <span class="math inline">\(GARCH(1,1)\)</span> con ecuación <a href="modelos-arch-y-garch.html#eq:eq-modelo-GARCH11">(9.11)</a>, la esperanza condicional de <span class="math inline">\(h_{t+k}\)</span>, es teóricamente el estimador óptimo para la predicción de la varianza condicional, y se determina por</p>
-<p><span class="math display">\[\hat{h}_t(k) = \alpha_0+\alpha_1\hat{w}_t^2(k-1)+\beta_1\hat{h}_t(k-1),\]</span> donde <span class="math inline">\(\hat{w}_t(k-1)=\hat{h}_t(k-1)\)</span> si <span class="math inline">\(k-1&gt;0\)</span>, mientras que <span class="math inline">\(\hat{w}_t(k-1)=w_{t+k-1}^2\)</span> y <span class="math inline">\(\hat{h}_t(k-1)=h_{t-k+1}\)</span> si <span class="math inline">\(k-1\leq0\)</span>. Sustituyendo de forma recursiva,</p>
-<span class="math display" id="eq:eq-prediccion-GARCH11-recursivo">\[\begin{equation}
+<p><span class="math display">\[\hat{h}_t(k) = \alpha_0+\alpha_1\hat{w}_t^2(k-1)+\beta_1\hat{h}_t(k-1),\]</span>
+donde <span class="math inline">\(\hat{w}_t(k-1)=\hat{h}_t(k-1)\)</span> si <span class="math inline">\(k-1&gt;0\)</span>, mientras que <span class="math inline">\(\hat{w}_t(k-1)=w_{t+k-1}^2\)</span> y <span class="math inline">\(\hat{h}_t(k-1)=h_{t-k+1}\)</span> si <span class="math inline">\(k-1\leq0\)</span>. Sustituyendo de forma recursiva,</p>
+<p><span class="math display" id="eq:eq-prediccion-GARCH11-recursivo">\[\begin{equation}
 \hat{h}_t(k)=\alpha_0\sum_{j=0}^{k-2}(\alpha_1+\beta_1)^j+(\alpha_1+\beta_1)^{k-1}h_{t+1},
 \tag{9.15}
 \end{equation}\]</span>
-<p>donde, en este caso, <span class="math inline">\(h_{t+1}\)</span> se calcula directamente a partir de la serie histórica.</p>
+donde, en este caso, <span class="math inline">\(h_{t+1}\)</span> se calcula directamente a partir de la serie histórica.</p>
 <p>Si el proceso es estacioanrio con <span class="math inline">\(\alpha_1+\beta_1&lt;1\)</span>, mediante un simple cálculo, obtenemos</p>
-<span class="math display" id="eq:eq-prediccion-GARCH-estacionario">\[\begin{equation}
+<p><span class="math display" id="eq:eq-prediccion-GARCH-estacionario">\[\begin{equation}
 \hat{h}_t(k)=\sigma_w^2+(\alpha_1+\beta_1)^{k-1}(h_{t+1}-\sigma_w^2)
 \tag{9.16}
 \end{equation}\]</span>
-<p>donde <span class="math inline">\(\sigma_w^2=\frac{\alpha_0}{1-\alpha_1-\beta_1}\)</span> es la varianza incondicional de <span class="math inline">\(w_t\)</span>.</p>
+donde <span class="math inline">\(\sigma_w^2=\frac{\alpha_0}{1-\alpha_1-\beta_1}\)</span> es la varianza incondicional de <span class="math inline">\(w_t\)</span>.</p>
 
 </div>
 </div>
@@ -486,12 +549,13 @@ ga('send', 'pageview');
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
-<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
 <script src="libs/gitbook/js/plugin-search.js"></script>
 <script src="libs/gitbook/js/plugin-sharing.js"></script>
 <script src="libs/gitbook/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -499,12 +563,12 @@ gitbook.start({
 "github": true,
 "facebook": false,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -519,7 +583,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
+"view": {
+"link": null,
+"text": null
+},
 "download": ["Serie-de-Tiempo-en-R.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "none"
 }
@@ -532,10 +604,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

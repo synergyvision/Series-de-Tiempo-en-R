@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 7 Estimación de parámetros | Series de Tiempo en R</title>
+  <meta name="description" content="Capítulo 7 Estimación de parámetros | Series de Tiempo en R" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 7 Estimación de parámetros | Series de Tiempo en R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="http://synergy.vision/Series-de-Tiempo-en-R//images/cover.png" />
+  
+  <meta name="github-repo" content="synergyvision/Series-de-Tiempo-en-R/" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 7 Estimación de parámetros | Series de Tiempo en R" />
+  
+  
+  <meta name="twitter:image" content="http://synergy.vision/Series-de-Tiempo-en-R//images/cover.png" />
+
+<meta name="author" content="Synergy Vision" />
+
+
+<meta name="date" content="2022-11-12" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="modelos-arma.html"/>
+<link rel="next" href="modelos-arima.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+<script src="https://cdn.datacamp.com/datacamp-light-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="images/logovision-black.png" width="160"></img></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#por-qué-leer-este-libro"><i class="fa fa-check"></i>¿Por qué leer este libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-libro"><i class="fa fa-check"></i>Estructura del libro</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#información-sobre-los-programas-y-convenciones"><i class="fa fa-check"></i>Información sobre los programas y convenciones</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prácticas-interactivas-con-r"><i class="fa fa-check"></i>Prácticas interactivas con R</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="acerca-del-autor.html"><a href="acerca-del-autor.html"><i class="fa fa-check"></i>Acerca del Autor</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introducción.html"><a href="introducción.html#conceptos-financieros-básicos"><i class="fa fa-check"></i><b>1.1</b> Conceptos financieros básicos</a></li>
+<li class="chapter" data-level="1.2" data-path="introducción.html"><a href="introducción.html#conceptos-básicos"><i class="fa fa-check"></i><b>1.2</b> Conceptos básicos</a></li>
+<li class="chapter" data-level="1.3" data-path="introducción.html"><a href="introducción.html#ejemplos"><i class="fa fa-check"></i><b>1.3</b> Ejemplos</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introducción.html"><a href="introducción.html#clasificación-de-las-series-de-tiempo"><i class="fa fa-check"></i><b>1.3.1</b> Clasificación de las series de tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introducción.html"><a href="introducción.html#componentes-de-una-serie-de-tiempo"><i class="fa fa-check"></i><b>1.4</b> Componentes de una serie de tiempo</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="introducción.html"><a href="introducción.html#el-modelo-aditivo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.1</b> El Modelo Aditivo de Componentes de Series de Tiempo</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introducción.html"><a href="introducción.html#el-modelo-multiplicativo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.2</b> El Modelo Multiplicativo de Componentes de Series de Tiempo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>2</b> Características de series de tiempo</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#medidas-de-dependencia-para-series-de-tiempo"><i class="fa fa-check"></i><b>2.1</b> Medidas de dependencia para series de tiempo</a></li>
+<li class="chapter" data-level="2.2" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia"><i class="fa fa-check"></i><b>2.2</b> Estimación de la Tendencia</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia-en-ausencia-de-estacionalidad"><i class="fa fa-check"></i><b>2.2.1</b> Estimación de la tendencia en ausencia de estacionalidad</a></li>
+<li class="chapter" data-level="2.2.2" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia-y-la-estacionalidad"><i class="fa fa-check"></i><b>2.2.2</b> Estimación de la tendencia y la estacionalidad</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia-por-regresión-clásica"><i class="fa fa-check"></i><b>2.3</b> Estimación de la tendencia por regresión clásica</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#regresión-clásica"><i class="fa fa-check"></i><b>2.3.1</b> Regresión Clásica</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>3</b> Modelos de series de tiempo</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-estocásticos"><i class="fa fa-check"></i><b>3.1</b> Modelos Estocásticos</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#procesos-estocásticos"><i class="fa fa-check"></i><b>3.1.1</b> Procesos Estocásticos</a></li>
+<li class="chapter" data-level="3.1.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#momentos-varianza-covarianza-y-correlación"><i class="fa fa-check"></i><b>3.1.2</b> Momentos, Varianza, Covarianza y Correlación</a></li>
+<li class="chapter" data-level="3.1.3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#variación-de-un-proceso"><i class="fa fa-check"></i><b>3.1.3</b> Variación de un proceso</a></li>
+<li class="chapter" data-level="3.1.4" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#martingalas"><i class="fa fa-check"></i><b>3.1.4</b> Martingalas</a></li>
+<li class="chapter" data-level="3.1.5" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#propiedad-de-markov"><i class="fa fa-check"></i><b>3.1.5</b> Propiedad de Markov</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-lineales"><i class="fa fa-check"></i><b>3.2</b> Modelos lineales</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#proceso-de-ruido-blanco"><i class="fa fa-check"></i><b>3.2.1</b> Proceso de Ruido Blanco</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="modelos-ar.html"><a href="modelos-ar.html"><i class="fa fa-check"></i><b>4</b> Modelos AR</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar1"><i class="fa fa-check"></i><b>4.1</b> Modelo AR(1)</a></li>
+<li class="chapter" data-level="4.2" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar2"><i class="fa fa-check"></i><b>4.2</b> Modelo AR(2)</a></li>
+<li class="chapter" data-level="4.3" data-path="modelos-ar.html"><a href="modelos-ar.html#procesos-arp"><i class="fa fa-check"></i><b>4.3</b> Procesos AR(p)</a></li>
+<li class="chapter" data-level="4.4" data-path="modelos-ar.html"><a href="modelos-ar.html#función-de-autocorrelación-parcial"><i class="fa fa-check"></i><b>4.4</b> Función de Autocorrelación Parcial</a></li>
+<li class="chapter" data-level="4.5" data-path="modelos-ar.html"><a href="modelos-ar.html#criterios-de-información"><i class="fa fa-check"></i><b>4.5</b> Criterios de Información</a></li>
+<li class="chapter" data-level="4.6" data-path="modelos-ar.html"><a href="modelos-ar.html#estimación-de-parámetros."><i class="fa fa-check"></i><b>4.6</b> Estimación de Parámetros.</a></li>
+<li class="chapter" data-level="4.7" data-path="modelos-ar.html"><a href="modelos-ar.html#predicciones-con-modelos-ar"><i class="fa fa-check"></i><b>4.7</b> Predicciones con modelos AR</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="modelos-ar.html"><a href="modelos-ar.html#predicción-de-un-paso"><i class="fa fa-check"></i><b>4.7.1</b> Predicción de un paso</a></li>
+<li class="chapter" data-level="4.7.2" data-path="modelos-ar.html"><a href="modelos-ar.html#predicción-de-dos-pasos"><i class="fa fa-check"></i><b>4.7.2</b> Predicción de dos pasos</a></li>
+<li class="chapter" data-level="4.7.3" data-path="modelos-ar.html"><a href="modelos-ar.html#predicción-de-múltiples-pasos"><i class="fa fa-check"></i><b>4.7.3</b> Predicción de múltiples pasos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="modelos-ma.html"><a href="modelos-ma.html"><i class="fa fa-check"></i><b>5</b> Modelos MA</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="modelos-ma.html"><a href="modelos-ma.html#propiedades-de-los-modelos-ma"><i class="fa fa-check"></i><b>5.1</b> Propiedades de los modelos MA</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="modelos-ma.html"><a href="modelos-ma.html#estacionaridad"><i class="fa fa-check"></i><b>5.1.1</b> Estacionaridad</a></li>
+<li class="chapter" data-level="5.1.2" data-path="modelos-ma.html"><a href="modelos-ma.html#función-de-autocorrelación-acf"><i class="fa fa-check"></i><b>5.1.2</b> Función de autocorrelación (ACF)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="modelos-ma.html"><a href="modelos-ma.html#identificación-del-orden-de-un-ma"><i class="fa fa-check"></i><b>5.2</b> Identificación del orden de un MA</a></li>
+<li class="chapter" data-level="5.3" data-path="modelos-ma.html"><a href="modelos-ma.html#estimación"><i class="fa fa-check"></i><b>5.3</b> Estimación</a></li>
+<li class="chapter" data-level="5.4" data-path="modelos-ma.html"><a href="modelos-ma.html#predicciones-usando-modelos-ma"><i class="fa fa-check"></i><b>5.4</b> Predicciones usando modelos MA</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="modelos-arma.html"><a href="modelos-arma.html"><i class="fa fa-check"></i><b>6</b> Modelos ARMA</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="modelos-arma.html"><a href="modelos-arma.html#propiedades-de-los-modelos-armapq"><i class="fa fa-check"></i><b>6.1</b> Propiedades de los modelos ARMA(p,q)</a></li>
+<li class="chapter" data-level="6.2" data-path="modelos-arma.html"><a href="modelos-arma.html#ecuaciones-en-diferencias"><i class="fa fa-check"></i><b>6.2</b> Ecuaciones en Diferencias</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="modelos-arma.html"><a href="modelos-arma.html#función-de-autocorrelación-acf-para-modelos-arma"><i class="fa fa-check"></i><b>6.2.1</b> Función de Autocorrelación (ACF) para modelos ARMA</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="modelos-arma.html"><a href="modelos-arma.html#pronósticos"><i class="fa fa-check"></i><b>6.3</b> Pronósticos</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="modelos-arma.html"><a href="modelos-arma.html#pronósticos-para-procesos-arma"><i class="fa fa-check"></i><b>6.3.1</b> Pronósticos para procesos ARMA</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="estimación-de-parámetros.html"><a href="estimación-de-parámetros.html"><i class="fa fa-check"></i><b>7</b> Estimación de parámetros</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="estimación-de-parámetros.html"><a href="estimación-de-parámetros.html#estimación-1"><i class="fa fa-check"></i><b>7.1</b> Estimación</a></li>
+<li class="chapter" data-level="7.2" data-path="estimación-de-parámetros.html"><a href="estimación-de-parámetros.html#sect-EMV"><i class="fa fa-check"></i><b>7.2</b> Estimación por Máxima Verosimilitud y Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="7.3" data-path="estimación-de-parámetros.html"><a href="estimación-de-parámetros.html#estimación-de-mínimos-cuadrados-para-modelos-armapq"><i class="fa fa-check"></i><b>7.3</b> Estimación de mínimos cuadrados para modelos ARMA(p,q)</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="modelos-arima.html"><a href="modelos-arima.html"><i class="fa fa-check"></i><b>8</b> Modelos ARIMA</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="modelos-arima.html"><a href="modelos-arima.html#construcción-de-modelos-arima"><i class="fa fa-check"></i><b>8.1</b> Construcción de modelos ARIMA</a></li>
+<li class="chapter" data-level="8.2" data-path="modelos-arima.html"><a href="modelos-arima.html#modelos-sarima"><i class="fa fa-check"></i><b>8.2</b> Modelos SARIMA</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html"><i class="fa fa-check"></i><b>9</b> Modelos ARCH y GARCH</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estructura-de-los-modelos"><i class="fa fa-check"></i><b>9.1</b> Estructura de los Modelos</a></li>
+<li class="chapter" data-level="9.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-arch"><i class="fa fa-check"></i><b>9.2</b> Modelos ARCH</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimación-de-un-modelo-archp"><i class="fa fa-check"></i><b>9.2.1</b> Estimación de un Modelo ARCH(p)</a></li>
+<li class="chapter" data-level="9.2.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#predicción-con-modelos-arch"><i class="fa fa-check"></i><b>9.2.2</b> Predicción con modelos ARCH</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-garch"><i class="fa fa-check"></i><b>9.3</b> Modelos GARCH</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimación-de-un-modelo-garch"><i class="fa fa-check"></i><b>9.3.1</b> Estimación de un Modelo GARCH</a></li>
+<li class="chapter" data-level="9.3.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#predicción-con-modelos-garch"><i class="fa fa-check"></i><b>9.3.2</b> Predicción con modelos GARCH</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><i class="fa fa-check"></i><b>10</b> Modelos lineales estacionales y modelos no-estacionarios</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-estacionales"><i class="fa fa-check"></i><b>10.1</b> Modelos Estacionales</a></li>
+<li class="chapter" data-level="10.2" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-de-memoria-larga"><i class="fa fa-check"></i><b>10.2</b> Modelos de memoria larga</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#diferenciación-fraccionada"><i class="fa fa-check"></i><b>10.2.1</b> Diferenciación fraccionada</a></li>
+<li class="chapter" data-level="10.2.2" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#ajuste-de-datos-simulados"><i class="fa fa-check"></i><b>10.2.2</b> Ajuste de datos simulados</a></li>
+<li class="chapter" data-level="10.2.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#evaluación-de-las-pruebas-de-dependencia-a-largo-plazo"><i class="fa fa-check"></i><b>10.2.3</b> Evaluación de las pruebas de dependencia a largo plazo</a></li>
+<li class="chapter" data-level="10.2.4" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#simulación"><i class="fa fa-check"></i><b>10.2.4</b> Simulación</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-no-estacionarios"><i class="fa fa-check"></i><b>10.3</b> Modelos no estacionarios</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#no-estacionarios-en-varianza"><i class="fa fa-check"></i><b>10.3.1</b> No estacionarios en Varianza</a></li>
+<li class="chapter" data-level="10.3.2" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#no-estacionarios-en-media"><i class="fa fa-check"></i><b>10.3.2</b> No estacionarios en Media</a></li>
+<li class="chapter" data-level="10.3.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#test-de-raíz-unitaria"><i class="fa fa-check"></i><b>10.3.3</b> Test de raíz unitaria</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-de-regresión"><i class="fa fa-check"></i><b>10.4</b> Modelos de regresión</a></li>
+<li class="chapter" data-level="10.5" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#estimación-consistente-de-la-matriz-de-covarianza"><i class="fa fa-check"></i><b>10.5</b> Estimación consistente de la matriz de covarianza</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="análisis-espectral.html"><a href="análisis-espectral.html"><i class="fa fa-check"></i><b>11</b> Análisis Espectral</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="análisis-espectral.html"><a href="análisis-espectral.html#comportamiento-cíclico-y-periodicidad"><i class="fa fa-check"></i><b>11.1</b> Comportamiento Cíclico y Periodicidad</a></li>
+<li class="chapter" data-level="11.2" data-path="análisis-espectral.html"><a href="análisis-espectral.html#la-densidad-espectral"><i class="fa fa-check"></i><b>11.2</b> La Densidad Espectral</a></li>
+<li class="chapter" data-level="11.3" data-path="análisis-espectral.html"><a href="análisis-espectral.html#periodograma-y-transformada-discreta-de-fourier"><i class="fa fa-check"></i><b>11.3</b> Periodograma y Transformada Discreta de Fourier</a></li>
+<li class="chapter" data-level="11.4" data-path="análisis-espectral.html"><a href="análisis-espectral.html#estimación-espectral-no-paramétrica"><i class="fa fa-check"></i><b>11.4</b> Estimación Espectral No-paramétrica</a></li>
+<li class="chapter" data-level="11.5" data-path="análisis-espectral.html"><a href="análisis-espectral.html#procesos-de-incremento-ortogonal-sobre--pipi"><i class="fa fa-check"></i><b>11.5</b> Procesos de Incremento Ortogonal sobre <span class="math inline">\([-\pi,\pi]\)</span></a></li>
+<li class="chapter" data-level="11.6" data-path="análisis-espectral.html"><a href="análisis-espectral.html#integración-con-respecto-a-un-proceso-de-incremento-ortogonal"><i class="fa fa-check"></i><b>11.6</b> Integración con Respecto a un Proceso de Incremento Ortogonal</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="análisis-espectral.html"><a href="análisis-espectral.html#propiedades-de-la-integral-estocástica"><i class="fa fa-check"></i><b>11.6.1</b> Propiedades de la Integral Estocástica</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="análisis-espectral.html"><a href="análisis-espectral.html#la-representación-espectral"><i class="fa fa-check"></i><b>11.7</b> La Representación Espectral</a></li>
+</ul></li>
+<li class="appendix"><span><b>Apéndice</b></span></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Series de Tiempo en R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="estimación-de-parámetros" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Capítulo 7</span> Estimación de parámetros<a href="estimación-de-parámetros.html#estimación-de-parámetros" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="estimación-1" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Estimación<a href="estimación-de-parámetros.html#estimación-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A lo largo de esta sección, supongamos que tenemos <span class="math inline">\(n\)</span> observaciones, <span class="math inline">\(x_1,\ldots,x_n\)</span>, a partir de un proceso ARMA(p,q) gaussiano causal e invertible en el que, inicialmente, los parámetros de orden, <span class="math inline">\(p\)</span> y <span class="math inline">\(q\)</span>, son conocidos. Nuestro objetivo es estimar los parámetros, <span class="math inline">\(\phi_1,\ldots,\phi_p,\theta_1,\ldots,\theta_q\)</span> y <span class="math inline">\(\sigma_w^2\)</span>. Vamos a discutir el problema de determinar <span class="math inline">\(p\)</span> y <span class="math inline">\(q\)</span> más adelante en esta sección.</p>
+<p>Comenzamos con el método de estimación de momentos. La idea detrás de estos estimadores es el de igualar los momentos de la población a los momentos de la muestra y luego resolver para los parámetros en términos de los momentos de la muestra. Inmediatamente vemos que, si <span class="math inline">\(\mathbb{E}(x_t)=\mu\)</span>, entonces estimador de momentos de <span class="math inline">\(\mu\)</span> es el promedio de la muestra <span class="math inline">\(\bar{x}\)</span>. Por lo tanto, mientras se discute el método de momentos, vamos a suponer <span class="math inline">\(\mu=0\)</span>. Aunque el método de momentos puede producir buenos estimadores, a veces puede conducir a estimadores subóptimos. En primer lugar, consideremos el caso en el cual el método conduce a un estimador óptimo (eficiente), esto es, un modelo AR(p).</p>
+<p>Cuando el proceso es AR(p),
+<span class="math display">\[x_t=\phi_1x_{t-1}+\cdots+\phi_px_{t-p}+w_t,\]</span>
+las primeras <span class="math inline">\(p+1\)</span> ecuaciones de <a href="modelos-arma.html#eq:eq-ACF-ARMA-causal">(6.34)</a> y <a href="modelos-arma.html#eq:eq-condicion-inicial-ACF-ARMA-causal">(6.35)</a> conducen a la siguiente definición:</p>
+<div class="definition">
+<p><span id="def:defi-ecuacion-yule-walker" class="definition"><strong>Definición 7.1  </strong></span>Las <em>ecuaciones de Yule-Walker</em> están dadas por</p>
+<p><span class="math display" id="eq:eq-yule-walker-sigma" id="eq:eq-yule-walker-gamma">\[\begin{eqnarray}
+\gamma(h)  &amp;=&amp; \phi_1\gamma(h-1)+\cdots\phi_p\gamma(h-p),\quad h=1,2,\ldots,p \tag{7.1}\\
+\sigma_w^2 &amp;=&amp; \gamma(0)-\phi_1\gamma(1)-\cdots-\phi_p\gamma(p)  \tag{7.2}
+\end{eqnarray}\]</span></p>
+</div>
+<hr />
+<p>En notacion matricial, las ecuaciones de Yule-Walker son:</p>
+<p><span class="math display" id="eq:eq-yule-walker-matricial">\[\begin{equation}
+  \Gamma_p\mathbf{\phi}=\mathbf{\gamma}_p, \sigma_w^2=\gamma(0)-\mathbf{\phi}^t\mathbf{\gamma}_p,
+\tag{7.3}
+\end{equation}\]</span></p>
+<p>donde <span class="math inline">\(\Gamma_p=\{\gamma(k-j)\}_{j,k=1}^p\)</span> es una matriz de orden <span class="math inline">\(p\times p\)</span>, <span class="math inline">\(\mathbf{\phi}=(\phi_1,\ldots,\phi_p)^t\)</span> es un vector <span class="math inline">\(p\times1\)</span> y <span class="math inline">\(\mathbf{\gamma}_p=(\gamma(1),\ldots,\gamma(p))^t\)</span> es un vector <span class="math inline">\(p\times1\)</span>. Usando el método de los momentos, reemplazamos <span class="math inline">\(\gamma(h)\)</span> en <a href="estimación-de-parámetros.html#eq:eq-yule-walker-matricial">(7.3)</a> por <span class="math inline">\(\hat{\gamma}(h)\)</span> y resolvemos</p>
+<p><span class="math display" id="eq:eq-estimadores-yule-walker">\[\begin{equation}
+  \hat{\mathbf{\phi}} = \hat{\Gamma}_p^{-1}\hat{\mathbf{\gamma}}_p, \hat{\sigma}_w^2 = \hat{\gamma}(0)-\hat{\mathbf{\gamma}}_p^t\hat{\Gamma}_p^{-1}\hat{\mathbf{\gamma}}_p.
+\tag{7.4}
+\end{equation}\]</span></p>
+<p>Estos estimadores son llamados <strong>estimadores de Yule-Walker</strong>. Para propósitos de cálculo es a veces más conveniente trabajar con la ACF muestral. Factorizando <span class="math inline">\(\hat{\gamma}(0)\)</span> en <a href="estimación-de-parámetros.html#eq:eq-estimadores-yule-walker">(7.4)</a> podemos escribir los estimadores de Yule-Walker como:</p>
+<p><span class="math display" id="eq:eq-estimadores-yule-walker-2">\[\begin{equation}
+  \hat{\mathbf{\phi}} = \hat{\mathbf{R}}_p^{-1}\hat{\mathbf{\rho}}_p,  \hat{\sigma}_w^2 = \hat{\gamma}(0)\left[1-\hat{\mathbf{\rho}}_p^t\hat{\mathbf{R}}_p^{-1}\hat{\mathbf{\rho}}_p\right],
+\tag{7.5}
+\end{equation}\]</span></p>
+<p>donde <span class="math inline">\(\hat{\mathbf{R}}_p=\{\hat{\rho}(k-j)\}_{j,k=1}^p\)</span> es una matriz de orden <span class="math inline">\(p\times p\)</span> y <span class="math inline">\(\hat{\mathbf{\rho}}_p=(\hat{\rho}(1),\ldots,\hat{\rho}_p)^t\)</span> es un vector <span class="math inline">\(p\times1\)</span>.</p>
+<p>Para un modelo <span class="math inline">\(AR(p)\)</span>, si el tamaño de la muestra es grande, los estimadores de Yule-Walker tienen distribución aproximadamente normal y <span class="math inline">\(\hat{\sigma}_w^2\)</span> es cercano al valor real de <span class="math inline">\(\sigma_w^2\)</span>. Establecemos este resultado en la proposición <a href="estimación-de-parámetros.html#prp:propie-estimadores-yule-walker-muestra-grande">7.1</a>.</p>
+<div class="proposition">
+<p><span id="prp:propie-estimadores-yule-walker-muestra-grande" class="proposition"><strong>Proposición 7.1  (Resultado de muestras de tamaño grande para los estimadores de Yule-Walker) </strong></span>El comportamiento asintótico (<span class="math inline">\(n\to\infty\)</span>) de los estimadores de Yule-Walker en el caso de un proceso AR(p) causal es como sigue:</p>
+<p><span class="math display" id="eq:eq-convergencia-estimadores-yule-walker">\[\begin{equation}
+  \sqrt{n}(\hat{\mathbf{\phi}}-\mathbf{\phi})\stackrel{d}{\to} N(\mathbf{0},\sigma_w^2\Gamma_p^{-1}),\qquad \hat{\sigma}_w^2\stackrel{p}{\to}\sigma_w^2
+\tag{7.6}
+\end{equation}\]</span></p>
+</div>
+<hr />
+<p>El algoritmo de Durbin-Levinson, <a href="modelos-arma.html#eq:eq-phi00-P10">(6.47)</a> a <a href="modelos-arma.html#eq:eq-coeficientes-phi-durbin-levinson">(6.49)</a>, se puede usar para calcular <span class="math inline">\(\hat{\mathbf{\phi}}\)</span> sin invertir <span class="math inline">\(\hat{\Gamma}_p\)</span> o <span class="math inline">\(\hat{\mathbf{R}}_p\)</span>, reemplazando <span class="math inline">\(\gamma(h)\)</span> por <span class="math inline">\(\hat{\gamma}(h)\)</span> en el algoritmo. En la corrida del algoritmo, iterativamente calculamos el <span class="math inline">\(h\times1\)</span> vector, <span class="math inline">\(\hat{\mathbf{\phi}}_h=(\hat{\phi}_{h1},\ldots,\hat{\phi}_{hh})^t\)</span>, para <span class="math inline">\(h=1,2,\ldots\)</span>. Por lo tanto, además de obtener el pronóstico deseado, el algoritmo de Durbin-Levinson nos da <span class="math inline">\(\hat{\phi}_{hh}\)</span>, la PACF muestral. Usando <a href="estimación-de-parámetros.html#eq:eq-convergencia-estimadores-yule-walker">(7.6)</a> se puede demostrar la siguiente propiedad.</p>
+<div class="proposition">
+<p><span id="prp:propie-distribucion-PACF-muestra-grande" class="proposition"><strong>Proposición 7.2  (Distribución de PACF para muestras grandes) </strong></span>Para un proceso <span class="math inline">\(AR(p)\)</span> causal, asintóticamente (<span class="math inline">\(n\to\infty\)</span>)
+<span class="math display" id="eq:eq-convergencia-PACF-muestral">\[\begin{equation}
+  \sqrt{n}\hat{\phi}_{hh}\stackrel{d}{\to}N(0,1),\text{ para } h&gt;p.
+\tag{7.7}
+\end{equation}\]</span></p>
+</div>
+<hr />
+<div class="example">
+<p><span id="exm:ejem-estimacion-yule-walker-AR2" class="example"><strong>Ejemplo 7.1  (Estimación de Yule-Walker para un proceso AR(2)) </strong></span>Los datos mostrados en la figura <a href="modelos-arma.html#fig:grafico-AR2-simulado">6.1</a> son <span class="math inline">\(n=144\)</span> observaciones simuladas de un modelo AR(2)
+<span class="math display">\[x_t=1.5x_{t-1}-0.75x_{t-2}+w_t,\]</span>
+donde <span class="math inline">\(w_t\sim iid N(0,1)\)</span>. Para estos datos, <span class="math inline">\(\hat{\gamma}(0)=8.434, \hat{\rho}(1)=0.834\)</span>, y <span class="math inline">\(\hat{\rho}(2)0=.476\)</span>. En consecuencia,</p>
+<p><span class="math display">\[\hat{\mathbf{\phi}} = \left(
+                      \begin{array}{c}
+                        \hat{\phi}_1 \\
+                        \hat{\phi}_2 \\
+                      \end{array}
+                    \right) = \left[
+                                \begin{array}{cc}
+                                  1 &amp; 0.834 \\
+                                  0.834 &amp; 1 \\
+                                \end{array}
+                              \right]^{-1}\left(
+                                            \begin{array}{c}
+                                              0.834 \\
+                                              0.476 \\
+                                            \end{array}
+                                          \right) = \left(
+                                                      \begin{array}{c}
+                                                        1.439 \\
+                                                        -0.725 \\
+                                                      \end{array}
+                                                    \right)
+\]</span></p>
+<p>y</p>
+<p><span class="math display">\[\hat{\sigma}_w^2 = 8.434\left[1-(0.834,0.476)\left(
+                                                 \begin{array}{c}
+                                                   1.439 \\
+                                                   -0.725 \\
+                                                 \end{array}
+                                               \right)\right] = 1.215.
+\]</span></p>
+<p>Por la proposición <a href="estimación-de-parámetros.html#prp:propie-estimadores-yule-walker-muestra-grande">7.1</a>, la matriz de varianza-covarianzas asintótica de <span class="math inline">\(\hat{\mathbf{\phi}}\)</span>,</p>
+<p><span class="math display">\[\frac{1}{144}\frac{1.215}{8.434}\left[
+                                    \begin{array}{cc}
+                                      1 &amp; 0.834 \\
+                                      0.834 &amp; 1 \\
+                                    \end{array}
+                                  \right]^{-1} = \left[
+                                                   \begin{array}{cc}
+                                                     0.057^2 &amp; -0.003 \\
+                                                     -0.003 &amp; 0.057^2 \\
+                                                   \end{array}
+                                                 \right],
+\]</span></p>
+<p>se puede usar para hallar la región de confianza o hacer inferencias sobre <span class="math inline">\(\hat{\mathbf{\phi}}\)</span> y sus componentes. Por ejemplo, un intervalo de confianza aproximado del 95% para <span class="math inline">\(\phi_2\)</span> es <span class="math inline">\(-0.725\pm2(0.057)\)</span> 0 <span class="math inline">\((-0.839, -0.611)\)</span> el cual contiene el valor real de <span class="math inline">\(\phi_2=-0.75\)</span>.</p>
+<p>Para estos datos, las tres primeras correlaciones muestrales fueron <span class="math inline">\(\hat{\phi}_{11}=\hat{\rho}(1)=0.834, \hat{\phi}_{22}=\hat{\phi}_2=-0.725\)</span> y <span class="math inline">\(\hat{\phi}_{33}=-0.075\)</span>. De acuerdo a la Propiedad~<span class="math inline">\(\ref{propie-distribucion-PACF-muestra-grande}\)</span>, el error estándar asintótico de <span class="math inline">\(\hat{\phi}_{33}\)</span> es <span class="math inline">\(1/\sqrt{144}=0.083\)</span>, y el valor observado es <span class="math inline">\(-0.075\)</span>, que esta a menos de una desviación estándar de <span class="math inline">\(\phi_{33}=0\)</span>.</p>
+</div>
+<hr />
+<div class="example">
+<p><span id="exm:ejem-estimacion-yule-walker-serie-reclutamiento" class="example"><strong>Ejemplo 7.2  (Estimación de Yule-Walker para la serie de nuevos peces) </strong></span>Consideremos nuevamente la serie de nuevos peces y ajustemos un modeloa AR(2) usando la estimación de Yule-Walker. Abajo están los resultados de fijar el modelo usando R.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Parámetros</th>
+<th align="right">Valores</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Media estimada</td>
+<td align="right">62.26278</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\phi_1\)</span> y <span class="math inline">\(\phi_2\)</span> estimados</td>
+<td align="right">1.3315874; -0.4445447</td>
+</tr>
+<tr class="odd">
+<td>Errores estándar</td>
+<td align="right">0.04222637; 0.04222637</td>
+</tr>
+<tr class="even">
+<td>Error de varianza estimada</td>
+<td align="right">94.79912</td>
+</tr>
+</tbody>
+</table>
+<p>Las instrucciones R para realizar la estimación de Yule-Walker y generar la figura <a href="estimación-de-parámetros.html#fig:grafico-pronostico-serie-reclutamiento-yw">7.1</a> son:</p>
+</div>
+<hr />
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="estimación-de-parámetros.html#cb64-1" aria-hidden="true" tabindex="-1"></a>rec<span class="ot">=</span><span class="fu">scan</span>(<span class="st">&quot;data/recruit.txt&quot;</span>)</span>
+<span id="cb64-2"><a href="estimación-de-parámetros.html#cb64-2" aria-hidden="true" tabindex="-1"></a>rec.yw<span class="ot">=</span><span class="fu">ar.yw</span>(rec, <span class="at">order=</span><span class="dv">2</span>)</span>
+<span id="cb64-3"><a href="estimación-de-parámetros.html#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------</span></span>
+<span id="cb64-4"><a href="estimación-de-parámetros.html#cb64-4" aria-hidden="true" tabindex="-1"></a>rec.pr<span class="ot">=</span><span class="fu">predict</span>(rec.yw, <span class="at">n.ahead=</span><span class="dv">24</span>) </span>
+<span id="cb64-5"><a href="estimación-de-parámetros.html#cb64-5" aria-hidden="true" tabindex="-1"></a>U<span class="ot">=</span>rec.pr<span class="sc">$</span>pred<span class="sc">+</span>rec.pr<span class="sc">$</span>se </span>
+<span id="cb64-6"><a href="estimación-de-parámetros.html#cb64-6" aria-hidden="true" tabindex="-1"></a>L<span class="ot">=</span>rec.pr<span class="sc">$</span>pred<span class="sc">-</span>rec.pr<span class="sc">$</span>se </span>
+<span id="cb64-7"><a href="estimación-de-parámetros.html#cb64-7" aria-hidden="true" tabindex="-1"></a>meses<span class="ot">=</span><span class="dv">360</span><span class="sc">:</span><span class="dv">453</span> </span>
+<span id="cb64-8"><a href="estimación-de-parámetros.html#cb64-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(meses,rec[meses], <span class="at">type=</span><span class="st">&quot;o&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">360</span>,<span class="dv">480</span>),<span class="at">ylab=</span><span class="st">&quot;Nuevos peces&quot;</span>, <span class="at">main=</span><span class="st">&quot;Estimación de Yule-Walker para la serie de nuevos peces&quot;</span>)</span>
+<span id="cb64-9"><a href="estimación-de-parámetros.html#cb64-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(rec.pr<span class="sc">$</span>pred, <span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">type=</span><span class="st">&quot;o&quot;</span>) </span>
+<span id="cb64-10"><a href="estimación-de-parámetros.html#cb64-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(U, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>,<span class="at">lty=</span><span class="st">&quot;dashed&quot;</span>)</span>
+<span id="cb64-11"><a href="estimación-de-parámetros.html#cb64-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(L, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>,<span class="at">lty=</span><span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:grafico-pronostico-serie-reclutamiento-yw"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/grafico-pronostico-serie-reclutamiento-yw-1.svg" alt="Estimación de Yule-Walker para la serie de nuevos peces"  />
+<p class="caption">
+Figura 7.1: Estimación de Yule-Walker para la serie de nuevos peces
+</p>
+</div>
+<p>En el caso de los modelos AR(p), los estimadores de Yule-Walker dados en <a href="estimación-de-parámetros.html#eq:eq-estimadores-yule-walker-2">(7.5)</a> son óptimos en el sentido de que la distribución asintótica, <a href="estimación-de-parámetros.html#eq:eq-convergencia-estimadores-yule-walker">(7.6)</a>, es la mejor distribución normal asintótica. Esto se debe a que, dadas las condiciones iniciales, los modelos AR(p) son modelos lineales, y los estimadores de Yule-Walker son esencialmente estimadores de mínimos cuadrados. Si utilizamos el método de momentos para los modelos MA o ARMA, no obtendremos estimadores óptimos debido a que tales procesos no son lineales en los parámetros.</p>
+<div class="example">
+<p><span id="exm:ejem-estimacion-momentos-MA1" class="example"><strong>Ejemplo 7.3  (Estimación por el Método de los Momentos para un proceso MA(1)) </strong></span>Considere la serie de tiempo</p>
+<p><span class="math display">\[x_t=w_t+\theta w_{t-1},\]</span></p>
+<p>donde <span class="math inline">\(|\theta|&lt;1\)</span>. El modelo se puede escribir como</p>
+<p><span class="math display">\[x_t=\sum_{j=1}^{\infty}(-\theta)^jx_{t-j}+w_t,\]</span></p>
+<p>el cual es no lineal en <span class="math inline">\(\theta\)</span>. Las primeras dos autocovarianza poblacionales son <span class="math inline">\(\gamma(0)=\sigma_w^2(1+\theta^2)\)</span> y <span class="math inline">\(\gamma(1)=\sigma_w^2\theta\)</span>, de modo que la estimación de <span class="math inline">\(\theta\)</span> se halla resolviendo</p>
+<p><span class="math display">\[\hat{\rho}(1) = \frac{\hat{\gamma}(1)}{\hat{\gamma}(0)} = \frac{\hat{\theta}}{1+\hat{\theta}^2}.\]</span></p>
+<p>Existen dos soluciones, por lo que elegimos la invertible. Si <span class="math inline">\(|\hat{\rho}(1)|\leq\frac{1}{2}\)</span>, la solución es real, en cualquier otro caso, no existe solución real. Aún cuando <span class="math inline">\(|\rho(1)|&lt;\frac{1}{2}\)</span> para un modelo MA(1), puede pasar que <span class="math inline">\(|\hat{\rho}(1)|\geq\frac{1}{2}\)</span> porque este es un estimador. Cuando <span class="math inline">\(|\hat{\rho}(1)|&lt;\frac{1}{2}\)</span>, la estimación invertible es</p>
+<p><span class="math display">\[\hat{\theta}=\frac{1-\sqrt{1-4\hat{\rho}(1)^2}}{2\hat{\rho}(1)}.\]</span></p>
+<p>Se puede demostrar que <a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a></p>
+<p>[^nota10:] La notación AN se lee y se define como: Sea <span class="math inline">\(\{x_n\}\)</span> una sucesión de variables aleatorias, se dice que <span class="math inline">\(\{x_n\}\)</span> que es con media <span class="math inline">\(\mu_n\)</span> y varianza <span class="math inline">\(\sigma_n^2\)</span>, si cuando <span class="math inline">\(n\to\infty\)</span>, <span class="math display">\[\sigma_n^{-1}(x_n-\mu_n)\stackrel{d}{\to}z,\]</span>donde <span class="math inline">\(z\)</span> tiene distribución normal estándar.</p>
+<p><span class="math display">\[\hat{\theta} \sim AN\left(\theta,\frac{1+\theta^2+4\theta^4+\theta^6+\theta^8}{n(1-\theta^2)^2}\right).\]</span></p>
+<p>El estimador de máxima verosimilitud (que discutiremos en la próxima sección) de <span class="math inline">\(\theta\)</span>, en este caso, tiene una varianza asintótica de <span class="math inline">\((1-\theta^2)/n\)</span>. Cuando <span class="math inline">\(\theta=0.5\)</span>, por ejemplo, la relación de la varianza asintótica del estimador por el método de los momentos y el estimador por el método de máxima verosimilitud de <span class="math inline">\(\theta\)</span> es alrededor de 3.5. Esto es, para muestras grandes, la varianza del estimador por el método de los momentos es alrededor de 3.5 veces mayor que la varianza del estimador por el EMV de <span class="math inline">\(\theta\)</span> cuando <span class="math inline">\(\theta=0.5\)</span>.</p>
+</div>
+</div>
+<div id="sect-EMV" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Estimación por Máxima Verosimilitud y Mínimos Cuadrados<a href="estimación-de-parámetros.html#sect-EMV" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Para fijar ideas, primero enfoquemos en un modelo causal AR(1). Sea</p>
+<p><span class="math display">\[x_t=\mu+\phi(x_{t-1}-\mu)+w_t,\]</span></p>
+<p>donde <span class="math inline">\(|\phi|&lt;1\)</span> y <span class="math inline">\(w_t\sim\text{iid}N(0,\sigma_w^2)\)</span>. Dado los datos <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span> buscamos la función de verosimilitud</p>
+<p><span class="math display">\[L(\mu,\phi,\sigma_w^2)=f_{\mu,\phi,\sigma_w^2}(x_1,x_2,\ldots,x_n).\]</span></p>
+<p>En el caso de un modelo AR(1), podemos escribir la función de verosimilitud como</p>
+<p><span class="math display">\[L(\mu,\phi,\sigma_w^2)=f(x_1)f(x_2|x_1)\cdots f(x_n|x_{n-1}),\]</span></p>
+<p>donde hemos eliminado los parámetros en las densidades <span class="math inline">\(f(\cdot)\)</span> para facilitar la notación.</p>
+<p>Dado que <span class="math inline">\(x_t|x_{t-1}\sim N(\mu+\phi(x_{t-1}-\mu,\sigma_w^2)\)</span> tenemos</p>
+<p><span class="math display">\[f(x_t|x_{t-1})=f_w[(x_t-\mu)-\phi(x_{t-1}-\mu)],\]</span></p>
+<p>donde <span class="math inline">\(f_w(\cdot)\)</span> es la densidad de <span class="math inline">\(w_t\)</span>, esto es, la densidad normal con media cero y varianza <span class="math inline">\(\sigma_w^2\)</span>. Podemos escribir la función de verosimilitud como</p>
+<p><span class="math display">\[L(\mu,\phi,\sigma_w^2)=f(x_1)\prod_{t=2}^{n}f_w[(x_t-\mu)-\phi(x_{t-1}-\mu)].\]</span></p>
+<p>Para hallar <span class="math inline">\(f(x_1)\)</span> podemos usar la representación causal</p>
+<p><span class="math display">\[x_1=\mu+\sum_{j=0}^{\infty}\phi^jw_{1-j},\]</span></p>
+<p>para ver que <span class="math inline">\(x_1\)</span> es normal con media <span class="math inline">\(\mu\)</span> y varianza <span class="math inline">\(\sigma_w^2/(1-\phi^2)\)</span>.</p>
+<p>Finalmente, para un AR(1), la verosimilitud es</p>
+<p><span class="math display" id="eq:eq-funcion-verosimilitud-AR1">\[\begin{equation}
+  L(\mu,\phi,\sigma_w^2)=(2\pi\sigma_w^2)^{-n/2}(1-\phi^2)^{1/2}\exp\left[-\frac{S(\mu,\phi)}{2\sigma_w^2}\right]
+\tag{7.8}
+\end{equation}\]</span></p>
+<p>donde</p>
+<p><span class="math display" id="eq:eq-S-AR1">\[\begin{equation}
+  S(\mu,\phi)=(1-\phi^2)(x_1-\mu)^2+\sum_{t=2}^{n}[(x_t-\mu)-\phi(x_{t-1}-\mu)]^2.
+\tag{7.9}
+\end{equation}\]</span></p>
+<p>Normalmente, <span class="math inline">\(S(\mu,\phi)\)</span> se llama <em>suma de cuadrados incondicional</em>. Podemos también considerar la estimación de <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\phi\)</span> usando la suma de cuadrados incondicional, esto es, minimizando <span class="math inline">\(S(\mu,\phi)\)</span>.</p>
+<p>Tomando la derivada parcial del logaritmo de <a href="estimación-de-parámetros.html#eq:eq-funcion-verosimilitud-AR1">(7.8)</a> con respecto a <span class="math inline">\(\sigma_w^2\)</span> e igualando a cero, que para cada valor de <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\phi\)</span> en el espacio de parámetros, <span class="math inline">\(\sigma_w^2=n^{-1}S(\mu,\phi)\)</span> maximiza la verosimilitud. Por consiguiente, el estimador de máxima verosimilitud de <span class="math inline">\(\sigma_w^2\)</span> es</p>
+<p><span class="math display" id="eq:eq-estimador-EMV-sigma-AR1">\[\begin{equation}
+  \hat{\sigma}_w^2=n^{-1}S(\hat{\mu},\hat{\phi})
+\tag{7.10}
+\end{equation}\]</span></p>
+<p>donde <span class="math inline">\(\hat{\mu}\)</span> y <span class="math inline">\(\hat{\phi}\)</span> son los estimadores de máxima verosimilitud de <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\phi\)</span> respectivamente.</p>
+<p>Si reemplazamos <span class="math inline">\(n\)</span> en <a href="estimación-de-parámetros.html#eq:eq-estimador-EMV-sigma-AR1">(7.10)</a> por <span class="math inline">\(n-2\)</span> podemos obtener el estimador de mínimo cuadrado incondicional de <span class="math inline">\(\sigma_w^2\)</span>.</p>
+<p>Si en <a href="estimación-de-parámetros.html#eq:eq-funcion-verosimilitud-AR1">(7.8)</a> tomamos logaritmo, reemplazamos <span class="math inline">\(\sigma_w^2\)</span> por <span class="math inline">\(\hat{\sigma}_w^2\)</span>, e ignoramos las constantes, <span class="math inline">\(\hat{\mu}\)</span> y <span class="math inline">\(\hat{\phi}\)</span> son los valores que minimizan la función de criterio</p>
+<p><span class="math display" id="eq:eq-funcion-criterio-AR1">\[\begin{equation}
+  l(\mu,\phi)=\ln[n^{-1}S(\mu,\phi)]-n^{-1}\ln(1-\phi^2).
+\tag{7.11}
+\end{equation}\]</span></p>
+<p>Esto es, <span class="math inline">\(l(\mu,\phi)\propto-2\ln L(\mu,\phi,\hat{\sigma}_w^2)\)</span>. <a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a></p>
+<p>Dado que <a href="estimación-de-parámetros.html#eq:eq-S-AR1">(7.9)</a> o <a href="estimación-de-parámetros.html#eq:eq-funcion-criterio-AR1">(7.11)</a> son funciones complicadas de los parámetros, la minimización de <span class="math inline">\(l(\mu,\phi)\)</span> o <span class="math inline">\(S(\mu,\phi)\)</span> se hace numéricamente. En el caso de modelos AR, tenemos la ventaja que, condicionando los valores inicial, ellos son modelos lineales. Esto es, podemos eliminar el término en la verosimilitud que causa la no-linealidad.</p>
+<p>Condicionando sobre <span class="math inline">\(x_1\)</span> la verosimilitud condicional llega a ser</p>
+<p><span class="math display" id="eq:eq-verosimilitud-condicional-AR1">\[\begin{eqnarray}
+  L(\mu,\phi,\sigma_w^2|x_1) &amp;=&amp; \prod_{t=2}^{n}f_w[(x_t-\mu)-\phi(x_{t-1}-\mu)] \nonumber \\
+        &amp;=&amp; (2\pi\sigma_w^2)^{-(n-1)/2}\exp\left[-\frac{S_c(\mu,\phi)}{2\sigma_w^2}\right] \tag{7.12}
+\end{eqnarray}\]</span></p>
+<p>donde la suma de cuadrados condicional es</p>
+<p><span class="math display" id="eq:eq-suma-cuadrado-condicional-AR1">\[\begin{equation}
+  S_c(\mu,\phi)=\sum_{t=2}^{n}[(x_t-\mu)-\phi(x_{t-1}-\mu)]^2.
+\tag{7.13}
+\end{equation}\]</span></p>
+<p>El estimador de máxima verosimilitud condicional de <span class="math inline">\(\sigma_w^2\)</span> es</p>
+<p><span class="math display" id="eq:eq-EMV-condicional-sigma-AR1">\[\begin{equation}
+  \hat{\sigma}_w^2=S_c(\hat{\mu},\hat{\phi})/(n-1)
+\tag{7.14}
+\end{equation}\]</span></p>
+<p>y <span class="math inline">\(\hat{\mu}\)</span> y <span class="math inline">\(\hat{\phi}\)</span> son los valores que minimizan la suma de cuadrados condicional <span class="math inline">\(S_c(\mu,\phi)\)</span>.</p>
+<p>Haciendo <span class="math inline">\(\alpha=\mu(1-\phi)\)</span> la suma de cuadrados condicional se puede escribir como</p>
+<p><span class="math display" id="eq:eq-suma-cuadrado-condicional-AR1-2">\[\begin{equation}
+  S_c(\mu,\phi)=\sum_{t=2}^{n}[x_t-(\alpha+\phi x_{t-1})]^2.
+\tag{7.15}
+\end{equation}\]</span></p>
+<p>El problema ahora es un problema de regresión lineal visto en el Tema 2. Siguiendo los resultados de la estimación de mínimos cuadrados, tenemos <span class="math inline">\(\hat{\alpha}=\bar{x}_{(2)}-\hat{\phi}\bar{x}_{(1)}\)</span> donde <span class="math inline">\(\bar{x}_{(1)}=(n-1)^{-1}\sum_{t=1}^{n-1}x_t\)</span> y <span class="math inline">\(\bar{x}_{(2)}=(n-1)^{-1}\sum_{t=2}^{n}x_t\)</span> y los estimados condicionales son entonces</p>
+<p><span class="math display" id="eq:eq-EMV-condicional-phi" id="eq:eq-EMV-condicional-mu">\[\begin{eqnarray}
+  \hat{\mu} &amp;=&amp; \frac{\bar{x}_{(2)}-\hat{\phi}\bar{x}_{(1)}}{1-\hat{\phi}} \tag{7.16} \\
+    \hat{\phi} &amp;=&amp; \frac{\sum_{t=2}^{n}(x_t-\bar{x}_{(2)})(x_{t-1}-\bar{x}_{(1)})}{\sum_{t=2}^{n}(x_{t-1}-\bar{x}_{(1)})^2}. \tag{7.17}
+\end{eqnarray}\]</span></p>
+<p>De <a href="estimación-de-parámetros.html#eq:eq-EMV-condicional-mu">(7.16)</a> y <a href="estimación-de-parámetros.html#eq:eq-EMV-condicional-phi">(7.17)</a> vemos que <span class="math inline">\(\hat{\mu}\approx\bar{x}\)</span> y <span class="math inline">\(\hat{\phi}\approx\hat{\rho}(1)\)</span>. Estos es, los estimadores de Yule-Walker y los estimadores de mínimos cuadrados son aproximadamente los mismos. La única diferencia es la inclusión o exclusión de los términos que envuelven los puntos finales <span class="math inline">\(x_1\)</span> y <span class="math inline">\(x_n\)</span>. Podemos también ajustar el estimado de <span class="math inline">\(\sigma_w^2\)</span> en <a href="estimación-de-parámetros.html#eq:eq-EMV-condicional-sigma-AR1">(7.14)</a> para que sea equivalente al estimador de mínimos cuadrados, esto es, dividimos <span class="math inline">\(S_c(\hat{\mu},\hat{\phi})\)</span> por <span class="math inline">\((n-3)\)</span> en vez de <span class="math inline">\((n-1)\)</span> en <a href="estimación-de-parámetros.html#eq:eq-EMV-condicional-sigma-AR1">(7.14)</a>.</p>
+<p>Para un modelo general AR(p) los estimadores máxima verosimilitud, mínimos cuadrados incondicionales y mínimos cuadrados condicionales se obtienen de manera análoga al ejemplo de AR(1).</p>
+<p>Para modelos ARMA en general, es difícil escribir la función de verosimilitud como una función explícita de los parámetros. En vez de eso, es conveniente escribir la verosimilitud en término de las innovaciones o errores de predicción de un paso, <span class="math inline">\(x_t-x_t^{t-1}\)</span>.</p>
+<p>Supóngase que <span class="math inline">\(x_t\)</span> es un proceso ARMA(p,q) causal con <span class="math inline">\(w_t\sim\text{idd}N(0,\sigma_w^2)\)</span>.</p>
+<p>Sea <span class="math inline">\(\pmb{\beta}=(\mu,\phi_1\ldots,\phi_p,\theta_1,\ldots,\theta_q)^t\)</span> un vector de orden <span class="math inline">\((p+q+1)\times1\)</span> de los parámetros del modelo. La función de verosimilitud se puede escribir como</p>
+<p><span class="math display">\[L(\pmb{\beta},\sigma_w^2)=\prod_{t=1}^{n}f(x_t|x_{t-1},\ldots,x_1)\]</span></p>
+<p>La distribución condicional de <span class="math inline">\(x_t\)</span> dados <span class="math inline">\(x_{t-1},\ldots,x_1\)</span> es gaussiana con media <span class="math inline">\(x_t^{t-1}\)</span> y varianza <span class="math inline">\(P_t^{t-1}\)</span>. Además, para modelos ARMA, podemos escribir <span class="math inline">\(P_t^{t-1}=\sigma_w^2r_t^{t-1}\)</span> donde <span class="math inline">\(r_t^{t-1}\)</span> no depende de <span class="math inline">\(\sigma_w^2\)</span>.</p>
+<p>La función de verosimilitud de la muestra se puede escribir entonces como</p>
+<p><span class="math display" id="eq:eq-funcion-verosimilitud-datos">\[\begin{equation}
+  L(\mathbf{\beta},\sigma_w^2)=(2\pi\sigma_w^2)^{-n/2}\left[r_1^0(\mathbf{\beta})r_2^1(\mathbf{\beta})\cdot sr_n^{n-1}(\mathbf{\beta})\right]^{1/2}\exp\left[-\frac{S(\mathbf{\beta})}{2\sigma_w^2}\right]
+\tag{7.18}
+\end{equation}\]</span></p>
+<p>donde</p>
+<p><span class="math display" id="eq:eq-S-beta">\[\begin{equation}
+  S(\mathbf{\beta})=\sum_{t=1}^{n}\left[\frac{(x_t-x_t^{t-1}(\mathbf{\beta}))^2}{r_t^{t-1}(\mathbf{\beta})}\right].
+\tag{7.19}
+\end{equation}\]</span></p>
+<p>Se tiene que <span class="math inline">\(x_t^{t-1}\)</span> y <span class="math inline">\(r_t^{t-1}\)</span> son funciones de <span class="math inline">\(\mathbf{\beta}\)</span> y hacemos este hecho explícito en <a href="estimación-de-parámetros.html#eq:eq-funcion-verosimilitud-datos">(7.18)</a> y <a href="estimación-de-parámetros.html#eq:eq-S-beta">(7.19)</a>.</p>
+<p>Dados los valores para <span class="math inline">\(\mathbf{\beta}\)</span> y <span class="math inline">\(\sigma_w^2\)</span>, la verosimilitud se puede evaluar usando las técnicas vistas para Pronósticos. La estimación de máxima verosimilitud ahora procederá maximizando @ref)eq:eq-funcion-verosimilitud-datos) con respecto a <span class="math inline">\(\mathbf{\beta}\)</span> y <span class="math inline">\(\sigma_w^2\)</span>. Tenemos entonces</p>
+<p><span class="math display" id="eq:eq-sigma-estimado-EMV">\[\begin{equation}
+  \hat{\sigma}_w^2=n^{-1}S(\hat{\mathbf{\beta}}),
+\tag{7.20}
+\end{equation}\]</span></p>
+<p>donde <span class="math inline">\(\hat{\mathbf{\beta}}\)</span> es el valor de <span class="math inline">\(\mathbf{\beta}\)</span> que minimiza la función de criterio</p>
+<p><span class="math display" id="eq:eq-funcion-criterio-EMV">\[\begin{equation}
+  l(\mathbf{\beta})=\ln[n^{-1}S(\mathbf{\beta})]+n^{-1}\sum_{t=1}^{n}\ln r_t^{t-1}(\mathbf{\beta}).
+\tag{7.21}
+\end{equation}\]</span></p>
+<p>Por ejemplo, para el modelo AR(1) discutido arriba, la función genérica <span class="math inline">\(l(\mathbf{\beta})\)</span> en <a href="estimación-de-parámetros.html#eq:eq-funcion-criterio-EMV">(7.21)</a> es <span class="math inline">\(l(\mu,\phi)\)</span> en <a href="estimación-de-parámetros.html#eq:eq-funcion-criterio-AR1">(7.11)</a> y la general <span class="math inline">\(S(\mathbf{\beta})\)</span> en <a href="estimación-de-parámetros.html#eq:eq-S-beta">(7.19)</a> es <span class="math inline">\(S(\mu,\phi)\)</span> dado en <a href="estimación-de-parámetros.html#eq:eq-S-AR1">(7.9)</a>.</p>
+<p>De <a href="estimación-de-parámetros.html#eq:eq-S-AR1">(7.9)</a> y <a href="estimación-de-parámetros.html#eq:eq-funcion-criterio-AR1">(7.11)</a> se ve que <span class="math inline">\(x_1^0=\mu\)</span> y <span class="math inline">\(x_t^{t-1}=\mu+\phi(x_{t-1}-\mu)\)</span> para <span class="math inline">\(t=2,\ldots,n\)</span>. También <span class="math inline">\(r_1^0=1/(1-\phi^2)\)</span> y <span class="math inline">\(r_t^{t-1}=1\)</span> para <span class="math inline">\(t=2,\ldots,n\)</span>.</p>
+<p>Los mínimos cuadrados incondicional se desarrollarán minimizando <a href="estimación-de-parámetros.html#eq:eq-S-beta">(7.19)</a> con respecto a <span class="math inline">\(\mathbf{\beta}\)</span>. La estimación de mínimos cuadrados condicional envuelve minimizar <a href="estimación-de-parámetros.html#eq:eq-S-beta">(7.19)</a> con respecto a <span class="math inline">\(\mathbf{\beta}\)</span> pero donde, para facilitar la carga computacional, las predicciones y sus errores se obtienen por condicionamiento sobre los valores iniciales de las observaciones. En general, se usan las rutinas numéricas de optimización para obtener las estimaciones y sus errores estándar.</p>
+<div class="example">
+<p><span id="exm:ejem-algoritmo-newton-raphson" class="example"><strong>Ejemplo 7.4  (Algoritmos de Newton-Raphson y puntuación) </strong></span>Dos rutinas numéricas de optimización comunes para la estimación de máxima verosimilitud son el Newton-Raphson y el de puntuación. Daremos una breve descripción de las ideas matemáticas. La implementación de estos algoritmos es más complicada de lo que discutiremos en este ejemplo.</p>
+<p>Sea <span class="math inline">\(l(\mathbf{\beta})\)</span> una función de criterio de <span class="math inline">\(k\)</span> parámetros <span class="math inline">\(\mathbf{\beta}=(\beta_1,\ldots,\beta_k)\)</span> la cual deseamos minimizar respecto a <span class="math inline">\(\mathbf{\beta}\)</span>. Por ejemplo, considere la función de verosimilitud dada por <a href="estimación-de-parámetros.html#eq:eq-funcion-criterio-AR1">(7.11)</a> o <a href="estimación-de-parámetros.html#eq:eq-funcion-criterio-EMV">(7.21)</a>. Suponga que <span class="math inline">\(l(\hat{\mathbf{\beta}})\)</span> es el extremo que estamos interesados en hallar, y <span class="math inline">\(\hat{\mathbf{\beta}}\)</span> se halla resolviendo <span class="math inline">\(\partial l(\mathbf{\beta})/\partial\beta_j=0\)</span> para <span class="math inline">\(j=1,\ldots,k\)</span>. Denotemos por <span class="math inline">\(l^{(1)}(\mathbf{\beta})\)</span> el vector <span class="math inline">\(k\times1\)</span> de derivadas parciales</p>
+<p><span class="math display">\[l^{(1)}(\mathbf{\beta})=\left(\frac{\partial l(\mathbf{\beta})}{\partial\beta_1},\cdots,\frac{\partial l(\mathbf{\beta})}{\partial\beta_k}\right)^t\]</span></p>
+<p>Note que <span class="math inline">\(l^{(1)}(\mathbf{\hat{\beta}})=\textbf{0}\)</span>.</p>
+<p>Sea <span class="math inline">\(l^{(2)}(\mathbf{\beta})\)</span> una matriz <span class="math inline">\(k\times k\)</span> de las segundas derivadas parciales</p>
+<p><span class="math display">\[l^{(2)}(\mathbf{\beta})=\left\{-\frac{\partial l^2(\mathbf{\beta})}{\partial\beta_i\partial\beta_j}\right\}_{i,j=1}^{k}\]</span></p>
+<p>y supongamos que <span class="math inline">\(l^{(2)}(\mathbf{\beta})\)</span> es no singular. Sea <span class="math inline">\(\mathbf{\beta}_{(0)}\)</span> un estimador inicial de <span class="math inline">\(\mathbf{\beta}\)</span>. Entonces, usando el desarrollo de Taylor, tenemos la siguiente aproximación:</p>
+<p><span class="math display">\[\textbf{0}=l^{(1)}(\mathbf{\hat{\beta}})\approx l^{(1)}(\mathbf{\beta}_{(0)})-l^{(2)}(\mathbf{\beta}_{(0)})\left[\mathbf{\hat{\beta}}-\mathbf{\beta}_0\right]\]</span></p>
+<p>Haciendo el lado derecho cero y resolviendo para <span class="math inline">\(\mathbf{\hat{\beta}}\)</span> se tiene</p>
+<p><span class="math display">\[\mathbf{\beta}_{(1)}=\mathbf{\beta}_{(0)}+\left[l^{(2)(\mathbf{\beta}_{(0)}})\right]^{-1}l^{(1)}(\mathbf{\beta}_{(0)})\]</span></p>
+<p>El algoritmo de Newton-Raphson procede iterando este resultado, reemplazando <span class="math inline">\(\mathbf{\beta}_{(0)}\)</span> por <span class="math inline">\(\mathbf{\beta}_{(1)}\)</span> para obtener <span class="math inline">\(\mathbf{\beta}_{(2)}\)</span> y así sucesivamente, hasta que converja. Bajo un conjunto apropiado de condiciones, la sucesión de estimadores <span class="math inline">\(\mathbf{\beta}_{(1)},\mathbf{\beta}_{(2)},\ldots\)</span>, convergerá a <span class="math inline">\(\mathbf{\hat{\beta}}\)</span> el estimador de máxima verosimilitud para <span class="math inline">\(\mathbf{\beta}\)</span>.</p>
+<p>Para la estimación de máxima verosimilitud, la función de criterio usada es <span class="math inline">\(l(\mathbf{\beta})\)</span> dada por (<a href="estimación-de-parámetros.html#eq:eq-funcion-criterio-EMV">(7.21)</a>; <span class="math inline">\(l^{(1)}(\mathbf{\beta})\)</span> es llamado el <strong>vector de puntuación</strong> y <span class="math inline">\(l^{(2)}(\mathbf{\beta})\)</span> es llamado el <strong>Hessiano</strong>. En el algoritmo de puntuaciones, reemplazamos <span class="math inline">\(l^{(2)}(\mathbf{\beta})\)</span> por <span class="math inline">\(\mathbb{E}[l^{(2)}(\mathbf{\beta})]\)</span>, la matriz de información. Bajo condiciones apropiadas, la inversa de la matriz de información es la matriz de varianza-covarianza asintótica del estimador <span class="math inline">\(\mathbf{\hat{\beta}}\)</span>. Esta es a veces aproximada por la inversa del Hessiano en <span class="math inline">\(\mathbf{\hat{\beta}}\)</span>.</p>
+<p>Si las derivadas son difíciles de obtener, es posible usar la estimación de verosimilitud cuasi-máxima donde se usan las técnicas numéricas para aproximar las derivadas.</p>
+</div>
+<hr />
+<div class="example">
+<p><span id="exm:ejem-EMV-serie-reclutamiento" class="example"><strong>Ejemplo 7.5  (EMV para la serie de nuevos peces) </strong></span>En el ejemplo <a href="estimación-de-parámetros.html#exm:ejem-estimacion-yule-walker-serie-reclutamiento">7.2</a> fijamos un modelo AR(2) para la serie de nuevos peces usando las ecuaciones de Yule-Walker. El siguiente comando en R fija el modelo AR(2) via máxima verosimilitud. Pueden comparar estos resultados con los obtenidos en el ejemplo <a href="estimación-de-parámetros.html#exm:ejem-estimacion-yule-walker-serie-reclutamiento">7.2</a>.</p>
+</div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="estimación-de-parámetros.html#cb65-1" aria-hidden="true" tabindex="-1"></a>rec.mle<span class="ot">=</span><span class="fu">ar.mle</span>(rec,<span class="at">order=</span><span class="dv">2</span>)</span>
+<span id="cb65-2"><a href="estimación-de-parámetros.html#cb65-2" aria-hidden="true" tabindex="-1"></a>rec.mle</span></code></pre></div>
+<pre><code>## 
+## Call:
+## ar.mle(x = rec, order.max = 2)
+## 
+## Coefficients:
+##      1       2  
+##  1.351  -0.461  
+## 
+## Order selected 2  sigma^2 estimated as  89.3</code></pre>
+</div>
+<div id="estimación-de-mínimos-cuadrados-para-modelos-armapq" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Estimación de mínimos cuadrados para modelos ARMA(p,q)<a href="estimación-de-parámetros.html#estimación-de-mínimos-cuadrados-para-modelos-armapq" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ahora discutiremos la estimación de mínimos cuadrados para modelos ARMA(p,q) via Gauss-Newton. Sea <span class="math inline">\(x_t\)</span> un proceso ARMA(p,q) gaussiano causal e invertible. Escribimos <span class="math inline">\(\mathbf{\beta}=(\phi_1,\ldots,\phi_p\)</span>, <span class="math inline">\(\theta_1,\ldots,\theta_q)^t\)</span>, para simplificación de la discusión, hacemos <span class="math inline">\(\mu=0\)</span>. Escribimos el modelo en términos de los errores</p>
+<p><span class="math display" id="eq:eq-modelo-ARMA-pq-EMV">\[\begin{equation}
+  w_t(\mathbf{\beta})=x_t-\sum_{j=1}^{p}\phi_jx_{t-j}-\sum_{k=1}^{q}\theta_kw_{t-k}(\mathbf{\beta})
+\tag{7.22}
+\end{equation}\]</span></p>
+<p>para enfatizar la dependencia de los errores sobre los parámetros.</p>
+<p>Para mínimos cuadrados condicional, aproximamos la suma residual de cuadrados condicionando por <span class="math inline">\(x_1,\ldots,x_p (p&gt;0)\)</span> y <span class="math inline">\(w_p=w_{p-1}=\cdots=w_{1-q}=0 (q&gt;0)\)</span>, en cuyo caso podemos evaluar <a href="estimación-de-parámetros.html#eq:eq-modelo-ARMA-pq-EMV">(7.22)</a> para <span class="math inline">\(t=p+1,p+2,\ldots,n\)</span>. Usando estos argumentos condicionales, el error de suma de cuadrados condicional es</p>
+<p><span class="math display">\[S_c(\mathbf{\beta})=\sum_{t=p+1}^{n}w_t^2(\mathbf{\beta})\]</span></p>
+<p>Minimizando <span class="math inline">\(S_c(\mathbf{\beta})\)</span> con respecto a <span class="math inline">\(\mathbf{\beta}\)</span> obtenemos los estimados de mínimos cuadrados condicional.</p>
+<p>Si <span class="math inline">\(q=0\)</span>, el problema es una regresión lineal, y no se necesitan técnicas iterativas para minimizar <span class="math inline">\(S_c(\phi_1,\ldots,\phi_p)\)</span>. Si <span class="math inline">\(q&gt;0\)</span> el problema es de regresión no-lineal y tenemos que acudir a optimización numérica.</p>
+<p>Cuando <span class="math inline">\(n\)</span> es grande, condicionando sobre unos pocos valores iniciales tendremos poca influencia sobre los estimados finales de los parámetros. En el caso de muestras de tamaño pequeño a moderado, podemos usar mínimos cuadrados incondicionales. El problema de mínimos cuadrados incondicional es elegir <span class="math inline">\(\mathbf{\beta}\)</span> para minimizar la suma de cuadrados incondicional, la cual denotamos por <span class="math inline">\(S(\mathbf{\beta})\)</span>.</p>
+<p>La suma de cuadrados incondicional se puede escribir de varias maneras. Una de las maneras es la siguiente forma <a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a></p>
+<p><span class="math display">\[S(\mathbf{\beta})=\sum_{t=-\infty}^{n}\hat{w}_t^2(\mathbf{\beta})\]</span></p>
+<p>donde <span class="math inline">\(\hat{w}_t^2(\mathbf{\beta})=\mathbb{E}(w_t|x_1,\ldots,x_n)\)</span>. Cuando <span class="math inline">\(t\leq0\)</span> los <span class="math inline">\(\hat{w}_t(\mathbf{\beta})\)</span> se obtienen por retroproyección. Como una forma práctica, aproximamos <span class="math inline">\(S(\mathbf{\beta})\)</span> por medio de iniciar la suma en <span class="math inline">\(t=-M+1\)</span> donde <span class="math inline">\(M\)</span> se elige suficientemente grande para garantizar que <span class="math inline">\(\sum_{t=-\infty}^{-M}\hat{w}_t^2(\mathbf{\beta})\approx0\)</span>. En el caso de estimación por mínimos cuadrados incondicional, son necesarias las técnicas de optimización numéricas aún cuando <span class="math inline">\(q=0\)</span>.</p>
+<p>Para emplear Gauss-Newton, sea <span class="math inline">\(\mathbf{\beta}_{(0)}=(\phi_1^{(0)},\ldots,\phi_p^{(0)},\theta_1^{(0)},\ldots,\theta_q^{(0)})^t\)</span> un estimado inicial de <span class="math inline">\(\mathbf{\beta}\)</span>. Por ejemplo, podemos obtener <span class="math inline">\(\mathbf{\beta}_{(0)}\)</span> por el método de los momentos. El desarrollo de Taylor de primer orden de <span class="math inline">\(w_t(\mathbf{\beta})\)</span> es</p>
+<p><span class="math display" id="eq:eq-desarrollo-Taylor-1-wt">\[\begin{equation}
+  w_t(\mathbf{\beta}) \approx w_t(\mathbf{\beta}_{(0)})-\left(\mathbf{\beta}-\mathbf{\beta}_{(0)}\right)^t z_t(\mathbf{\beta}_{(0)})
+\tag{7.23}
+\end{equation}\]</span></p>
+<p>donde</p>
+<p><span class="math display">\[z_t(\mathbf{\beta}_{(0)})=\left(-\frac{\partial w_t(\mathbf{\beta}_{(0)})}{\partial\beta_1},\cdots,-\frac{\partial w_t(\mathbf{\beta}_{(0)})}{\partial\beta_{p+q}}\right)^t\text{, }t=1,\ldots,n\]</span></p>
+<p>La aproximación lineal de <span class="math inline">\(S_c(\mathbf{\beta})\)</span> s</p>
+<p><span class="math display" id="eq:eq-aprox-lineal-S-beta">\[\begin{equation}
+  Q(\mathbf{\beta})=\sum_{t=p+1}^{n}\left[w_t(\mathbf{\beta}_{(0)})-\left(\mathbf{\beta}-\mathbf{\beta}_{(0)}\right)^tz_t(\mathbf{\beta}_{(0)})\right]^2
+\tag{7.24}
+\end{equation}\]</span></p>
+<p>y esta es la cantidad que queremos minimizar. Para aproximar los mínimos cuadrados incondicional, iniciaremos la suma en <a href="estimación-de-parámetros.html#eq:eq-aprox-lineal-S-beta">(7.24)</a> en <span class="math inline">\(t=-M+1\)</span> para <span class="math inline">\(M\)</span> grande, y trabajamos con los valores de retroproyección.</p>
+<p>Usando los resultados de mínimos cuadrados ordinarios, sabemos que</p>
+<p><span class="math display" id="eq:eq-beta-estimado-mc">\[\begin{equation}
+  (\widehat{\mathbf{\beta}-\mathbf{\beta}}_{(0)})=\left(n^{-1}\sum_{t=p+1}^{n}z_t(\mathbf{\beta}_{(0)})z_t^t(\mathbf{\beta}_{(0)})\right)^{-1}
+\left(n^{-1}\sum_{t=p+1}^{n}z_t(\mathbf{\beta}_{(0)})w_t(\mathbf{\beta}_{(0)})\right)
+\tag{7.25}
+\end{equation}\]</span></p>
+<p>minimiza <span class="math inline">\(Q(\mathbf{\beta})\)</span>. De <a href="estimación-de-parámetros.html#eq:eq-beta-estimado-mc">(7.25)</a> podemos escribir el estimado Gauss-Newton de un paso como</p>
+<p><span class="math display" id="eq:eq-estimador-gauss-newton-1">\[\begin{equation}
+  \mathbf{\beta}_{(1)}=\mathbf{\beta}_{(0)}+\Delta(\mathbf{\beta}_{(0)})
+\tag{7.26}
+\end{equation}\]</span></p>
+<p>donde <span class="math inline">\(\Delta(\mathbf{\beta}_{(0)})\)</span> denota el lado derecho de <a href="estimación-de-parámetros.html#eq:eq-beta-estimado-mc">(7.25)</a>. La estimación Gauss-Newton se logra reemplazando <span class="math inline">\(\mathbf{\beta}_{(0)}\)</span> por <span class="math inline">\(\mathbf{\beta}_{(1)}\)</span> en <a href="estimación-de-parámetros.html#eq:eq-estimador-gauss-newton-1">(7.26)</a>. Este procedimiento se repite, iterando para <span class="math inline">\(j=2,3,\ldots\)</span>, para calcular</p>
+<p><span class="math display">\[\mathbf{\beta}_{(j)}=\mathbf{\beta}_{(j-1)}+\Delta(\mathbf{\beta}_{(j-1)})\]</span></p>
+<p>hasta converger.</p>
+<div class="example">
+<p><span id="exm:ejem-gauss-newton-MA1" class="example"><strong>Ejemplo 7.6  (Gauss-Newton para un MA(1)) </strong></span>Considere un proceso MA(1) invertible, <span class="math inline">\(x_t=w_t+\theta w_{t-1}\)</span>. Escribimos el error truncado como</p>
+<p><span class="math display" id="eq:eq-error-truncado-MA1">\[\begin{equation}
+  w_t(\theta)=x_t-\theta w_{t-1}(\theta)\text{, }t=1,\ldots,n
+\tag{7.27}
+\end{equation}\]</span></p>
+<p>donde condicionamos <span class="math inline">\(w_0(\theta)=0\)</span>. Derivando respecto de <span class="math inline">\(\theta\)</span></p>
+<p><span class="math display" id="eq:eq-derivada-error-truncado-MA1">\[\begin{equation}
+  -\frac{\partial w_t(\theta)}{\partial\theta}=w_{t-1}(\theta)+\theta\frac{\partial w_{t-1}(\theta)}{\partial\theta}\text{, }t=1,\ldots,n
+\tag{7.28}
+\end{equation}\]</span></p>
+<p>donde <span class="math inline">\(\partial w_0(\theta)/\partial\theta=0\)</span>. Usando la notación de <a href="estimación-de-parámetros.html#eq:eq-desarrollo-Taylor-1-wt">(7.23)</a> podemos escribir <a href="estimación-de-parámetros.html#eq:eq-derivada-error-truncado-MA1">(7.28)</a> como</p>
+<p><span class="math display" id="eq:eq-derivada-error-truncado-MA1-2">\[\begin{equation}
+  z_t(\theta)=w_{t-1}(\theta)-\theta z_{t-1}(\theta)\text{, }t=1,\ldots,n
+\tag{7.29}
+\end{equation}\]</span></p>
+<p>donde <span class="math inline">\(z_0(\theta)=0\)</span>.</p>
+<p>Sea <span class="math inline">\(\theta_{(0)}\)</span> una estimación inicial de <span class="math inline">\(\theta\)</span>, por ejemplo, el estimado dado en el ejemplo <a href="estimación-de-parámetros.html#exm:ejem-estimacion-momentos-MA1">7.3</a>. Entonces, el procedimiento Gauss-Newton para mínimos cuadrados condicional está dado por</p>
+<p><span class="math display" id="eq:eq-procedimiento-gauss-newton-MA1">\[\begin{equation}
+  \theta_{(j+1)}=\theta_{(j)}+\frac{\sum_{t=1}^{n}z_t(\theta_{(j)})w_t(\theta_{(j)})}{\sum_{t=1}^{n}z_t^2(\theta_{(j)})}\text{, }j=0,1,2,\ldots
+\tag{7.30}
+\end{equation}\]</span></p>
+<p>donde los valores en <a href="estimación-de-parámetros.html#eq:eq-procedimiento-gauss-newton-MA1">(7.30)</a> se calculan recursivamente usando <a href="estimación-de-parámetros.html#eq:eq-error-truncado-MA1">(7.27)</a> y <a href="estimación-de-parámetros.html#eq:eq-derivada-error-truncado-MA1">(7.28)</a>. Los cálculos se paran cuando <span class="math inline">\(|\theta_{(j+1)}-\theta_{(j)}|\)</span> ó <span class="math inline">\(|Q(\theta_{(j+1)})-Q(\theta_{(j)})|\)</span> son menor que alguna cantidad prefijada.</p>
+</div>
+<hr />
+<div class="example">
+<p><span id="exm:ejem-ajuste-varvas-glaciares" class="example"><strong>Ejemplo 7.7  (Ajuste de la serie de varvas glaciares) </strong></span>Consideremos la serie de espesores de varvas glaciares en Massachusetts para <span class="math inline">\(n=634\)</span> años, como analizamos en el ejemplo 3.4.3 (Tema 3) donde ajustamos a un modelo de promedio móvil de primer orden una transformación logarítmica, podemos también a esa serie ajustar una ecuación en diferencia de la transformación logarítmica, como sigue</p>
+<p><span class="math display">\[\nabla[\ln(x_t)]=\ln(x_t)-\ln(x_{t-1})=\ln\left(\frac{x_t}{x_{t-1}}\right)\]</span></p>
+<p>el cual se puede interpretar como la proporción del porcentaje de cambio en el espesor.</p>
+<p>En la figura <a href="estimación-de-parámetros.html#fig:grafico-ACF-PACF-varvas-glaciares">7.2</a> mostramos las ACF y PACF muestral, confirmando la tendencia de <span class="math inline">\(\nabla[\ln(x_t)]\)</span> de comportarse como proceso de promedio móvil de primer orden ya que la ACF tiene un pico significativa en paso 1 y la PACF decrece exponencialmente.</p>
+<p>A continuación se muestran 9 iteraciones del procedimiento de Gauss-Newton dado en <a href="estimación-de-parámetros.html#eq:eq-procedimiento-gauss-newton-MA1">(7.30)</a>, iniciando con <span class="math inline">\(\hat{\theta}_0=-0.1\)</span>, dando los valores</p>
+<p><span class="math display">\[-0.442; -0.624; -0.717;-0.750;-0.763;-0.768;-0.771;-0.772;-0.772;\]</span></p>
+<p>para <span class="math inline">\(\theta_{(1)},\ldots,\theta_{(9)}\)</span>, y la varianza estimada del error es <span class="math inline">\(\hat{\sigma}_w^2=0.236\)</span>. Usando el valor final de <span class="math inline">\(\hat{\theta}=\theta_{(9)}=-0.772\)</span> y el vector <span class="math inline">\(z_t\)</span> de derivadas parciales en <a href="estimación-de-parámetros.html#eq:eq-derivada-error-truncado-MA1-2">(7.29)</a> nos da un error estándar de <span class="math inline">\(0.025\)</span> y un <span class="math inline">\(t\)</span>-valor de <span class="math inline">\(-0.772/0.025=-30.88\)</span> con <span class="math inline">\(632\)</span> grados de libertad (se pierde uno con las diferencias).</p>
+</div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="estimación-de-parámetros.html#cb67-1" aria-hidden="true" tabindex="-1"></a>varva<span class="ot">=</span><span class="fu">scan</span>(<span class="st">&quot;data/varve.txt&quot;</span>)</span>
+<span id="cb67-2"><a href="estimación-de-parámetros.html#cb67-2" aria-hidden="true" tabindex="-1"></a>dv<span class="ot">=</span><span class="fu">log</span>(varva[<span class="dv">2</span><span class="sc">:</span><span class="dv">634</span>]<span class="sc">/</span>varva[<span class="dv">1</span><span class="sc">:</span><span class="dv">633</span>]);</span>
+<span id="cb67-3"><a href="estimación-de-parámetros.html#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))</span>
+<span id="cb67-4"><a href="estimación-de-parámetros.html#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(dv,<span class="dv">30</span>) </span>
+<span id="cb67-5"><a href="estimación-de-parámetros.html#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pacf</span>(dv,<span class="dv">30</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:grafico-ACF-PACF-varvas-glaciares"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/grafico-ACF-PACF-varvas-glaciares-1.svg" alt="ACF y PACF de la serie varvas glaciares"  />
+<p class="caption">
+Figura 7.2: ACF y PACF de la serie varvas glaciares
+</p>
+</div>
+<hr />
+<p>En el caso general de un proceso ARMA(p,q) causal e invertible, las estimaciones de máxima verosimilitud, y las estimaciones de mínimos cuadrados condicional e incondicional (y las estimación de Yule-Walker en el caso de modelos AR) dan estimadores óptimos. La prueba de este resultado general se puede hallar en Brockwell y Davis (2006). Denotaremos los coeficientes del proceso ARMA por <span class="math inline">\(\mathbf{\beta}=(\phi_1,\ldots,\phi_p,\theta_1,\ldots,\theta_q)&#39;\)</span>.</p>
+<div class="proposition">
+<p><span id="prp:propie-distribucion-estimadores-muestras-grandes" class="proposition"><strong>Proposición 7.3  (Distribución de los estimadores para muestras grandes) </strong></span>Bajo condiciones apropiadas, para procesos ARMA causal e invertible, los estimadores de máxima verosimilitud, mínimos cuadrados incondicional y condicional, cada uno inicializado por los estimadores dados por el método de los momentos, proveen estimadores óptimos de <span class="math inline">\(\sigma_w^2\)</span> y <span class="math inline">\(\mathbf{\beta}\)</span> en el sentido de que <span class="math inline">\(\hat{\sigma}_w^2\)</span> es consistente, y la distribución asintótica de <span class="math inline">\(\mathbf{\hat{\beta}}\)</span> es la mejor distribución normal asintótica. En particular, cuando <span class="math inline">\(n\to\infty\)</span></p>
+<p><span class="math display" id="eq:eq-distribucion-estimadores-muestras-grandes">\[\begin{equation}
+  \sqrt{n}\left(\mathbf{\hat{\beta}}-\mathbf{\beta}\right)\overset{d}{\to}N(\textbf{0},\sigma_w^2\Gamma_{p,q}^{-1})
+\tag{7.31}
+\end{equation}\]</span></p>
+</div>
+<hr />
+<p>En <a href="estimación-de-parámetros.html#eq:eq-distribucion-estimadores-muestras-grandes">(7.31)</a> la matriz de varianza-covarianza del estimador <span class="math inline">\(\mathbf{\hat{\beta}}\)</span> es la inversa de la matriz de transformación. En este caso, la matriz <span class="math inline">\(\Gamma_{p,q}\)</span> de orden <span class="math inline">\((p+q)\times(p+q)\)</span>, que tiene la forma</p>
+<p><span class="math display" id="eq:eq-matriz-Gamma-pq">\[\begin{equation}
+  \Gamma_{p,q}=\left(
+                   \begin{array}{cc}
+                     \Gamma_{\phi\phi} &amp; \Gamma_{\phi\theta} \\
+                     \Gamma_{\theta\phi} &amp; \Gamma_{\theta\theta} \\
+                   \end{array}
+                 \right)
+\tag{7.32}
+\end{equation}\]</span></p>
+<p>La <span class="math inline">\(p\times p\)</span> matriz <span class="math inline">\(\Gamma_{\phi\phi}\)</span> es dada por <a href="estimación-de-parámetros.html#eq:eq-yule-walker-matricial">(7.3)</a>, esto es, el <span class="math inline">\(ij\)</span>-ésimo elemento de <span class="math inline">\(\Gamma_{\phi\phi}\)</span> para <span class="math inline">\(i,j=1,\ldots,p\)</span> es <span class="math inline">\(\gamma_x(i-j)\)</span> de un proceso AR(p) <span class="math inline">\(\phi(B)x_t=w_t\)</span>. Similarmente, <span class="math inline">\(\Gamma_{\theta\theta}\)</span> es una matriz <span class="math inline">\(q\times q\)</span> con el <span class="math inline">\(ij\)</span>-ésimo elemento para <span class="math inline">\(i,j=1,\ldots,q\)</span> igual a <span class="math inline">\(\gamma_y(i-j)\)</span> de un proceso AR(q) <span class="math inline">\(\theta(B)y_t=w_t\)</span>. La <span class="math inline">\(p\times q\)</span> matriz <span class="math inline">\(\Gamma_{\phi\theta}=\{\gamma_{xy}(i-j)\}\)</span> para <span class="math inline">\(i=1,\ldots,p; j=1,\ldots,q\)</span>; estos es, el <span class="math inline">\(ij\)</span>-ésimo elemento es la covarianza cruzada entre dos procesos AR dados por <span class="math inline">\(\phi(B)x_t=w_t\)</span> y <span class="math inline">\(\theta(B)y_t=w_t\)</span>. Finalmente, <span class="math inline">\(\Gamma_{\theta\phi}=\Gamma_{\phi\theta}&#39;\)</span> es de orden <span class="math inline">\(q\times p\)</span>.</p>
+<div class="example">
+<p><span id="exm:ejem-distribuciones-asintoticas-especificas" class="example"><strong>Ejemplo 7.8  (Algunas distribuciones asintóticas específicas) </strong></span>Las siguientes distribuciones son algunos casos de la proposición <a href="estimación-de-parámetros.html#prp:propie-distribucion-estimadores-muestras-grandes">7.3</a></p>
+<ol style="list-style-type: decimal">
+<li><p><strong>AR(1):</strong> <span class="math inline">\(\gamma_x(0)=\sigma_w^2/(1-\phi^2)\)</span>, de esta manera <span class="math inline">\(\sigma_w^2\Gamma_{1,0}^{-1}=(1-\phi^2)\)</span>. Entonces
+<span class="math display" id="eq:eq-distribucion-asintotica-AR1">\[\begin{equation}
+     \hat{\phi}\sim AN[\phi,n^{-1}(1-\phi^2)]
+\tag{7.33}
+\end{equation}\]</span></p></li>
+<li><p><strong>AR(2):</strong> Pueden verificar que <span class="math inline">\(\gamma_x(0)=\left(\frac{1-\phi_2}{1+\phi_2}\right)\frac{\sigma_w^2}{(1-\phi_2)^2-\phi_1^2}\)</span> y <span class="math inline">\(\gamma_x(1)=\phi_1\gamma_x(0)+\phi_2\gamma_x(1)\)</span>. De este hecho, podemos calcular <span class="math inline">\(\Gamma_{2,0}^{-1}\)</span>. En particular, tenemos
+<span class="math display" id="eq:eq-distribucion-asintotica-AR2">\[\begin{equation}
+\left(
+   \begin{array}{c}
+     \hat{\phi}_1 \\
+     \hat{\phi}_2 \\
+   \end{array}
+\right)\sim AN\left[\left(
+                       \begin{array}{c}
+                         \phi_1 \\
+                         \phi_2 \\
+                       \end{array}
+                     \right), n^{-1}\left(
+                                      \begin{array}{cc}
+                                        1-\phi_2^2 &amp; -\phi_1(1+\phi_2) \\
+                                        \text{sym} &amp; 1-\phi_2^2 \\
+                                      \end{array}
+                                    \right)\right]
+\tag{7.34}  
+\end{equation}\]</span></p></li>
+<li><p><strong>MA(1):</strong> En este caso, escribimos <span class="math inline">\(\theta(B)y_t=w_t\)</span> ó <span class="math inline">\(y_t+\theta y_{t-1}=w_t\)</span>. Entonces, análogamente al caso AR(1), <span class="math inline">\(\gamma_t(0)=\sigma_w^2/(1-\theta^2)\)</span>, de este modo <span class="math inline">\(\sigma_w^2\Gamma_{0,1}^{-1}=(1-\theta^2)\)</span>. Entonces,
+<span class="math display" id="eq:eq-distribucion-asintotica-MA1">\[\begin{equation}
+\hat{\theta}\sim AN[\theta,n^{-1}(1-\theta^2)]
+  \tag{7.35}
+  \end{equation}\]</span></p></li>
+<li><p><strong>MA(2):</strong> Escribiendo <span class="math inline">\(y_t+\theta_1y_{t-1}+\theta_2y_{t-2}=w_t\)</span>, así, análogamente al caso AR(2), tenemos
+<span class="math display" id="eq:eq-distribucion-asintotica-MA2">\[\begin{equation}
+\left(
+   \begin{array}{c}
+     \hat{\theta}_1 \\
+     \hat{\theta}_2 \\
+   \end{array}
+\right)\sim AN\left[\left(
+                       \begin{array}{c}
+                         \theta_1 \\
+                         \theta_2 \\
+                       \end{array}
+                     \right), n^{-1}\left(
+                                      \begin{array}{cc}
+                                        1-\theta_2^2 &amp; -\theta_1(1+\theta_2) \\
+                                        \text{sym} &amp; 1-\theta_2^2 \\
+                                      \end{array}
+                                    \right)\right]
+\tag{7.36}
+\end{equation}\]</span></p></li>
+<li><p><strong>ARMA(1,1):</strong> Para calcular <span class="math inline">\(\Gamma_{\phi\theta}\)</span> debemos hallar <span class="math inline">\(\gamma_{xy}(0)\)</span>, donde <span class="math inline">\(x_t-\phi x_{t-1}=w_t\)</span> y <span class="math inline">\(y_t+\theta y_{t-1}=w_t\)</span>. Tenemos
+<span class="math display">\[\begin{eqnarray*}
+  \gamma_{xy}(0) &amp;=&amp; \text{cov}(x_t,y_t)=\text{cov}(\phi x_{t-1}+w_t,-\theta y_{t-1}+w_t \\
+              &amp;=&amp; -\phi\theta\gamma_{xy}(0)+\sigma_w^2
+\end{eqnarray*}\]</span>
+Resolviendo, hallamos <span class="math inline">\(\gamma_{xy}(0)=\sigma_w^2/(1+\phi\theta)\)</span>. Entonces,
+<span class="math display" id="eq:eq-distribucion-asintotica-ARMA11">\[\begin{equation}
+\left(
+   \begin{array}{c}
+     \hat{\phi} \\
+     \hat{\theta} \\
+   \end{array}
+\right)\sim AN\left[\left(
+                       \begin{array}{c}
+                         \phi \\
+                         \theta \\
+                       \end{array}
+                     \right), n^{-1}\left[
+                                      \begin{array}{cc}
+                                        (1-\phi^2)^{-1} &amp; (1+\phi\theta)^{-1} \\
+                                        \text{sym} &amp; (1-\theta^2)^{-1} \\
+                                      \end{array}
+                                    \right]^{-1}\right]
+\tag{7.37}
+\end{equation}\]</span></p></li>
+</ol>
+</div>
+<hr />
+<p>Puede resultar sorprendente, que las distribuciones asintóticas de <span class="math inline">\(\hat{\phi}\)</span> de un AR(1) [ecuación <a href="estimación-de-parámetros.html#eq:eq-distribucion-asintotica-AR1">(7.33)</a>] y <span class="math inline">\(\hat{\theta}\)</span> de un MA(1) [ecuación <a href="estimación-de-parámetros.html#eq:eq-distribucion-asintotica-MA1">(7.35)</a>] sean de la misma forma. Es posible explicar este resultado heurístico inesperado usando la intuición de regresión lineal. Esto es, para el modelo de regresión normal presentado en la Sección 3.3 del Tema 3 sin término de intercepción <span class="math inline">\(x_t=\beta z_t+w_t\)</span>, sabemos que <span class="math inline">\(\hat{\beta}\)</span> es normalmente distribuido con media <span class="math inline">\(\beta\)</span>, y de (3.16) (Tema 3)</p>
+<p><span class="math display">\[\text{var}\left\{\sqrt{n}\left(\hat{\beta}-\beta\right)\right\}=n\sigma_w^2\left(\sum_{t=1}^{n}z_t^2\right)^{-1}=\sigma_w^2\left(n^{-1}\sum_{t=1}^{n}z_t^2\right)^{-1}\]</span></p>
+<p>Para el modelo AR(1) causal dado por <span class="math inline">\(x_t=\phi x_{t-1}+w_t\)</span>, la intuición de regresión nos dice que debemos esperar que para <span class="math inline">\(n\)</span> grande</p>
+<p><span class="math display">\[\sqrt{n}(\hat{\phi}-\phi)\]</span></p>
+<p>es aproximadamente normal con media cero y varianza dada por</p>
+<p><span class="math display">\[\sigma_w^2\left(n^{-1}\sum_{t=1}^{n}x_{t-1}^2\right)^{-1}\]</span></p>
+<p>Ahora, <span class="math inline">\(n^{-1}\sum_{t=2}^{n}x_{t-1}^2\)</span> es la varianza muestral (recuerde que la media de <span class="math inline">\(x_t\)</span> es cero) de <span class="math inline">\(x_t\)</span>, de modo que cuando <span class="math inline">\(n\)</span> se hace grande podemos esperar que esta se aproxime a <span class="math inline">\(\text{var}(x_t)=\gamma(0)=\sigma_w^2/(1-\phi^2)\)</span>. Entonces, la varianza muestral grande de <span class="math inline">\(\sqrt{n}(\hat{\phi}-\phi)\)</span> es</p>
+<p><span class="math display">\[\sigma_w^2\gamma_x(0)^{-1}=\sigma_w^2\left(\frac{\sigma_w^2}{1-\phi^2}\right)^{-1}=(1-\phi^2)\]</span></p>
+<p>esto es, <a href="estimación-de-parámetros.html#eq:eq-distribucion-asintotica-AR1">(7.33)</a> vale.</p>
+<p>En el caso de un MA(1), podemos usar la discusión del ejemplo <a href="estimación-de-parámetros.html#exm:ejem-gauss-newton-MA1">7.6</a> para escribir un modelo de regresión aproximado para el MA(1). Esto es, considere la aproximación <a href="estimación-de-parámetros.html#eq:eq-derivada-error-truncado-MA1-2">(7.29)</a> como el modelo de regresión</p>
+<p><span class="math display">\[z_t(\hat{\theta})=-\theta z_{t-1}(\hat{\theta})+w_{t-1}\]</span></p>
+<p>donde ahora, <span class="math inline">\(z_{t-1}(\hat{\theta})\)</span> se define como en el ejemplo <a href="estimación-de-parámetros.html#exm:ejem-gauss-newton-MA1">7.6</a>, jugando el papel de regresor.</p>
+<p>Continuando con la analogía, podemos esperar que la distribución asintótica de <span class="math inline">\(\sqrt{n}(\hat{\phi}-\phi)\)</span> sea normal con media cero y varianza aproximada</p>
+<p><span class="math display">\[\sigma_w^2\left(n^{-1}\sum_{t=1}^{n}z_{t-1}^2(\hat{\theta})\right)^{-1}\]</span></p>
+<p>Como en el caso AR(1), <span class="math inline">\(n^{-1}\sum_{t=1}^{n}z_{t-1}^2(\hat{\theta})\)</span> es la varianza muestral de <span class="math inline">\(z_t(\hat{\theta})\)</span>, de modo que para <span class="math inline">\(n\)</span> grande, esta debería ser <span class="math inline">\(\text{var}\{z_t(\theta)\}=\gamma_z(0)\)</span>.</p>
+<p>Pero, note que, como se ve de <a href="estimación-de-parámetros.html#eq:eq-derivada-error-truncado-MA1-2">(7.29)</a>, <span class="math inline">\(z_t(\theta)\)</span> es aproximadamente un proceso AR(1) con parámetro <span class="math inline">\(-\theta\)</span>. Por la tanto,</p>
+<p><span class="math display">\[\sigma_w^2\gamma_X(0)^{-1}=\sigma_w^2\left(\frac{\sigma_w^2}{1-(-\theta)^2}\right)^{-1}=(1-\theta^2)\]</span></p>
+<p>lo cual concuerda con <a href="estimación-de-parámetros.html#eq:eq-distribucion-asintotica-MA1">(7.35)</a>.</p>
+<p>Finalmente, la distribución asintótica de los parámetros estimados de un AR y de un MA son de la misma forma, porque en el caso MA, los <em>regresores</em> son las diferencias del proceso <span class="math inline">\(z_t(\theta)\)</span> que tienen estructura AR, y es esta estructura la que determina la varianza asintótica de los estimadores.</p>
+<p>En el ejemplo 3.31 el error estándar estimado de <span class="math inline">\(\hat{\theta}\)</span> fue <span class="math inline">\(0.025\)</span>. En el ejemplo, este valor se calculó como la raíz cuadrada de</p>
+<p><span class="math display">\[s_w^2\left(n^{-1}\sum_{t=2}^{n}z_{t-1}^2(\hat{\theta})\right)^{-1}\]</span></p>
+<p>donde <span class="math inline">\(n=633, s_w^2=0.236\)</span> y <span class="math inline">\(\hat{\theta}=-0.772\)</span>. Usando <a href="estimación-de-parámetros.html#eq:eq-distribucion-asintotica-MA1">(7.35)</a>, también pudimos haber calculado este valor usando la aproximación asintótica, como la raíz cuadrada de <span class="math inline">\((1-0.772^2)/633\)</span> lo cual también nos da <span class="math inline">\(0.025\)</span>.</p>
+<p>El comportamiento asintótico de los estimadores de los parámetros nos da una información adicional sobre el problema de ajuste de los modelos ARMA a los datos. Por ejemplo, supongamos que una serie de tiempo sigue un proceso AR(1) y decidimos fijar un modelo AR(2) a los datos. ¿Habrá algún problema si hacemos esto? Más generalmente, <em>¿por qué no fijamos un modelo AR de orden grande para asegurar que capturamos toda la dinámica del proceso?</em> Después de todo, si el proceso es realmente un AR(1), los otros parámetros autoregresivos no serán significativos. La respuesta es que si sobre ajustamos el modelo, podemos perder eficiencia. Por ejemplo, si fijamos un modelo AR(1) a un proceso AR(1), para <span class="math inline">\(n\)</span> grande, <span class="math inline">\(\text{var}(\hat{\phi})\approx n^{-1}(1-\phi_1^2)\)</span>. Pero si fijamos un modelo AR(2) a un proceso AR(1), para <span class="math inline">\(n\)</span> grande, <span class="math inline">\(\text{var}(\hat{\phi})\approx n^{-1}(1-\phi_2^2)=n^{-1}\)</span> porque <span class="math inline">\(\phi_2=0\)</span>. En consecuencia, la varianza de <span class="math inline">\(\phi_1\)</span> ha sido aumentada, haciendo del estimador menos preciso. Sin embargo, diremos que el sobre ajuste lo podemos usar como una herramienta de diagnóstico. Por ejemplo,, si fijamos un modelo AR(2) a los datos y estos se satisfacen con el modelo, entonces, agregando un parámetro más y fijando un modelo AR(3) debería darnos aproximadamente el mismo modelo como en el ajuste AR(2). Discutiremos los modelos de diagnóstico con más detalle más adelante.</p>
+<p>Si <span class="math inline">\(n\)</span> es pequeño o si los parámetros están cerca de los bordes o cotas, la aproximación asintótica puede ser un poco pobre. La técnica de bootstrap puede ser útil en este caso. Para una explicación ampliada de bootstrap véase Efron y Tibshirani (1994). Daremos un ejemplo simple de bootstrap para un proceso AR(1)</p>
+<div class="example">
+<p><span id="exm:ejem-bootstrap-AR1" class="example"><strong>Ejemplo 7.9  (Bootstrap para un AR(1)) </strong></span>Consideremos un modelo AR(1) con coeficiente de regresión cerca a la cota de causalidad y un error del proceso que es simétrico pero no normal. Específicamente, considere el modelo estacionario y causal</p>
+<p><span class="math display" id="eq:eq-modelo-estacionario-causal">\[\begin{equation}\label{}
+  x_t=\mu+\phi(x_{t-1}-\mu)+w_t
+\tag{7.38}
+\end{equation}\]</span></p>
+<p>donde <span class="math inline">\(\mu=50, \phi=0.95\)</span> y <span class="math inline">\(w_t\)</span> son iid doble exponencial con localización cero, y parámetro de escala <span class="math inline">\(\beta=2\)</span>. La densidad de <span class="math inline">\(w_t\)</span> está dada por</p>
+<p><span class="math display">\[f_{w_t}(w)=\frac{1}{2\beta}\exp[-|w|/\beta]\text{ con }-\infty&lt;w&lt;\infty\]</span></p>
+<p>En este ejemplo, <span class="math inline">\(\mathbb{E}(w_t)=0\)</span> y <span class="math inline">\(\text{var}(w_t)=2\beta^2=8\)</span>. La figura <a href="estimación-de-parámetros.html#fig:grafico-modelo-estacionario-causal-n-100">7.3</a> muestra <span class="math inline">\(n=100\)</span> observaciones simuladas de este proceso.</p>
+</div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="estimación-de-parámetros.html#cb68-1" aria-hidden="true" tabindex="-1"></a>boot<span class="ot">=</span><span class="fu">scan</span>(<span class="st">&quot;data/ar1boot.txt&quot;</span>)</span>
+<span id="cb68-2"><a href="estimación-de-parámetros.html#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boot,<span class="at">type=</span><span class="st">&quot;b&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;Tiempo&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:grafico-modelo-estacionario-causal-n-100"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/grafico-modelo-estacionario-causal-n-100-1.svg" alt="Modelo causal estacionario, n=100"  />
+<p class="caption">
+Figura 7.3: Modelo causal estacionario, n=100
+</p>
+</div>
+<p>Esta realización en particular es interesante, ya que los datos lucen como si fuesen generados de un proceso no-estacionario con tres diferentes niveles de media. De hecho, los datos fueron generados por un modelo estacionario y causal de buen comportamiento, aunque no normal. Para mostrar las ventajas del bootstrap, procederemos como si no conociéramos la distribución del error y procederemos como si este fuera normal; por supuesto, esto significa, por ejemplo, que los EMV de <span class="math inline">\(\phi\)</span> basados en una normal no serán los EMV reales porque los datos no son normales.</p>
+<p>Usando los datos mostrado en la figura @ref{fig:grafico-modelo-estacionario-causal-n-100), obtenemos los estimadores de Yule-Walker <span class="math inline">\(\hat{\mu}=40.0483, \hat{\phi}=0.9572\)</span> y <span class="math inline">\(s_w^2=15.55\)</span>, donde <span class="math inline">\(s_w^2\)</span> es el estimado de <span class="math inline">\(\text{var}(w_t)\)</span>.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="estimación-de-parámetros.html#cb69-1" aria-hidden="true" tabindex="-1"></a>m<span class="ot">=</span><span class="fu">mean</span>(boot)</span>
+<span id="cb69-2"><a href="estimación-de-parámetros.html#cb69-2" aria-hidden="true" tabindex="-1"></a>m</span></code></pre></div>
+<pre><code>## [1] 40.05</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="estimación-de-parámetros.html#cb71-1" aria-hidden="true" tabindex="-1"></a>fit<span class="ot">=</span><span class="fu">ar.yw</span>(boot,<span class="at">order=</span><span class="dv">1</span>)</span>
+<span id="cb71-2"><a href="estimación-de-parámetros.html#cb71-2" aria-hidden="true" tabindex="-1"></a>fit</span></code></pre></div>
+<pre><code>## 
+## Call:
+## ar.yw.default(x = boot, order.max = 1)
+## 
+## Coefficients:
+##     1  
+## 0.957  
+## 
+## Order selected 1  sigma^2 estimated as  15.6</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="estimación-de-parámetros.html#cb73-1" aria-hidden="true" tabindex="-1"></a>phi<span class="ot">=</span>fit<span class="sc">$</span>ar</span></code></pre></div>
+<p>Basándonos en la proposición <a href="estimación-de-parámetros.html#prp:propie-distribucion-estimadores-muestras-grandes">7.3</a>, diremos que <span class="math inline">\(\hat{\phi}\)</span> es aproximadamente normal con media <span class="math inline">\(\phi\)</span> y varianza <span class="math inline">\((1-\phi^2)/100\)</span>, la cual es aproximada por <span class="math inline">\((1-0.957^2)/100=0.029^2\)</span>.</p>
+<p>Para evaluar la distribución muestral finita de <span class="math inline">\(\hat{\phi}\)</span> cuando <span class="math inline">\(n=100\)</span>, simularemos 1000 realizaciones de este proceso AR(1) y estimaremos los parámetros vía Yule-Walker. La densidad muestral finita del estimador Yule-Walker de <span class="math inline">\(\phi\)</span> basado en 1000 simulaciones se muestra en la figura <a href="estimación-de-parámetros.html#fig:grafico-densidad-muestral-estimadores-yule-walker">7.4</a>. Claramente la distribución muestral no está cerca a la normalidad para este tamaño muestral. La media de la distribución mostrada es <span class="math inline">\(0.8638\)</span> y la varianza es <span class="math inline">\(0.122^2\)</span> estos valores son muy distintos de los valores asintóticos.</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="estimación-de-parámetros.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Densidad del estimador de Yule-Walker de phi</span></span>
+<span id="cb74-2"><a href="estimación-de-parámetros.html#cb74-2" aria-hidden="true" tabindex="-1"></a>phi.est<span class="ot">=</span><span class="dv">0</span></span>
+<span id="cb74-3"><a href="estimación-de-parámetros.html#cb74-3" aria-hidden="true" tabindex="-1"></a>x.sim<span class="ot">=</span>boot[<span class="dv">1</span>]</span>
+<span id="cb74-4"><a href="estimación-de-parámetros.html#cb74-4" aria-hidden="true" tabindex="-1"></a>wt<span class="ot">=</span><span class="fu">rexp</span>(<span class="dv">100</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb74-5"><a href="estimación-de-parámetros.html#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>)</span>
+<span id="cb74-6"><a href="estimación-de-parámetros.html#cb74-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb74-7"><a href="estimación-de-parámetros.html#cb74-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">100</span>)</span>
+<span id="cb74-8"><a href="estimación-de-parámetros.html#cb74-8" aria-hidden="true" tabindex="-1"></a>  {x.sim[j]<span class="ot">=</span><span class="dv">50</span><span class="fl">+0.95</span><span class="sc">*</span>(x.sim[j<span class="dv">-1</span>]<span class="sc">-</span><span class="dv">50</span>)<span class="sc">+</span>wt[j]}</span>
+<span id="cb74-9"><a href="estimación-de-parámetros.html#cb74-9" aria-hidden="true" tabindex="-1"></a>  fit.est<span class="ot">=</span><span class="fu">ar.yw</span>(x.sim,<span class="at">order=</span><span class="dv">1</span>)</span>
+<span id="cb74-10"><a href="estimación-de-parámetros.html#cb74-10" aria-hidden="true" tabindex="-1"></a>  phi.est[i]<span class="ot">=</span>fit.est<span class="sc">$</span>ar}</span>
+<span id="cb74-11"><a href="estimación-de-parámetros.html#cb74-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-12"><a href="estimación-de-parámetros.html#cb74-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(phi.est),<span class="at">main=</span><span class="st">&quot;Densidad muestral finita de los estimadores de Yule-Walker de phi&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:grafico-densidad-muestral-estimadores-yule-walker"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/grafico-densidad-muestral-estimadores-yule-walker-1.svg" alt="Densidad muestral finita de los estimadores de Yule-Walker de phi"  />
+<p class="caption">
+Figura 7.4: Densidad muestral finita de los estimadores de Yule-Walker de phi
+</p>
+</div>
+<p>Algunos de los cuantiles de la distribución muestral son:</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Cuantil</th>
+<th align="center">5%</th>
+<th align="center">10%</th>
+<th align="center">25%</th>
+<th align="center">50%</th>
+<th align="center">75%</th>
+<th align="center">90%</th>
+<th align="center">95%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Valor</td>
+<td align="center">0.6747</td>
+<td align="center">0.6957</td>
+<td align="center">0.7587</td>
+<td align="center">0.8638</td>
+<td align="center">0.9689</td>
+<td align="center">1.0320</td>
+<td align="center">1.0530</td>
+</tr>
+</tbody>
+</table>
+<p>Antes de discutir la técnica de bootstrap, estudiemos el proceso de innovación muestral <span class="math inline">\(x_t-x_t^{t-1}\)</span> con la correspondiente varianza <span class="math inline">\(P_t^{t-1}\)</span>. Para el modelo AR(1) de este ejemplo</p>
+<p><span class="math display">\[x_t^{t-1}=\mu+\phi(x_{t-1}-\mu)\text{, }t=2,\ldots,100\]</span></p>
+<p>De aquí, se sigue que</p>
+<p><span class="math display">\[P_t^{t-1}=\mathbb{E}(x_t-x_t^{t-1})^2=\sigma_w^2\text{, }t=2,\ldots,100\]</span></p>
+<p>Cuando <span class="math inline">\(t=1\)</span>, tenemos</p>
+<p><span class="math display">\[x_1^0=\mu\text{ y }P_1^0=\sigma_w^2/(1-\phi^2)\]</span></p>
+<p>Entonces, las innovaciones tiene media cero pero varianzas distintas; a fin de que todas las innovaciones tengan la misma varianza <span class="math inline">\(\sigma_w^2\)</span>, las escribiremos como</p>
+<p><span class="math display" id="eq:eq-innovaciones-bootstrap">\[\begin{eqnarray}
+  \epsilon_1 &amp;=&amp; (x_1-\mu)\sqrt{(1-\phi^2)} \nonumber \\
+  \epsilon_t &amp;=&amp; (x_t-\mu)-\phi(x_{t-1}-\mu)\text{, para }t=2,\ldots,100 \tag{7.39}
+\end{eqnarray}\]</span></p>
+<p>De estas ecuaciones, podemos escribir el modelo en término de las innovaciones <span class="math inline">\(\epsilon_t\)</span> como</p>
+<p><span class="math display" id="eq:eq-modelo-innovaciones">\[\begin{eqnarray}
+  x_1 &amp;=&amp; \mu+\epsilon_1/\sqrt{(1-\phi^2)} \nonumber\\
+  x_t &amp;=&amp; \mu+\phi(x_{t-1}-\mu)+\epsilon_t\text{, para }t=2,\ldots,100 \tag{7.40}
+\end{eqnarray}\]</span></p>
+<p>A continuación, reemplazamos los parámetros con sus estimados en <a href="estimación-de-parámetros.html#eq:eq-innovaciones-bootstrap">(7.39)</a>, esto es, <span class="math inline">\(n=100, \hat{\mu}=40.048\)</span> y <span class="math inline">\(\hat{\phi}=0.957\)</span> y denotamos los resultados de las innovaciones muestrales como <span class="math inline">\(\{\hat{\epsilon}_1,\ldots,\hat{\epsilon}_{100}\}\)</span>. Para obtener una muestra bootstrap, primero escogemos una muestra aleatoria con reemplazo con <span class="math inline">\(n=100\)</span> del conjunto de innovaciones muestral, llamemos a esta muestra <span class="math inline">\(\{\epsilon_1^*,\ldots,\epsilon_{100}^*\}\)</span>. Ahora, generamos un conjunto de datos bootstrap secuencialmente haciendo</p>
+<p><span class="math display" id="eq:eq-generacion-datos-bootstrap">\[\begin{eqnarray}
+  x_1^* &amp;=&amp; 40.048+\epsilon_1^*/\sqrt{(1-0.957^2)} \nonumber\\
+  x_t^* &amp;=&amp; 40.048+0.957(x_{t-1}^*-40.048)+\epsilon_t^*\text{, }t=2,\ldots,n \tag{7.41}
+\end{eqnarray}\]</span></p>
+<p>A continuación, estimamos los parámetros como si los datos fueran <span class="math inline">\(x_t^*\)</span>. Llamamos a estos estimados <span class="math inline">\(\hat{\mu}(1),\hat{\phi}(1)\)</span> y <span class="math inline">\(s_w^2(1)\)</span>. Repetimos este proceso un número grande <span class="math inline">\(N\)</span> de veces, generando una colección de parámetros estimados bootstrap <span class="math inline">\(\{\hat{\mu}(k),\hat{\phi}(k),s_w^2(k),k=1,\ldots,N\}\)</span>. Podemos entonces aproximar la distribución muestral finita de un estimador de los valores del parámetro obtenido con bootstrap. Por ejemplo, podemos aproximar la distribución de <span class="math inline">\(\hat{\phi}-\phi\)</span> por la distribución empírica de <span class="math inline">\(\hat{\phi}(k)-\hat{\phi}\)</span> para <span class="math inline">\(k=1,\ldots,N\)</span>.</p>
+<p>La figura <a href="estimación-de-parámetros.html#fig:grafico-histograma-bootstrap">7.5</a> muestra un histograma bootstrap de 200 estimaciones de <span class="math inline">\(\phi\)</span> hechas con bootstrap usando los datos en la figura @ref(fig:grafico-modelo-estacionario-causal-n-100}. En particular, la media de la distribución de <span class="math inline">\(\hat{\phi}(k)\)</span> es <span class="math inline">\(0.8750\)</span> con varianza <span class="math inline">\(0.0556^2\)</span>. Algunos cuantiles de esta distribución son:</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Cuantil</th>
+<th align="center">5%</th>
+<th align="center">10%</th>
+<th align="center">25%</th>
+<th align="center">50%</th>
+<th align="center">75%</th>
+<th align="center">90%</th>
+<th align="center">95%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Valor</td>
+<td align="center">0.7833</td>
+<td align="center">0.8014</td>
+<td align="center">0.8412</td>
+<td align="center">0.8762</td>
+<td align="center">0.9135</td>
+<td align="center">0.9455</td>
+<td align="center">0.9672</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="estimación-de-parámetros.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Booststrap</span></span>
+<span id="cb75-2"><a href="estimación-de-parámetros.html#cb75-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-3"><a href="estimación-de-parámetros.html#cb75-3" aria-hidden="true" tabindex="-1"></a>nboot<span class="ot">=</span><span class="dv">200</span></span>
+<span id="cb75-4"><a href="estimación-de-parámetros.html#cb75-4" aria-hidden="true" tabindex="-1"></a>resids<span class="ot">=</span>fit<span class="sc">$</span>resid</span>
+<span id="cb75-5"><a href="estimación-de-parámetros.html#cb75-5" aria-hidden="true" tabindex="-1"></a>resids<span class="ot">=</span>resids[<span class="dv">2</span><span class="sc">:</span><span class="dv">100</span>]</span>
+<span id="cb75-6"><a href="estimación-de-parámetros.html#cb75-6" aria-hidden="true" tabindex="-1"></a>boot.star<span class="ot">=</span>boot</span>
+<span id="cb75-7"><a href="estimación-de-parámetros.html#cb75-7" aria-hidden="true" tabindex="-1"></a>phi.star<span class="ot">=</span><span class="fu">matrix</span>(<span class="dv">0</span>,nboot,<span class="dv">1</span>)</span>
+<span id="cb75-8"><a href="estimación-de-parámetros.html#cb75-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nboot){</span>
+<span id="cb75-9"><a href="estimación-de-parámetros.html#cb75-9" aria-hidden="true" tabindex="-1"></a>  resid.star<span class="ot">=</span><span class="fu">sample</span>(resids,<span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb75-10"><a href="estimación-de-parámetros.html#cb75-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">99</span>){</span>
+<span id="cb75-11"><a href="estimación-de-parámetros.html#cb75-11" aria-hidden="true" tabindex="-1"></a>    boot.star[t<span class="sc">+</span><span class="dv">1</span>]<span class="ot">=</span>boot<span class="sc">+</span>phi<span class="sc">*</span>(boot.star[t]<span class="sc">-</span>boot)<span class="sc">+</span>resid.star[t]</span>
+<span id="cb75-12"><a href="estimación-de-parámetros.html#cb75-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb75-13"><a href="estimación-de-parámetros.html#cb75-13" aria-hidden="true" tabindex="-1"></a>  phi.star[i]<span class="ot">=</span><span class="fu">ar.yw</span>(boot.star,<span class="at">order=</span><span class="dv">1</span>)<span class="sc">$</span>ar</span>
+<span id="cb75-14"><a href="estimación-de-parámetros.html#cb75-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb75-15"><a href="estimación-de-parámetros.html#cb75-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Histograma</span></span>
+<span id="cb75-16"><a href="estimación-de-parámetros.html#cb75-16" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(phi.star,<span class="at">breaks=</span><span class="dv">15</span>,<span class="at">col =</span> <span class="st">&quot;lightblue&quot;</span>,</span>
+<span id="cb75-17"><a href="estimación-de-parámetros.html#cb75-17" aria-hidden="true" tabindex="-1"></a><span class="at">main=</span><span class="st">&quot;Histograma de frecuencia para phi estimado con bootstrap&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:grafico-histograma-bootstrap"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/grafico-histograma-bootstrap-1.svg" alt="Histograma bootstrap de phi basado en 200 iteraciones."  />
+<p class="caption">
+Figura 7.5: Histograma bootstrap de phi basado en 200 iteraciones.
+</p>
+</div>
+<hr />
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="9">
+<li id="fn9"><p><span class="math inline">\(\cos(\alpha\pm\beta)=\cos(\alpha)\cos(\beta)\mp\sin(\alpha)\sin(\beta)\)</span><a href="estimación-de-parámetros.html#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>Véase Bhat, R.R. (1985). <em>Modern Probability Theory, 2nd ed.</em> New York, Wiley, pag157.<a href="estimación-de-parámetros.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>Algunas identidades que pueden ayudar aquí: <span class="math inline">\(e^{i\alpha}=\cos(\alpha)+i\sin(\alpha)\)</span>, así <span class="math inline">\(\cos(\alpha)=(e^{i\alpha}+e^{-i\alpha})/2\)</span> y <span class="math inline">\(\sin(\alpha)=(e^{i\alpha}-e^{-i\alpha})/2i\)</span>.<a href="estimación-de-parámetros.html#fnref11" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-78759535-1', 'auto');
+ga('send', 'pageview');  
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="modelos-arma.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="modelos-arima.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/synergyvision/Teoria-de-Portafolio/edit/master/bookdown/304-estimacion-de-parametros.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Serie-de-Tiempo-en-R.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -582,7 +582,7 @@ par(mfrow=c(2,1))
 plot(d3t, type = "l", ylab = "Diferencias", xlab = "tiempo")
 plot(d6t, type = "l", ylab = "Diferencias", xlab = "tiempo")
 # Regresion diff
-data.diff=as.data.frame(cbind(d3t,diff(r3t$V3)))
+data.diff=as.data.frame(cbind(d3t,diff(r3t$V2)))
 dyt=lm(d6t~d3t, data = data.diff)
 summary(dyt)
 # Residuales diff

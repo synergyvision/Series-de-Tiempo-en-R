@@ -1,14 +1,8 @@
-<script src="https://cdn.datacamp.com/datacamp-light-latest.min.js"></script>
-
 --- 
 title: "Series de Tiempo en R"
 subtitle: "Ciencia de los Datos Financieros"
 author: "Synergy Vision"
-<<<<<<< HEAD
 date: "2022-11-12"
-=======
-date: "2020-01-31"
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 knit: "bookdown::render_book"
 documentclass: krantz
 bibliography: [book.bib, packages.bib]
@@ -55,13 +49,38 @@ Este libro es posible gracias a una gran cantidad de desarrolladores que contrib
 
 Vamos a utilizar el paquete [Datacamp Tutorial](https://github.com/datacamp/tutorial) que utiliza la librería en JavaScript [Datacamp Light](https://github.com/datacamp/datacamp-light) para crear ejercicios y prácticas con `R`. De esta forma el libro es completamente interactivo y con prácticas incluidas. De esta forma estamos creando una experiencia única de aprendizaje en línea.
 
-<div data-datacamp-exercise data-height="300" data-encoded="true">eyJsYW5ndWFnZSI6InIiLCJwcmVfZXhlcmNpc2VfY29kZSI6ImIgPC0gNSIsInNhbXBsZSI6IiMgQ3JlYSB1bmEgdmFyaWFibGUgYSwgaWd1YWwgYSA1XG5cblxuIyBNdWVzdHJhIGVsIHZhbG9yIGRlIGEiLCJzb2x1dGlvbiI6IiMgQ3JlYSB1bmEgdmFyaWFibGUgYSwgaWd1YWwgYSA1XG5hIDwtIDVcblxuIyBNdWVzdHJhIGVsIHZhbG9yIGRlIGFcbmEiLCJzY3QiOiJ0ZXN0X29iamVjdChcImFcIilcbnRlc3Rfb3V0cHV0X2NvbnRhaW5zKFwiYVwiLCBpbmNvcnJlY3RfbXNnID0gXCJBc2VnJnVhY3V0ZTtyYXRlIGRlIG1vc3RyYXIgZWwgdmFsb3IgZGUgYGFgLlwiKVxuc3VjY2Vzc19tc2coXCJFeGNlbGVudGUhXCIpIn0=</div>
+
+```r
+b <- 5
+```
 
 
+```r
+# Crea una variable a, igual a 5
 
 
+# Muestra el valor de a
+```
 
 
+```r
+# Crea una variable a, igual a 5
+a <- 5
+
+# Muestra el valor de a
+a
+```
+
+```
+## [1] 5
+```
+
+
+```r
+#test_object("a")
+#test_output_contains("a", incorrect_msg = "Aseg&uacute;rate de mostrar el valor de `a`.")
+#success_msg("Excelente!")
+```
 
 ## Agradecimientos {-}
 
@@ -168,7 +187,8 @@ Algunos ejemplos donde se puede utilizar y hacer precciones con series de tiempo
 
 La mayoría de los estudios financieros y econ?micos implican rendimiento, en lugar de precios de los activos. Existen dos buenas razones para ello. Primero, para los inversores medios, el rendimiento de un activo es un resumen completo y libre de escala de la oportunidad de inversión. Segundo, las series de rendimiento son más fáciles de manejar que las series de precios porque las primeras tienen propiedades estadísticas más atractivas. Sin embargo, existen varias definiciones de rendimiento de activos. Sea $P_t$ el precio de un activo en tiempo $t$. Discutiremos algunas definiciones de rendimiento que utilizaremos a lo largo del libro. Supongamos por el momento que el activo no paga dividendos.
 
-\BeginKnitrBlock{definition}\iffalse{-91-82-101-110-100-105-109-105-101-110-116-111-32-115-105-109-112-108-101-32-100-101-32-117-110-32-112-101-114-105-111-100-111-93-}\fi{}<div class="definition"><span class="definition" id="def:defi-rendimiento-simple"><strong>(\#def:defi-rendimiento-simple)  \iffalse (Rendimiento simple de un periodo) \fi{} </strong></span>Mantener el activo fijo durante un periodo a partir de tiempo $t-1$ hasta tiempo $t$ da lugar a una **rentabilidad bruta simple**
+::: {.definition #defi-rendimiento-simple name="Rendimiento simple de un periodo"}
+Mantener el activo fijo durante un periodo a partir de tiempo $t-1$ hasta tiempo $t$ da lugar a una **rentabilidad bruta simple**
 \begin{equation}
 1+R_t=\frac{P_t}{P_{t-1}}\quad\text{ o }\quad P_t=P_{t-1}(1+R_t)
 (\#eq:eq-rentabilidad-bruta-simple)
@@ -177,14 +197,17 @@ El correspondiente **rendimiento neto simple** de un periodo o **rendimiento sim
 \begin{equation}
 R_t=\frac{P_t}{P_{t-1}}-1=\frac{P_t-P_{t-1}}{P_{t-1}}
 (\#eq:eq-rendimiento-neto-simple)
-\end{equation}</div>\EndKnitrBlock{definition}
+\end{equation}
+:::
 
-\BeginKnitrBlock{definition}\iffalse{-91-82-101-110-100-105-109-105-101-110-116-111-32-115-105-109-112-108-101-32-109-117-108-116-105-112-101-114-105-111-100-111-93-}\fi{}<div class="definition"><span class="definition" id="def:defi-rendimiento-simple-multiperiodo"><strong>(\#def:defi-rendimiento-simple-multiperiodo)  \iffalse (Rendimiento simple multiperiodo) \fi{} </strong></span>Mantener el activo fijo durante $k$ periodos entre los tiempos $t-k$ y $t$ da un **rendimiento bruto simple de periodo $k$**
+::: {.definition #defi-rendimiento-simple-multiperiodo name="Rendimiento simple multiperiodo"}
+Mantener el activo fijo durante $k$ periodos entre los tiempos $t-k$ y $t$ da un **rendimiento bruto simple de periodo $k$**
 \begin{eqnarray*}
 1+ R_t[k] &=& \frac{P_t}{P_{t-k}} = \frac{P_t}{P_{t-1}}\times\frac{P_{t-1}}{P_{t-2}}\times \cdots \times\frac{P_{t-k+1}}{P_{t-k}} \\
         &=& (1+R_t)(1+R_{t-1})\cdots(1+R_{t-k+1}) \\
         &=& \prod_{j=0}^{k-1}(1+R_{t-j})
-\end{eqnarray*}</div>\EndKnitrBlock{definition}
+\end{eqnarray*}
+:::
 
 De la definición, se tiene que la rentabilidad bruta simple de periodo $k$ es el producto de las $k$ rentabilidades brutas simples de un periodo. Esto se llama **rendimiento compuesto**. El **rendimiento neto simple de periodo $k$** es $R_t[k]=(P_t-P_{t-k})/P_{t-k}$.
 
@@ -232,12 +255,14 @@ C=A\exp(-r\times n)
 \end{equation}
 el cual se refiere como el valor presente de un activo que vale $A$ dolares $n$ años a partir de ahora, asumiendo que la tasa de interés compuesta continua es $r$ por año.
 
-\BeginKnitrBlock{definition}\iffalse{-91-82-101-110-100-105-109-105-101-110-116-111-32-99-111-109-112-117-101-115-116-111-32-99-111-110-116-105-110-117-111-93-}\fi{}<div class="definition"><span class="definition" id="def:defi-rendimiento-compuesto-continuo"><strong>(\#def:defi-rendimiento-compuesto-continuo)  \iffalse (Rendimiento compuesto continuo) \fi{} </strong></span>El logaritmo natural de rendimiento bruto simple de un activo se denomina **rendimiento compuesto continuo** o **rendimiento logarítmico**
+::: {.definition #defi-rendimiento-compuesto-continuo name="Rendimiento compuesto continuo"}
+El logaritmo natural de rendimiento bruto simple de un activo se denomina **rendimiento compuesto continuo** o **rendimiento logarítmico**
 \begin{equation}
 r_t=\ln(1+R_t) = \ln\left(\frac{P_t}{P_{t-1}}\right) = p_t-o_{t-1}
 (\#eq:eq-rendimiento-compuesto-continuo)
 \end{equation}
-donde $p_t=\ln(P_t)$.</div>\EndKnitrBlock{definition}
+donde $p_t=\ln(P_t)$.
+:::
 
 Los rendimientos compuestos continuos deisfrutan de algunas ventajas sobre los rendimientos netos simples $R_t$. En primer lugar, consideremos los rendimientos multiperiodos. Tenemos
 \begin{eqnarray*}
@@ -247,23 +272,29 @@ r_t[k] &=& \ln(1+R_t[k]) = \ln[(1+R_t)(1+R_{t-1})\cdots(1+R_{t-k+1})]\\
 \end{eqnarray*}
 Por lo tanto, el rendimiento multiperiodo compuesto continuo es simplemente la suma de los rendimientos compuesto continuo de un periodo involucrados. En segundo lugar, las propiedades estadísticas de los logaritmos de los rendimientos son más manejables.
 
-\BeginKnitrBlock{definition}\iffalse{-91-82-101-110-116-97-98-105-108-105-100-97-100-32-100-101-32-108-97-32-99-97-114-116-101-114-97-93-}\fi{}<div class="definition"><span class="definition" id="def:defi-rentabilidad-cartera"><strong>(\#def:defi-rentabilidad-cartera)  \iffalse (Rentabilidad de la cartera) \fi{} </strong></span>El rendimiento neto simple de una cartera de inversión compuesta por $N$ activos es una media ponderada de los rendimientos netos simples de los activos en cuestión, en la que la ponderación de cada activo es el porcentaje del valor de la cartera invertido en ese activo. Sea $p$ un portafolio que ponga peso con el activo $i$, entonces el rendimineto simple $p$ en el tiempo $t$ es
+::: {.definition #defi-rentabilidad-cartera name="Rentabilidad de la cartera"}
+El rendimiento neto simple de una cartera de inversión compuesta por $N$ activos es una media ponderada de los rendimientos netos simples de los activos en cuestión, en la que la ponderación de cada activo es el porcentaje del valor de la cartera invertido en ese activo. Sea $p$ un portafolio que ponga peso con el activo $i$, entonces el rendimineto simple $p$ en el tiempo $t$ es
 $$R_{p,t} = \sum_{i=1}^N\omega_iR_{it}$$
-donde $R_{it}$ es el rendimiento simple del activo $i$.</div>\EndKnitrBlock{definition}
+donde $R_{it}$ es el rendimiento simple del activo $i$.
+:::
 
 Los rendimientos compuestos continuos de una cartera, sin embargo, no tienen la propiedad conveniente anterior. Si los rendimientos simples $R_t$ son todos pequeños en magnitud, entonces tenemos
 $$r_{p,t} \approx \sum_{i=1}^N\omega_ir_{it}$$
 donde $r_{p,t}$ es el rendimiento compuesto continuo de la cartera en el momento $t$. Esta aproximación se utiliza a menudo para estudiar los rendimientos de las carteras.
 
-\BeginKnitrBlock{definition}\iffalse{-91-80-97-103-111-32-100-101-32-100-105-118-105-100-101-110-100-111-115-93-}\fi{}<div class="definition"><span class="definition" id="def:defi-pago-dividendos"><strong>(\#def:defi-pago-dividendos)  \iffalse (Pago de dividendos) \fi{} </strong></span>Si un activo paga dividendos periódicamente, debemos modificar las definiciones de rendimientos de activos.
+::: {.definition #defi-pago-dividendos name="Pago de dividendos"}
+Si un activo paga dividendos periódicamente, debemos modificar las definiciones de rendimientos de activos.
 
 Sea $D_t$ el pago de dividendos de un activo entre los tiempos $t-1$ y $t$ y sea $P_t$ el precio del activo al final del periodo $t$. Entonces el dividendo no se incluye en $P_t$. Entonces el rendimiento neto simple y el rendimiento compuesto continuo en el tiempo $t$ están dados por
 \begin{eqnarray*}
 R_t &=& \frac{P_t+D_t}{P_{t-1}}-1 \\
 r_t &=& \ln(P_t+D_t) - \ln(P_{t-1})
-\end{eqnarray*}</div>\EndKnitrBlock{definition}
+\end{eqnarray*}
+:::
 
-\BeginKnitrBlock{definition}\iffalse{-91-69-120-99-101-115-111-32-100-101-32-114-101-110-100-105-109-105-101-110-116-111-93-}\fi{}<div class="definition"><span class="definition" id="def:exceso-rendimiento"><strong>(\#def:exceso-rendimiento)  \iffalse (Exceso de rendimiento) \fi{} </strong></span>El **rendimiento excesivo** de un activo en el momento $t$ es la diferencia entre el rendimiento del activo y el rendimiento de algún activo de referencia.</div>\EndKnitrBlock{definition}
+::: {.definition #exceso-rendimiento name="Exceso de rendimiento"}
+El **rendimiento excesivo** de un activo en el momento $t$ es la diferencia entre el rendimiento del activo y el rendimiento de algún activo de referencia.
+:::
 
 A menudo se considera que el activo de referencia no tiene riesgo, como una devolución de letras del Tesoro de EE.UU. a corto plazo. El exceso de rentabilidad simple y el logaritmo de exceso de rentabilidad de un activo se definen como 
 \begin{equation}
@@ -291,18 +322,24 @@ $$A = C\exp(r\times n),\qquad C=A\exp(-r\times n).$$
 Una serie tiempo es una secuencia de observaciones, medidos en determinados momentos del tiempo, ordenados cronológicamente y, espaciados entre sí de manera uniforme, así los datos usualmente son dependientes entre sí. El principal objetivo de una serie de tiempo es su análisis para hacer pronóstico. Formalmente se tiene la siguiente definición.
 
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-serie-tiempo"><strong>(\#def:defi-serie-tiempo) </strong></span>Una **serie de tiempo** es un conjunto de observaciones $x_t$, cada una registrada a un tiempo específico $t$.
-</div>\EndKnitrBlock{definition}
+::: {.definition #defi-serie-tiempo}
+Una **serie de tiempo** es un conjunto de observaciones $x_t$, cada una registrada a un tiempo específico $t$.
+
+:::
 
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-modelo-serie-tiempo"><strong>(\#def:defi-modelo-serie-tiempo) </strong></span>Un **modelo de series de tiempo** para los datos observados $\{x_t\}$ es una especificación de una distribución conjunta (o posiblemente solo de medias y covarianzas) de una sucesión de variables aleatorias $\{X_t\}$ de las cuales $\{x_t\}$ es una realización.</div>\EndKnitrBlock{definition}
+::: {.definition #defi-modelo-serie-tiempo}
+Un **modelo de series de tiempo** para los datos observados $\{x_t\}$ es una especificación de una distribución conjunta (o posiblemente solo de medias y covarianzas) de una sucesión de variables aleatorias $\{X_t\}$ de las cuales $\{x_t\}$ es una realización.
+:::
 
 A continuación presentaremos una serie de ejemplos que demuestran la utilidad y lo cotidiano de las series de tiempo, también se mostrarán los códigos en **R** para cargar los archivos de datos y graficar las respectivas series de tiempo.
 
 ## Ejemplos 
-\BeginKnitrBlock{example}\iffalse{-91-66-101-110-101-102-105-99-105-111-115-32-100-101-32-97-99-99-105-111-110-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-beneficios-acciones"><strong>(\#exm:ejem-beneficios-acciones)  \iffalse (Beneficios de acciones) \fi{} </strong></span>Beneficios por acción trimestrales para la compañía Johnson y Johnson. Se tienen 84 trimestres iniciando el primer trimestre de 1960 hasta el último trimestre de 1980. Los métodos para analizar tales datos se verán en el Tema 3 usando técnicas de regresión. El archivo es *"jj.txt"*.
+::: {.example #ejem-beneficios-acciones name="Beneficios de acciones"}
+Beneficios por acción trimestrales para la compañía Johnson y Johnson. Se tienen 84 trimestres iniciando el primer trimestre de 1960 hasta el último trimestre de 1980. Los métodos para analizar tales datos se verán en el Tema 3 usando técnicas de regresión. El archivo es *"jj.txt"*.
 
-Los comandos en R para cargar el archivo y graficar la serie de tiempo son los siguientes:</div>\EndKnitrBlock{example}
+Los comandos en R para cargar el archivo y graficar la serie de tiempo son los siguientes:
+:::
 
 
 ```r
@@ -315,7 +352,9 @@ plot(jj, type="l",ylab="Beneficios por acción trimestrales")
 <p class="caption">(\#fig:unnamed-chunk-8)Beneficios por acción trimestrales para la compañía Johnson y Johnson</p>
 </div>
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:reservas-internacionales"><strong>(\#exm:reservas-internacionales) </strong></span>El archivo *"ReservasInternacionales.xlsx"*, contiene el registro mensual de Reservas Internacionales Venezolanas en millones de dólares ($), iniciando en el mes de enero de 1996 hasta el mes de diciembre de 2017</div>\EndKnitrBlock{example}
+::: {.example #reservas-internacionales}
+El archivo *"ReservasInternacionales.xlsx"*, contiene el registro mensual de Reservas Internacionales Venezolanas en millones de dólares ($), iniciando en el mes de enero de 1996 hasta el mes de diciembre de 2017
+:::
 
 
 ```r
@@ -332,7 +371,9 @@ plot.ts(reservas[,2], xlab="Año",ylab="Monto",
 </div>
 
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:precio-petroleo"><strong>(\#exm:precio-petroleo) </strong></span>El archivo *"PreciosPetroleoVzla.xlsx"* contiene el precio promedio mensual de venta para el petróleo venezolano (en dólares) desde enero 2006 hasta noviembre 2017</div>\EndKnitrBlock{example}
+::: {.example #precio-petroleo}
+El archivo *"PreciosPetroleoVzla.xlsx"* contiene el precio promedio mensual de venta para el petróleo venezolano (en dólares) desde enero 2006 hasta noviembre 2017
+:::
 
 
 ```r
@@ -349,7 +390,9 @@ plot.ts(petroleo[,2], xlab="Año",ylab="Monto",
 </div>
 
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:indice-dow-jones"><strong>(\#exm:indice-dow-jones) </strong></span>El archivo *"IndiceDowJones.xlsx"* contiene los valores histórico del Índice Dow-Jones desde enero de 1930 hasta octubre de 2017. En el archivo podems notar que desde enero de 1930 hasta diciembre de 1994, los registros son el promedio semanal, a partir de enero de 1995, los registros son diarios. La primera columa es la fecha, la segunda columna es el valor de apertura, la tercera columna el valor máximo, la cuarta el valor mínimo, la quinta el último valor del índice o valor de cierre y la sexta columna es el volumen de acciones.</div>\EndKnitrBlock{example}
+::: {.example #indice-dow-jones}
+El archivo *"IndiceDowJones.xlsx"* contiene los valores histórico del Índice Dow-Jones desde enero de 1930 hasta octubre de 2017. En el archivo podems notar que desde enero de 1930 hasta diciembre de 1994, los registros son el promedio semanal, a partir de enero de 1995, los registros son diarios. La primera columa es la fecha, la segunda columna es el valor de apertura, la tercera columna el valor máximo, la cuarta el valor mínimo, la quinta el último valor del índice o valor de cierre y la sexta columna es el volumen de acciones.
+:::
 
 
 ```r
@@ -365,7 +408,9 @@ plot.ts(DJ[,-1], xlab="Días",
 </div>
 
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:Bolsa-Valores-New-York"><strong>(\#exm:Bolsa-Valores-New-York) </strong></span>La figura siguiente muestra los porcentajes de cambio diario de la Bolsa de Valores de New York desde el 2 de febrero de 1984 hasta el 31 de diciembre de 1991. Como se ve hay una caída fuerte, esta ocurrió el 19 de octubre de 1987 en $t=938$. El archivo de datos es *"nyse.txt"*.</div>\EndKnitrBlock{example}
+::: {.example #Bolsa-Valores-New-York}
+La figura siguiente muestra los porcentajes de cambio diario de la Bolsa de Valores de New York desde el 2 de febrero de 1984 hasta el 31 de diciembre de 1991. Como se ve hay una caída fuerte, esta ocurrió el 19 de octubre de 1987 en $t=938$. El archivo de datos es *"nyse.txt"*.
+:::
 
 
 ```r
@@ -378,9 +423,11 @@ plot(NYSE,xlab="Tiempo",ylab="Porcentaje de cambio, NYSE")
 <p class="caption">(\#fig:unnamed-chunk-12)Porcentaje de cambio de la bolsa de New York</p>
 </div>
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:euribor"><strong>(\#exm:euribor) </strong></span>La evolución del EURIBOR es algo que fluctúa a diario. Se entiende por EURIBOR (Euro Interbank Offered Rate) el tipo de interés, promovido por el Instituto Europeo de Mercados Monetarios (EMMI), consistente en la media aritmética simple de los valores diarios con días de mercado para operaciones de depósitos en euros a plazo de uno/tres/seis/doce meses y referido al día quince del mes anterior al comienzo de cada período de interés o al día siguiente hábil si aquel no lo fuese, calculado a partir del ofertado por una muestra de Bancos para operaciones entre entidades de similar calificación.
+::: {.example #euribor}
+La evolución del EURIBOR es algo que fluctúa a diario. Se entiende por EURIBOR (Euro Interbank Offered Rate) el tipo de interés, promovido por el Instituto Europeo de Mercados Monetarios (EMMI), consistente en la media aritmética simple de los valores diarios con días de mercado para operaciones de depósitos en euros a plazo de uno/tres/seis/doce meses y referido al día quince del mes anterior al comienzo de cada período de interés o al día siguiente hábil si aquel no lo fuese, calculado a partir del ofertado por una muestra de Bancos para operaciones entre entidades de similar calificación.
 
-A continuación mostramos dos series del EURIBOR. La primera es la evolución histórica anual del EURIBOR desde su implantación en 1999 hasta 2018, los datos se corresponden al mes de enero de cada año. La segunda es la evolución mensual desde enero de 2007 hasta marzo de 2018.</div>\EndKnitrBlock{example}
+A continuación mostramos dos series del EURIBOR. La primera es la evolución histórica anual del EURIBOR desde su implantación en 1999 hasta 2018, los datos se corresponden al mes de enero de cada año. La segunda es la evolución mensual desde enero de 2007 hasta marzo de 2018.
+:::
 
 
 ```r
@@ -409,7 +456,9 @@ grid(col = "gray")
 <p class="caption">(\#fig:unnamed-chunk-14)Evolución mensual del EURIBOR (2007-2018)</p>
 </div>
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:cambio-dolar-euro"><strong>(\#exm:cambio-dolar-euro) </strong></span>El archivo *Cambio-EUR-USD.xlsx* contiene el histórico de la cotización dolar estadounidense versus el euro desde el 01/05/2017 hasta el 26/04/2018. En la primera columna se muestra la fecha, la segunda columna el precio de apertura, la tercera el precio de cierre, la cuarta la diferencia en %, la quinta el precio máximo del día, la sexta el precio mínimo y la utlima el volumen de transacciones. A continuación presentamos los gráficos de apertura, cierre, máximo y mínimo.</div>\EndKnitrBlock{example}
+::: {.example #cambio-dolar-euro}
+El archivo *Cambio-EUR-USD.xlsx* contiene el histórico de la cotización dolar estadounidense versus el euro desde el 01/05/2017 hasta el 26/04/2018. En la primera columna se muestra la fecha, la segunda columna el precio de apertura, la tercera el precio de cierre, la cuarta la diferencia en %, la quinta el precio máximo del día, la sexta el precio mínimo y la utlima el volumen de transacciones. A continuación presentamos los gráficos de apertura, cierre, máximo y mínimo.
+:::
 
 
 ```r
@@ -582,8 +631,10 @@ El objetivo primario en el análisis de Series de Tiempo es desarrollar modelos 
 
 ## Medidas de dependencia para series de tiempo
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-proceso-estocastico"><strong>(\#def:defi-proceso-estocastico) </strong></span>Un **proceso estocástico** es una familia de variables aleatorias indexadas $x(\omega,t)$ ó $x_t(\omega)$ donde $t$ pertenece a un conjunto de índices $T$ y $\omega$ pertenece a un espacio muestral $\Omega$. Si $t=t^*$ fijo, $x(\omega,t^*)$ es una variable aleatoria. Si $\omega=\omega^*$ fijo, $x(\omega^*,t)$ es una función de $t$, y se llama una *realización* del proceso. Una **serie de tiempo** es la realización de un proceso estocástico.
-</div>\EndKnitrBlock{definition}
+::: {.definition #defi-proceso-estocastico}
+Un **proceso estocástico** es una familia de variables aleatorias indexadas $x(\omega,t)$ ó $x_t(\omega)$ donde $t$ pertenece a un conjunto de índices $T$ y $\omega$ pertenece a un espacio muestral $\Omega$. Si $t=t^*$ fijo, $x(\omega,t^*)$ es una variable aleatoria. Si $\omega=\omega^*$ fijo, $x(\omega^*,t)$ es una función de $t$, y se llama una *realización* del proceso. Una **serie de tiempo** es la realización de un proceso estocástico.
+
+:::
 
 ---
 
@@ -613,7 +664,8 @@ $$f_t(x)=\frac{\partial F_t(x)}{\partial x},$$
 cuando existen, a menudo son más útiles para determinar si una coordenada en particular de la serie de tiempo tiene una función de densidad conocida, como la distribución  normal (gaussiana), por ejemplo.
 
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-funcion-media"><strong>(\#def:defi-funcion-media) </strong></span>La **función de media** es definida como
+::: {.definition #defi-funcion-media}
+La **función de media** es definida como
 
 \begin{equation}
 \mu_{xt}=\mathbb{E}(x_t)=\int_{-\infty}^{\infty}xf_t(x)dx,
@@ -621,19 +673,22 @@ cuando existen, a menudo son más útiles para determinar si una coordenada en p
 \end{equation}
 
 en caso de que exista, donde $\mathbb{E}$ denota el operador usual de esperanza. Cuando no haya confusión sobre a que serie de tiempo nos referimos, escribiremos $\mu_{xt}$ como $\mu_t$.
-</div>\EndKnitrBlock{definition}
+
+:::
 
 ---
 
 Lo importante de comprender sobre $\mu_t$ consiste en que es una media teórica para la serie de tiempo en un punto particular, donde la media se asume o calcula sobre todos los posibles eventos que podrían haber producido $x_t$.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-funcion-autocovarianza"><strong>(\#def:defi-funcion-autocovarianza) </strong></span>La **función de autocovarianza** es definida como producto del segundo momento
+::: {.definition #defi-funcion-autocovarianza}
+La **función de autocovarianza** es definida como producto del segundo momento
 \begin{equation}
 \gamma_x(s,t)=\mathbb{E}[(x_s-\mu_s)(x_t-\mu_t)],
 (\#eq:eq-funcion-autocovarianza)
 \end{equation}
 para todo $t$ y $s$. cuando no haya confusión en la existencia sobre a que serie nos referimos, escribiremos $\gamma_x(s,t)=\gamma(s,t)$.
-</div>\EndKnitrBlock{definition}
+
+:::
 
 ---
 
@@ -646,12 +701,14 @@ Note que $\gamma_x(s,t)=\gamma_x(t,s)$ para todo los puntos $s$ y $t$. La funci�
 
 Otro función de medida de tendencia importante es la *función de autocorrelación*.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-acf"><strong>(\#def:defi-acf) </strong></span>La **función de autocorrelación (ACF)** (ACF, siglas en ingles: Autocorrelation Function) se define como
+::: {.definition #defi-acf}
+La **función de autocorrelación (ACF)** (ACF, siglas en ingles: Autocorrelation Function) se define como
 \begin{equation}
 \rho(s,t)=\frac{\gamma(s,t)}{\sqrt{\gamma(s,s)\gamma(t,t)}}
 (\#eq:eq-funcion-autocorrelacion)
 \end{equation}
-</div>\EndKnitrBlock{definition}
+
+:::
 
 ---
 
@@ -661,21 +718,25 @@ La $ACF$ mide la predictibilidad lineal de una serie de tiempo en tiempo $t$, di
 
 Si podemos predecir $x_t$ exactamente de $x_s$ a través de la relación lineal $x_t=\beta_0+\beta_1x_s$ entonces la correlación será 1 cuando $\beta_1>0$ y $-1$ cuando $\beta_1<0$.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-covarianza-cruzada"><strong>(\#def:defi-covarianza-cruzada) </strong></span>La **función de covarianza cruzada** entre dos series $x_t$ y $y_t$ se define como
+::: {.definition #defi-covarianza-cruzada}
+La **función de covarianza cruzada** entre dos series $x_t$ y $y_t$ se define como
 \begin{equation}
 \gamma_{xy}(s,t)=\mathbb{E}[(x_s-\mu_{xs})(y_t-\mu_{yt})]
 (\#eq:eq-funcion-covarianza-cruzada)
 \end{equation}
-</div>\EndKnitrBlock{definition}
+
+:::
 
 ---
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-ccf"><strong>(\#def:defi-ccf) </strong></span>La **función de correlación cruzada (CCF)** (CCF, siglas en ingles: Cross Correlation Function) es definida como
+::: {.definition #defi-ccf}
+La **función de correlación cruzada (CCF)** (CCF, siglas en ingles: Cross Correlation Function) es definida como
 \begin{equation}
 \rho_{xy}(s,t)=\frac{\gamma_{xy}(s,t)}{\sqrt{\gamma_x(s,s)\gamma_y(t,t)}}
 (\#eq:eq-funcion-correlacion-cruzada)
 \end{equation}
-</div>\EndKnitrBlock{definition}
+
+:::
 
 ---
 
@@ -683,7 +744,8 @@ Las definiciones anteriores de funciones de media y varianza son completamente g
 
 Formalmente tenemos las siguientes definiciones de estacionaridad
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-estricta-estacionaridad"><strong>(\#def:defi-estricta-estacionaridad) </strong></span>Una serie de tiempo **estrictamente estacionaria** es una serie para la cual el comportamiento probabilístico de cada sucesión de valores
+::: {.definition #defi-estricta-estacionaridad}
+Una serie de tiempo **estrictamente estacionaria** es una serie para la cual el comportamiento probabilístico de cada sucesión de valores
 $$\{x_{t_1},x_{t_2},\ldots,x_{t_k}\}$$
 es idéntico a la serie trasladada en el tiempo
 $$\{x_{t_1+h},x_{t_2+h},\ldots,x_{t_k+h}\}$$
@@ -693,24 +755,28 @@ P[X_{t_1}\leq c_1,\ldots,x_{t_k}\leq c_k] = P[X_{t_1+h}\leq c_1,\ldots,x_{t_k+h}
 (\#eq:eq-estricta-estacionaridad)
 \end{equation}
 para todo $k=1,2,\ldots$, todo puntos de tiempos $t_1,t_2,\ldots,t_k$ y números $c_1,c_2,\ldots,c_k$ y todo salto $h=\pm0,\pm1,\pm2,\ldots$.
-</div>\EndKnitrBlock{definition}
+
+:::
 
 ---
 
 Esta definición de estacionaridad es muy fuerte para la mayoría de las aplicaciones prácticas. Por ello necesitamos una versión menos fuerte que imponga menos condiciones sobre las distribuciones de probabilidad, ya que si observamos bien la ecuación \@ref(eq:eq-estricta-estacionaridad), lo que nos dice la misma es que todas las posibles distribuciones de probabilidad deben ser iguales, lo que como ya indicamos en la práctica es muy difícil de comprobar aún para conjuntos de datos sencillos. La siguiente versión de estacionaridad solo impone condiciones sobre los dos primeros momentos de la serie
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-debilmente-estacionaria"><strong>(\#def:defi-debilmente-estacionaria) </strong></span>Una serie de tiempo **débilmente estacionaria** $x_t$, es un proceso de varianza finita tal que
+::: {.definition #defi-debilmente-estacionaria}
+Una serie de tiempo **débilmente estacionaria** $x_t$, es un proceso de varianza finita tal que
 
 1) la función de media $\mu_t$ es constante y no depende del tiempo $t$, 
 
 2) la función de covarianza $\gamma(t,s)$ depende solo de las diferencias de $s$ y $t$, $|t-s|$.
 
 Por consiguiente, usaremos el término **estacionaridad** para referirnos a estacionaridad débil; si un proceso es estacionario en el sentido estricto usaremos el término *estrictamente estacionario*.
-</div>\EndKnitrBlock{definition}
+
+:::
 
 ---
 
-\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota. </em></span>  \fi{}
+::: {.remark}
+
 1)  Si una serie de tiempo es estrictamente estacionaria, entonces todos las funciones de distribución multivariadas para subconjuntos de variables deben coincidir con sus contrapartes en el conjunto trasladado, para todos los valores del parámetro $h$. Por ejemplo para $k=1$ La ecuación \@ref(eq:eq-estricta-estacionaridad) implica que
 \begin{equation}
         P\{x_s\leq c\}=P\{x_t\leq c\}
@@ -727,7 +793,8 @@ para cada puntos $s$ y $t$.
 para cada par de puntos $s$ y $t$ y salto $h$. Entonces, si la función de varianza del proceso existe, \@ref(eq:e1p21) implica que la función de autocovarianza de la serie $x_t$ satisface $\gamma(s,t)=\gamma(s+h,t+h)$ para todos $s$ y $t$ y salto $h$.
 
 Podemos interpretar este resultado diciendo que la función de autocovarianza del proceso depende sólo de las diferencias de tiempo entre $s$ y $t$, y no del tiempo actual.
-</div>\EndKnitrBlock{remark}
+
+:::
 
 ---
 
@@ -748,21 +815,25 @@ Debido a que la función de covarianza de una serie de tiempo estacionaria, $\ga
 \end{eqnarray}
 no depende del argumento de tiempo $t$; asumiendo que $\text{Var}(x_t)=\gamma(0,0)<\infty$. De ahora en adelante, por conveniencia, prescindiremos del segundo argumento de $\gamma(h,0)$, es decir, la función de covarianza se denotará $\gamma(h)$.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-autocovarianza-serie-estacionaria"><strong>(\#def:defi-autocovarianza-serie-estacionaria) </strong></span>La **función de autocovarianza de una serie de tiempo estacionaria** se escribirá como
+::: {.definition #defi-autocovarianza-serie-estacionaria}
+La **función de autocovarianza de una serie de tiempo estacionaria** se escribirá como
 \begin{equation}
 \gamma(h)=\mathbb{E}[(x_{t+h}-\mu)(x_t-\mu)]
 (\#eq:eq-funcion-autocovarianza-estacionaria)
 \end{equation}
-</div>\EndKnitrBlock{definition}
+
+:::
 
 ---
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-acf-estacionaria"><strong>(\#def:defi-acf-estacionaria) </strong></span>La **función de autocorrelación (ACF) de una serie de tiempo estacionaria** será escrita, usando \@ref(eq:eq-funcion-autocorrelacion) como
+::: {.definition #defi-acf-estacionaria}
+La **función de autocorrelación (ACF) de una serie de tiempo estacionaria** será escrita, usando \@ref(eq:eq-funcion-autocorrelacion) como
 \begin{equation}
 \rho(h)=\frac{\gamma(t+h,t)}{\sqrt{\gamma(t+h,t+h)\gamma(t,t)}}=\frac{\gamma(h)}{\gamma(0)}
 (\#eq:eq-funcion-autocorrelacion-estacionaria)
 \end{equation}
-</div>\EndKnitrBlock{definition}
+
+:::
 
 ---
 
@@ -793,22 +864,26 @@ La desigualdad de Cauchy-Schwartz muestra nuevamente que $-1\leq\rho(h)\leq1$ pa
     lo cual muestra como usar la notación para demostrar el resultado.
 
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-conjuntamente-estacionarias"><strong>(\#def:defi-conjuntamente-estacionarias) </strong></span>Dos series de tiempo $x_t$ y $x_s$ se dice que son **conjuntamente estacionarias** si cada una de ellas es estacionaria y la función de correlación cruzada
+::: {.definition #defi-conjuntamente-estacionarias}
+Dos series de tiempo $x_t$ y $x_s$ se dice que son **conjuntamente estacionarias** si cada una de ellas es estacionaria y la función de correlación cruzada
 \begin{equation}
 \gamma_{xy}(h)=\mathbb{E}[(x_{t+h}-\mu_x)(y_t-\mu_y)]
 (\#eq:eq-estacionaridad-conjunta)
 \end{equation}
 es una función sólo del salto $h$.
-</div>\EndKnitrBlock{definition}
+
+:::
 
 ---
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-ccf-conjuntamente-estacionarias"><strong>(\#def:defi-ccf-conjuntamente-estacionarias) </strong></span>La **función de correlación cruzada (CCF)** de dos series conjuntamente estacionarias $x_t$ y $y_t$ se define como
+::: {.definition #defi-ccf-conjuntamente-estacionarias}
+La **función de correlación cruzada (CCF)** de dos series conjuntamente estacionarias $x_t$ y $y_t$ se define como
 \begin{equation}
 \rho_{xy}(h)=\frac{\gamma_{xy}(h)}{\sqrt{\gamma_x(0)\gamma_y(0)}}
 (\#eq:eq-ccf-conjuntamente-estacionarias)
 \end{equation}
-</div>\EndKnitrBlock{definition}
+
+:::
 
 ---
 
@@ -819,7 +894,8 @@ De nuevo, tenemos el resultado $-1\leq\rho_{xy}(h)\leq1$ lo cual nos permite com
 \end{equation}
 lo cual se puede demostrar de manera similar que para \@ref(eq:eq-simetria-funcion-autocovarianza).
 
-\BeginKnitrBlock{example}\iffalse{-91-69-115-116-97-99-105-111-110-97-114-105-100-97-100-32-99-111-110-106-117-110-116-97-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-estacionaridad-conjunta"><strong>(\#exm:ejem-estacionaridad-conjunta)  \iffalse (Estacionaridad conjunta) \fi{} </strong></span>Considere las series $x_t$ y $y_t$ formadas por las sumas y diferencias de dos valores sucesivos de un ruido blanco respectivamente, esto es
+::: {.example #ejem-estacionaridad-conjunta name="Estacionaridad conjunta"}
+Considere las series $x_t$ y $y_t$ formadas por las sumas y diferencias de dos valores sucesivos de un ruido blanco respectivamente, esto es
 $$x_t=w_t+w_{t-1}$$
 y
 $$y_t=w_t-w_{t-1}$$
@@ -836,14 +912,16 @@ $$\rho_{xy}(h)=\begin{cases}0,&h=0\\
 			-1/2,&h=-1\\
 			0,&|h|\geq2\end{cases}.$$
 Claramente, las funciones de autocovarianza y correlación cruzada dependen solo del salto $h$, por lo tanto las series son conjuntamente estacionarias.
-</div>\EndKnitrBlock{example}
+
+:::
 
 ---
 
 El concepto de estacionaridad débil forma la base para muchos de los análisis realizados con series de tiempo. Las propiedades fundamentales de la media \@ref(eq:e1p22) y la función de covarianza \@ref(eq:eq-funcion-autocovarianza-estacionaria) son satisfechas por muchos modelos teóricos que aparecen para generar realizaciones muestrales apropiadas. 
 
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-proceso-lineal"><strong>(\#def:defi-proceso-lineal) </strong></span>Un **proceso lineal** $x_t$ se define como una combinación lineal de variables aleatorias de ruido blanco $w_t$, y está dado por
+::: {.definition #defi-proceso-lineal}
+Un **proceso lineal** $x_t$ se define como una combinación lineal de variables aleatorias de ruido blanco $w_t$, y está dado por
 \begin{equation}
 x_t=\mu+\sum_{j=-\infty}^{\infty}\psi_jw_{t-j}
 (\#eq:eq-proceso-lineal)
@@ -853,7 +931,8 @@ donde los coeficientes satisfacen
 \sum_{j=-\infty}^{\infty}|\psi_j|<\infty
 (\#eq:eq-coeficientes-proceso-lineal)
 \end{equation}
-</div>\EndKnitrBlock{definition}
+
+:::
 
 ---
 
@@ -865,8 +944,10 @@ Para un proceso lineal, podemos demostrar que la función de autocovarianza est�
 para todo $h\geq0$; recuerde que $\gamma(-h)=\gamma(h)$. Finalmente como mencionamos anteriormente, un caso importante en el cual una serie débilmente estacionaria es también estrictamente estacionaria es la serie normal o gaussiana.
 
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-proceso-gaussiano"><strong>(\#def:defi-proceso-gaussiano) </strong></span>Un proceso $\{x_t\}$, se dice que es un **proceso gaussiano** si el $k$-ésimo vector dimensional $\hat{x}=(x_{t_1},x_{t_2},\ldots,x_{t_k})$, para cada conjunto de puntos $t_1,t_2,\ldots,t_k$ y cada entero positivo $k$ tiene distribución normal multivariada.
-</div>\EndKnitrBlock{definition}
+::: {.definition #defi-proceso-gaussiano}
+Un proceso $\{x_t\}$, se dice que es un **proceso gaussiano** si el $k$-ésimo vector dimensional $\hat{x}=(x_{t_1},x_{t_2},\ldots,x_{t_k})$, para cada conjunto de puntos $t_1,t_2,\ldots,t_k$ y cada entero positivo $k$ tiene distribución normal multivariada.
+
+:::
 
 ---
 
@@ -941,12 +1022,14 @@ En la tendencia cuadrática podemos observar:
 
 Otro modelo propuesto para la tendencia es el dado por la siguiente definición. 
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-modelo-log-lineal"><strong>(\#def:defi-modelo-log-lineal) </strong></span>El modelo **Logarítmico Lineal** o **Log-Lineal** se define como
+::: {.definition #defi-modelo-log-lineal}
+El modelo **Logarítmico Lineal** o **Log-Lineal** se define como
 \begin{equation}
 \ln X_t = \beta_0+\beta_1t + \epsilon_t
 (\#eq:eq-modelo-log-lineal)
 \end{equation}
-</div>\EndKnitrBlock{definition}
+
+:::
 
 ---
 
@@ -1025,7 +1108,9 @@ Sin embargo, el *tipo* de función es conocida. Los parámetros $\beta_1,\ldots,
 \end{equation}
 cuya solución, si existe, es un problema numérico. El valor $\hat{x}_t=f(t;\hat{\beta}_1,\ldots,\hat{\beta}_p)$ servirá como una *predicción* de futuros valores $x_t$. Las diferencias observadas $x_t-\hat{x}_t$ son llamadas *residuales*. Ellas contienen información sobre la bondad de ajuste del modelo a los datos.
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejem-poblacion-usa-metodo-T1"><strong>(\#exm:ejem-poblacion-usa-metodo-T1) </strong></span>El archivo "USPOP.txt" contiene la información de la población de Estados Unidos de América desde 1780 hasta 1980 segun el censo poblacional cada 10 años. En el gráfico podemos observar que no existe estacionalidad, por lo que podemos aplicar el método descrito para ajustar la tendencia.</div>\EndKnitrBlock{example}
+::: {.example #ejem-poblacion-usa-metodo-T1}
+El archivo "USPOP.txt" contiene la información de la población de Estados Unidos de América desde 1780 hasta 1980 segun el censo poblacional cada 10 años. En el gráfico podemos observar que no existe estacionalidad, por lo que podemos aplicar el método descrito para ajustar la tendencia.
+:::
 
 
 ```r
@@ -1085,9 +1170,11 @@ lines(reg$fitted.values,col="red")
 
 ---
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejemplo-poblacion-alemania-T1"><strong>(\#exm:ejemplo-poblacion-alemania-T1) </strong></span>El archivo "Population-North-Rhine-Westphalia.txt" contiene la población de la región North-Rhine-Westphalia (Alemania) en millónes cada 5 años desde 1935 hasta 1980. Observando el gráfico podemos suponer que la tendencia se puede ajustar por el modelo cúbico \@ref(eq:eq-modelo-cubico), esto es 
+::: {.example #ejemplo-poblacion-alemania-T1}
+El archivo "Population-North-Rhine-Westphalia.txt" contiene la población de la región North-Rhine-Westphalia (Alemania) en millónes cada 5 años desde 1935 hasta 1980. Observando el gráfico podemos suponer que la tendencia se puede ajustar por el modelo cúbico \@ref(eq:eq-modelo-cubico), esto es 
 $$T_t=\beta_0+\beta_1t+\beta_2t^2+\beta_3t^3$$
-El código en R para el gráfico y el ajuste es</div>\EndKnitrBlock{example}
+El código en R para el gráfico y el ajuste es
+:::
 
 ```r
 NRWpop=read.table("data/Population-North-Rhine-Westphalia.txt",
@@ -1192,11 +1279,13 @@ El promedio móvil entonces nos provee con el estimador
 \end{equation}
 Dado que $X_t$ es no observado para $t\leq0$ o $t\geq n$ no podemos usar \@ref(eq:eq-estimador-promedio-movil) para $t\leq q$ o $t>n-q$. Una forma de resolver este problema es haciendo $X_t=X_1$ para $t<1$ y $X_t=X_n$ para $t>n$. A continuación presentamos un ejemplo
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejem-huelgas-USA-T2"><strong>(\#exm:ejem-huelgas-USA-T2) </strong></span>El gráfico siguiente muestra las huelgas ocurridas en EE.UU, de 1951 a 1980, según la Oficina de Estadísticas Laborales del Departamento de Trabajo de los EE.UU.
+::: {.example #ejem-huelgas-USA-T2}
+El gráfico siguiente muestra las huelgas ocurridas en EE.UU, de 1951 a 1980, según la Oficina de Estadísticas Laborales del Departamento de Trabajo de los EE.UU.
 
 A estos datos le aplicamos un promedio móvil de 5 puntos, la Figura  muestra la serie suavizada y el término de error estimado $\hat{\epsilon}_t = X_t - \hat{T}_t$ se muestra en la Figura \ref{Grafico-tema3-residuales-huelga-USA}. Como era de esperarse ellos no presentan una tendencia clara.
 
-Las instrucciones en R para el suavizado y los gráficos son los siguientes:</div>\EndKnitrBlock{example}
+Las instrucciones en R para el suavizado y los gráficos son los siguientes:
+:::
 
 
 ```r
@@ -1257,9 +1346,11 @@ un proceso estacionario con media $k!a_k$. Esta consideración sugiere la posibi
 
 [^2]: Esto depende del hecho de que muchas funciones pueden ser aproximadas bastante bien, en un intervalo de longitud finita, por un polinomio de grado razonablemente bajo.
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejem-diferenciacion-poblacion-usa-T2"><strong>(\#exm:ejem-diferenciacion-poblacion-usa-T2) </strong></span>Aplicando esta técnica al ejemplo \@ref(exm:ejem-poblacion-usa-metodo-T1) de población de los EE.UU, hallamos que dos operaciones de diferenciación son suficientes para producir una serie sin aparente tendencia. Los datos diferenciados se muestran en la Figura. Note que la magnitud de las fluctuaciones en $\nabla^2X_n$ se incrementa con el valor de $n$. Este efecto se puede suprimir tomando primero logaritmo natural, $y_n=\ln X_n$ y entonces aplicando el operador $\nabla^2$ a la serie $\{y_n\}$.
+::: {.example #ejem-diferenciacion-poblacion-usa-T2}
+Aplicando esta técnica al ejemplo \@ref(exm:ejem-poblacion-usa-metodo-T1) de población de los EE.UU, hallamos que dos operaciones de diferenciación son suficientes para producir una serie sin aparente tendencia. Los datos diferenciados se muestran en la Figura. Note que la magnitud de las fluctuaciones en $\nabla^2X_n$ se incrementa con el valor de $n$. Este efecto se puede suprimir tomando primero logaritmo natural, $y_n=\ln X_n$ y entonces aplicando el operador $\nabla^2$ a la serie $\{y_n\}$.
 
-Las instrucciones en R son las siguientes:</div>\EndKnitrBlock{example}
+Las instrucciones en R son las siguientes:
+:::
 
 ```r
 Dx=diff(uspop,difference=2)
@@ -1686,20 +1777,24 @@ Suponga que consideramos un modelo de regresión con $k$ coeficientes y denotemo
 \end{equation}
 donde $RSS_k$ denota la suma residual de cuadrados bajo el modelo con $k$ coeficientes de regresión. Entonces, Akaike (1969, 1973, 1974) sugirió medir la bondad del ajuste para este modelo en particular equilibrando el error del ajuste contra el número de parámetros en el modelo; definiendo lo siguiente
 
-\BeginKnitrBlock{definition}\iffalse{-91-67-114-105-116-101-114-105-111-32-100-101-32-73-110-102-111-114-109-97-99-105-243-110-32-100-101-32-65-107-97-105-107-101-32-40-65-73-67-41-93-}\fi{}<div class="definition"><span class="definition" id="def:defi-AIC"><strong>(\#def:defi-AIC)  \iffalse (Criterio de Información de Akaike (AIC)) \fi{} </strong></span>El Criterio de Información de Akaike se define como
+::: {.definition #defi-AIC name="Criterio de Información de Akaike (AIC)"}
+El Criterio de Información de Akaike se define como
 \begin{equation}
 AIC=\ln\hat{\sigma}_k^2+\frac{n+2k}{n}
 (\#eq:eq-AIC)
 \end{equation}
 donde $\hat{\sigma}_k^2$ está dado por \@ref(eq:eq-estimador-emv-varianza) y $k$ es el número de parámetros en el modelo
-</div>\EndKnitrBlock{definition}
+
+:::
 
 ----
 
 El *criterio de información de Akaike* (AIC) es una medida de la calidad relativa de un modelo estadístico, para un conjunto dado de datos. Como tal, el AIC proporciona un medio para la selección del modelo. El valor de $k$ que minimiza $AIC$ especifica el mejor modelo. La idea es que la minimización de $\hat{\sigma}_k^2$ sea razonablemente objetiva, excepto que decrezca monótonamente cuando $k$ crece. Por lo tanto, debemos penalizar la variación del error por un término proporcional al número de parámetros. La elección del término de penalización dado por \@ref(eq:eq-AIC) no es único.
 
 
-\BeginKnitrBlock{example}\iffalse{-91-84-101-109-112-101-114-97-116-117-114-97-32-103-108-111-98-97-108-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-temperatura-global"><strong>(\#exm:ejem-temperatura-global)  \iffalse (Temperatura global) \fi{} </strong></span>Consideremos los datos de temperatura global del archivo "globtemp2.txt". Estos datos corresponden a 125 años de mediciones de temperatura, representan la desviación promedio entre las temperaturas en tierra y aire medidos en grados centígrados (°C), desde 1880 hasta 2004.</div>\EndKnitrBlock{example}
+::: {.example #ejem-temperatura-global name="Temperatura global"}
+Consideremos los datos de temperatura global del archivo "globtemp2.txt". Estos datos corresponden a 125 años de mediciones de temperatura, representan la desviación promedio entre las temperaturas en tierra y aire medidos en grados centígrados (°C), desde 1880 hasta 2004.
+:::
 
 
 ```r
@@ -1787,7 +1882,8 @@ acf(e.temp, main="ACF de los residuales de la temperatura global")
  
 ---
 
-\BeginKnitrBlock{example}\iffalse{-91-85-115-111-32-100-101-32-114-101-103-114-101-115-105-243-110-32-112-97-114-97-32-100-101-115-99-117-98-114-105-114-32-117-110-97-32-115-101-241-97-108-32-100-101-32-114-117-105-100-111-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-regresion-senal-ruido"><strong>(\#exm:ejem-regresion-senal-ruido)  \iffalse (Uso de regresión para descubrir una señal de ruido) \fi{} </strong></span>
+::: {.example #ejem-regresion-senal-ruido name="Uso de regresión para descubrir una señal de ruido"}
+
 Consideremos el modelo
 
 \begin{equation}
@@ -1819,7 +1915,8 @@ Usando regresión lineal sobre la serie generada, el modelo fijado será
 
 con $\hat{\sigma}_w=5.08$, donde los valores entre paréntesis son los errores estándar.
 
-Las instrucciones en R son las siguientes:</div>\EndKnitrBlock{example}
+Las instrucciones en R son las siguientes:
+:::
 
 
 ```r
@@ -1837,7 +1934,8 @@ lines(Xt,col="blue")
 
 ---
 
-\BeginKnitrBlock{example}\iffalse{-91-85-115-111-32-100-101-32-112-101-114-105-111-100-111-103-114-97-109-97-32-112-97-114-97-32-100-101-115-99-117-98-114-105-114-32-117-110-97-32-115-101-241-97-108-32-100-101-32-114-117-105-100-111-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-periodograma-senal-ruido"><strong>(\#exm:ejem-periodograma-senal-ruido)  \iffalse (Uso de periodograma para descubrir una señal de ruido) \fi{} </strong></span>En algunos ejemplos puede lucir engañoso la periodicidad porque damos por supuesto que conocemos el valor del parámetro $\omega$. Si no conocemos el parámetro $\omega$, podemos tratar de fijar el modelo \@ref(eq:eq-modelo-senosoidal) usando regresión no lineal con $\omega$ como un parámetro. Otro método es intentar con distintos valores de $\omega$ de forma sistemática. 
+::: {.example #ejem-periodograma-senal-ruido name="Uso de periodograma para descubrir una señal de ruido"}
+En algunos ejemplos puede lucir engañoso la periodicidad porque damos por supuesto que conocemos el valor del parámetro $\omega$. Si no conocemos el parámetro $\omega$, podemos tratar de fijar el modelo \@ref(eq:eq-modelo-senosoidal) usando regresión no lineal con $\omega$ como un parámetro. Otro método es intentar con distintos valores de $\omega$ de forma sistemática. 
 
 Una medida apropiada de la presencia de una frecuencia de oscilación de $j$ ciclos en $n$ puntos de tiempos de un conjunto datos podría ser
 
@@ -1848,7 +1946,8 @@ P(j/n)=\hat{\beta}_1^2(j/n)+\hat{\beta}_2^2(j/n)
 
 lo cual es básicamente una medida de correlación cuadrada. La cantidad \@ref(eq:eq-periodograma) es usualmente llamada el *periodograma*.
 
-La Figura siguiente muestra el periodograma para los datos generados por \@ref(eq:eq-modelo-senosoidal), y es fácil descubrir la componente periódica con frecuencia $\omega=0.02=10/500$.</div>\EndKnitrBlock{example}
+La Figura siguiente muestra el periodograma para los datos generados por \@ref(eq:eq-modelo-senosoidal), y es fácil descubrir la componente periódica con frecuencia $\omega=0.02=10/500$.
+:::
 
 
 ```r
@@ -1922,7 +2021,8 @@ De lo anterior, se tiene que los procesos estocásticos suelen ser descritos med
 
 ### Momentos, Varianza, Covarianza y Correlación
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-esperanza-varianza-procesos"><strong>(\#def:defi-esperanza-varianza-procesos) </strong></span>El **valor esperado** y **varianza** de un proceso estocástico están dados por
+::: {.definition #defi-esperanza-varianza-procesos}
+El **valor esperado** y **varianza** de un proceso estocástico están dados por
 \begin{equation}
 \mathbb{E}(x_t)=\int_{\Omega}x(\omega,t)dP(\omega),\quad t\in[0,T]
 (\#eq:eq-esperanza-proceso)
@@ -1932,13 +2032,18 @@ y
 Var(x_t)=\mathbb{E}(x_t-\mathbb{E}(x_t))^2,\quad t\in[0,T]
 (\#eq:eq-varianza-proceso)
 \end{equation}
-siempre que las integrales existan y sean finitas.</div>\EndKnitrBlock{definition}
+siempre que las integrales existan y sean finitas.
+:::
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-k-esimo-momento-proceso"><strong>(\#def:defi-k-esimo-momento-proceso) </strong></span>El **$k$-ésimo momento** de $x_t$, con $k\geq1$, se define como $\mathbb{E}(x_t^k)$ para todo $t\in[0,t]$.</div>\EndKnitrBlock{definition}
+::: {.definition #defi-k-esimo-momento-proceso}
+El **$k$-ésimo momento** de $x_t$, con $k\geq1$, se define como $\mathbb{E}(x_t^k)$ para todo $t\in[0,t]$.
+:::
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-funcion-covarianza-proceso"><strong>(\#def:defi-funcion-covarianza-proceso) </strong></span>La **función de covarianza** del proceso para dos instantes de tiempo $t$ y $s$ está dada por
+::: {.definition #defi-funcion-covarianza-proceso}
+La **función de covarianza** del proceso para dos instantes de tiempo $t$ y $s$ está dada por
 $$\gamma(t,s)=Cov(x_t,x_s)=\mathbb{E}[(x_t-\mathbb{E}(x_t))(x_s-\mathbb{E}(x_s))]$$
-La cantidad $x_t-x_s$ es llamada el proceso de *incrementos* desde $s$ a $t$, con $s<t$.</div>\EndKnitrBlock{definition}
+La cantidad $x_t-x_s$ es llamada el proceso de *incrementos* desde $s$ a $t$, con $s<t$.
+:::
 
 ### Variación de un proceso
 
@@ -1946,18 +2051,22 @@ Sea $P_n=\{0=t_0<t_1<\cdots<t_i<\cdots<t_n=t\}$ una partición cualquiera del in
 $$||P_n||=\max\{j=0,1,\ldots,n-1(t_{j+1}-t_j)\}$$
 el tamaño de paso máximo de discretización de la partición $P_n$.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-variacion-proceso"><strong>(\#def:defi-variacion-proceso) </strong></span>La **variación** del proceso $x$ se define como
+::: {.definition #defi-variacion-proceso}
+La **variación** del proceso $x$ se define como
 \begin{equation}
 V_t(x)=p-\lim_{||P_n||}\sum_{k=0}^{n-1}|x_{t_{k+1}}-x_{t_k}|
 (\#eq:eq-variacion-proceso)
 \end{equation}
-Si $x$ es diferenciable, entonces $V_t(x)=\int_0^t|x'(u)|du$. Si $V_t(X)<\infty$, entonces decimos que $x$ es de *variación acotada* en $[0,t]$. Si es cierto para todo $t\geq0$, entonces decimos que $x$ tiene *variación acotada*.</div>\EndKnitrBlock{definition}
+Si $x$ es diferenciable, entonces $V_t(x)=\int_0^t|x'(u)|du$. Si $V_t(X)<\infty$, entonces decimos que $x$ es de *variación acotada* en $[0,t]$. Si es cierto para todo $t\geq0$, entonces decimos que $x$ tiene *variación acotada*.
+:::
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-variacion-acotada"><strong>(\#def:defi-variacion-acotada) </strong></span>La **variación cuadrática** de un proceso estocástico $x$, denotada por $[x,x]_t$, se define como
+::: {.definition #defi-variacion-acotada}
+La **variación cuadrática** de un proceso estocástico $x$, denotada por $[x,x]_t$, se define como
 \begin{equation}
 [x,x]_t = p-\lim_{||P_n||}\sum_{k=0}^{n-1}|x_{t_{k+1}}-x_{t_k}|^2
 (\#eq:eq-variacion-acotada-proceso)
-\end{equation}</div>\EndKnitrBlock{definition}
+\end{equation}
+:::
 
 Para procesos estocásticos con trayectorias continua, el límite existe, y en dicho caso usamos la notación $\langle x,x\rangle_t$ y podemos definirla alternativamente como 
 \begin{equation}
@@ -1977,17 +2086,22 @@ El concepto de la martingala en la teoría de probabilidades fue introducido por
 
 El concepto fue inmediatamente aplicado al análisis de procesos bursátiles. Uno de los resultados más importantes de la matemática financiera es, precisamente, que un mercado perfecto sin posibilidades de arbitraje es una martingala.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-filtracion"><strong>(\#def:defi-filtracion) </strong></span>Sea $(\omega,\mathcal{F},P)$ un espacio de probabilidad. Una **filtración** $\{\mathcal{F}_t,t\geq0\}$ es una familia creciente de sub-$\sigma$-álgebras de $\mathcal{F}$ indexadas por $t\geq0$; es decir, para cada $s,t>0$ tal que $s<t$, se tiene $\mathcal{F}_s\subset\mathcal{F}_t$ con $\mathcal{F}_0=\{\Omega,\emptyset\}$.</div>\EndKnitrBlock{definition}
+::: {.definition #defi-filtracion}
+Sea $(\omega,\mathcal{F},P)$ un espacio de probabilidad. Una **filtración** $\{\mathcal{F}_t,t\geq0\}$ es una familia creciente de sub-$\sigma$-álgebras de $\mathcal{F}$ indexadas por $t\geq0$; es decir, para cada $s,t>0$ tal que $s<t$, se tiene $\mathcal{F}_s\subset\mathcal{F}_t$ con $\mathcal{F}_0=\{\Omega,\emptyset\}$.
+:::
 
 Para cada proceso estocástico $\{x_t\}_{t\geq0}$ y para cada $t$, podemos asociar una $\sigma$-álgebra denotada por $\mathcal{F}_t=\sigma\{x_s:0\leq s\leq t\}$, y que además es la $\sigma$-álgebra generada por $x$; es decir, la $\sigma$-álgebra más pequeña (minimal) de $\mathcal{F}$ que hace a $x(s,\omega)$ medible para cada $0\leq s\leq t$.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-proceso-adaptado"><strong>(\#def:defi-proceso-adaptado) </strong></span>Dado un proceso estocástico $\{X_t\}_{t\geq0}$ y una filtración $\{\mathcal{F}_t, t\geq0\}$ (no necesariamente la que genera $X$), el proceso $X$ se denomina **adaptado** a $\{\mathcal{F}_t, t\geq0\}$ ($\mathcal{F}_t$-adaptado) si para cada $t\geq0$, $X(t)$ es $\mathcal{F}_t$-medible.</div>\EndKnitrBlock{definition}
+::: {.definition #defi-proceso-adaptado}
+Dado un proceso estocástico $\{X_t\}_{t\geq0}$ y una filtración $\{\mathcal{F}_t, t\geq0\}$ (no necesariamente la que genera $X$), el proceso $X$ se denomina **adaptado** a $\{\mathcal{F}_t, t\geq0\}$ ($\mathcal{F}_t$-adaptado) si para cada $t\geq0$, $X(t)$ es $\mathcal{F}_t$-medible.
+:::
 
 En otras palabras $X=\{X_t\}_{t\geq0}$ es $\mathcal{F}_t$-adaptado cuando el valor de $X_t$ en el tiempo $t$ solo depende de la información contenida en la realización hasta el instante $t$.
 
 Dado un espacio de probabilidad $(\Omega,\mathcal{F},P)$ y una filtración $\{\mathcal{F}_t,t\geq0\}$, entonces definimos el **espacio de probabilidad filtrado** a la cuaterna $(\Omega,\mathcal{F},\{\mathcal{F}_t\}_{t\geq0},P)$.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-martingala"><strong>(\#def:defi-martingala) </strong></span>Sea $(\Omega,\mathcal{F},\{\mathcal{F}_t\}_{t\geq0},P)$ un espacio de probabilidad filtrado. Un proceso $X_t$ con $t\in T$, $T\subseteq\mathcal{R}$ un conjunto de índices, es una **martingala** relativo a la filtración $\{\mathcal{F}_t,t\geq0\}$, si
+::: {.definition #defi-martingala}
+Sea $(\Omega,\mathcal{F},\{\mathcal{F}_t\}_{t\geq0},P)$ un espacio de probabilidad filtrado. Un proceso $X_t$ con $t\in T$, $T\subseteq\mathcal{R}$ un conjunto de índices, es una **martingala** relativo a la filtración $\{\mathcal{F}_t,t\geq0\}$, si
 
 1) $X_t$ es adaptado a la filtración $\{\mathcal{F}_t,t\geq0\}$
   
@@ -1998,9 +2112,11 @@ Dado un espacio de probabilidad $(\Omega,\mathcal{F},P)$ y una filtración $\{\m
 Decimos que el proceso es una **submartingala** si 
 $$\mathbb{E}(X_t|\mathcal{F}_s)\geq X_s \text{ c.s.}$$
 Decimos que es una **supermartingala** si 
-$$\mathbb{E}(X_t|\mathcal{F}_s)\leq X_s \text{ c.s.}$$</div>\EndKnitrBlock{definition}
+$$\mathbb{E}(X_t|\mathcal{F}_s)\leq X_s \text{ c.s.}$$
+:::
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-36"><strong>(\#exm:unnamed-chunk-36) </strong></span>Sean $X_0,X_1,\ldots,X_n$ variables aleatorias iid tal que $\mathbb{E}(X_1)=\mu$ y sean 
+::: {.example #unnamed-chunk-36}
+Sean $X_0,X_1,\ldots,X_n$ variables aleatorias iid tal que $\mathbb{E}(X_1)=\mu$ y sean 
 \begin{eqnarray*}
 M_0 &=& X_0 \\
 M_1 &=& X_0+X_1 \\
@@ -2011,7 +2127,8 @@ La sucesión de variables aleatorias $M_n$ se llama **paseo aleatorio** y es una
 
 Es fácil demostrarlo, sencillamente usamos el hecho de que 
 $$M_{n+1}=M_n+X_{n+1}$$
-y que $M_n$ y $X_{n+1}$ son independientes. Podemos generar tal proceso en **R**.</div>\EndKnitrBlock{example}
+y que $M_n$ y $X_{n+1}$ son independientes. Podemos generar tal proceso en **R**.
+:::
 
 
 ```r
@@ -2024,7 +2141,9 @@ plot(M,type = "l",xlab = "t",ylab = "M_n")
 ```
 
 ![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-37-1.svg)<!-- -->
-\BeginKnitrBlock{example}\iffalse{-91-80-114-101-99-105-111-32-100-101-32-97-99-99-105-111-110-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-38"><strong>(\#exm:unnamed-chunk-38)  \iffalse (Precio de acciones) \fi{} </strong></span>Sean $Y_0,Y_1,\ldots,Y_n$ variables aleatorias independientes y positivas. Supongamos que una acción tiene precio $M_0$ a tiempo $t=0$. </div>\EndKnitrBlock{example}
+::: {.example #unnamed-chunk-38 name="Precio de acciones"}
+Sean $Y_0,Y_1,\ldots,Y_n$ variables aleatorias independientes y positivas. Supongamos que una acción tiene precio $M_0$ a tiempo $t=0$. 
+:::
 
 Un modelo común para modelar el precio de la acción en tiempo $t=n$ es
 
@@ -2060,28 +2179,36 @@ $$P(Y_i=(1+t)e^{-r})=p\quad\text{ y }\quad P(Y_i=(1+t)^{-1}e^{-r})=1-p$$
 
 La constante $r$ es la tasa de interés y los factores $(1+t)$ y $(1+t)^{-1}$ modelan las variaciones del mercado y garantizan que el precio tiene la forma $M_0(1+t)^ye^{-nr}$, con $|y|\leq n$. La volatilidad del precio está asociada a $p$. 
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-proceso-cuadrado-integrable"><strong>(\#def:defi-proceso-cuadrado-integrable) </strong></span>Una variable aleatoria $X$ es **cuadrado integrable** si $\mathbb{E}(X^2)<\infty$. Un proceso estocástico $X_t$ en el intervalo $[0,T]$, donde $T$ puede ser infinito, es **cuadrado integrable** si 
+::: {.definition #defi-proceso-cuadrado-integrable}
+Una variable aleatoria $X$ es **cuadrado integrable** si $\mathbb{E}(X^2)<\infty$. Un proceso estocástico $X_t$ en el intervalo $[0,T]$, donde $T$ puede ser infinito, es **cuadrado integrable** si 
 \begin{equation}
 \sup_{t\in[0,T]}\mathbb{E}(X_t^2)<\infty
 (\#eq:eq-proceso-cuadrado-integrable)
 \end{equation}
-es decir, si sus segundos momentos son acotados.</div>\EndKnitrBlock{definition}
+es decir, si sus segundos momentos son acotados.
+:::
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-proceso-uniforme-integrable"><strong>(\#def:defi-proceso-uniforme-integrable) </strong></span>Un proceso estocástico $X_t, 0\leq t\leq T$ se dice que es **uniformemente integrable** si 
+::: {.definition #defi-proceso-uniforme-integrable}
+Un proceso estocástico $X_t, 0\leq t\leq T$ se dice que es **uniformemente integrable** si 
 $$\mathbb{E}(|X_t|\mathbf{1}_{\{|X_t|>n\}})$$
-converge a 0 cuando $n\to\infty$ uniformemente en $t$.</div>\EndKnitrBlock{definition}
+converge a 0 cuando $n\to\infty$ uniformemente en $t$.
+:::
 
 ### Propiedad de Markov
 
 La propiedad de Markov establece que si conocemos el estado actual  de un proceso estocástico, entonces el comportamiento futuro de dicho proceso es independiente de su pasado. Un proceso $X_t$ tiene la *propiedad de Markov* si la distribución condicional del proceso $X_t$ dado el proceos en el instante $X_t=x$, no depende de los valores pasados.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-proceso-markov"><strong>(\#def:defi-proceso-markov) </strong></span>$X$ es un **proceso de Markov** si para cualquier $t$ y $s>0$,
+::: {.definition #defi-proceso-markov}
+$X$ es un **proceso de Markov** si para cualquier $t$ y $s>0$,
 $$P(X_{t+s}\leq y|\mathcal{F}_t) = P(X_{t+s}\leq y|X_t) \text{ c.s.}$$
-donde $\mathcal{F}_t$ es la $\sigma$-álgebra generada por el proceso hasta el tiempo $t$.</div>\EndKnitrBlock{definition}
+donde $\mathcal{F}_t$ es la $\sigma$-álgebra generada por el proceso hasta el tiempo $t$.
+:::
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-funcion-transicion-probabilidad"><strong>(\#def:defi-funcion-transicion-probabilidad) </strong></span>La **función de transición de probabilidad** de un proceso $X$ se define como 
+::: {.definition #defi-funcion-transicion-probabilidad}
+La **función de transición de probabilidad** de un proceso $X$ se define como 
 $$P(y,t,x,s) = P(X_y\leq y|X_s\leq x)$$
-la función de distribución condicional del proceso en el instante $t$, dado que éste está en el punto $x$ en el instante $s<t$.</div>\EndKnitrBlock{definition}
+la función de distribución condicional del proceso en el instante $t$, dado que éste está en el punto $x$ en el instante $s<t$.
+:::
 
 La propiedad de Markov implica una expresión que resulta muy útil en términos de la esperanza condicional por la $\sigma$-álgebra de eventos, la cual es válida tanto para procesos en tiempo discreto como en tiempo continuo.
 
@@ -2093,11 +2220,13 @@ Los modelos lineales proporcionan un enfoque natural que permite analizar el com
 
 ### Proceso de Ruido Blanco
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-ruido-blanco"><strong>(\#def:defi-ruido-blanco) </strong></span>Un proceso $\{w_t\}$ se denomina **ruido blanco** (white noise) de media 0 y varianza $\sigma^2$ si satisface
+::: {.definition #defi-ruido-blanco}
+Un proceso $\{w_t\}$ se denomina **ruido blanco** (white noise) de media 0 y varianza $\sigma^2$ si satisface
 \begin{eqnarray*}
 \mathbb{E}(w_t) &=& 0,\quad Var(w_t)=\sigma_w^2<\infty \\
 Cov(w_t,w_{t-k}) &=& 0, \forall k\neq0
-\end{eqnarray*}</div>\EndKnitrBlock{definition}
+\end{eqnarray*}
+:::
 
 Las series de tiempo generadas de esta manera son muy usadas como modelos para ruido en aplicaciones de ingeniería. La designación *"blanco"* se origina de la analogía con la luz blanca e indica que todos los posibles períodos de oscilación están presentes con igual intensidad.
 
@@ -2116,12 +2245,14 @@ Calculemos la función de autocovarianza de $w_t$
 \end{eqnarray*}
 La última igualdad se sigue del hecho de que $w_s$ y $w_t$ son no-correlacionados para $s\neq t$ por lo que $\mathbb{E}(w_sw_t) = \mathbb{E}(w_s)\mathbb{E}(w_t)=0$.
 
-\BeginKnitrBlock{example}\iffalse{-91-69-115-116-97-99-105-111-110-97-114-105-100-97-100-32-100-101-32-117-110-32-114-117-105-100-111-32-98-108-97-110-99-111-93-}\fi{}<div class="example"><span class="example" id="exm:unnamed-chunk-39"><strong>(\#exm:unnamed-chunk-39)  \iffalse (Estacionaridad de un ruido blanco) \fi{} </strong></span>La función de autocovarianza de un ruido blanco es fácil de evaluar como 
+::: {.example #unnamed-chunk-39 name="Estacionaridad de un ruido blanco"}
+La función de autocovarianza de un ruido blanco es fácil de evaluar como 
 $$\gamma_w(h) = \mathbb{E}(w_{t+h}w_t) = \begin{cases}
                                           \sigma_w^2,&\text{ si }h=0\\
                                           0,&\text{ si }h\neq0
                                          \end{cases}$$
-donde $\sigma_w^2$ es la varianza del ruido blanco. Esto significa que la serie es *débilmente estacionaria* o *estacionaria*. Si las variables de ruido blanco también son gaussianas, el proceso es *estrictamente estacionario*, como se pueder ver evaluando (2.10) usando la relación (2.2).</div>\EndKnitrBlock{example}
+donde $\sigma_w^2$ es la varianza del ruido blanco. Esto significa que la serie es *débilmente estacionaria* o *estacionaria*. Si las variables de ruido blanco también son gaussianas, el proceso es *estrictamente estacionario*, como se pueder ver evaluando (2.10) usando la relación (2.2).
+:::
 
 
 ```r
@@ -2150,12 +2281,14 @@ acf(wn)
 
 ![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-40-2.svg)<!-- -->
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejem-promedio-movil-ruido-blanco"><strong>(\#exm:ejem-promedio-movil-ruido-blanco) </strong></span>Podemos reemplazar las series de ruido blanco $w_t$ por un promedio móvil que suavice la serie. Por ejemplo, consideremos la serie $w_t$ en la ecuación ( ) y reemplacémosla por un promedio móvil de 3 puntos, dado por 
+::: {.example #ejem-promedio-movil-ruido-blanco}
+Podemos reemplazar las series de ruido blanco $w_t$ por un promedio móvil que suavice la serie. Por ejemplo, consideremos la serie $w_t$ en la ecuación ( ) y reemplacémosla por un promedio móvil de 3 puntos, dado por 
 \begin{equation}
 v_t = \frac{1}{3}(w_{t-1}+w_t+w_{t+1})
 (\#eq:eq-promedio-movil-ruido-blanco)
 \end{equation}
-lo cual nos da una serie suavizada. Tomando la serie del ejemplo anterior y usando la función 'filter' de **R** se obtienen los gráficos siguientes:</div>\EndKnitrBlock{example}
+lo cual nos da una serie suavizada. Tomando la serie del ejemplo anterior y usando la función 'filter' de **R** se obtienen los gráficos siguientes:
+:::
 
 
 ```r
@@ -2182,10 +2315,13 @@ plot.ts(vn,ylim=c(-3,3),ylab="Promedio móvil")
 ![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-41-2.svg)<!-- -->
 En la parte superior de cada uno se observan los ruidos blancos y en la parte inferior los respectivos promedios móviles. Podemos notar que las series de promedio móvil suavizan el comportamiento de las series originales, si tomamos más puntos en el promedio mayor será el suavizado.
 
-\BeginKnitrBlock{example}\iffalse{-91-70-117-110-99-105-243-110-32-100-101-32-109-101-100-105-97-32-100-101-32-117-110-32-112-114-111-109-101-100-105-111-32-109-243-118-105-108-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-funcion-media-MA"><strong>(\#exm:ejem-funcion-media-MA)  \iffalse (Función de media de un promedio móvil) \fi{} </strong></span>Si $w_t$ denota una serie de ruido blanco, entonces $\mu_{wt}=\mathbb{E}(w_t)=0$ para todo $t$. Luego para el promedio móvil de 3 puntos se tiene
-$$\mu_{wt} = \mathbb{E}(v_t) = \frac{1}{3}\mathbb{E}(w_{t-1}+w_t+w_{t+1}) = \frac{1}{3}(\mathbb{E}(w_{t-1})+\mathbb{E}(w_t)+\mathbb{E}(w_{t+1}))=0.$$</div>\EndKnitrBlock{example}
+::: {.example #ejem-funcion-media-MA name="Función de media de un promedio móvil"}
+Si $w_t$ denota una serie de ruido blanco, entonces $\mu_{wt}=\mathbb{E}(w_t)=0$ para todo $t$. Luego para el promedio móvil de 3 puntos se tiene
+$$\mu_{wt} = \mathbb{E}(v_t) = \frac{1}{3}\mathbb{E}(w_{t-1}+w_t+w_{t+1}) = \frac{1}{3}(\mathbb{E}(w_{t-1})+\mathbb{E}(w_t)+\mathbb{E}(w_{t+1}))=0.$$
+:::
 
-\BeginKnitrBlock{example}\iffalse{-91-65-117-116-111-99-111-118-97-114-105-97-110-122-97-32-100-101-32-117-110-32-112-114-111-109-101-100-105-111-32-109-243-118-105-108-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-ACF-MA"><strong>(\#exm:ejem-ACF-MA)  \iffalse (Autocovarianza de un promedio móvil) \fi{} </strong></span>Consideremos el promedio móvil de 3 puntos del ejemplo anterior y calculemos su función de autocovarianza
+::: {.example #ejem-ACF-MA name="Autocovarianza de un promedio móvil"}
+Consideremos el promedio móvil de 3 puntos del ejemplo anterior y calculemos su función de autocovarianza
 \begin{eqnarray*}
 \gamma_v(s,t) &=& \mathbb{E}[(v_s-\mu_s)(v_t-\mu_t)] \\
       &=& \mathbb{E}[(v_s-o)(v_t-0)] \\
@@ -2212,18 +2348,22 @@ Usando el hecho de que $\mathbb{E}(w_tw_s)=0$ si $s\neq t$. Cálculos similares 
                 0, &\text{ si }|s-t|\geq3
                 \end{cases}
 (\#eq:eq-autocovarianza-promedio-movil)
-\end{equation}</div>\EndKnitrBlock{example}
+\end{equation}
+:::
 
-\BeginKnitrBlock{example}\iffalse{-91-69-115-116-97-99-105-111-110-97-114-105-100-97-100-32-100-101-32-117-110-32-112-114-111-109-101-100-105-111-32-109-243-118-105-108-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-estacionaridad-MA"><strong>(\#exm:ejem-estacionaridad-MA)  \iffalse (Estacionaridad de un promedio móvil) \fi{} </strong></span>El proceso de promedio móvil usado en los ejemplos \@ref(exm:ejem-promedio-movil-ruido-blanco) y \@ref(exm:ejem-funcion-media-MA) es estacionario ya que podemos escribir la función de autocovarianza obtenida en \@ref(eq:eq-autocovarianza-promedio-movil) como
+::: {.example #ejem-estacionaridad-MA name="Estacionaridad de un promedio móvil"}
+El proceso de promedio móvil usado en los ejemplos \@ref(exm:ejem-promedio-movil-ruido-blanco) y \@ref(exm:ejem-funcion-media-MA) es estacionario ya que podemos escribir la función de autocovarianza obtenida en \@ref(eq:eq-autocovarianza-promedio-movil) como
 $$\gamma_v(h) = \begin{cases}
                   3/9, &\text{ si }h=0\\
                   2/9, &\text{ si }h=\pm1\\
                   1/9, &\text{ si }h=\pm2\\
                   0, &\text{ si }|h|\geq3
                   \end{cases}$$
-        </div>\EndKnitrBlock{example}
+        
+:::
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejem-camino-aleatorio"><strong>(\#exm:ejem-camino-aleatorio) </strong></span>Un modelo para analizar tendencias es el camino aleatorio con tendencia dado por 
+::: {.example #ejem-camino-aleatorio}
+Un modelo para analizar tendencias es el camino aleatorio con tendencia dado por 
 \begin{equation}
 X_t = \delta+X_{t-1}+w_t
 (\#eq:eq-camino-aleatorio-tendencia)
@@ -2234,7 +2374,8 @@ X_t = \delta t+\sum_{j=1}^Nw_j
 (\#eq:eq-camino-aleatorio-suma)
 \end{equation}
 para $t=1,2,\ldots.$
-A continuación generaremos un camino aleatorio usando **R**</div>\EndKnitrBlock{example}
+A continuación generaremos un camino aleatorio usando **R**
+:::
 
 
 ```r
@@ -2262,7 +2403,8 @@ lines(0.2*(1:500),lty="dashed",col="blue")
 
 Los modelos autoregresivos están basados en la idea de que el valor actual de la serie $x_t$ se puede explicar como una función de $p$ valores pasados $x_{t-1},x_{t-2},\ldots,x_{t-p}$ donde $p$ determina el número de pasos en necesarios para predecir el valor actual. Una parte de las series de tiempo económicas y financieras suelen ser caracterizadas por los modelos autorregresivos. Entre los principales ejemplos de las finanzas tenemos valoración de precios y de dividendos, las tasas reales de cambio, tasas de interés y los diferenciales de tipos de interés (spreads).
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-modelo-ARp"><strong>(\#def:defi-modelo-ARp) </strong></span>Un *modelo autoregresivo de orden $p$*, abreviado $AR(p)$ es de la forma 
+::: {.definition #defi-modelo-ARp}
+Un *modelo autoregresivo de orden $p$*, abreviado $AR(p)$ es de la forma 
 
 \begin{equation}
 x_t=\phi_1x_{t-1}+\phi_2x_{t-2}+\cdots+\phi_px_{t-p}+w_t,
@@ -2280,7 +2422,8 @@ x_t=\alpha+\phi_1x_{t-1}+\phi_2x_{t-2}+\cdots+\phi_px_{t-p}+w_t,
 (\#eq:eq-ARp-mu)
 \end{equation}
 
-donde $\alpha=\mu(1-\phi_1-\phi_2-\cdots-\phi_p)$.</div>\EndKnitrBlock{definition}
+donde $\alpha=\mu(1-\phi_1-\phi_2-\cdots-\phi_p)$.
+:::
 
 ----
 
@@ -2300,11 +2443,13 @@ o más conciso como
 
 Las propiedades de $\phi(B)$ son importantes para resolver \@ref(eq:eq-ARp-B-conciso). Esto nos lleva a la siguiente definición.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-operador-autoregresivo"><strong>(\#def:defi-operador-autoregresivo) </strong></span>El *operador autoregresivo* de orden $p$ se define como
+::: {.definition #defi-operador-autoregresivo}
+El *operador autoregresivo* de orden $p$ se define como
 \begin{equation}
 \phi(B) = 1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p
 (\#eq:eq-operador-autoregresivo)
-\end{equation}</div>\EndKnitrBlock{definition}
+\end{equation}
+:::
 
 ## Modelo AR(1)
 
@@ -2414,7 +2559,8 @@ acf(ar1_4,type = "covariance", main="ACF de la Serie AR(1) con phi=-0.5")
 </div>
 
 
-\BeginKnitrBlock{example}\iffalse{-91-77-111-100-101-108-111-32-65-82-32-69-120-112-108-111-115-105-118-111-32-121-32-99-97-117-115-97-108-105-100-97-100-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-modelo-AR-explosivo-causal"><strong>(\#exm:ejem-modelo-AR-explosivo-causal)  \iffalse (Modelo AR Explosivo y causalidad) \fi{} </strong></span>
+::: {.example #ejem-modelo-AR-explosivo-causal name="Modelo AR Explosivo y causalidad"}
+
 Ya hemos descritos las condiciones para que un proceso $AR(1)$ sea estacionario. Nos preguntamos si existe un proceso AR(1) estacionario con $|\phi|>1$. Tal proceso será llamado *explosivo* porque los valores de la serie de tiempo se hacen grande en magnitud rápidamente. Claramente, porque $|\phi|^j$ crece sin acotación cuando $j\to\infty$. Por otra parte, $\sum_{j=0}^{k-1}\phi^jw_{t-j}$ no converge (en media cuadrado) cuando $k\to\infty$, de modo que la idea intuitiva usada para obtener \@ref(eq:eq-AR1-serie-lineal) no funciona acá directamente.
 Podemos modificar el argumento para obtener un modelo estacionario como sigue. Escribimos $x_{t+1}=\phi x_t+w_{t+1}$ en cuyo caso
 
@@ -2427,7 +2573,8 @@ Podemos modificar el argumento para obtener un modelo estacionario como sigue. E
 iterando $k$ pasos hacia adelante. Porque $|\phi|^{-1}<1$, este resultado sugiere el modelo AR(1) estacionario que depende del futuro
 $$x_t=-\sum_{j=1}^{\infty}\phi^{-1}w_{t+j}$$
 
-Podemos verificar que este modelo es estacionario y de la forma AR(1), $x_t=\phi x_{t-1}+w_t$. Desafortunadamente, el modelo es inútil porque requiere conocer el futuro para predecir el futuro. Cuando un proceso no depende del futuro, tal como un AR(1) con $|\phi|<1$, decimos que el proceso es *causal*. En el caso explosivo de este ejemplo, el proceso es estacionario, pero también depende del futuro, y no causal.</div>\EndKnitrBlock{example}
+Podemos verificar que este modelo es estacionario y de la forma AR(1), $x_t=\phi x_{t-1}+w_t$. Desafortunadamente, el modelo es inútil porque requiere conocer el futuro para predecir el futuro. Cuando un proceso no depende del futuro, tal como un AR(1) con $|\phi|<1$, decimos que el proceso es *causal*. En el caso explosivo de este ejemplo, el proceso es estacionario, pero también depende del futuro, y no causal.
+:::
 
 
 ## Modelo AR(2)
@@ -2527,17 +2674,10 @@ d) $x_t=-0.2x_{t-1}+0.35x_{t-2}+w_t$
 
 <div class="figure">
 <img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-45-1.svg" alt="ACF de 4 procesos estacionarios AR(2)"  />
-<<<<<<< HEAD
-<p class="caption">(\#fig:unnamed-chunk-451)ACF de 4 procesos estacionarios AR(2)</p>
+<p class="caption">(\#fig:unnamed-chunk-45-1)ACF de 4 procesos estacionarios AR(2)</p>
 </div><div class="figure">
 <img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-45-2.svg" alt="ACF de 4 procesos estacionarios AR(2)"  />
-<p class="caption">(\#fig:unnamed-chunk-452)ACF de 4 procesos estacionarios AR(2)</p>
-=======
-<p class="caption">(\#fig:unnamed-chunk-45)ACF de 4 procesos estacionarios AR(2)</p>
-</div><div class="figure">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-45-2.svg" alt="ACF de 4 procesos estacionarios AR(2)"  />
-<p class="caption">(\#fig:unnamed-chunk-45)ACF de 4 procesos estacionarios AR(2)</p>
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
+<p class="caption">(\#fig:unnamed-chunk-45-2)ACF de 4 procesos estacionarios AR(2)</p>
 </div>
 
 La serie (b) tiene raíces características complejas, en efecto 
@@ -2570,7 +2710,8 @@ $$(1-\phi_1B-\phi_2B^2-\cdots-\phi_pB^p)\rho(h)=0\text{, para }h>0.$$
 
 El gráfico de la ACF de un proceso $AR(p)$ estacionario mostrará una mezcla de ondas de senos y cosenos con decaimientos exponenciales dependiendo de la naturaleza de sus raíces características.
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejem-modelo-AR3"><strong>(\#exm:ejem-modelo-AR3) </strong></span>Consideremos el modelo $AR(3)$ de la forma 
+::: {.example #ejem-modelo-AR3}
+Consideremos el modelo $AR(3)$ de la forma 
 
 $$x_t=0.0047+0.35x_{t-1}+0.18x_{t-2}-0.14x_{t-3}+w_t.$$
   
@@ -2587,7 +2728,8 @@ la cual podemos factorizar como
 $$(1+0.52B)(1-0.87B+0.27B^2)=0$$
 
 El primer factor $(1+0.52B)=0$, muestra u ndecaimiento exponencial en la ACF. Veamos ahora el segundo factor $(1-0.87B-(-0.27)B^2)=0$, tenemos que $\phi_1^2+4\phi_2=(0.87)^2+4(-0.27)=-0.3231<0$. Por consiguiente la ACF mostrará un comportamiento en ondas de senos y cosenos.
-</div>\EndKnitrBlock{example}
+
+:::
 
 ```r
 xt<-arima.sim(list(order=c(3,0,0),ar=c(0.35,0.18,-0.14)),n=100)
@@ -2634,7 +2776,8 @@ Para concluir esta sección, destaquemos que tanto la función de autocorrelaci�
 | AR(p)  |  Disminución gradual | Corte en paso p  |
 
 
-\BeginKnitrBlock{example}\iffalse{-91-76-97-32-80-65-67-70-32-100-101-32-117-110-32-65-82-40-49-41-32-99-97-117-115-97-108-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-PACF-AR1-causal"><strong>(\#exm:ejem-PACF-AR1-causal)  \iffalse (La PACF de un AR(1) causal) \fi{} </strong></span>
+::: {.example #ejem-PACF-AR1-causal name="La PACF de un AR(1) causal"}
+
 Considere la PACF de un proceso AR(1) dado por $x_t=\phi x_{t-1}+w_t$ con $|\phi|<1$. Por definición, $\phi_{1,1}=\rho(1)=\phi$. Para calcular $\phi_{2,2}$ considere la regresión de $x_2$ en $x_1$, $x_2^1=\beta x_1$. Minimicemos $\beta$
 
 $$\mathbb{E}(x_2-\beta x_1)^2 = \gamma(0)-2\beta\gamma(1)+\beta^2\gamma(0).$$
@@ -2647,11 +2790,13 @@ Esta ecuación es la misma que la anterior, por lo que $\beta=\phi$ y $x_0^1=\ph
 
 $$\text{cov}(x_2-\phi x_1,x_0-\phi x_1)=\gamma(2)-2\phi\gamma(1)+\phi^2\gamma(0)=0$$
 
-porque $\gamma(h)=\gamma(0)\phi^h$. Entonces $\phi_{2,2}=0$.</div>\EndKnitrBlock{example}
+porque $\gamma(h)=\gamma(0)\phi^h$. Entonces $\phi_{2,2}=0$.
+:::
 
 ----
 
-\BeginKnitrBlock{example}\iffalse{-91-76-97-32-80-65-67-70-32-100-101-32-117-110-32-65-82-40-112-41-32-99-97-117-115-97-108-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-PACF-ARp-causal"><strong>(\#exm:ejem-PACF-ARp-causal)  \iffalse (La PACF de un AR(p) causal) \fi{} </strong></span>
+::: {.example #ejem-PACF-ARp-causal name="La PACF de un AR(p) causal"}
+
 Sea $x_t=\sum_{j=1}^{p}\phi_jx_{t-j}+w_j$ donde las raíces de $\phi(z)$ están fuera del círculo unitario. En particular, $x_h=\sum_{j=1}^{p}\phi_jx_{h-j}+w_h$. Cuando $h>p$, la regresión de $x_h$ en $x_{h-1},x_{h-2},\ldots,x_1$ es
 
 $$x_h^{h-1}=\sum_{j=1}^{p}\phi_jx_{h-j}$$
@@ -2669,7 +2814,8 @@ ya que, por causalidad $x_0-x_0^{h-1}$ depende sólo de $\{w_{h-1},w_{h-2},\ldot
 
 La figura \@ref(fig:grafico-ACF-PACF-AR2) muestra las ACF y PACF del modelo AR(2) dado por 
 
-$$x_t=1.5x_{t-1}-0.75x_{t-2}+w_t.$$</div>\EndKnitrBlock{example}
+$$x_t=1.5x_{t-1}-0.75x_{t-2}+w_t.$$
+:::
 
 
 ```r
@@ -2692,14 +2838,16 @@ abline(h=0)
 
 Existen diversos criterios de información disponibles para determinar el orden $p$ de un proceso autoregresivo. Todos ellos están basados en verosimilitud. El primer criterio ya lo definimos en \@ref(def:defi-AIC)
 
-\BeginKnitrBlock{definition}\iffalse{-91-67-114-105-116-101-114-105-111-32-100-101-32-73-110-102-111-114-109-97-99-105-243-110-32-100-101-32-65-107-97-105-107-101-32-40-65-73-67-41-93-}\fi{}<div class="definition"><span class="definition" id="def:defi-AIC-2"><strong>(\#def:defi-AIC-2)  \iffalse (Criterio de Información de Akaike (AIC)) \fi{} </strong></span>El Criterio de Información de Akaike se define como 
+::: {.definition #defi-AIC-2 name="Criterio de Información de Akaike (AIC)"}
+El Criterio de Información de Akaike se define como 
 
 \begin{equation}
 AIC = \ln\hat{\sigma}_k^2+\frac{n+2k}{n}
 (\#eq:eq-AIC)
 \end{equation}
 
-donde $\hat{\sigma}_k^2$ es el estimador de máxima verosimilitud para la varianza, $k$ es el número de parámetros en el modelo y $n$ es el tamaño de la muestra [^nota4]</div>\EndKnitrBlock{definition}
+donde $\hat{\sigma}_k^2$ es el estimador de máxima verosimilitud para la varianza, $k$ es el número de parámetros en el modelo y $n$ es el tamaño de la muestra [^nota4]
+:::
 
 ----
 
@@ -2713,25 +2861,29 @@ El AIC no proporciona una prueba de un modelo en el sentido de probar una hipót
 
 En el criterio AIC definido en la ecuación \@ref(eq:eq-AIC), el sesgo es aproximado por el número de parámetros los cuales son constantes y no tienen variabilidad. Para el modelo de regresión, la corrección del sesgo el logaritmo de la verosimilitud se define como
 
-\BeginKnitrBlock{definition}\iffalse{-91-65-73-67-32-99-111-110-32-115-101-115-103-111-32-99-111-114-114-101-103-105-100-111-32-40-65-73-67-99-41-93-}\fi{}<div class="definition"><span class="definition" id="def:defi-AICc"><strong>(\#def:defi-AICc)  \iffalse (AIC con sesgo corregido (AICc)) \fi{} </strong></span>
+::: {.definition #defi-AICc name="AIC con sesgo corregido (AICc)"}
+
 \begin{equation}
 AICc = \ln\hat{\sigma}_k^2+\frac{n+k}{n-k-2}
 (\#eq:eq-AICc)
 \end{equation}
 
-donde $\hat{\sigma}_k^2$ es el estimador de máxima verosimilitud de la varianza, $k$ es el número de parámetros en el modelo y $n$ es el tamaño de la muestra.</div>\EndKnitrBlock{definition}
+donde $\hat{\sigma}_k^2$ es el estimador de máxima verosimilitud de la varianza, $k$ es el número de parámetros en el modelo y $n$ es el tamaño de la muestra.
+:::
 
 ----
 
 Este modelo fue propuesto originalmente por *N. Sugiura* en el artículo **"Further analysis of the data by Akaike's information criterion and the finite corrections"**. *Communications in Statistics, Theory and Methods*, Vol. 7, No. 1, pp. 13-26, 1978. Se tiene que el AICc es esencialmente el AIC con un término de penalización adicional para el número de parámetros. Nótese que cuando $n\to\infty$, el término de penalización adicional converge a 0, y por lo tanto el AICc converge al AIC. De manera similar que en el AIC, se selecciona el modelo con el menor valor AICc.
 
-\BeginKnitrBlock{definition}\iffalse{-91-67-114-105-116-101-114-105-111-32-100-101-32-73-110-102-111-114-109-97-99-105-243-110-32-100-101-32-83-99-104-119-97-114-122-32-40-83-73-67-41-93-}\fi{}<div class="definition"><span class="definition" id="def:defi-SIC"><strong>(\#def:defi-SIC)  \iffalse (Criterio de Información de Schwarz (SIC)) \fi{} </strong></span>
+::: {.definition #defi-SIC name="Criterio de Información de Schwarz (SIC)"}
+
 \begin{equation}
 SIC = \ln\hat{\sigma}_k^2+\frac{k\ln n}{n}
 (\#eq:eq-SIC)
 \end{equation}
   
-usando la misma notación que en la definición \@ref(def:defi-AICc).</div>\EndKnitrBlock{definition}
+usando la misma notación que en la definición \@ref(def:defi-AICc).
+:::
 
 ----
 
@@ -2740,7 +2892,9 @@ SIC también llamado *Criterio Bayesiano de Información* (BIC) es un criterio p
 El BIC fue desarrollado por *Gideon E. Schwarz*, quien dio un argumento bayesiano a favor de su adopción. Akaike también desarrolló su propio formalismo bayesiano, que ahora se conoce como la ABIC (siglas en inglés) por Criterio de Información Bayesiano de Akaike.
 
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejem-serie-nuevos-peces-AR2"><strong>(\#exm:ejem-serie-nuevos-peces-AR2) </strong></span>Consideremos el archivo de datos "recruit.txt", consistente del número de nuevos peces en el Pacífico Central relacionado con el Índice de Oscilación del Sur (SOI) que mide los cambios en la presión del aire relativo a la temperatura de la superficie del mar. Son 453 registros de 1950 a 1987 tomados mensualmente. La ACF y la PACF indican que el modelo que mejor se ajusta es un $AR(2)$. La ACF tiene ciclos correspondientes a aproximadamente períodos de 12 meses y la PACF tiene valores grandes para $h=1,2$ y es esencialmente cero para paso de orden mayor.</div>\EndKnitrBlock{example}
+::: {.example #ejem-serie-nuevos-peces-AR2}
+Consideremos el archivo de datos "recruit.txt", consistente del número de nuevos peces en el Pacífico Central relacionado con el Índice de Oscilación del Sur (SOI) que mide los cambios en la presión del aire relativo a la temperatura de la superficie del mar. Son 453 registros de 1950 a 1987 tomados mensualmente. La ACF y la PACF indican que el modelo que mejor se ajusta es un $AR(2)$. La ACF tiene ciclos correspondientes a aproximadamente períodos de 12 meses y la PACF tiene valores grandes para $h=1,2$ y es esencialmente cero para paso de orden mayor.
+:::
 
 
 ```r
@@ -2837,10 +2991,12 @@ $$\hat{x}_m(h) = \phi_0+\sum_{i=1}^p\phi_1\hat{x}_m(h-i)$$
 
 donde se entiede que $\hat{x}_m(i)=x_{m+i}$ si $i<0$. Esta predicción se puede calcular recursivamente usando las predicciones $\hat{x}_m(i)$ para $i=1,\ldots,h-1$. El error de predicción de paso $h$ es $e_m(h)=x_{m+h}-\hat{x}_m(h)$. Se puede demostrar que para un proceso $AR(p)$ estacionario, $\hat{x}_m(h)$ converge a $\mathbb{E}(x_t)$ cuando $h\to\infty$, esto es, para una serie $AR(p)$ estacionaria, la predicción a largo plazo se aproxima a su media incondicional. Esta propiedad se conoce como la *reversión media* en la literatura financiera. La desviación del error de predicción se aproxima entonces a la desviación incondicional de $x_t$.
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejem-prediccion-SOI"><strong>(\#exm:ejem-prediccion-SOI) </strong></span>Realicemos una predicción para la serie de nuevos peces dado en el ejemplo \@ref(exm:ejem-serie-nuevos-peces-AR2). Para ello usaremos la función "predict" de R. Vamos a hacer una predicción de 24 meses. Del ejemplo \@ref(exm:ejem-serie-nuevos-peces-AR2), pudimos notar en las ACF y PACF que un modelo que se ajusta a esta serie es un proceso $AR(2)$, así que lo primero que hacemos es ajustar el modelo, y luego calculamos la predicción. 
+::: {.example #ejem-prediccion-SOI}
+Realicemos una predicción para la serie de nuevos peces dado en el ejemplo \@ref(exm:ejem-serie-nuevos-peces-AR2). Para ello usaremos la función "predict" de R. Vamos a hacer una predicción de 24 meses. Del ejemplo \@ref(exm:ejem-serie-nuevos-peces-AR2), pudimos notar en las ACF y PACF que un modelo que se ajusta a esta serie es un proceso $AR(2)$, así que lo primero que hacemos es ajustar el modelo, y luego calculamos la predicción. 
 
 Al realizar el gráfico de la serie y la predicción notamos que después de 12 meses, la predicción converge a la media de la serie tal como se describió previamente.
-</div>\EndKnitrBlock{example}
+
+:::
 
 
 ```r
@@ -2860,14 +3016,6 @@ regr$asy.se.coef
 ```r
 # Prediccion
 fore=predict(regr, n.ahead=24)
-```
-
-```
-## Warning in object$var.pred * vars: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-```
-
-```r
 ts.plot(rec,fore$pred,col=1:2,xlim=c(1980,1990),
         xlab="Años", ylab="Nuevos peces")
 lines(fore$pred,type = "p",col=2)
@@ -2883,14 +3031,16 @@ lines(fore$pred-fore$se,lty = "dashed",col=4)
 
 En este capítulo describiremos otra clase de modelos simples que también son útiles en el modelado de series de retorno en finanzas. Estos modelos se denominam modelos de promedio móvil ($MA$, siglas en inglés: Moving Average). Hay varias maneras de introducir los modelos $MA$. Un enfoque es tratar el modelo como una extensión de una serie de ruido blanco; alternativamente a la representación autoregresiva en la cual $x_t$ del lado izquierdo se asume como una combinación lineal, en los modelos de promedio móvil e orden $q$ $MA(q)$, asumimos el ruido blanco $w_t$ del lado derecho de la ecuación que los define como una combinación lineal de los datos observados.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-modelo-MAq"><strong>(\#def:defi-modelo-MAq) </strong></span>El **modelo de promedio móvil de orden $q$** o modelo $MA(q)$, se define como
+::: {.definition #defi-modelo-MAq}
+El **modelo de promedio móvil de orden $q$** o modelo $MA(q)$, se define como
 
 \begin{equation}
 x_t=w_t+\theta_1x_{t-1}+\theta_2x_{t-2}+\cdots+\theta_qx_{t-q}
 (\#eq:eq-MAq)
 \end{equation}
   
-donde hay $q$ pasos o saltos en el promedio móvil y $\theta_1,\theta_2,\ldots,\theta_q (\theta_q\neq0)$ son parámetros. [^nota7] El ruido $w_t$ se asume como un ruido blanco gaussiano.</div>\EndKnitrBlock{definition}
+donde hay $q$ pasos o saltos en el promedio móvil y $\theta_1,\theta_2,\ldots,\theta_q (\theta_q\neq0)$ son parámetros. [^nota7] El ruido $w_t$ se asume como un ruido blanco gaussiano.
+:::
 
 ----
 
@@ -2906,12 +3056,14 @@ x_t = \theta(B)w_t
 
 usando la siguiente definición.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-operador-promedio-movil"><strong>(\#def:defi-operador-promedio-movil) </strong></span>El **operador de promedio móvil** se define como
+::: {.definition #defi-operador-promedio-movil}
+El **operador de promedio móvil** se define como
 
 \begin{equation}
 \theta(B) = 1+\theta_1B+\theta_2B^2+\cdots+\theta_qb^q
 (\#eq:eq-operador-promedio-movil)
-\end{equation}</div>\EndKnitrBlock{definition}
+\end{equation}
+:::
 
 ----
 
@@ -3077,7 +3229,8 @@ Para un modelo $MA(2)$ dado por la ecuación \@ref(eq:eq-MA2) la función de aut
 
 En este caso, la ACF corta en paso 2. Esta propiedad la podemos generalizar a los modelos $MA(q)$. Así, para un modelo $MA(q)$ la ACF se corta en paso $q$, y vale cero para $h>q$. Consecuentemente, una serie $MA(q)$ está solo linealmente relacionada con sus $q$ primeros valores y por consiguiente es un modelo de "memoria finita". 
 
-\BeginKnitrBlock{example}\iffalse{-91-78-111-32-117-110-105-99-105-100-97-100-32-100-101-32-109-111-100-101-108-111-115-32-77-65-32-101-32-73-110-118-101-114-116-105-98-105-108-105-100-97-100-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-no-unicidad-MA"><strong>(\#exm:ejem-no-unicidad-MA)  \iffalse (No unicidad de modelos MA e Invertibilidad) \fi{} </strong></span>Usando las funciones de autocovarianza (ec.  \@ref(eq:eq-autocovarianza-MA1)) y de autocorrelación (ec. \@ref(eq:eq-ACF-MA1)) de un modelo $MA(1)$ podemos notar que $\rho(h)$ es el mismo para $\theta$ y $1/\theta$, probemos, por ejemplo, con $\theta=5$ y $\frac{1}{\theta}=\frac{1}{5}$
+::: {.example #ejem-no-unicidad-MA name="No unicidad de modelos MA e Invertibilidad"}
+Usando las funciones de autocovarianza (ec.  \@ref(eq:eq-autocovarianza-MA1)) y de autocorrelación (ec. \@ref(eq:eq-ACF-MA1)) de un modelo $MA(1)$ podemos notar que $\rho(h)$ es el mismo para $\theta$ y $1/\theta$, probemos, por ejemplo, con $\theta=5$ y $\frac{1}{\theta}=\frac{1}{5}$
   
 \begin{eqnarray*}
 \rho(h) &=& \begin{cases}
@@ -3110,7 +3263,8 @@ $$x_t=w_t+\frac{1}{5}w_{t-1}, w_t\sim iidN(0,25)\text{  y  } x_t=v_t+5v_{t-1},  
 
 son los mismos debido a la normalidad, es decir, todas las distribuciones finitas son las mismas.
               
-Para descubrir cual de los modelos es el modelo invertible, podemos invertir los papeles de $x_t$ y $w_t$ (porque estamos copiando el caso $AR$) y escribir el modelo $MA(1)$ como $w_t=-\theta w_{t-1}+x_t$. Siguiendo los pasos para \@ref(eq:eq-AR1-serie-lineal), si $|\theta|<1$, entonces $w_t=\sum_{j=0}^{\infty}(-\theta)^jx_{t-j}$, lo cual es la representación del modelo $AR$ infinito deseado. Por consiguiente, elegimos el modelo con $\sigma_w^2=25$ y $\theta=1/5$ ya que este modelo es invertible</div>\EndKnitrBlock{example}
+Para descubrir cual de los modelos es el modelo invertible, podemos invertir los papeles de $x_t$ y $w_t$ (porque estamos copiando el caso $AR$) y escribir el modelo $MA(1)$ como $w_t=-\theta w_{t-1}+x_t$. Siguiendo los pasos para \@ref(eq:eq-AR1-serie-lineal), si $|\theta|<1$, entonces $w_t=\sum_{j=0}^{\infty}(-\theta)^jx_{t-j}$, lo cual es la representación del modelo $AR$ infinito deseado. Por consiguiente, elegimos el modelo con $\sigma_w^2=25$ y $\theta=1/5$ ya que este modelo es invertible
+:::
 
 ----
 
@@ -3200,7 +3354,8 @@ El modelo de regresión clásico del Capítulo 3 fue desarrollado para el caso e
 
 Ahora procederemos con un desarrollo más general de modelos autoregresivos, de promedio móvil y mezcla de ambos modelos para series de tiempo estacionarias.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-modelo-ARMA"><strong>(\#def:defi-modelo-ARMA) </strong></span>Una serie de tiempo $\{x_t; t=0,\pm1,\pm2,\ldots\}$ es un *proceso autoregresivo de promedio móvil*, denotado $ARMA(p,q)$, si es estacionario y
+::: {.definition #defi-modelo-ARMA}
+Una serie de tiempo $\{x_t; t=0,\pm1,\pm2,\ldots\}$ es un *proceso autoregresivo de promedio móvil*, denotado $ARMA(p,q)$, si es estacionario y
 
 \begin{equation}
     x_t=\phi_1x_{t-1}+\cdots+\phi_px_{t-p}+w_t+\theta_1w_{t-1}+\cdots+\theta_qw_{t-q}
@@ -3214,7 +3369,8 @@ con $\phi_p\neq0,\theta_q\neq0$ y $\sigma_w^2>0$. Los parámetros $p$ y $q$ son 
 (\#eq:eq-modelo-ARMA-media-no-cero)
 \end{equation}
 
-A menos que se declare lo contrario, $\{w_t;t=0,\pm1,\pm2,\ldots\}$ es una sucesión de ruido blanco gaussiano.</div>\EndKnitrBlock{definition}
+A menos que se declare lo contrario, $\{w_t;t=0,\pm1,\pm2,\ldots\}$ es una sucesión de ruido blanco gaussiano.
+:::
 
 ----
 
@@ -3227,7 +3383,8 @@ Como se observó previamente, cuando $q=0$, el modelo es llamado modelo autoregr
 
 Antes de discutir las condiciones bajo la cual \@ref(eq:eq-modelo-ARMA) es causal e invertible, veamos un potencial problema con el modelo ARMA.
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejem-modelo-econometria"><strong>(\#exm:ejem-modelo-econometria) </strong></span>En econometría, es usual considerar modelos dinámicos del siguiente tipo; llamemos $x_1,\ldots,x_r$ a la característica numérica de interés en un sector económico arbitrario dado (precios, nivel de producción, ingresos, inversiones, etc.), asumiendo por ejemplo que las observaciones son anuales. Para el año $n$ existe un vector asociado $X(n)$ con coordenadas $x_1(n),\ldots,x_r(n)$. Asumimos que $X(n)$ verifica la recursión lineal del tipo
+::: {.example #ejem-modelo-econometria}
+En econometría, es usual considerar modelos dinámicos del siguiente tipo; llamemos $x_1,\ldots,x_r$ a la característica numérica de interés en un sector económico arbitrario dado (precios, nivel de producción, ingresos, inversiones, etc.), asumiendo por ejemplo que las observaciones son anuales. Para el año $n$ existe un vector asociado $X(n)$ con coordenadas $x_1(n),\ldots,x_r(n)$. Asumimos que $X(n)$ verifica la recursión lineal del tipo
 $$X(n) = A_0X(n)+A_1X(n-1)+\cdots+A_jX(n-j)$$
 donde $A_0,\ldots,A_j$ son matrices, pero esa relación \emph{ideal} es perturbada por un efecto aleatorio $w(n)$ con media cero, no correlacionado para diferentes años. Entonces $X(n)$ llega a ser un vector aleatorio que verifica
 
@@ -3237,11 +3394,13 @@ X(n) = \sum_{k=0}^jA_kX(n-k) + w(n).
 \end{equation}
 
 Se puede demostrar, con unas pocas restricciones sobre los $A_k$, que si $w(n)$ es un ruido blanco, entonces existe un proceso estacionario $X(n)$ que satisface \@ref(eq:eq-vector-aleatorio-ejemplo-econometria) tal que para cada $i=1,\ldots,r$, $x_i(n)$ es un proceso ARMA.
-</div>\EndKnitrBlock{example}
+
+:::
 
 
 
-\BeginKnitrBlock{example}\iffalse{-91-82-101-100-117-110-100-97-110-99-105-97-32-100-101-32-80-97-114-225-109-101-116-114-111-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-redundancia-parametro"><strong>(\#exm:ejem-redundancia-parametro)  \iffalse (Redundancia de Parámetro) \fi{} </strong></span>Considere un proceso de ruido blanco $x_t=w_t$. Equivalentemente podemos escribir este como $0.5x_{t-1}=0.5w_{t-1}$ utilizando el operador de cambio una vez y multiplicando por 0.5. Ahora, restamos las dos representaciones para obtener
+::: {.example #ejem-redundancia-parametro name="Redundancia de Parámetro"}
+Considere un proceso de ruido blanco $x_t=w_t$. Equivalentemente podemos escribir este como $0.5x_{t-1}=0.5w_{t-1}$ utilizando el operador de cambio una vez y multiplicando por 0.5. Ahora, restamos las dos representaciones para obtener
 
 \begin{equation}
     x_t-0.5x_{t-1}=w_t-0.5w_{t-1}\text{ ó }x_t=0.5x_{t-1}-0.5w_{t-1}+w_t
@@ -3257,7 +3416,8 @@ $$x_t=(1-0.5B)^{-1}(1-0.5B)x_t=(1-0.5B)^{-1}(1-0.5B)w_t=w_t$$
 el cual es el modelo original.
 
 Podemos fácilmente detectar el problema de sobre-parametrización con el uso de los operadores o sus polinomios asociados. Esto es, escribimos el polinomio AR $\phi(z)=(1-0.5z)$, el polinomio MA $\theta(z)=(1-0.5z)$ y note que ambos polinomios tienen un factor común, este es $(1-0.5z)$. Este factor común identifica los parámetros de redundancia de inmediato. Descartando el factor en cada uno, nos queda $\phi(z)=1$ y $\theta(z)=1$ de donde se concluye que $\phi(B)=1$ y $\theta(B)=1$, y deducimos que el modelo es un ruido blanco. La consideración de parámetros de redundancia será crucial cuando discutamos la estimación de modelo ARMA en general. Como apuntó este ejemplo, podemos fijar un modelo ARMA(1,1) a un ruido blanco y conseguir que los parámetros estimados sean significativos. Si no fuéramos conscientes de la redundancia de parámetros, se podría alegar que los datos están correlacionados, cuando en realidad no lo son.
-</div>\EndKnitrBlock{example}
+
+:::
 
 ----
 
@@ -3272,7 +3432,8 @@ Los ejemplos \@ref(exm:ejem-modelo-AR-explosivo-causal), \@ref(exm:ejem-no-unici
 
 Para resolver estos problemas, requeriremos algunas restricciones adicionales sobre los parámetros de los modelos, pero primero, daremos las siguientes definiciones:
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-polinomios-AR-MA"><strong>(\#def:defi-polinomios-AR-MA) </strong></span>Los *Polinomios AR y MA* se definen como
+::: {.definition #defi-polinomios-AR-MA}
+Los *Polinomios AR y MA* se definen como
 
 \begin{equation}
     \phi(z)=1-\phi_1z-\cdots-\phi_pz^p\text{, }\phi_p\neq0
@@ -3286,7 +3447,8 @@ y
 (\#eq:eq-polinomio-MA)
 \end{equation}
 
-respectivamente, donde $z$ es un número complejo.</div>\EndKnitrBlock{definition}
+respectivamente, donde $z$ es un número complejo.
+:::
 
 ----
 
@@ -3294,39 +3456,46 @@ Para abordar el primer problema (Modelos de parámetros redundantes), de ahora e
 
 Para resolver el problema del modelo con dependencia del futuro, introduciremos formalmente el concepto de causalidad.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-causalidad"><strong>(\#def:defi-causalidad) </strong></span>Un modelo ARMA(p,q), $\phi(B)x_t=\theta(B)w_t$, se dice que es *causal* si la serie de tiempo $\{x_t:t=0,\pm1,\pm2,\ldots\}$ se puede escribir como un proceso lineal de un lado, esto es
+::: {.definition #defi-causalidad}
+Un modelo ARMA(p,q), $\phi(B)x_t=\theta(B)w_t$, se dice que es *causal* si la serie de tiempo $\{x_t:t=0,\pm1,\pm2,\ldots\}$ se puede escribir como un proceso lineal de un lado, esto es
 
 \begin{equation}
     x_t=\sum_{j=0}^{\infty}\psi_jw_{t-j}=\psi(B)w_t
 (\#eq:eq-modelo-causal)
 \end{equation}
 
-donde $\psi(B)=\sum_{j=0}^{\infty}\psi_jB^j$ y $\sum_{j=0}^{\infty}|\psi_j|<\infty$; haciendo $\psi_0=1$</div>\EndKnitrBlock{definition}
+donde $\psi(B)=\sum_{j=0}^{\infty}\psi_jB^j$ y $\sum_{j=0}^{\infty}|\psi_j|<\infty$; haciendo $\psi_0=1$
+:::
 
 ----
 
 En el ejemplo \@ref(exm:ejem-modelo-AR-explosivo-causal) el proceso $AR(1)$ $x_t=\phi z_{t-1}+w_t$ es causal solo cuando $|\phi|<1$. Equivalentemente, el proceso es causal sólo cuando la raíz de $\phi(z)=1-\phi z$ es mayor que uno en valor absoluto. Esto es, la raíz $z_0$ de $\phi(z)$ es $z_0=1/\phi$ (porque $\phi(z_0)=0$) y $|z_0|>1$, porque $|\phi|<1$.
 
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-modelo-invertible"><strong>(\#def:defi-modelo-invertible) </strong></span>Un modelo ARMA(p,q) $\phi(B)x_t=\theta(B)w_t$ se dice *invertible* si la serie de tiempo $\{x_t:t=0,\pm1,\pm2,\ldots\}$ se puede escribir como
+::: {.definition #defi-modelo-invertible}
+Un modelo ARMA(p,q) $\phi(B)x_t=\theta(B)w_t$ se dice *invertible* si la serie de tiempo $\{x_t:t=0,\pm1,\pm2,\ldots\}$ se puede escribir como
 \begin{equation}
     \pi(B)x_t=\sum_{j=0}^{\infty}\pi_jx_{t-j}=w_t
 (\#eq:eq-modelo-invertible)
 \end{equation}
 
-donde $\pi(B)=\sum_{j=0}^{\infty}\pi_jB^j$ y $\sum_{j=0}^{\infty}|\pi_j|<\infty$; hacemos $\pi_0=1$</div>\EndKnitrBlock{definition}
+donde $\pi(B)=\sum_{j=0}^{\infty}\pi_jB^j$ y $\sum_{j=0}^{\infty}|\pi_j|<\infty$; hacemos $\pi_0=1$
+:::
 
 ## Propiedades de los modelos ARMA(p,q)
 
-\BeginKnitrBlock{proposition}\iffalse{-91-80-114-111-112-105-101-100-97-100-32-49-58-32-67-97-117-115-97-108-105-100-97-100-93-}\fi{}<div class="proposition"><span class="proposition" id="prp:propiedad-causalidad-ARMApq"><strong>(\#prp:propiedad-causalidad-ARMApq)  \iffalse (Propiedad 1: Causalidad) \fi{} </strong></span>Un modelo ARMA(p,q) es causal si y solo si $\phi(z)\neq0$ para $|z|\leq1$. El coeficiente del proceso lineal dado en \@ref(eq:eq-modelo-causal) se puede determinar resolviendo
+::: {.proposition #propiedad-causalidad-ARMApq name="Propiedad 1: Causalidad"}
+Un modelo ARMA(p,q) es causal si y solo si $\phi(z)\neq0$ para $|z|\leq1$. El coeficiente del proceso lineal dado en \@ref(eq:eq-modelo-causal) se puede determinar resolviendo
 
 $$\psi(z)=\sum_{j=0}^{\infty}\psi_jz^j=\frac{\theta(z)}{\phi(z)}\text{, }|z|<1.$$
 
-Otra manera de ver la propiedad 1, es que un *modelo ARMA es causal sólo cuando las raíces de $\phi(z)$ están fuera del círculo unitario*, esto es $\phi(z)=0$ sólo cuando $|z|>1$.</div>\EndKnitrBlock{proposition}
+Otra manera de ver la propiedad 1, es que un *modelo ARMA es causal sólo cuando las raíces de $\phi(z)$ están fuera del círculo unitario*, esto es $\phi(z)=0$ sólo cuando $|z|>1$.
+:::
 
 ---- 
 
-\BeginKnitrBlock{proof}<div class="proof">\iffalse{} <span class="proof"><em>Demostración. </em></span>  \fi{}Supongamos primero que las raíces de $\phi(z)$, digamos $z_1,\ldots,z_p$, están fuera del círculo unitario. Escribimos las raíces en el siguiente orden $1<|<_1|\leq|z_2|\leq\ldots\leq|z_p|$, note que $z_1,\ldots,z_p$ no son necesariamente únicas, y hacemos $|z_1|=1+\epsilon$, para algún $\epsilon>0$. Entonces, $\phi(z)\neq0$ siempre que $|z|<|z_1|=1+\epsilon$ y por consiguiente, $\phi^{-1}(z)$ existe y tiene un desarrollo en serie de potencias
+::: {.proof}
+Supongamos primero que las raíces de $\phi(z)$, digamos $z_1,\ldots,z_p$, están fuera del círculo unitario. Escribimos las raíces en el siguiente orden $1<|<_1|\leq|z_2|\leq\ldots\leq|z_p|$, note que $z_1,\ldots,z_p$ no son necesariamente únicas, y hacemos $|z_1|=1+\epsilon$, para algún $\epsilon>0$. Entonces, $\phi(z)\neq0$ siempre que $|z|<|z_1|=1+\epsilon$ y por consiguiente, $\phi^{-1}(z)$ existe y tiene un desarrollo en serie de potencias
 
 $$\frac{1}{\phi(z)} = \sum_{j=0}^{\infty}a_jz^j,\quad |z|<1+\epsilon.$$
 
@@ -3413,23 +3582,29 @@ Si existe un número en el círculo unitario, digamos $z_0$, para el cual $\phi(
 (\#eq:eq-B19)
 \end{equation}
 
-Finalmente, la ecuación \@ref(eq:eq-B19) implica que $\phi(z)\neq0$ para $|z|\leq1$; esto es, las raíces de $\phi(z)$ están fuera del círculo unitario.</div>\EndKnitrBlock{proof}
+Finalmente, la ecuación \@ref(eq:eq-B19) implica que $\phi(z)\neq0$ para $|z|\leq1$; esto es, las raíces de $\phi(z)$ están fuera del círculo unitario.
+:::
 
 ----
 
-\BeginKnitrBlock{proposition}\iffalse{-91-80-114-111-112-105-101-100-97-100-32-50-58-32-73-110-118-101-114-116-105-98-105-108-105-100-97-100-93-}\fi{}<div class="proposition"><span class="proposition" id="prp:propiedad-invertibilidad-ARMApq"><strong>(\#prp:propiedad-invertibilidad-ARMApq)  \iffalse (Propiedad 2: Invertibilidad) \fi{} </strong></span>Un modelo ARMA(p,q) es *invertible* si y solo si $\theta(z)\neq0$ para $|z|\leq1$. El coeficiente $\pi_j$ de $\pi(B)$ dado en \@ref(eq:eq-modelo-invertible) se puede determinar al resolver
+::: {.proposition #propiedad-invertibilidad-ARMApq name="Propiedad 2: Invertibilidad"}
+Un modelo ARMA(p,q) es *invertible* si y solo si $\theta(z)\neq0$ para $|z|\leq1$. El coeficiente $\pi_j$ de $\pi(B)$ dado en \@ref(eq:eq-modelo-invertible) se puede determinar al resolver
 
 $$\pi(z)=\sum_{j=0}^{\infty}\pi_jz^j=\frac{\phi(z)}{\theta(z)}\text{, }|z|\leq1.$$
 
-  Otra manera de escribir la propiedad 2, es que un *proceso ARMA es invertible solo cuando las raíces de $\theta(z)$ están fuera del círculo unitario*; esto es, $\theta(z)=0$ sólo cuando $|z|>1$.</div>\EndKnitrBlock{proposition}
+  Otra manera de escribir la propiedad 2, es que un *proceso ARMA es invertible solo cuando las raíces de $\theta(z)$ están fuera del círculo unitario*; esto es, $\theta(z)=0$ sólo cuando $|z|>1$.
+:::
 
 ----
 
-\BeginKnitrBlock{proof}<div class="proof">\iffalse{} <span class="proof"><em>Demostración. </em></span>  \fi{}La demostración de esta propiedad es similar a la propiedad 1, y se deja como ejercicio.</div>\EndKnitrBlock{proof}
+::: {.proof}
+La demostración de esta propiedad es similar a la propiedad 1, y se deja como ejercicio.
+:::
 
 ----
 
-\BeginKnitrBlock{example}\iffalse{-91-82-101-100-117-110-100-97-110-99-105-97-32-100-101-32-80-97-114-225-109-101-116-114-111-115-44-32-67-97-117-115-97-108-105-100-97-100-32-101-32-73-110-118-101-114-116-105-98-105-108-105-100-97-100-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-redundancia-causalidad-invertibilidad"><strong>(\#exm:ejem-redundancia-causalidad-invertibilidad)  \iffalse (Redundancia de Parámetros, Causalidad e Invertibilidad) \fi{} </strong></span>
+::: {.example #ejem-redundancia-causalidad-invertibilidad name="Redundancia de Parámetros, Causalidad e Invertibilidad"}
+
 
 Considere el proceso
 
@@ -3474,7 +3649,8 @@ $$\pi(z)=\frac{\phi(z)}{\theta(z)}=(1-0.9z)(1-0.5z+0.5^2z^2-0.5^3z^3+\cdots)\tex
 
 En este caso, los $\pi$-pesos están dados por  $\pi_j=(-1)^j(0.9+0.5)0.5^{j-1}$ para $j\geq1$ y por lo tanto, podemos escribir \@ref(eq:eq-ejemplo-ARMA11) como
 
-$$x_t=1.4\sum_{j=0}^{\infty}(-0.5)^{j-1}x_{t-j}+w_t$$</div>\EndKnitrBlock{example}
+$$x_t=1.4\sum_{j=0}^{\infty}(-0.5)^{j-1}x_{t-j}+w_t$$
+:::
 
 ----
 
@@ -3581,11 +3757,7 @@ En el caso de raíces distintas, la solución de la ecuación en diferencias hom
   u_n &=& z_1^{-n}\times(\text{un polinomio en } n \text{ de grado }m_1-1) \\
       &+& z_2^{-n}\times(\text{un polinomio en } n \text{ de grado }m_2-1)
 \end{eqnarray*}
-<<<<<<< HEAD
-donde $m_1$ es la multiplicidad de la raíz $z_1$ y $m_2$ es la multiplicidad de la raíz $z_2$. En este ejemplo, se tiene $m_1=m_2=1$ y decimos que $c_1$ y $c_2 $ son polinomios de grado cero respectivamente.
-=======
 donde $m_1$ es la multiplicidad de la raíz $z_1$ y $m_2$ es la multiplicidad de la raíz $z_2$. En este ejemplo, se tiene $m_1=m_2=1$ y decimos que $c_1$ y $c_2$ son polinomios de grado cero respectivamente.
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 
 En el caso de raíces repetidas, la solución es
 $$u_n=z_0^{-n}\times(\text{un polinomio en } n \text{ de grado }m_0-1),$$
@@ -3593,7 +3765,8 @@ donde $m_0$ es la multiplicidad de la raíz $z_0$; esto es $m_0=2$. En este caso
 
 Veamos a continuacion algunos ejemplos de uso de las ecuaciones en diferencias, los dos primeros veremos la aplicación a procesos $AR(2)$, y posteriormente daremos un ejemplo de uso para modelos ARMA.
 
-\BeginKnitrBlock{example}\iffalse{-91-76-97-32-65-67-70-32-100-101-32-117-110-32-112-114-111-99-101-115-111-32-65-82-40-50-41-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-ACF-AR2"><strong>(\#exm:ejem-ACF-AR2)  \iffalse (La ACF de un proceso AR(2)) \fi{} </strong></span>
+::: {.example #ejem-ACF-AR2 name="La ACF de un proceso AR(2)"}
+
 Supóngase que $x_t=\phi_1x_{t-1}+\phi_2x_{t-2}+w_t$ es un proceso $AR(2)$ causal. Multiplicando ambos lados del modelo por $x_{t-h}$ para $h>0$, tomando esperanza:
 
 $$\mathbb{E}(x_tx_{t-h})=\phi_1\mathbb{E}(x_{t-1}x_{t-h})+\phi_2\mathbb{E}(x_{t-2}x_{t-h})+\mathbb{E}(w_tx_{t-h})$$
@@ -3627,14 +3800,17 @@ Usando los resultados para la ecuación en diferencias homogénea de orden dos, 
 - **Caso 3:** Cuando $z_1=\bar{z}_2$ son complejas conjugadas, entonces $c_2=\bar{c}_1$ (porque $\rho(h)$ es real) y $$\rho(h)=c_1z_1^{-h}+\bar{c}_1\bar{z}_1^{-h}.$$
   Escribiendo $c_1$ y $z_1$ en coordenadas polares, por ejemplo $z_1=|z_1|e^{i\theta}$ donde $\theta$ es el ángulo cuya tangente es el radio de la parte imaginaria y la parte real de $z_1$; el rango de $\theta$ es $[-\pi,\pi]$. Entonces, usando el hecho de que $e^{i\alpha}+e^{-i\alpha}=2\cos(\alpha)$ la solución tiene la forma
   $$\rho(h)=a|z_1|^{-h}\cos(h\theta+b),$$
-  donde $a$ y $b$ se determinan de las condiciones iniciales. De nuevo $\rho(h)$ tiende a cero exponencialmente cuando $h\to\infty$ pero en forma senosoidal.</div>\EndKnitrBlock{example}
+  donde $a$ y $b$ se determinan de las condiciones iniciales. De nuevo $\rho(h)$ tiende a cero exponencialmente cuando $h\to\infty$ pero en forma senosoidal.
+:::
 
 ----
 
-\BeginKnitrBlock{example}\iffalse{-91-67-97-109-105-110-111-32-109-117-101-115-116-114-97-108-32-100-101-32-117-110-32-112-114-111-99-101-115-111-32-65-82-40-50-41-32-99-111-110-32-114-97-237-99-101-115-32-99-111-109-112-108-101-106-97-115-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-camino-muestral-AR2"><strong>(\#exm:ejem-camino-muestral-AR2)  \iffalse (Camino muestral de un proceso AR(2) con raíces complejas) \fi{} </strong></span>
+::: {.example #ejem-camino-muestral-AR2 name="Camino muestral de un proceso AR(2) con raíces complejas"}
+
 La Figura \@ref(fig:grafico-AR2-simulado) muestra $n=144$ observaciones de un modelo AR(2)
 $$x_t=1.5x_{t-1}-0.75x_{t-2}+w_t$$
-con $\sigma_w^2=1$ y con raíces complejas, así el proceso exhibe un comportamiento pseudo-cíclico con  una frecuencia de un ciclo cada 12 puntos de tiempo. El polinomio autoregresivo para este modelo es $\phi(z)=1-1.5z+0.75z^2$. Las raíces de $\phi(z)$ son $1\pm i/\sqrt{3}$ y $\theta=\tan^{-1}(1/\sqrt{3})=2\pi/12$ radianes por unidad de tiempo. Para convertir el ángulo a ciclos por unidad de tiempo, dividimos por $2\pi$ para obtener $1/12$ ciclos por unidad de tiempo. La ACF para este modelo se muestra en la parte inferior de la Figura \@ref(fig:grafico-AR2-simulado).</div>\EndKnitrBlock{example}
+con $\sigma_w^2=1$ y con raíces complejas, así el proceso exhibe un comportamiento pseudo-cíclico con  una frecuencia de un ciclo cada 12 puntos de tiempo. El polinomio autoregresivo para este modelo es $\phi(z)=1-1.5z+0.75z^2$. Las raíces de $\phi(z)$ son $1\pm i/\sqrt{3}$ y $\theta=\tan^{-1}(1/\sqrt{3})=2\pi/12$ radianes por unidad de tiempo. Para convertir el ángulo a ciclos por unidad de tiempo, dividimos por $2\pi$ para obtener $1/12$ ciclos por unidad de tiempo. La ACF para este modelo se muestra en la parte inferior de la Figura \@ref(fig:grafico-AR2-simulado).
+:::
 
 ```r
 # Simulación del proceso AR(2)
@@ -3687,7 +3863,8 @@ Suponga que $\alpha(z)$ tiene $r$ raíces distintas, $z_1$ con multiplicidad $m_
 
 donde $P_j(n)$ para $j=1,2,\ldots,r$ es un polinomio en $n$ de grado $m_j-1$. Dadas las condiciones iniciales $u_0,u_1,\ldots,u_{p-1}$ podemos resolver $P_j(n)$ explícitamente para $j=1,2,\ldots,r$
 
-\BeginKnitrBlock{example}\iffalse{-91-68-101-116-101-114-109-105-110-97-99-105-243-110-32-100-101-32-108-111-115-32-112-115-105-45-112-101-115-111-115-32-100-101-32-117-110-32-112-114-111-99-101-115-111-32-65-82-77-65-40-112-44-113-41-32-99-97-117-115-97-108-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-pesos-ARMA-causal"><strong>(\#exm:ejem-pesos-ARMA-causal)  \iffalse (Determinación de los psi-pesos de un proceso ARMA(p,q) causal) \fi{} </strong></span>
+::: {.example #ejem-pesos-ARMA-causal name="Determinación de los psi-pesos de un proceso ARMA(p,q) causal"}
+
 Para un modelo ARMA(p,q) causal $\phi(B)x_t=\theta(B)w_t$ donde los ceros de $\phi(z)$ están fuera del círculo unitario, recordemos que podemos escribir este como
 
 $$x_t=\sum_{j=0}^{\infty}\psi_jw_{t-j}$$
@@ -3738,7 +3915,8 @@ Dado que $\max(p,q+1)=2$, usando \@ref(eq:eq-condicion-inicial-pesos), tenemos q
 
 Para hallar la solución particular, usamos la condición inicial $\psi=1.4$, de modo que $1.4=c0.9$ ó $c=1.4/0.9$. Finalmente $\psi_j=1.4(0.9)^{j-1}$ para $j\geq1$ como vimos en el ejemplo \@ref(exm:ejem-redundancia-causalidad-invertibilidad).
 
-Para ver los primeros 50 $\psi$-pesos, usamos las siguientes instrucciones en R:</div>\EndKnitrBlock{example}
+Para ver los primeros 50 $\psi$-pesos, usamos las siguientes instrucciones en R:
+:::
 
 
 ```r
@@ -3835,7 +4013,8 @@ con condiciones iniciales
 Dividiendo \@ref(eq:eq-ACF-ARMA-causal) y \@ref(eq:eq-condicion-inicial-ACF-ARMA-causal) por $\gamma(0)$ nos permite resolver la ACF $\rho(h)=\gamma(h)/\gamma(0)$.
 
 
-\BeginKnitrBlock{example}\iffalse{-91-76-97-32-65-67-70-32-100-101-32-117-110-32-112-114-111-99-101-115-111-32-65-82-77-65-40-49-44-49-41-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-ACF-ARMA11"><strong>(\#exm:ejem-ACF-ARMA11)  \iffalse (La ACF de un proceso ARMA(1,1)) \fi{} </strong></span>
+::: {.example #ejem-ACF-ARMA11 name="La ACF de un proceso ARMA(1,1)"}
+
 Consideremos el proceso ARMA(1,1) causal $x_t=\phi x_{t-1}+\theta w_{t-1}+w_t$ donde $|\phi|<1$. Basándonos en \@ref(eq:eq-ACF-ARMA-causal) la función de autocovarianza satisface
 
 $$\gamma(h)-\phi\gamma(h-1)=0\text{, }h=2,3,\ldots,$$
@@ -3863,7 +4042,8 @@ Finalmente, dividiendo por $\gamma(0)$ nos da la ACF
 \begin{equation}
   \rho(h)=\frac{(1+\theta\phi)(\phi+\theta)}{1+2\theta\phi+\theta^2}\phi^{h-1}\text{, }h\geq1
 (\#eq:eq-ACF-ARMA11)
-\end{equation}</div>\EndKnitrBlock{example}
+\end{equation}
+:::
 
 ----
 
@@ -3895,7 +4075,8 @@ donde $\alpha_0,\alpha_1,\ldots,\alpha_n$ son números reales. Los predictores l
 
 A continuación daremos algunas propiedades y ejemplos.
 
-\BeginKnitrBlock{proposition}\iffalse{-91-77-101-106-111-114-32-80-114-101-100-105-99-116-111-114-32-76-105-110-101-97-108-32-112-97-114-97-32-80-114-111-99-101-115-111-115-32-69-115-116-97-99-105-111-110-97-114-105-111-115-93-}\fi{}<div class="proposition"><span class="proposition" id="prp:propiedad-mejor-predictor-lineal"><strong>(\#prp:propiedad-mejor-predictor-lineal)  \iffalse (Mejor Predictor Lineal para Procesos Estacionarios) \fi{} </strong></span>
+::: {.proposition #propiedad-mejor-predictor-lineal name="Mejor Predictor Lineal para Procesos Estacionarios"}
+
 Dada las observaciones $x_1,x_2,\ldots,x_n$, el mejor predictor lineal $x_{n+m}^n=\alpha_0+\sum_{k=1}^{n}\alpha_kx_k$, de $x_{n+m}$ para $m\geq1$, se halla resolviendo
 
 \begin{equation}
@@ -3903,7 +4084,8 @@ Dada las observaciones $x_1,x_2,\ldots,x_n$, el mejor predictor lineal $x_{n+m}^
 (\#eq:eq-mejor-predictor-lineal)
 \end{equation}
 
-donde $x_0=1$.</div>\EndKnitrBlock{proposition}
+donde $x_0=1$.
+:::
 
 ----
 
@@ -3982,7 +4164,8 @@ Para verificar \@ref(eq:eq-ecm-prediccion-1-paso), usemos \@ref(eq:eq-elementos-
 \end{eqnarray*}
 
 
-\BeginKnitrBlock{example}\iffalse{-91-80-114-101-100-105-99-99-105-243-110-32-112-97-114-97-32-117-110-32-65-82-40-50-41-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-prediccion-AR2"><strong>(\#exm:ejem-prediccion-AR2)  \iffalse (Predicción para un AR(2)) \fi{} </strong></span>
+::: {.example #ejem-prediccion-AR2 name="Predicción para un AR(2)"}
+
 Suponga que tenemos un proceso AR(2) causal $x_t=\phi_1x_{t-1}+\phi_2x_{t-2}+w_t$, y una observación $x_1$. Entonces, usando la ecuación \@ref(eq:eq-elementos-matriz-phi-n), la predicción de $x_2$ basada en $x_1$ es
 $$x_2^1=\phi_{11}x_1=\frac{\gamma(1)}{\gamma(0)}x_1=\rho(1)x_1$$
 Ahora, supóngase que deseamos la predicción de $x_3$ basado en dos observaciones $x_1$ y $x_2$. Podemos usar \@ref(eq:eq-elementos-matriz-phi-n) de nuevo y resolver
@@ -4013,7 +4196,8 @@ De ello se deduce que, de hecho $x_3^2=\phi_1x_2+\phi_2x_1$, y por la unicidad d
 
 $$x_{n+1}^n=\phi_1x_n+\phi_2x_{n-1}$$
 
-Esto es, $\phi_{n1}=\phi_1$, $\phi_{n2}=\phi_2$ y $\phi_{nj}=0$ para $j=3,4,\ldots,n$</div>\EndKnitrBlock{example}
+Esto es, $\phi_{n1}=\phi_1$, $\phi_{n2}=\phi_2$ y $\phi_{nj}=0$ para $j=3,4,\ldots,n$
+:::
 
 ----
 
@@ -4027,7 +4211,8 @@ Del ejemplo \@ref(exm:ejem-prediccion-AR2), es claro que si la serie de tiempo e
 Para modelos ARMA en general, las ecuaciones de predicción no serán tan simple como en el caso AR puro. Además, para $n$ grande, el uso de \@ref(eq:eq-elementos-matriz-phi-n) es prohibitivo, ya que requiere la inversión de una matriz grande. Sin embargo, existen soluciones iterativas que no requieren ninguna inversión de matriz. En particular, utilizaremos la solución recursiva de Levinson (1947) y Durbin (1960).
 
 
-\BeginKnitrBlock{proposition}\iffalse{-91-65-108-103-111-114-105-116-109-111-32-100-101-32-68-117-114-98-105-110-45-76-101-118-105-110-115-111-110-93-}\fi{}<div class="proposition"><span class="proposition" id="prp:propiedad-algoritmo-durbin-levinson"><strong>(\#prp:propiedad-algoritmo-durbin-levinson)  \iffalse (Algoritmo de Durbin-Levinson) \fi{} </strong></span>
+::: {.proposition #propiedad-algoritmo-durbin-levinson name="Algoritmo de Durbin-Levinson"}
+
 Las ecuaciones \@ref(eq:eq-elementos-matriz-phi-n) y \@ref(eq:eq-ecm-prediccion-1-paso) se pueden resolver iterativamente como sigue:
 
 \begin{equation}
@@ -4047,11 +4232,13 @@ donde, para $n\geq2$
 \begin{equation}
   \phi_{nk}=\phi_{n-1,k}-\phi_{nn}\phi_{n-1,k-1}\text{, para }k=1,2,\ldots,n-1
 (\#eq:eq-coeficientes-phi-durbin-levinson)
-\end{equation}</div>\EndKnitrBlock{proposition}
+\end{equation}
+:::
 
 ----
 
-\BeginKnitrBlock{example}\iffalse{-91-85-115-111-32-100-101-108-32-65-108-103-111-114-105-116-109-111-32-68-117-114-98-105-110-45-76-101-118-105-110-115-111-110-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-algoritmo-durbin-levinson"><strong>(\#exm:ejem-algoritmo-durbin-levinson)  \iffalse (Uso del Algoritmo Durbin-Levinson) \fi{} </strong></span>
+::: {.example #ejem-algoritmo-durbin-levinson name="Uso del Algoritmo Durbin-Levinson"}
+
 Para usar el algoritmo, iniciemos con $\phi_{00}=0, P_1^0=\gamma(0)$. Entonces, para $n=1$,
 
 $$\phi_{11}=\rho(1)\text{ y }P_2^1=\gamma(0)[1-\phi_{11}^2].$$
@@ -4068,18 +4255,22 @@ Para $n=3$
 
 $$\phi_{33}=\frac{\rho(3)-\phi_{21}\rho(2)-\phi_{22}\rho(1)}{1-\phi_{21}\rho(1)-\phi_{22}\rho(2)}$$
 
-y así sucesivamente.</div>\EndKnitrBlock{example}
+y así sucesivamente.
+:::
 
 ----
 
 Una consecuencia importante del algoritmo de Durbin-Levinson es la siguiente propiedad.
 
-\BeginKnitrBlock{proposition}\iffalse{-91-83-111-108-117-99-105-243-110-32-73-116-101-114-97-116-105-118-97-32-112-97-114-97-32-108-97-32-80-65-67-70-93-}\fi{}<div class="proposition"><span class="proposition" id="prp:propiedad-solucion-iterativa-PACF"><strong>(\#prp:propiedad-solucion-iterativa-PACF)  \iffalse (Solución Iterativa para la PACF) \fi{} </strong></span>
-La PACF de un proceso estacionario $x_t$, se puede obtener via iteración de $$\phi_{nn}=\frac{\rho(n)-\sum_{k=1}^{n-1}\phi_{n-1,k}\rho(n-k)}{1-\sum_{k=1}^{n-1}\phi_{n-1,k}\rho(k)}\text{, con }P_{n+1}^n=P_n^{n-1}(1-\phi_{nn}^2)$$ como $\phi_{nn}$, para $n=1,2,\ldots$</div>\EndKnitrBlock{proposition}
+::: {.proposition #propiedad-solucion-iterativa-PACF name="Solución Iterativa para la PACF"}
+
+La PACF de un proceso estacionario $x_t$, se puede obtener via iteración de $$\phi_{nn}=\frac{\rho(n)-\sum_{k=1}^{n-1}\phi_{n-1,k}\rho(n-k)}{1-\sum_{k=1}^{n-1}\phi_{n-1,k}\rho(k)}\text{, con }P_{n+1}^n=P_n^{n-1}(1-\phi_{nn}^2)$$ como $\phi_{nn}$, para $n=1,2,\ldots$
+:::
 
 ----
 
-\BeginKnitrBlock{example}\iffalse{-91-76-97-32-80-65-67-70-32-100-101-32-117-110-32-65-82-40-50-41-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-PACF-AR2"><strong>(\#exm:ejem-PACF-AR2)  \iffalse (La PACF de un AR(2)) \fi{} </strong></span>
+::: {.example #ejem-PACF-AR2 name="La PACF de un AR(2)"}
+
 Del ejemplo \@ref(exm:ejem-PACF-ARp-causal), sabemos que para un AR(2), $\phi_{hh}=0$ para $h>2$, pero usaremos los resultados del ejemplo \@ref(exm:ejem-prediccion-AR2) y la proposición \@ref(prp:propiedad-solucion-iterativa-PACF) para calcular los primeros tres valores de la PACF. Recuerde (Ejemplo \@ref(exm:ejem-ACF-AR2)) que para un AR(2), $\rho(1)=\phi_1/(1-\phi_2)$ y en general $\rho(h)-\phi_1\rho(h-1)-\phi_2\rho(h-2)=0$ para $h\geq2$. Entonces
 
 \begin{eqnarray*}
@@ -4087,7 +4278,8 @@ Del ejemplo \@ref(exm:ejem-PACF-ARp-causal), sabemos que para un AR(2), $\phi_{h
   \phi_{22} &=& \frac{\rho(2)-\rho(1)^2}{1-\rho(1)^2}=\frac{\left[\phi_1\left(\frac{\phi_1}{1-\phi_2}\right)+\phi_2\right]-\left(\frac{\phi_1}{1-\phi_2}\right)^2}{1-\left(\frac{\phi_1}{1-\phi_2}\right)^2}=\phi_2 \\
   \phi_{21} &=& \phi_1 \\
   \phi_{33} &=& \frac{\rho(3)-\phi_1\rho(2)-\phi_2\rho(1)}{1-\phi_1\rho(1)-\phi_2\rho(2)}=0.
-\end{eqnarray*}</div>\EndKnitrBlock{example}
+\end{eqnarray*}
+:::
 
 ----
 
@@ -4128,7 +4320,8 @@ El error cuadrático medio del predictor de $m$ pasos es
 Otro algoritmo útil para calcular pronósticos es dado por Brockwell \& Davis (1996)[\ref{brockwell:davis}]. Este algoritmo se obtiene por aplicación directa del Teorema de Proyección a $x_t-x_t^{t-1}$ para $t=1,2,\ldots,n$ usando el hecho de que $x_t-x_t^{t-1}$ y $x_s-x_s^{s-1}$ son no-correlacionados para $s\neq t$. Presentamos el caso en el cual $x_t$ es una serie de tiempo estacionaria de media cero.
 
 
-\BeginKnitrBlock{proposition}\iffalse{-91-65-108-103-111-114-105-116-109-111-32-100-101-32-73-110-110-111-118-97-99-105-111-110-101-115-93-}\fi{}<div class="proposition"><span class="proposition" id="prp:propiedad-algoritmo-innovaciones"><strong>(\#prp:propiedad-algoritmo-innovaciones)  \iffalse (Algoritmo de Innovaciones) \fi{} </strong></span>
+::: {.proposition #propiedad-algoritmo-innovaciones name="Algoritmo de Innovaciones"}
+
 Los predictores $x_{t+1}^t$ y sus errores cuadráticos medios $P_{t+1}^t$ se pueden calcular iterativamente como
 
 $$x_1^0=0\text{, }P_1^0=\gamma(0)$$
@@ -4148,7 +4341,8 @@ donde, para $j=0,1,\ldots,t-1$,
 \begin{equation}
   \theta_{t,t-j}=\left(\gamma(t-j)-\sum_{k=0}^{j-1}\theta_{j,j-k}\theta_{t,t-k}P_{k+1}^k\right)\left(P_{j+1}^j\right)^{-1}
 (\#eq:eq-coeficiente-innovacion)
-\end{equation}</div>\EndKnitrBlock{proposition}
+\end{equation}
+:::
 
 ----
 
@@ -4162,7 +4356,8 @@ Dado los datos $x_1,x_2,\ldots,x_n$ el algoritmo de innovación se puede calcula
 donde los $\theta_{n+m-1,j}$ se obtienen por iteración continua de \@ref(eq:eq-coeficiente-innovacion).
 
 
-\BeginKnitrBlock{example}\iffalse{-91-80-114-101-100-105-99-99-105-243-110-32-100-101-32-117-110-32-77-65-40-49-41-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-prediccion-MA1"><strong>(\#exm:ejem-prediccion-MA1)  \iffalse (Predicción de un MA(1)) \fi{} </strong></span>
+::: {.example #ejem-prediccion-MA1 name="Predicción de un MA(1)"}
+
 El algoritmo de innovación nos da un buen predictor para un proceso de promedio móvil. Considere un modelo MA(1), $x_t=w_t+\theta x_{t-1}$. Recuerde que $\gamma(0)=(1+\theta^2)\sigma_w^2, \gamma(1)=\theta\sigma_w^2$ y $\gamma(h)=0$ para $h>1$. Entonces, usando la proposición \@ref(prp:propiedad-algoritmo-innovaciones), tenemos,
 
 \begin{eqnarray*}
@@ -4174,7 +4369,8 @@ El algoritmo de innovación nos da un buen predictor para un proceso de promedio
 
 Finalmente, de \@ref(eq:eq-interactiva-predictor-x) el predictor de un paso es
 
-$$x_{n+1}^n=\theta(x_n-x_n^{n-1})\sigma_w^2/P_n^{n-1}$$</div>\EndKnitrBlock{example}
+$$x_{n+1}^n=\theta(x_n-x_n^{n-1})\sigma_w^2/P_n^{n-1}$$
+:::
   
 
 ### Pronósticos para procesos ARMA
@@ -4245,7 +4441,8 @@ También, observe que para una muestra fija de tamaño $n$ los errores de predic
 \end{equation}
 
 
-\BeginKnitrBlock{example}\iffalse{-91-80-114-111-110-243-115-116-105-99-111-32-97-32-108-97-114-103-111-32-112-108-97-122-111-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-pronostico-largo-plazo"><strong>(\#exm:ejem-pronostico-largo-plazo)  \iffalse (Pronóstico a largo plazo) \fi{} </strong></span>
+::: {.example #ejem-pronostico-largo-plazo name="Pronóstico a largo plazo"}
+
 Consideremos el pronóstico para un proceso ARMA de media $\mu$. Del caso de media cero en \@ref(eq:eq-esperanza-predictor-causal) podemos deducir que el pronóstico de $m$ pasos se puede escribir como
 
 \begin{equation}
@@ -4266,7 +4463,8 @@ exponencialmente (en el sentido de media cuadrado) cuando $m\to\infty$. Más aú
 
 exponencialmente cuando $m\to\infty$.
 
-Es claro de \@ref(eq:eq-pronostico-m-pasos) y \@ref(eq:eq-convergencia-ecm-prediccion) que el pronóstico de un proceso ARMA rápidamente se estabiliza a la media con un error de predicción constante a medida que el periodo de pronóstico  $m$ crece. </div>\EndKnitrBlock{example}
+Es claro de \@ref(eq:eq-pronostico-m-pasos) y \@ref(eq:eq-convergencia-ecm-prediccion) que el pronóstico de un proceso ARMA rápidamente se estabiliza a la media con un error de predicción constante a medida que el periodo de pronóstico  $m$ crece. 
+:::
 
 ----
 
@@ -4305,7 +4503,8 @@ donde $\tilde{x}_t^n=x_t$ para $1\leq t\leq n$ y $\tilde{x}_t^n=0$ para $t\leq0$
 \end{equation*}
 
 
-\BeginKnitrBlock{example}\iffalse{-91-80-114-111-110-243-115-116-105-99-111-32-112-97-114-97-32-117-110-97-32-115-101-114-105-101-32-65-82-77-65-40-49-44-49-41-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-pronostico-ARMA11"><strong>(\#exm:ejem-pronostico-ARMA11)  \iffalse (Pronóstico para una serie ARMA(1,1)) \fi{} </strong></span>
+::: {.example #ejem-pronostico-ARMA11 name="Pronóstico para una serie ARMA(1,1)"}
+
 Dado los datos $x_1,x_2,\ldots,x_n$ para propósito de pronósticos, escribiremos el modelo como
 
 $$x_{n+1}=\phi x_n+w_{n+1}+\theta w_n.$$
@@ -4331,7 +4530,8 @@ La varianza aproximada del pronóstico se calcula de \@ref(eq:eq-ecm-prediccion)
   P_{n+m}^n &=& \sigma_w^2\left[1+(\phi+\theta)^2\sum_{j=1}^{m-1}\phi^{2(j-1)}\right] \\
             &=& \sigma_w^2\left[1+\frac{(\phi+\theta)^2(1-\phi^{2(m-1)})}{(1-\phi^2)}\right]
 \end{eqnarray*}
-</div>\EndKnitrBlock{example}
+
+:::
 
 ----
 
@@ -4346,7 +4546,8 @@ donde $c_{\alpha/2}$ se elige de manera de obtener el grado deseado de confidenc
 
 
 
-\BeginKnitrBlock{example}\iffalse{-91-80-114-111-110-243-115-116-105-99-111-32-112-97-114-97-32-108-97-32-115-101-114-105-101-32-100-101-32-110-117-101-118-111-115-32-112-101-99-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-pronostico-serie-reclutamiento"><strong>(\#exm:ejem-pronostico-serie-reclutamiento)  \iffalse (Pronóstico para la serie de nuevos peces) \fi{} </strong></span>
+::: {.example #ejem-pronostico-serie-reclutamiento name="Pronóstico para la serie de nuevos peces"}
+
 Usando los parámetros estimados como los valores actuales de los parámetros, la figura \@ref(fig:grafico-pronostico-serie-reclutamiento) muestra los resultados de la serie de nuevos peces dada en el ejemplo \@ref(exm:ejem-serie-nuevos-peces-AR2), sobre un periodo de 24 meses $m=1,2,\ldots,24$.
 
 Los pronósticos actuales se calculan como
@@ -4364,7 +4565,8 @@ para $n=453$ y $m=1,2,\ldots,12$. Recuerde que $x_t^s=x_t$ cuando $t\leq s$. Los
 y así sucesivamente.
 
 Note como el pronóstico se nivela rápidamente y los intervalos de predicción son amplios, aún cuando en este caso los límites están basados en un solo error estándar; esto es, $x_{n+m}^n\pm\sqrt{P_{n+m}^n}$.
-</div>\EndKnitrBlock{example}
+
+:::
 
 
 <div class="figure" style="text-align: center">
@@ -4398,7 +4600,8 @@ Estas ecuaciones son precisamente las ecuaciones de predicción para predicción
 \end{equation}
 
 
-\BeginKnitrBlock{example}\iffalse{-91-82-101-116-114-111-112-114-111-121-101-99-99-105-243-110-32-100-101-32-117-110-32-112-114-111-99-101-115-111-32-65-82-77-65-40-49-44-49-41-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-retroproyeccion-ARMA11"><strong>(\#exm:ejem-retroproyeccion-ARMA11)  \iffalse (Retroproyección de un proceso ARMA(1,1)) \fi{} </strong></span>
+::: {.example #ejem-retroproyeccion-ARMA11 name="Retroproyección de un proceso ARMA(1,1)"}
+
 Considere un proceso ARMA(1,1) causal e invertible $x_t=\phi x_{t-1}+\theta w_{t-1}+w_t$, llamaremos a este, modelo hacia adelante.  Hemos visto que el mejor predictor lineal hacia atrás en el tiempo es el mismo predictor lineal hacia adelante en el tiempo para procesos estacionarios. Dado que estamos suponiendo que el modelo ARMA es gaussiano, tenemos que el mínimo error cuadrático medio de predicción hacia atrás es el mismo que hacia adelante para modelos ARMA. Entonces, el proceso se puede generar equivalentemente por un modelo hacia atrás $x_t=\phi x_{t+1}+\theta v_{t+1}+v_t$ donde $\{v_t\}$ es un ruido blanco gaussiano con varianza $\sigma_w^2$. [^nota8] 
 
 [^nota8:] En el caso estacionario gaussiano (a) la distribución de $\{x_{n+1},x_n,\ldots,x_1\}$ es la misma que (b) la distribución de $\{x_0,x_1,\ldots,x_n\}$. En pronóstico usamos (a) para obtener $\mathbb{E}(x_{n+1}|x_n,\ldots,x_1)$; en retroproyección usamos (b) para obtener $\mathbb{E}(x_0|x_1,\ldots,x_n)$. Dado que (a) y (b) son iguales, los dos problemas son equivalentes.
@@ -4416,7 +4619,8 @@ $$\tilde{x}_0^n=\phi x_1+\theta\tilde{v}_1^n+\tilde{v}_0^n=\phi x_1+\theta\tilde
 porque $\tilde{v}_t^n=0$ para $t\leq0$. Continuando, las retroproyecciones truncadas general están dadas por
 
 $$\tilde{x}_{1-m}^n=\phi\tilde{x}_{2-m}^n\text{, para }m=2,3,\ldots$$
-</div>\EndKnitrBlock{example}
+
+:::
 
 
 <!--chapter:end:303-modelos-ARMA.Rmd-->
@@ -4433,12 +4637,14 @@ Cuando el proceso es AR(p),
 $$x_t=\phi_1x_{t-1}+\cdots+\phi_px_{t-p}+w_t,$$
 las primeras $p+1$ ecuaciones de \@ref(eq:eq-ACF-ARMA-causal) y \@ref(eq:eq-condicion-inicial-ACF-ARMA-causal) conducen a la siguiente definición:
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-ecuacion-yule-walker"><strong>(\#def:defi-ecuacion-yule-walker) </strong></span>Las *ecuaciones de Yule-Walker* están dadas por
+::: {.definition #defi-ecuacion-yule-walker}
+Las *ecuaciones de Yule-Walker* están dadas por
 
 \begin{eqnarray}
 \gamma(h)  &=& \phi_1\gamma(h-1)+\cdots\phi_p\gamma(h-p),\quad h=1,2,\ldots,p (\#eq:eq-yule-walker-gamma)\\
 \sigma_w^2 &=& \gamma(0)-\phi_1\gamma(1)-\cdots-\phi_p\gamma(p)  (\#eq:eq-yule-walker-sigma)
-\end{eqnarray}</div>\EndKnitrBlock{definition}
+\end{eqnarray}
+:::
 
 ----
 
@@ -4467,28 +4673,33 @@ donde $\hat{\mathbf{R}}_p=\{\hat{\rho}(k-j)\}_{j,k=1}^p$ es una matriz de orden 
 
 Para un modelo $AR(p)$, si el tamaño de la muestra es grande, los estimadores de Yule-Walker tienen distribución aproximadamente normal y $\hat{\sigma}_w^2$ es cercano al valor real de $\sigma_w^2$. Establecemos este resultado en la proposición \@ref(prp:propie-estimadores-yule-walker-muestra-grande).
 
-\BeginKnitrBlock{proposition}\iffalse{-91-82-101-115-117-108-116-97-100-111-32-100-101-32-109-117-101-115-116-114-97-115-32-100-101-32-116-97-109-97-241-111-32-103-114-97-110-100-101-32-112-97-114-97-32-108-111-115-32-101-115-116-105-109-97-100-111-114-101-115-32-100-101-32-89-117-108-101-45-87-97-108-107-101-114-93-}\fi{}<div class="proposition"><span class="proposition" id="prp:propie-estimadores-yule-walker-muestra-grande"><strong>(\#prp:propie-estimadores-yule-walker-muestra-grande)  \iffalse (Resultado de muestras de tamaño grande para los estimadores de Yule-Walker) \fi{} </strong></span>
+::: {.proposition #propie-estimadores-yule-walker-muestra-grande name="Resultado de muestras de tamaño grande para los estimadores de Yule-Walker"}
+
 El comportamiento asintótico ($n\to\infty$) de los estimadores de Yule-Walker en el caso de un proceso AR(p) causal es como sigue:
   
 \begin{equation}
   \sqrt{n}(\hat{\mathbf{\phi}}-\mathbf{\phi})\stackrel{d}{\to} N(\mathbf{0},\sigma_w^2\Gamma_p^{-1}),\qquad \hat{\sigma}_w^2\stackrel{p}{\to}\sigma_w^2
 (\#eq:eq-convergencia-estimadores-yule-walker)
-\end{equation}</div>\EndKnitrBlock{proposition}
+\end{equation}
+:::
 
 ----
 
 El algoritmo de Durbin-Levinson, \@ref(eq:eq-phi00-P10) a \@ref(eq:eq-coeficientes-phi-durbin-levinson), se puede usar para calcular $\hat{\mathbf{\phi}}$ sin invertir $\hat{\Gamma}_p$ o $\hat{\mathbf{R}}_p$, reemplazando $\gamma(h)$ por $\hat{\gamma}(h)$ en el algoritmo. En la corrida del algoritmo, iterativamente calculamos el $h\times1$ vector, $\hat{\mathbf{\phi}}_h=(\hat{\phi}_{h1},\ldots,\hat{\phi}_{hh})^t$, para $h=1,2,\ldots$. Por lo tanto, además de obtener el pronóstico deseado, el algoritmo de Durbin-Levinson nos da $\hat{\phi}_{hh}$, la PACF muestral. Usando \@ref(eq:eq-convergencia-estimadores-yule-walker) se puede demostrar la siguiente propiedad.
 
-\BeginKnitrBlock{proposition}\iffalse{-91-68-105-115-116-114-105-98-117-99-105-243-110-32-100-101-32-80-65-67-70-32-112-97-114-97-32-109-117-101-115-116-114-97-115-32-103-114-97-110-100-101-115-93-}\fi{}<div class="proposition"><span class="proposition" id="prp:propie-distribucion-PACF-muestra-grande"><strong>(\#prp:propie-distribucion-PACF-muestra-grande)  \iffalse (Distribución de PACF para muestras grandes) \fi{} </strong></span>
+::: {.proposition #propie-distribucion-PACF-muestra-grande name="Distribución de PACF para muestras grandes"}
+
 Para un proceso $AR(p)$ causal, asintóticamente ($n\to\infty$)
 \begin{equation}
   \sqrt{n}\hat{\phi}_{hh}\stackrel{d}{\to}N(0,1),\text{ para } h>p.
 (\#eq:eq-convergencia-PACF-muestral)
-\end{equation}</div>\EndKnitrBlock{proposition}
+\end{equation}
+:::
 
 ----
 
-\BeginKnitrBlock{example}\iffalse{-91-69-115-116-105-109-97-99-105-243-110-32-100-101-32-89-117-108-101-45-87-97-108-107-101-114-32-112-97-114-97-32-117-110-32-112-114-111-99-101-115-111-32-65-82-40-50-41-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-estimacion-yule-walker-AR2"><strong>(\#exm:ejem-estimacion-yule-walker-AR2)  \iffalse (Estimación de Yule-Walker para un proceso AR(2)) \fi{} </strong></span>
+::: {.example #ejem-estimacion-yule-walker-AR2 name="Estimación de Yule-Walker para un proceso AR(2)"}
+
 Los datos mostrados en la figura \@ref(fig:grafico-AR2-simulado) son $n=144$ observaciones simuladas de un modelo AR(2)
 $$x_t=1.5x_{t-1}-0.75x_{t-2}+w_t,$$
 donde $w_t\sim iid N(0,1)$. Para estos datos, $\hat{\gamma}(0)=8.434, \hat{\rho}(1)=0.834$, y $\hat{\rho}(2)0=.476$. En consecuencia,
@@ -4543,11 +4754,13 @@ $$
 
 se puede usar para hallar la región de confianza o hacer inferencias sobre $\hat{\mathbf{\phi}}$ y sus componentes. Por ejemplo, un intervalo de confianza aproximado del 95\% para $\phi_2$ es $-0.725\pm2(0.057)$ 0 $(-0.839, -0.611)$ el cual contiene el valor real de $\phi_2=-0.75$.
 
-Para estos datos, las tres primeras correlaciones muestrales fueron $\hat{\phi}_{11}=\hat{\rho}(1)=0.834, \hat{\phi}_{22}=\hat{\phi}_2=-0.725$ y $\hat{\phi}_{33}=-0.075$. De acuerdo a la Propiedad~\ref{propie-distribucion-PACF-muestra-grande}, el error estándar asintótico de $\hat{\phi}_{33}$ es $1/\sqrt{144}=0.083$, y el valor observado es $-0.075$, que esta a menos de una desviación estándar de $\phi_{33}=0$.</div>\EndKnitrBlock{example}
+Para estos datos, las tres primeras correlaciones muestrales fueron $\hat{\phi}_{11}=\hat{\rho}(1)=0.834, \hat{\phi}_{22}=\hat{\phi}_2=-0.725$ y $\hat{\phi}_{33}=-0.075$. De acuerdo a la Propiedad~\ref{propie-distribucion-PACF-muestra-grande}, el error estándar asintótico de $\hat{\phi}_{33}$ es $1/\sqrt{144}=0.083$, y el valor observado es $-0.075$, que esta a menos de una desviación estándar de $\phi_{33}=0$.
+:::
 
 ----
 
-\BeginKnitrBlock{example}\iffalse{-91-69-115-116-105-109-97-99-105-243-110-32-100-101-32-89-117-108-101-45-87-97-108-107-101-114-32-112-97-114-97-32-108-97-32-115-101-114-105-101-32-100-101-32-110-117-101-118-111-115-32-112-101-99-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-estimacion-yule-walker-serie-reclutamiento"><strong>(\#exm:ejem-estimacion-yule-walker-serie-reclutamiento)  \iffalse (Estimación de Yule-Walker para la serie de nuevos peces) \fi{} </strong></span>
+::: {.example #ejem-estimacion-yule-walker-serie-reclutamiento name="Estimación de Yule-Walker para la serie de nuevos peces"}
+
 Consideremos nuevamente la serie de nuevos peces y ajustemos un modeloa AR(2) usando la estimación de Yule-Walker. Abajo están los resultados de fijar el modelo usando R.
 
 
@@ -4558,7 +4771,8 @@ Consideremos nuevamente la serie de nuevos peces y ajustemos un modeloa AR(2) us
 |Errores estándar   |0.04222637;  0.04222637   |
 |Error de varianza estimada   |94.79912   |
     
-Las instrucciones R para realizar la estimación de Yule-Walker y generar la figura \@ref(fig:grafico-pronostico-serie-reclutamiento-yw) son:</div>\EndKnitrBlock{example}
+Las instrucciones R para realizar la estimación de Yule-Walker y generar la figura \@ref(fig:grafico-pronostico-serie-reclutamiento-yw) son:
+:::
 
 ----
 
@@ -4585,7 +4799,8 @@ lines(L, col="blue",lty="dashed")
 
 En el caso de los modelos AR(p), los estimadores de Yule-Walker dados en \@ref(eq:eq-estimadores-yule-walker-2) son óptimos en el sentido de que la distribución asintótica, \@ref(eq:eq-convergencia-estimadores-yule-walker), es la mejor distribución normal asintótica. Esto se debe a que, dadas las condiciones iniciales, los modelos AR(p) son modelos lineales, y los estimadores de Yule-Walker son esencialmente estimadores de mínimos cuadrados. Si utilizamos el método de momentos para los modelos MA o ARMA, no obtendremos estimadores óptimos debido a que tales procesos no son lineales en los parámetros.
 
-\BeginKnitrBlock{example}\iffalse{-91-69-115-116-105-109-97-99-105-243-110-32-112-111-114-32-101-108-32-77-233-116-111-100-111-32-100-101-32-108-111-115-32-77-111-109-101-110-116-111-115-32-112-97-114-97-32-117-110-32-112-114-111-99-101-115-111-32-77-65-40-49-41-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-estimacion-momentos-MA1"><strong>(\#exm:ejem-estimacion-momentos-MA1)  \iffalse (Estimación por el Método de los Momentos para un proceso MA(1)) \fi{} </strong></span>
+::: {.example #ejem-estimacion-momentos-MA1 name="Estimación por el Método de los Momentos para un proceso MA(1)"}
+
 Considere la serie de tiempo
 
 $$x_t=w_t+\theta w_{t-1},$$
@@ -4608,7 +4823,8 @@ Se puede demostrar que [^nota10]
 
 $$\hat{\theta} \sim AN\left(\theta,\frac{1+\theta^2+4\theta^4+\theta^6+\theta^8}{n(1-\theta^2)^2}\right).$$
 
-El estimador de máxima verosimilitud (que discutiremos en la próxima sección) de $\theta$, en este caso, tiene una varianza asintótica de $(1-\theta^2)/n$. Cuando $\theta=0.5$, por ejemplo, la relación de la varianza asintótica del estimador por el método de los momentos y el estimador por el método de máxima verosimilitud de $\theta$ es alrededor de 3.5. Esto es, para muestras grandes, la varianza del estimador por el método de los momentos es alrededor de 3.5 veces mayor que la varianza del estimador por el EMV de $\theta$ cuando $\theta=0.5$.</div>\EndKnitrBlock{example}
+El estimador de máxima verosimilitud (que discutiremos en la próxima sección) de $\theta$, en este caso, tiene una varianza asintótica de $(1-\theta^2)/n$. Cuando $\theta=0.5$, por ejemplo, la relación de la varianza asintótica del estimador por el método de los momentos y el estimador por el método de máxima verosimilitud de $\theta$ es alrededor de 3.5. Esto es, para muestras grandes, la varianza del estimador por el método de los momentos es alrededor de 3.5 veces mayor que la varianza del estimador por el EMV de $\theta$ cuando $\theta=0.5$.
+:::
 
 
 ## Estimación por Máxima Verosimilitud y Mínimos Cuadrados {#sect-EMV}
@@ -4680,11 +4896,7 @@ Si en \@ref(eq:eq-funcion-verosimilitud-AR1) tomamos logaritmo, reemplazamos $\s
 
 Esto es, $l(\mu,\phi)\propto-2\ln L(\mu,\phi,\hat{\sigma}_w^2)$. [^nota11]
 
-<<<<<<< HEAD
-[^nota11:] La función de criterio a veces es llamada perfil de verosimilitud.
-=======
 [^nota11]: La función de criterio a veces es llamada perfil de verosimilitud.
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 
 Dado que \@ref(eq:eq-S-AR1) o \@ref(eq:eq-funcion-criterio-AR1) son funciones complicadas de los parámetros, la minimización de $l(\mu,\phi)$ o $S(\mu,\phi)$ se hace numéricamente. En el caso de modelos AR, tenemos la ventaja que, condicionando los valores inicial, ellos son modelos lineales. Esto es, podemos eliminar el término en la verosimilitud que causa la no-linealidad.
 
@@ -4779,7 +4991,8 @@ De \@ref(eq:eq-S-AR1) y \@ref(eq:eq-funcion-criterio-AR1) se ve que $x_1^0=\mu$ 
 
 Los mínimos cuadrados incondicional se desarrollarán minimizando \@ref(eq:eq-S-beta) con respecto a $\mathbf{\beta}$. La estimación de mínimos cuadrados condicional envuelve minimizar \@ref(eq:eq-S-beta) con respecto a $\mathbf{\beta}$ pero donde, para facilitar la carga computacional, las predicciones y sus errores se obtienen por condicionamiento sobre los valores iniciales de las observaciones. En general, se usan las rutinas numéricas de optimización para obtener las estimaciones y sus errores estándar.
 
-\BeginKnitrBlock{example}\iffalse{-91-65-108-103-111-114-105-116-109-111-115-32-100-101-32-78-101-119-116-111-110-45-82-97-112-104-115-111-110-32-121-32-112-117-110-116-117-97-99-105-243-110-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-algoritmo-newton-raphson"><strong>(\#exm:ejem-algoritmo-newton-raphson)  \iffalse (Algoritmos de Newton-Raphson y puntuación) \fi{} </strong></span>
+::: {.example #ejem-algoritmo-newton-raphson name="Algoritmos de Newton-Raphson y puntuación"}
+
 Dos rutinas numéricas de optimización comunes para la estimación de máxima verosimilitud son el Newton-Raphson y el de puntuación. Daremos una breve descripción de las ideas matemáticas. La implementación de estos algoritmos es más complicada de lo que discutiremos en este ejemplo.
 
 Sea $l(\mathbf{\beta})$ una función de criterio de $k$ parámetros $\mathbf{\beta}=(\beta_1,\ldots,\beta_k)$ la cual deseamos minimizar respecto a $\mathbf{\beta}$. Por ejemplo, considere la función de verosimilitud dada por \@ref(eq:eq-funcion-criterio-AR1) o \@ref(eq:eq-funcion-criterio-EMV). Suponga que $l(\hat{\mathbf{\beta}})$ es el extremo que estamos interesados en hallar, y $\hat{\mathbf{\beta}}$ se halla resolviendo $\partial l(\mathbf{\beta})/\partial\beta_j=0$ para $j=1,\ldots,k$. Denotemos por $l^{(1)}(\mathbf{\beta})$ el vector $k\times1$ de derivadas parciales
@@ -4805,12 +5018,15 @@ El algoritmo de Newton-Raphson procede iterando este resultado, reemplazando $\m
 
 Para la estimación de máxima verosimilitud, la función de criterio usada es $l(\mathbf{\beta})$ dada por (\@ref(eq:eq-funcion-criterio-EMV); $l^{(1)}(\mathbf{\beta})$ es llamado el **vector de puntuación** y $l^{(2)}(\mathbf{\beta})$ es llamado el **Hessiano**. En el algoritmo de puntuaciones, reemplazamos $l^{(2)}(\mathbf{\beta})$ por $\mathbb{E}[l^{(2)}(\mathbf{\beta})]$, la matriz de información. Bajo condiciones apropiadas, la inversa de la matriz de información es la matriz de varianza-covarianza asintótica del estimador $\mathbf{\hat{\beta}}$. Esta es a veces aproximada por la inversa del Hessiano en $\mathbf{\hat{\beta}}$.
 
-Si las derivadas son difíciles de obtener, es posible usar la estimación de verosimilitud cuasi-máxima donde se usan las técnicas numéricas para aproximar las derivadas.</div>\EndKnitrBlock{example}
+Si las derivadas son difíciles de obtener, es posible usar la estimación de verosimilitud cuasi-máxima donde se usan las técnicas numéricas para aproximar las derivadas.
+:::
 
 ----
 
-\BeginKnitrBlock{example}\iffalse{-91-69-77-86-32-112-97-114-97-32-108-97-32-115-101-114-105-101-32-100-101-32-110-117-101-118-111-115-32-112-101-99-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-EMV-serie-reclutamiento"><strong>(\#exm:ejem-EMV-serie-reclutamiento)  \iffalse (EMV para la serie de nuevos peces) \fi{} </strong></span>
-En el ejemplo \@ref(exm:ejem-estimacion-yule-walker-serie-reclutamiento)  fijamos un modelo AR(2) para la serie de nuevos peces usando las ecuaciones de Yule-Walker. El siguiente comando en R fija el modelo AR(2) via máxima verosimilitud. Pueden comparar estos resultados con los obtenidos en el ejemplo \@ref(exm:ejem-estimacion-yule-walker-serie-reclutamiento).</div>\EndKnitrBlock{example}
+::: {.example #ejem-EMV-serie-reclutamiento name="EMV para la serie de nuevos peces"}
+
+En el ejemplo \@ref(exm:ejem-estimacion-yule-walker-serie-reclutamiento)  fijamos un modelo AR(2) para la serie de nuevos peces usando las ecuaciones de Yule-Walker. El siguiente comando en R fija el modelo AR(2) via máxima verosimilitud. Pueden comparar estos resultados con los obtenidos en el ejemplo \@ref(exm:ejem-estimacion-yule-walker-serie-reclutamiento).
+:::
 
 
 ```r
@@ -4855,11 +5071,7 @@ Cuando $n$ es grande, condicionando sobre unos pocos valores iniciales tendremos
 
 La suma de cuadrados incondicional se puede escribir de varias maneras. Una de las maneras es la siguiente forma [^nota12]
 
-<<<<<<< HEAD
-[^nota12:] Para detalles, véase Box, G.E.P., Jenkins, G.M. and Reinsel, G.C. (1994). *Time Series Analysis, Forecasting and Control, 3rd ed.* Englewood Cliffs, NJ: Prentice Hall. Apéndice A7.3.
-=======
 [^nota12]: Para detalles, véase Box, G.E.P., Jenkins, G.M. and Reinsel, G.C. (1994). *Time Series Analysis, Forecasting and Control, 3rd ed.* Englewood Cliffs, NJ: Prentice Hall. Apéndice A7.3.
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 
 $$S(\mathbf{\beta})=\sum_{t=-\infty}^{n}\hat{w}_t^2(\mathbf{\beta})$$
 
@@ -4907,7 +5119,8 @@ $$\mathbf{\beta}_{(j)}=\mathbf{\beta}_{(j-1)}+\Delta(\mathbf{\beta}_{(j-1)})$$
 
 hasta converger.
 
-\BeginKnitrBlock{example}\iffalse{-91-71-97-117-115-115-45-78-101-119-116-111-110-32-112-97-114-97-32-117-110-32-77-65-40-49-41-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-gauss-newton-MA1"><strong>(\#exm:ejem-gauss-newton-MA1)  \iffalse (Gauss-Newton para un MA(1)) \fi{} </strong></span>
+::: {.example #ejem-gauss-newton-MA1 name="Gauss-Newton para un MA(1)"}
+
 Considere un proceso MA(1) invertible, $x_t=w_t+\theta w_{t-1}$. Escribimos el error truncado como
 
 \begin{equation}
@@ -4938,11 +5151,13 @@ Sea $\theta_{(0)}$ una estimación inicial de $\theta$, por ejemplo, el estimado
 (\#eq:eq-procedimiento-gauss-newton-MA1)
 \end{equation}
 
-donde los valores en \@ref(eq:eq-procedimiento-gauss-newton-MA1) se calculan recursivamente usando \@ref(eq:eq-error-truncado-MA1) y \@ref(eq:eq-derivada-error-truncado-MA1). Los cálculos se paran cuando $|\theta_{(j+1)}-\theta_{(j)}|$ ó $|Q(\theta_{(j+1)})-Q(\theta_{(j)})|$ son menor que alguna cantidad prefijada.</div>\EndKnitrBlock{example}
+donde los valores en \@ref(eq:eq-procedimiento-gauss-newton-MA1) se calculan recursivamente usando \@ref(eq:eq-error-truncado-MA1) y \@ref(eq:eq-derivada-error-truncado-MA1). Los cálculos se paran cuando $|\theta_{(j+1)}-\theta_{(j)}|$ ó $|Q(\theta_{(j+1)})-Q(\theta_{(j)})|$ son menor que alguna cantidad prefijada.
+:::
 
 ----
 
-\BeginKnitrBlock{example}\iffalse{-91-65-106-117-115-116-101-32-100-101-32-108-97-32-115-101-114-105-101-32-100-101-32-118-97-114-118-97-115-32-103-108-97-99-105-97-114-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-ajuste-varvas-glaciares"><strong>(\#exm:ejem-ajuste-varvas-glaciares)  \iffalse (Ajuste de la serie de varvas glaciares) \fi{} </strong></span>
+::: {.example #ejem-ajuste-varvas-glaciares name="Ajuste de la serie de varvas glaciares"}
+
 Consideremos la serie de espesores de varvas glaciares en Massachusetts para $n=634$ años, como analizamos en el ejemplo 3.4.3 (Tema 3) donde ajustamos a un modelo de promedio móvil de primer orden una transformación logarítmica, podemos también a esa serie ajustar una ecuación en diferencia de la transformación logarítmica, como sigue
 
 $$\nabla[\ln(x_t)]=\ln(x_t)-\ln(x_{t-1})=\ln\left(\frac{x_t}{x_{t-1}}\right)$$
@@ -4956,7 +5171,8 @@ A continuación se muestran 9 iteraciones del procedimiento de Gauss-Newton dado
 
 $$-0.442; -0.624; -0.717;-0.750;-0.763;-0.768;-0.771;-0.772;-0.772;$$
 
-para $\theta_{(1)},\ldots,\theta_{(9)}$, y la varianza estimada del error es $\hat{\sigma}_w^2=0.236$. Usando el valor final de $\hat{\theta}=\theta_{(9)}=-0.772$ y el vector $z_t$ de derivadas parciales en \@ref(eq:eq-derivada-error-truncado-MA1-2) nos da un error estándar de $0.025$ y un $t$-valor de $-0.772/0.025=-30.88$ con $632$ grados de libertad (se pierde uno con las diferencias).</div>\EndKnitrBlock{example}
+para $\theta_{(1)},\ldots,\theta_{(9)}$, y la varianza estimada del error es $\hat{\sigma}_w^2=0.236$. Usando el valor final de $\hat{\theta}=\theta_{(9)}=-0.772$ y el vector $z_t$ de derivadas parciales en \@ref(eq:eq-derivada-error-truncado-MA1-2) nos da un error estándar de $0.025$ y un $t$-valor de $-0.772/0.025=-30.88$ con $632$ grados de libertad (se pierde uno con las diferencias).
+:::
 
 
 ```r
@@ -4977,13 +5193,15 @@ pacf(dv,30)
 En el caso general de un proceso ARMA(p,q) causal e invertible, las estimaciones de máxima verosimilitud, y las estimaciones de mínimos cuadrados condicional e incondicional (y las estimación de Yule-Walker en el caso de modelos AR) dan estimadores óptimos. La prueba de este resultado general se puede hallar en Brockwell y Davis (2006). Denotaremos los coeficientes del proceso ARMA por $\mathbf{\beta}=(\phi_1,\ldots,\phi_p,\theta_1,\ldots,\theta_q)'$.
 
 
-\BeginKnitrBlock{proposition}\iffalse{-91-68-105-115-116-114-105-98-117-99-105-243-110-32-100-101-32-108-111-115-32-101-115-116-105-109-97-100-111-114-101-115-32-112-97-114-97-32-109-117-101-115-116-114-97-115-32-103-114-97-110-100-101-115-93-}\fi{}<div class="proposition"><span class="proposition" id="prp:propie-distribucion-estimadores-muestras-grandes"><strong>(\#prp:propie-distribucion-estimadores-muestras-grandes)  \iffalse (Distribución de los estimadores para muestras grandes) \fi{} </strong></span>
+::: {.proposition #propie-distribucion-estimadores-muestras-grandes name="Distribución de los estimadores para muestras grandes"}
+
 Bajo condiciones apropiadas, para procesos ARMA causal e invertible, los estimadores de máxima verosimilitud, mínimos cuadrados incondicional y condicional, cada uno inicializado por los estimadores dados por el método de los momentos, proveen estimadores óptimos de $\sigma_w^2$ y $\mathbf{\beta}$ en el sentido de que $\hat{\sigma}_w^2$ es consistente, y la distribución asintótica de $\mathbf{\hat{\beta}}$ es la mejor distribución normal asintótica. En particular, cuando $n\to\infty$
 
 \begin{equation}
   \sqrt{n}\left(\mathbf{\hat{\beta}}-\mathbf{\beta}\right)\overset{d}{\to}N(\textbf{0},\sigma_w^2\Gamma_{p,q}^{-1})
 (\#eq:eq-distribucion-estimadores-muestras-grandes)
-\end{equation}</div>\EndKnitrBlock{proposition}
+\end{equation}
+:::
 
 ----
 
@@ -5003,7 +5221,8 @@ En \@ref(eq:eq-distribucion-estimadores-muestras-grandes) la matriz de varianza-
 La $p\times p$ matriz $\Gamma_{\phi\phi}$ es dada por \@ref(eq:eq-yule-walker-matricial), esto es, el $ij$-ésimo elemento de $\Gamma_{\phi\phi}$ para $i,j=1,\ldots,p$ es $\gamma_x(i-j)$ de un proceso AR(p) $\phi(B)x_t=w_t$. Similarmente, $\Gamma_{\theta\theta}$ es una matriz $q\times q$ con el $ij$-ésimo elemento para $i,j=1,\ldots,q$ igual a $\gamma_y(i-j)$ de un proceso AR(q) $\theta(B)y_t=w_t$. La $p\times q$ matriz $\Gamma_{\phi\theta}=\{\gamma_{xy}(i-j)\}$ para $i=1,\ldots,p; j=1,\ldots,q$; estos es, el $ij$-ésimo elemento es la covarianza cruzada entre dos procesos AR dados por $\phi(B)x_t=w_t$ y $\theta(B)y_t=w_t$. Finalmente, $\Gamma_{\theta\phi}=\Gamma_{\phi\theta}'$ es de orden $q\times p$.
 
 
-\BeginKnitrBlock{example}\iffalse{-91-65-108-103-117-110-97-115-32-100-105-115-116-114-105-98-117-99-105-111-110-101-115-32-97-115-105-110-116-243-116-105-99-97-115-32-101-115-112-101-99-237-102-105-99-97-115-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-distribuciones-asintoticas-especificas"><strong>(\#exm:ejem-distribuciones-asintoticas-especificas)  \iffalse (Algunas distribuciones asintóticas específicas) \fi{} </strong></span>
+::: {.example #ejem-distribuciones-asintoticas-especificas name="Algunas distribuciones asintóticas específicas"}
+
 Las siguientes distribuciones son algunos casos de la proposición \@ref(prp:propie-distribucion-estimadores-muestras-grandes)
 
 1) **AR(1):** $\gamma_x(0)=\sigma_w^2/(1-\phi^2)$, de esta manera $\sigma_w^2\Gamma_{1,0}^{-1}=(1-\phi^2)$. Entonces
@@ -5086,7 +5305,8 @@ Resolviendo, hallamos $\gamma_{xy}(0)=\sigma_w^2/(1+\phi\theta)$. Entonces,
                                        \right]^{-1}\right]
  (\#eq:eq-distribucion-asintotica-ARMA11)
 \end{equation}
-</div>\EndKnitrBlock{example}
+
+:::
 
 ----
 
@@ -5141,7 +5361,8 @@ El comportamiento asintótico de los estimadores de los parámetros nos da una i
 
 Si $n$ es pequeño o si los parámetros están cerca de los bordes o cotas, la aproximación asintótica puede ser un poco pobre. La técnica de bootstrap puede ser útil en este caso. Para una explicación ampliada de bootstrap véase Efron y Tibshirani (1994). Daremos un ejemplo simple de bootstrap para un proceso AR(1)
 
-\BeginKnitrBlock{example}\iffalse{-91-66-111-111-116-115-116-114-97-112-32-112-97-114-97-32-117-110-32-65-82-40-49-41-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-bootstrap-AR1"><strong>(\#exm:ejem-bootstrap-AR1)  \iffalse (Bootstrap para un AR(1)) \fi{} </strong></span>
+::: {.example #ejem-bootstrap-AR1 name="Bootstrap para un AR(1)"}
+
 Consideremos un modelo AR(1) con coeficiente de regresión cerca a la cota de causalidad y un error del proceso que es simétrico pero no normal. Específicamente, considere el modelo estacionario y causal
 
 \begin{equation}\label{}
@@ -5153,7 +5374,8 @@ donde $\mu=50, \phi=0.95$ y $w_t$ son iid doble exponencial con localización ce
 
 $$f_{w_t}(w)=\frac{1}{2\beta}\exp[-|w|/\beta]\text{ con }-\infty<w<\infty$$
 
-En este ejemplo, $\mathbb{E}(w_t)=0$ y $\text{var}(w_t)=2\beta^2=8$. La figura \@ref(fig:grafico-modelo-estacionario-causal-n-100) muestra $n=100$ observaciones simuladas de este proceso.</div>\EndKnitrBlock{example}
+En este ejemplo, $\mathbb{E}(w_t)=0$ y $\text{var}(w_t)=2\beta^2=8$. La figura \@ref(fig:grafico-modelo-estacionario-causal-n-100) muestra $n=100$ observaciones simuladas de este proceso.
+:::
 
 
 ```r
@@ -5379,7 +5601,8 @@ si es estacionario.
 
 Los modelos ARMA integrados o modelos ARIMA, es una extensión de los modelos ARMA que incluyen diferenciación. Formalmente, tenemos la siguiente definición.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-modelo-ARIMA"><strong>(\#def:defi-modelo-ARIMA) </strong></span>Un proceso $x_t$ es un proceso ARIMA(p,d,q) si 
+::: {.definition #defi-modelo-ARIMA}
+Un proceso $x_t$ es un proceso ARIMA(p,d,q) si 
 
 $$\nabla^dx_t = (1-B)^dx_t$$
   
@@ -5394,7 +5617,8 @@ Si $\mathbb{E}(\nabla^dx_t)=\mu$, escribimos el modelo como
 
 $$\phi(B)(1-B)^dx_t=\delta+\theta(B)w_t,$$
 
-donde $\delta=\mu(1-\phi_1-\cdots-\phi_p)$.</div>\EndKnitrBlock{definition}
+donde $\delta=\mu(1-\phi_1-\cdots-\phi_p)$.
+:::
 
 ----
 
@@ -5442,7 +5666,9 @@ Una vez que hemos establecido el valor preliminar de $d$, el siguiente paso es v
 
 Dado que estamos trabajando con estimaciones, dos modelos que luzcan diferentes pueden ser de hecho bastante similares, por lo tanto, nodebemos preocuparnos, de momento, en ser muy precisos al ajustar un modelo. En este punto, unos pocos valores preliminares de $p,d$ y $q$ serán suficientes y nos permitirán iniciar las estimaciones de los parámetros. A continuación daremos un ejemplo de uso de los pasos previamente descritos.
 
-\BeginKnitrBlock{example}\iffalse{-91-65-110-225-108-105-115-105-115-32-100-101-32-100-97-116-111-115-32-71-46-78-46-80-46-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-gnp-data"><strong>(\#exm:ejem-gnp-data)  \iffalse (Análisis de datos G.N.P.) \fi{} </strong></span>Consideremos los datos del Producto Nacional Bruto trimestral de EE.UU en miles de millónes de dólares, desde el primer trimestre de 1947 hasta el tercer trimestre de 2002. Son $n=223$ observaciones, losdatos han sido ajustados estacionalmente. El archivo de datos es "gnp96.txt", y fueron obtenidos del *Federal Reserve Bank of St. Louis* (http://research.stlouisfed.org/). El gráfico \@ref(fig:fig-gnp-data) muestra la serie de tiempo correspondiente.</div>\EndKnitrBlock{example}
+::: {.example #ejem-gnp-data name="Análisis de datos G.N.P."}
+Consideremos los datos del Producto Nacional Bruto trimestral de EE.UU en miles de millónes de dólares, desde el primer trimestre de 1947 hasta el tercer trimestre de 2002. Son $n=223$ observaciones, losdatos han sido ajustados estacionalmente. El archivo de datos es "gnp96.txt", y fueron obtenidos del *Federal Reserve Bank of St. Louis* (http://research.stlouisfed.org/). El gráfico \@ref(fig:fig-gnp-data) muestra la serie de tiempo correspondiente.
+:::
 
 
 ```r
@@ -5576,7 +5802,9 @@ Además de graficar $\hat{\rho}_e(h)$, podemos realizar una prueba de hipótesis
 
 es útil para realizar esta prueba de hipótesis. El  valor $H$ en \@ref(eq:eq-estadistico-ljung-box-pierce) se elige de manera arbitraria, en general se usa $H=20$. Bajo la hipótesis nula de que el modelo es adecuado, asintóticamente, (cuando $n\to\infty$), $Q$ se distribuye como una chi-cuadrado con $H-p-q$ grados de libertad, esto es $Q\sim\chi_{H-p-q}^2$. Entonces, rechazamos la hipótesis nula a nivel $\alpha$ si el valor  de $Q$ es mayor que la $\chi_{H-p-q}^2(1-\alpha)$.
 
-\BeginKnitrBlock{example}\iffalse{-91-68-105-97-103-110-243-115-116-105-99-111-32-112-97-114-97-32-108-97-32-116-97-115-97-32-100-101-32-99-114-101-99-105-109-105-101-110-116-111-32-100-101-108-32-80-46-78-46-66-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-diagnostico-tasa-crecimiento-gnp"><strong>(\#exm:ejem-diagnostico-tasa-crecimiento-gnp)  \iffalse (Diagnóstico para la tasa de crecimiento del P.N.B) \fi{} </strong></span>Enfoquémonos en el modelo $MA(2)$ ajustado del ejemplo \@ref(exm:ejem-gnp-data), el análisis de los residuales de $AR(1)$ es similar. La figura \@ref(fig:fig-modelo-arima002-gnp) muestra el gráfico de los residuales estandarizados (parte superior), la ACF de los residuales (parte media izquierda) (Note que R incluye la correlación en paso cero que siempre es uno) y los valores del estadístico $Q$, dado en \@ref(eq:eq-estadistico-ljung-box-pierce) desde paso $H=1$ hasta $H=20$ (parte inferior). </div>\EndKnitrBlock{example}
+::: {.example #ejem-diagnostico-tasa-crecimiento-gnp name="Diagnóstico para la tasa de crecimiento del P.N.B"}
+Enfoquémonos en el modelo $MA(2)$ ajustado del ejemplo \@ref(exm:ejem-gnp-data), el análisis de los residuales de $AR(1)$ es similar. La figura \@ref(fig:fig-modelo-arima002-gnp) muestra el gráfico de los residuales estandarizados (parte superior), la ACF de los residuales (parte media izquierda) (Note que R incluye la correlación en paso cero que siempre es uno) y los valores del estadístico $Q$, dado en \@ref(eq:eq-estadistico-ljung-box-pierce) desde paso $H=1$ hasta $H=20$ (parte inferior). 
+:::
 
 
 ```r
@@ -5664,35 +5892,32 @@ La figura \@ref(fig:fig-histograma-qq-plot-residual-gnp-arima) muestra un histog
 
 Como explicamos previamente, debemos tener cuidado con sobreajustar un modelo; no siempre es el caso que más es mejor. Sobreajustar nos lleva a estimadores menos preciso, y agregar más parámetros puede ajustar mejor los datos pero puede llevar a malas predicciones. Este resultado se ilustra en el ejemplo siguiente.
 
-\BeginKnitrBlock{example}\iffalse{-91-85-110-32-112-114-111-98-108-101-109-97-32-100-101-32-115-111-98-114-101-97-106-117-115-116-101-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-problema-sobreajuste"><strong>(\#exm:ejem-problema-sobreajuste)  \iffalse (Un problema de sobreajuste) \fi{} </strong></span>La figura \@ref(fig:fig-sobreajuste-poblacion-usa), muestra  la población de los EE.UU., según el censo oficial cada 10 años de 1910 hasta 1990 (puntos azules). Si usamos estos nueve puntos para predecir la población a futuro de los EE.UU. podemos usar un polinomio de grado 8 para ajustar las 9 observaciones; lo cual como se observa en la gráfica es perfecta. El modelo en este caso es 
+::: {.example #ejem-problema-sobreajuste name="Un problema de sobreajuste"}
+La figura \@ref(fig:fig-sobreajuste-poblacion-usa), muestra  la población de los EE.UU., según el censo oficial cada 10 años de 1910 hasta 1990 (puntos azules). Si usamos estos nueve puntos para predecir la población a futuro de los EE.UU. podemos usar un polinomio de grado 8 para ajustar las 9 observaciones; lo cual como se observa en la gráfica es perfecta. El modelo en este caso es 
 
 $$x_t=\beta_0+\beta_1t+\beta_2t^2+\cdots+\beta_8t^8+w_t$$
 
-El modelo fijado, el cual es graficado hasta el año 2010, (linea continua roja), pasa a través de los 9 puntos. El modelo predice que la población de los EE.UU. estará cercana a cero en el año 2000, y cruzará el cero en algún mes del año 2002, lo cual es falso.</div>\EndKnitrBlock{example}
+El modelo fijado, el cual es graficado hasta el año 2010, (linea continua roja), pasa a través de los 9 puntos. El modelo predice que la población de los EE.UU. estará cercana a cero en el año 2000, y cruzará el cero en algún mes del año 2002, lo cual es falso.
+:::
 
-<<<<<<< HEAD
-```{rfig.cap="Población de los EE.UU (puntos azules) y modelos ajustado (linea roja continua) de 1910 hasta 2010",fig-sobreajuste-poblacion-usa}
-=======
 
 ```r
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 uspop=read.table("data/USPOP2.txt", header = TRUE)
 fit.usp=lm(Pob~t+I(t^2)+I(t^3)+I(t^4)+I(t^5)+I(t^6)+I(t^7)+I(t^8),
            data=uspop)
 plot(uspop,type="p",lty=19,col="blue",xlim=c(1910,2010))
 lines(x = uspop$t, y=predict(fit.usp), col = "red", lwd = 2)
 ```
-<<<<<<< HEAD
-=======
 
 ![](Serie-de-Tiempo-en-R_files/figure-html/fig-sobreajuste-poblacion-usa-1.svg)<!-- -->
 
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ----
 
 El paso final en el ajuste de modelos es la elección del modelo. Esto es, debemos decidir que modelo mantendremos para la predicción. La técnica más popular es calcular los índices AIC, AICc y SIC (BIC), descritos en las definiciones \@ref(def:defi-AIC-2), \@ref(def:defi-AICc) y \@ref(def:defi-SIC).
 
-\BeginKnitrBlock{example}\iffalse{-91-69-108-101-99-99-105-243-110-32-100-101-108-32-109-111-100-101-108-111-32-112-97-114-97-32-108-97-32-115-101-114-105-101-32-80-46-78-46-66-46-32-100-101-32-69-69-46-85-85-46-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-eleccion-modelo-gnp"><strong>(\#exm:ejem-eleccion-modelo-gnp)  \iffalse (Elección del modelo para la serie P.N.B. de EE.UU.) \fi{} </strong></span>Volviendo al análisis del P.N.B. de EE.UU., visto en los ejemplos \@ref(exm:ejem-gnp-data) y \@ref(exm:ejem-diagnostico-tasa-crecimiento-gnp), recordemos que los modelos son AR(1), MA(2) y ARIMA(1,1,2). Para escoger el modelo final, comparemos los valores del AIC, AICc y SIC para los 3 modelos</div>\EndKnitrBlock{example}
+::: {.example #ejem-eleccion-modelo-gnp name="Elección del modelo para la serie P.N.B. de EE.UU."}
+Volviendo al análisis del P.N.B. de EE.UU., visto en los ejemplos \@ref(exm:ejem-gnp-data) y \@ref(exm:ejem-diagnostico-tasa-crecimiento-gnp), recordemos que los modelos son AR(1), MA(2) y ARIMA(1,1,2). Para escoger el modelo final, comparemos los valores del AIC, AICc y SIC para los 3 modelos
+:::
 
 ```r
 n=length(gnpgr)
@@ -5785,7 +6010,8 @@ log(sarima)+karima*log(n)/n
 
 En esta sección vamos a introducir diversas modificaciones a los modelos ARIMA para que se ajusten a comportamiento estacional y no-estacionario. A menudo, la dependencia del pasado tiende a ocurrir más fuertemente en múltiplos de algún paso estacinal $s$ oculto. Por ejemplo, con datos económicos mensuales, existe una fuerte componente anual con pasos que son múltiplos de $s=12$, debido a la fuerte conexión de todas las actividades al calendario anual. Los datos tomados trimestralmente exhibirán un período repetitivo para $s=4$. Los fenómenos naturales tales como temperatura, lluvia, etc., también presentan una fuerte componente correspondiente a la estación del año. Por consiguiente, la variabilidad natural de muchos fenómenos físicos, biológicos y procesos económicos tienden a comportarse según las fluctuaciones estacionales. Debido a esto, es apropiado introducir polinomios autorregresivo de promedio móvil que se identifiquen con los rezagos estacionales.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-modelo-sarma"><strong>(\#def:defi-modelo-sarma) </strong></span>El **modelo autorregresivo de promedio móvil estacional puro** denotado $ARMA(P,Q)_s$ tiene la forma
+::: {.definition #defi-modelo-sarma}
+El **modelo autorregresivo de promedio móvil estacional puro** denotado $ARMA(P,Q)_s$ tiene la forma
 
 \begin{equation}
 \Phi_P(B^s)x_t=\Theta_Q(B^s)w_t,
@@ -5808,11 +6034,13 @@ y
   
 son los *operadores autorreggresivo estacional* y de *promedio móvil estacional* de ordenes $P$ y $Q$ respectivamente, con período estacional $s$.
 
-Análogo a las propiedades de los modelos $ARMA$ no-estacionales, el modelo $ARMA(P,Q)_s$ puro es *causal* sólo cuando las raíces de $\Phi_P(z^s)$ están fuera del círculo unitario y es *invertible* cuando las raíces de $\Theta_Q(z^s)$ están fuera del círculo unitario. </div>\EndKnitrBlock{definition}
+Análogo a las propiedades de los modelos $ARMA$ no-estacionales, el modelo $ARMA(P,Q)_s$ puro es *causal* sólo cuando las raíces de $\Phi_P(z^s)$ están fuera del círculo unitario y es *invertible* cuando las raíces de $\Theta_Q(z^s)$ están fuera del círculo unitario. 
+:::
 
 ----
 
-\BeginKnitrBlock{example}\iffalse{-91-85-110-97-32-115-101-114-105-101-32-65-82-32-101-115-116-97-99-105-111-110-97-108-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-serie-AR-estacional"><strong>(\#exm:ejem-serie-AR-estacional)  \iffalse (Una serie AR estacional) \fi{} </strong></span>Una serie autorregresiva estacional de primer orden que podría durar meses la podemos escribir como
+::: {.example #ejem-serie-AR-estacional name="Una serie AR estacional"}
+Una serie autorregresiva estacional de primer orden que podría durar meses la podemos escribir como
 
 $$(1-\Phi B^{12})x_t=w_t$$
 
@@ -5824,7 +6052,8 @@ Este modelo exhibe la serie $x_t$ en términos de saltos o rezagos múltiplos de
 
 De la forma anterior se desprende cláramente que la estimación y el pronóstico para tal proceso sólo implica modificaciones directas del cso de rezago unitario que ya tratamos. En particular, la condición causal requiere $|\Phi|<1$.
 
-Simulamos 3 años de datos de este modelo con $\Phi=0.9$ y mostramos las ACF y PACF teóricas del modelo. Véase la figura \@ref(fig:fig-modelo-AR1-estacional)</div>\EndKnitrBlock{example}
+Simulamos 3 años de datos de este modelo con $\Phi=0.9$ y mostramos las ACF y PACF teóricas del modelo. Véase la figura \@ref(fig:fig-modelo-AR1-estacional)
+:::
 
 
 ```r
@@ -5894,12 +6123,14 @@ Como un criterio de diagnóstico inicial, podemos usar las propiedades de una se
 
 En general, podemos combinar los operadores no estacionales y estacionales en un solo modelo.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-modelo-sarma-multiplicativo"><strong>(\#def:defi-modelo-sarma-multiplicativo) </strong></span>Un modelo **multiplicativo autorregresivo de promedio móvil estacional** denotado por $ARMA(p,q)\times(P,Q)_s$ tiene la forma 
+::: {.definition #defi-modelo-sarma-multiplicativo}
+Un modelo **multiplicativo autorregresivo de promedio móvil estacional** denotado por $ARMA(p,q)\times(P,Q)_s$ tiene la forma 
 
 \begin{equation}
 \Phi_P(B^s)\phi(B)x_t = \Theta_Q(B^s)\theta(B)w_t
 (\#eq:eq-sarma-multiplicativo)
-\end{equation}</div>\EndKnitrBlock{definition}
+\end{equation}
+:::
 
 ----
 
@@ -5907,7 +6138,8 @@ Aunque las propiedades de diagnóstico en la tabla anterior no son estrictamente
 
 Al ajustar tales modelos, nos centraremos primero en los componentes estacionales autorregresivo de promedio móvil estacional, lo que en general nos conduce a resultados más satisfactorios.
 
-\BeginKnitrBlock{example}\iffalse{-91-85-110-32-109-111-100-101-108-111-32-101-115-116-97-99-105-111-110-97-108-32-109-105-120-116-111-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-modelo-estacional-mixto"><strong>(\#exm:ejem-modelo-estacional-mixto)  \iffalse (Un modelo estacional mixto) \fi{} </strong></span>Consideremos un modelo $ARMA(0,1)\times(1,0)_{12}$
+::: {.example #ejem-modelo-estacional-mixto name="Un modelo estacional mixto"}
+Consideremos un modelo $ARMA(0,1)\times(1,0)_{12}$
   
 $$x_t = \Phi x_{t-12}+w_t+\theta w_{t-1},$$
   
@@ -5923,7 +6155,8 @@ Además, multiplicando el modelo por $x_{t-h}, h>0$, y tomando valor esperado, t
   \rho(h) &=& 0 \text{, en otro caso.}
 \end{eqnarray*}
 
-Las ACF y PACF para este modelo, con $\Phi=0.8$ y $\theta=-0.5$ se muestran en la Figura \@ref(fig:fig-modelo-sarma-multiplicativo). Los comandos en $R$ para reproducir la Figura \@ref(fig:fig-modelo-sarma-multiplicativo) son los siguientes.</div>\EndKnitrBlock{example}
+Las ACF y PACF para este modelo, con $\Phi=0.8$ y $\theta=-0.5$ se muestran en la Figura \@ref(fig:fig-modelo-sarma-multiplicativo). Los comandos en $R$ para reproducir la Figura \@ref(fig:fig-modelo-sarma-multiplicativo) son los siguientes.
+:::
 
 
 
@@ -5957,29 +6190,34 @@ $$(1-B^{12})x_t = x_t-x_{t-12} = v_t+w_t-w_{t-12}.$$
 
 Este modelo es un modelo $MA(1)_{12}$ estacionario y su ACF tendrá un pico solo en paso 12. En general, la diferenciación estacional puede ser indicada cuando la ACF decae lentamente en múltiplos de algún período estacional $s$, pero es despreciable entre los períodos.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-diferencia-estacional-D"><strong>(\#def:defi-diferencia-estacional-D) </strong></span>La **diferencia estacional de orden $D$** se define como  
+::: {.definition #defi-diferencia-estacional-D}
+La **diferencia estacional de orden $D$** se define como  
 
 \begin{equation}
 \nabla_s^Dx_t=(1-B^2)^Dx_t
 (\#eq:eq-diferencia-estacional-D)
-\end{equation}</div>\EndKnitrBlock{definition}
+\end{equation}
+:::
 
 ----
 
 Normalmente, $D=1$, es suficiente para obtener estacionaridad estacional. incorporando estas ideas al modelo general nos lleva a la siguiente definición. 
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-modelo-sarima"><strong>(\#def:defi-modelo-sarima) </strong></span>Un modelo **autorregresivo integrado de promedio móvil estacional multiplicativo** o modelo $SARIMA$ está dado por 
+::: {.definition #defi-modelo-sarima}
+Un modelo **autorregresivo integrado de promedio móvil estacional multiplicativo** o modelo $SARIMA$ está dado por 
 
 \begin{equation}
 \Phi_P(B^s)\phi(B)\nabla_s^D\nabla^dx_t = \delta+\Theta_Q(B^s)\theta(B)w_t,
 (\#eq:eq-modelo-sarima)
 \end{equation}
   
-donde $w_t$ es un ruido blanco gaussiano. El modelo general es denotado como $ARIMA(p,d,q)\times(P,D,Q)_s$. Las componentes autorregresiva y de promedio móvil ordinarias son representadas por $\phi(B)$ y $\theta(B)$ de órdenes $p$ y $q$ respectivamente, y las componentes autorregresivas y de promedio móvil estacionales por $\Phi_P(B^s)$ y $\Theta_Q(B^s)$ de órdenes $P$ y $Q$, y las componentes de diferencias ordinarias y estacionales $\nabla^d=(1-B)^d$ y $\nabla_s^D=(1-B^s)^D$.</div>\EndKnitrBlock{definition}
+donde $w_t$ es un ruido blanco gaussiano. El modelo general es denotado como $ARIMA(p,d,q)\times(P,D,Q)_s$. Las componentes autorregresiva y de promedio móvil ordinarias son representadas por $\phi(B)$ y $\theta(B)$ de órdenes $p$ y $q$ respectivamente, y las componentes autorregresivas y de promedio móvil estacionales por $\Phi_P(B^s)$ y $\Theta_Q(B^s)$ de órdenes $P$ y $Q$, y las componentes de diferencias ordinarias y estacionales $\nabla^d=(1-B)^d$ y $\nabla_s^D=(1-B^s)^D$.
+:::
 
 ----
 
-\BeginKnitrBlock{example}\iffalse{-91-85-110-32-109-111-100-101-108-111-32-83-65-82-73-77-65-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-modelo-sarima"><strong>(\#exm:ejem-modelo-sarima)  \iffalse (Un modelo SARIMA) \fi{} </strong></span>Consideremos el siguiente modelo, el cual a menudo provee una representación razonable para seires econométricas estacionales y no estacionarias. Mostramos la ecuación para el modelo, denotado por $ARIMA(0,1,1)\times(0,1,1)_{12}$ en la notación de la definición anterior (Definición \@ref(def:defi-modelo-sarima)), donde las fluctuaciones estacionales ocurren cada 12 meses. Entonces con $\delta=0$, el modelo \@ref(eq:eq-modelo-sarima) llega a ser 
+::: {.example #ejem-modelo-sarima name="Un modelo SARIMA"}
+Consideremos el siguiente modelo, el cual a menudo provee una representación razonable para seires econométricas estacionales y no estacionarias. Mostramos la ecuación para el modelo, denotado por $ARIMA(0,1,1)\times(0,1,1)_{12}$ en la notación de la definición anterior (Definición \@ref(def:defi-modelo-sarima)), donde las fluctuaciones estacionales ocurren cada 12 meses. Entonces con $\delta=0$, el modelo \@ref(eq:eq-modelo-sarima) llega a ser 
 
 $$\nabla_{12}\nabla x_t=\Theta(B^{12})\theta(B)w_t,$$
   
@@ -5998,7 +6236,8 @@ o en la forma de ecuaciones en diferencias
 
 $$x_t = x_{t-1}+x_{t-12}-x_{t-13}+w_t+\theta w_{t-1}+\Theta w_{t-12}+\Theta\theta w_{t-13}.$$
   
-Note que la naturaleza multiplicativa del modelo implica que el coeficiente de $w_{t-13}$ es el producto de los coeficientes de $w_t$ y $w_{t-12}$, en lugar de un parámetro libre. El supuesto del modelo multiplicativo parece funcionar bien con muchos conjuntos  de datos de series de tiempo estacionales a la vez que reduce el número de parámetros que debemos estimar.</div>\EndKnitrBlock{example}
+Note que la naturaleza multiplicativa del modelo implica que el coeficiente de $w_{t-13}$ es el producto de los coeficientes de $w_t$ y $w_{t-12}$, en lugar de un parámetro libre. El supuesto del modelo multiplicativo parece funcionar bien con muchos conjuntos  de datos de series de tiempo estacionales a la vez que reduce el número de parámetros que debemos estimar.
+:::
 
 ----
 
@@ -6006,7 +6245,9 @@ Seleccionar el modelo apropiado para un conjunto de datos dado entre todos los p
 
 Primero aplicamos operaciones de diferenciación y luego construimos los residuos a partir de una serie de tamaño reducido. A continuación, evaluamos las ACF y PACF de estos residuos. Los picos que aparecen en estas funciones a menudo pueden eliminarse fjando o ajustando una componente autorregresiva o una componente de promedio móvil de acuerdo con las propiedades de las Tablas para las funciones ACF y PACF. Al considerar si el modelo es satisfactorio podemos aplicar las técnicas de diagnóstico discutidas en la Sección [Construcción de modelos ARIMA].
 
-\BeginKnitrBlock{example}\iffalse{-91-80-97-115-97-106-101-114-111-115-32-97-233-114-101-111-115-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-pasajeros-aereos"><strong>(\#exm:ejem-pasajeros-aereos)  \iffalse (Pasajeros aéreos) \fi{} </strong></span>Consideremos el conjunto de datos de $R$ "AirPassengers", que son los totales mensuales de pasajeros de lineas aereas internacionales de 1949 a 1960. En la Figura \@ref(fig:fig-serie-pasajeros-transformados) mostramos la serie de datos así como 3 transformaciones de los mismos. Primero una transformación logarítmica, luego una diferenciación de un paso sobre esta, y finalmente una diferenciación adicional de orden 12. Las instrucciones en $R$ son:</div>\EndKnitrBlock{example}
+::: {.example #ejem-pasajeros-aereos name="Pasajeros aéreos"}
+Consideremos el conjunto de datos de $R$ "AirPassengers", que son los totales mensuales de pasajeros de lineas aereas internacionales de 1949 a 1960. En la Figura \@ref(fig:fig-serie-pasajeros-transformados) mostramos la serie de datos así como 3 transformaciones de los mismos. Primero una transformación logarítmica, luego una diferenciación de un paso sobre esta, y finalmente una diferenciación adicional de orden 12. Las instrucciones en $R$ son:
+:::
 
 
 ```r
@@ -6035,7 +6276,6 @@ acf2(ddlx,50)
 </div>
 
 ```
-<<<<<<< HEAD
 ##       [,1]  [,2]  [,3]  [,4] [,5] [,6]  [,7]  [,8]
 ## ACF  -0.34  0.11 -0.20  0.02 0.06 0.03 -0.06  0.00
 ## PACF -0.34 -0.01 -0.19 -0.13 0.03 0.03 -0.06 -0.02
@@ -6057,59 +6297,6 @@ acf2(ddlx,50)
 ##      [,49] [,50]
 ## ACF   0.11 -0.02
 ## PACF  0.09  0.13
-=======
-##         ACF  PACF
-##  [1,] -0.34 -0.34
-##  [2,]  0.11 -0.01
-##  [3,] -0.20 -0.19
-##  [4,]  0.02 -0.13
-##  [5,]  0.06  0.03
-##  [6,]  0.03  0.03
-##  [7,] -0.06 -0.06
-##  [8,]  0.00 -0.02
-##  [9,]  0.18  0.23
-## [10,] -0.08  0.04
-## [11,]  0.06  0.05
-## [12,] -0.39 -0.34
-## [13,]  0.15 -0.11
-## [14,] -0.06 -0.08
-## [15,]  0.15 -0.02
-## [16,] -0.14 -0.14
-## [17,]  0.07  0.03
-## [18,]  0.02  0.11
-## [19,] -0.01 -0.01
-## [20,] -0.12 -0.17
-## [21,]  0.04  0.13
-## [22,] -0.09 -0.07
-## [23,]  0.22  0.14
-## [24,] -0.02 -0.07
-## [25,] -0.10 -0.10
-## [26,]  0.05 -0.01
-## [27,] -0.03  0.04
-## [28,]  0.05 -0.09
-## [29,] -0.02  0.05
-## [30,] -0.05  0.00
-## [31,] -0.05 -0.10
-## [32,]  0.20 -0.02
-## [33,] -0.12  0.01
-## [34,]  0.08 -0.02
-## [35,] -0.15  0.02
-## [36,] -0.01 -0.16
-## [37,]  0.05 -0.03
-## [38,]  0.03  0.01
-## [39,] -0.02  0.05
-## [40,] -0.03 -0.08
-## [41,] -0.07 -0.17
-## [42,]  0.10  0.07
-## [43,] -0.09 -0.10
-## [44,]  0.03 -0.06
-## [45,] -0.04 -0.03
-## [46,] -0.04 -0.12
-## [47,]  0.11 -0.01
-## [48,] -0.05 -0.05
-## [49,]  0.11  0.09
-## [50,] -0.02  0.13
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ```
 
 *Componente estacional*: Parece que en la estacionalidad, la ACF se corta en paso $1s$ ($s=12$), mientras que la PACF se rezaga en pasos $1s,2s,3s,4s,\ldots$. Estos resultados implican un $SMA(1), P=0,Q=1$, en la componente estacional (s=12).
@@ -6164,15 +6351,9 @@ sarima(lx, 1,1,1, 0,1,1,12)
 ## $fit
 ## 
 ## Call:
-<<<<<<< HEAD
 ## arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, Q), period = S), 
 ##     include.mean = !no.constant, transform.pars = trans, fixed = fixed, optim.control = list(trace = trc, 
 ##         REPORT = 1, reltol = tol))
-=======
-## stats::arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, 
-##     Q), period = S), include.mean = !no.constant, transform.pars = trans, fixed = fixed, 
-##     optim.control = list(trace = trc, REPORT = 1, reltol = tol))
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ## 
 ## Coefficients:
 ##         ar1     ma1    sma1
@@ -6191,7 +6372,6 @@ sarima(lx, 1,1,1, 0,1,1,12)
 ## sma1  -0.5643 0.0747 -7.5544  0.0000
 ## 
 ## $AIC
-<<<<<<< HEAD
 ## [1] -3.679
 ## 
 ## $AICc
@@ -6199,15 +6379,6 @@ sarima(lx, 1,1,1, 0,1,1,12)
 ## 
 ## $BIC
 ## [1] -3.591
-=======
-## [1] -3.394
-## 
-## $AICc
-## [1] -3.392
-## 
-## $BIC
-## [1] -3.313
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ```
 
 Sin embargo, el parámetro $AR$ no es significativo, así que intentamos eliminando un parámetro de la parte dentro de las estaciones. En este caso probaremos con los modelos $ARIMA(0,1,1)\times(0,1,1)_{12}$ y $ARIMA(1,1,0)\times(0,1,1)_{12}$.
@@ -6249,15 +6420,9 @@ sarima(lx, 0,1,1, 0,1,1,12)
 ## $fit
 ## 
 ## Call:
-<<<<<<< HEAD
 ## arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, Q), period = S), 
 ##     include.mean = !no.constant, transform.pars = trans, fixed = fixed, optim.control = list(trace = trc, 
 ##         REPORT = 1, reltol = tol))
-=======
-## stats::arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, 
-##     Q), period = S), include.mean = !no.constant, transform.pars = trans, fixed = fixed, 
-##     optim.control = list(trace = trc, REPORT = 1, reltol = tol))
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ## 
 ## Coefficients:
 ##          ma1    sma1
@@ -6275,7 +6440,6 @@ sarima(lx, 0,1,1, 0,1,1,12)
 ## sma1  -0.5569 0.0731  -7.619       0
 ## 
 ## $AIC
-<<<<<<< HEAD
 ## [1] -3.69
 ## 
 ## $AICc
@@ -6283,15 +6447,6 @@ sarima(lx, 0,1,1, 0,1,1,12)
 ## 
 ## $BIC
 ## [1] -3.624
-=======
-## [1] -3.404
-## 
-## $AICc
-## [1] -3.404
-## 
-## $BIC
-## [1] -3.343
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ```
 
 
@@ -6327,7 +6482,6 @@ sarima(lx, 1,1,0, 0,1,1,12)
 </div>
 
 ```
-<<<<<<< HEAD
 ## $fit
 ## 
 ## Call:
@@ -6358,226 +6512,6 @@ sarima(lx, 1,1,0, 0,1,1,12)
 ## 
 ## $BIC
 ## [1] -3.61
-```
-
-Todos los criterios de información prefieren el modelo $ARIMA(0,1,1)\times(0,1,1)_{12}$. En la Figura \@ref(fig:fig-residuales-pasajeros) mostramos los diagnósticos para los residuales y excepto para uno o dos datos atípicos, el modelo parece ajustarse bien.
-
-Finalmente, el pronóstico para 12 meses de los datos con la transformación logarítmica lo mostramo en la Figura \@ref(fig:fig-pronostico-pasajeros).
-
-
-```r
-sarima.for(lx, 12, 0,1,1, 0,1,1,12)
-```
-
-<div class="figure">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-pronostico-pasajeros-1.svg" alt="Pronóstico de 12 meses usando el modelo ARIMA(0,1,1)x(0,1,1)_12 de los datos transformados de pasajeros aéreos"  />
-<p class="caption">(\#fig:fig-pronostico-pasajeros)Pronóstico de 12 meses usando el modelo ARIMA(0,1,1)x(0,1,1)_12 de los datos transformados de pasajeros aéreos</p>
-</div>
-
-```
-## $pred
-##        Jan   Feb   Mar   Apr   May   Jun   Jul   Aug
-## 1961 6.110 6.054 6.172 6.199 6.233 6.369 6.507 6.503
-##        Sep   Oct   Nov   Dec
-## 1961 6.325 6.209 6.063 6.168
-## 
-## $se
-##          Jan     Feb     Mar     Apr     May     Jun
-## 1961 0.03672 0.04278 0.04809 0.05287 0.05725 0.06132
-##          Jul     Aug     Sep     Oct     Nov     Dec
-## 1961 0.06513 0.06873 0.07216 0.07543 0.07856 0.08157
-```
-
-----
-
-
-<!--chapter:end:305-modelos-ARIMA.Rmd-->
-
-# Modelos ARCH y GARCH
-
-Antes de comenzar, es necesario precisar el concepto de volatilidad en
-el contexto del análisis financiero. Se denomina volatilidad a la tasa relativa a la que un activo experimenta una drástica disminución o aumento de su precio dentro de un período predeterminado de tiempo. La
-volatilidad se determina mediante el cálculo de la desviación estándar
-anualizada de la variación diaria del precio. Si el precio de la acción aumenta y disminuye rápidamente durante cortos períodos de tiempo,
-entonces se dice que tiene una volatilidad alta. Si el precio se mantiene casi siempre en el mismo valor entonces se dice que tiene volatilidad baja. Los inversores evalúan la volatilidad de las acciones antes de tomar una decisión en, la compra de una oferta de acciones nuevas, la adquisición de acciones adicionales de un activo ya presente en una cartera, o en la venta de acciones que actualmente est án en poder del inversionista. La idea detrás de la comprensión del comportamiento de la volatilidad de los activos es organizar las inversiones para obtener el máximo rendimiento con el mínimo de oportunidades de pérdida.
-
-En esta sección se discutirán algunos de los modelos estadísticos y econométricos mas importantes para la modelización de la volatilidad de series de tiempo de rentabilidades de activos. A diferencia del análisis de series de tiempo tradicional, el cual se enfoca principalmente en la modelización del momento condicional de primer orden, los denominados modelos de heterocedasticidad condicional buscan captar la dependencia dentro del momento condicional de segundo orden, en otras palabras, el objetivo ahora es modelizar la volatilidad. La incertidumbre o riesgo constituye uno de los temas de investigación principales en el análisis financiero. Como se mencion´o, la volatilidad es un factor importante en las finanzas puesto que proporciona un método simple para calcular el valor en riesgo de una situación financiera en la gestión de riesgos. Por otra parte, la modelización de la volatilidad de una serie de tiempo puede mejorar la eficiencia en la estimación de parámetros y la exactitud en los intervalos de predicción. En esta sección se discutirán los modelos univariados de la volatilidad entre los que se incluyen el modelo autorregresivo de heterocedasticidad condicional (*ARCH*) de Engle
-(1982), el modelo generalizado ARCH (*GARCH*) de Bollerslev (1986), entre otros.
-
-La volatilidad tiene la particularidad de que no es posible su observación directa. Aún cuando esto no es posible, la volatilidad tiene algunas características que pueden ser observadas en las series de rentabilidad de activos entre los que se pueden destacar,
-
-- Agrupamiento de la volatilidad (cluster). En otras palabras, períodos
-de volatilidades altas y períodos de volatilidades bajas.
-
-- Evolución continua de la volatilidad en el tiempo.
-
-- Las variaciones de la volatilidad se presentan en un rango fijo,
-es decir, no diverge al infinito. En términos estadísticos, se puede
-decir que la volatilidad es a menudo estacionaria.
-
-- La volatilidad parece reaccionar de manera diferente a un incremento
-elevado de los precios o una disminución sustancial de los precios. Este efecto es conocido con el nombre de apalancamiento o efecto palanca.
-
-Tales propiedades descritas anteriormente juegan un papel importante
-en el desarrollo de los modelos usados para caracterizar la volatilidad.
-
-## Estructura de los Modelos
-
-Como se analizó en secciones previas, más precisamente en la sección de modelos lineales, una serie de tiempo $x_t$ se puede escribir como la suma de dos componentes,
-
-\begin{equation}
-x_t=\mu_t+w_t = \mathbb{E}(x_t|\mathcal{F}_{t-1})
-(\#eq:eq-modelos-xt-2-componentes)
-\end{equation}
-
-donde $\mathcl{F}_{t-1}$ representa la información disponible hasta el tiempo $t-1$. Usualmente, $\mathcal{F}_{t-1}$ consiste de todas la funciones lineales del pasado de $x_t$. El objetivo de los proceso descritos por \@ref(eq:eq-modelos-xt-2-componentes) es la modelización de $\mu_t=\mathbb{E}(x_t|\mathcal{F}_{t-1})$, con la suposición de que $w_t$ sea un ruido blanco condicionalmente homocedástico, es decir,
-
-\begin{equation}
-\mathbb{E}(w_t^2) = \mathbb{E}(w_t^2|\mathcal{F}_{t-1}) = \sigma_w^2.
-(\#eq:eq-ruido-blanco-homocedastico)
-\end{equation}
-
-Los modelos de heterocedasticidad condicional suponen que el segundo momento condicional depende del tiempo, es decir,
-
-\begin{equation}
-\sigma_t^2=Var(x_t|\mathcal{F}_{t-1})=\mathbb{E}((x_t-\mu_t)^2|\mathcal{F}_{t-1})=\mathbb{E}(w_t^2|\mathcal{F}_{t-1})=h_t,
-(\#eq:eq-varianza-heterocedastica)
-\end{equation}
-
-siendo $h_t$ una función no negtiva, $h_t=h_t(\mathcal{F}_{t-1})$. A través de este capítulo discutiremos algunas de las posibles funciones para $h_t$.
-
-La forma en que $h_t$ evoluciona respecto del tiempo distinguirá una forma de otra. Ya que nuestro objetivo esel estudio de modelos que nos permitan caracterizar series de tiempo financieras, consideraremos de forma general que $x_t$ representa la serie de rentabilidades de activos. Así mismo, haremos referencia de $w_t$ como la *rentabilidad corregida en media* o *impulso* del activo.
-
-Los modelos de heterocedasticidad condicional los podemos clasificar en dos categorías generales
-
-1) La primera categoría, agrupa los modelos que usan una función exacta que rige la evolución de $\sigma_t^2=h_t$.
-
-2) La segunda categoría, agrupa los modelos que usan una ecuación estocástica para describir $\sigma_t^2=h_t$.
-
-Los modelos GARCH pertenecen a la primera categoría, mientras que los modelos de volatilidad estocástica están en la segunda categoría.
-
-
-## Modelos ARCH
-
-El primer modelo que proporciona un enfoque sistemático para el modelado de la volatilidad es el modelo *Autorregresivo de Heterocedasticidad Condicional* denotado por sus sigla en inglés $ARCH$ (Autoregressive Conditional Heteroscedasticity), introducido por Engle (1982). un modelo $ARCH(p)$ tiene la forma
-
-\begin{eqnarray}
-w_t^2 &=& \nu_t\sqrt{h_t} \nonumber \\
-h_t   &=& \alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2.
-(\#eq:eq-modelo-ARCHp)
-\end{eqnarray}
-
-Donde $\{\nu_t\}$ es una sucesión de variables aleatorias iid con media 0 y varianza 1, $\alpha_0>0,\alpha_p>0$ y $\alpha_i\geq0, i=1,\ldots,p-1$. La condición de no negatividad sobre los coeficinetes $\alpha_i$ garantizan que la varianza condicional $h_t$ sea positiva.
-
-\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota. </em></span>  \fi{}Algunos autores usan $\sigma_t^2$ para denotar la varianza condicional en la ecuación \@ref(eq:eq-modelos-ARCHp) en lugar de $h_t$ tal como lo denotamos. Así pues, el modelo $ARCH(p)$ también lo podemos escirbir de la siguiente manera:
-
-\begin{eqnarray*}
-w_t &=& \nu_t\sigma_t \\
-\sigma_t^2 &=& \alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2.
-\end{eqnarray*}
-
-Sin embargo, en lo que sigue y por razones prácticas, usareos la primera notación que describimos en la ecuación \@ref(eq:eq-modelos-ARCHp).</div>\EndKnitrBlock{remark}
-
-El modelo $ARCH(P)$ lo podemos escribir como un modelo $AR(p)$ para $w_t^2$. En efecto,
-
-\begin{equation}
-w_t^2=\alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2+\eta_t,
-(\#eq:eq-modelo-AR-wt2)
-\end{equation}
-
-donde $\eta_t=w_t^2-h_t$. Recordando la teoría de los modelos $AR$, si las raíces de la ecuación característica del proceso $AR$ están fuera del círculo unitario, entonces el proceso es estacionario y además podemos calcular la varianza incondicional de $w_t$, como
-
-$$Var(w_t^2) = \sigma_w^2 = \mathbb{E}(w_t^2) = \frac{\alpha_0}{1-\alpha_1-\cdots-\alpha_p}$$
-
-siempre y cuando $1-\alpha_1-\cdots-\alpha_p>0$. Tomando en cuenta la ecuación \@ref(eq:eq-modelo-ARCHp), podemos ver la razón por la cual los modelos $ARCH$ pueden describir el agrupamiento de la volatilidad. El mmodelo establece que la varianza condicional $h_t$ es una función creciente de $w_{t-1}^2$ para $i=1,\ldots,p$. Por lo tanto, valores grandes de $w_{t-1}$ (en módulo) dan lugar a valores grandes de $h_t$. Por consiguiente, $w_t$ también tiende a asumirvalores grandes (en módulo).
-
-Además de capturar el agrupamiento de la volatilidad, los modelos $ARCH$ tambie'n reflejan el exceso de kurtosis estándar de las series de rentabilidad. Para estudiar esta y otras propiedades, consideraremos por simplicidad el modelo $ARCH(1)$, que asume la forma siguiente:
-
-\begin{eqnarray*}
-w_t &=& \nu_t\sqrt{h_t} \nonumber\\
-h_t &=& \alpha_0+\alpha_1w_{t-1}^2. 
-(\#eq:eq-modelo-ARCH1)
-\end{equation}
-
-Entonces, tenemos que 
-
-$$\mathbb{E}(w_t) = \mathbb{E}[\mathbb{E}(w_t|\mathcal{F}_{t-1})] = \mathbb{E}(\sqrt{h_t}\mathbb{E}(\nu_t)) = 0.$$
-
-Por otro lado, suponiendo estacionaridad de la serie, la varianza incondicional de $w_t$ es 
-
-$$\sigma_w^2=\mathbb{E}(w_t^2) = \frac{\alpha_0}{1-\alpha_1},$$
-
-con $0\leq\alpha_1<1$. Suponiendo normalidad en $\nu_t$, tenemos
-
-$$\mathbb{E}(w_t^4|\mathcal{F}_{t-1}) = 3(\alpha_0+\alpha_1w_{t-1}^2)^2,$$
-
-y por lo tanto
-
-$$\mathbb{E}(w_t^4) = \mathbb{E}(\mathbb{E}(w_t^4|\mathcal{F}_{t-1})) = 3\mathbb{E}(\alpha_0^2+2\alpha_0\alpha_1w_{t-1}^2+\alpha_1^2w_{t-1}^4).$$
-
-Entonces si $w_t$ es estacionario de cuarto orden con $\mu_4=\mathbb{E}(w_t^4)$, tenemos que
-
-$$\mu_4 = 3(\alpha_0^2+2\alpha_0\alpha_1Var(w_t)+\alpha_1^2\mu_4) = 3\alpha_0^2\left(1+2\frac{\alpha_1}{1-\alpha_1}\right)+3\alpha_1^2\mu_4.$$
-
-Despejando, obtenemos
-
-$$\mu_4 = \frac{3\alpha_0^2(1+\alpha_1)}{(1-\alpha_1)(1-3\alpha_1^2)}.$$
-
-Con la condición $0\leq\alpha_1^2<\frac{1}{3}$, para asegurar que $\mu_4>0$. or otra parte, la kurtosis incondicional de $w_t$ es 
-
-$$k = \frac{\mathbb{E}(w_t^4)}{[Var(w_t)]^2} = 3\frac{1-\alpha_1^2}{1-3\alpha_1^2} > 3.$$
-
-En esta última ecuación vemos reflejado el exceso de kurtosis de $w_t$.
-
-El modelo $ARCH$ tiene múltiles propiedades que en cierta forma pueden mejorar el modelado de series de tiempo financieras, en epsecial si queremos modeloar o simular la volatilidad.Sin embargo, este modelo como los ya vistos presentan limitaciones a la hora de modelar series de rentabilidad de activos financieros. Es habitual que períodos de rentabilidades negativas sean seguidos por períodos de gran volatilidad. Así, los modelos $ARCH$ no tienen la capacidad de captar esta característica debido a que la volatilidad responde igualmente ante impulsos negativos y positivos, pues dependen del cuadrado de los mismos. 
-
-Por otro lado, las condiciones para la existencia de momentos de orden mayor, implica colocar restricciones muy estrictas sobre los parámetros del modelo. Como ya mencionamos, para un modelo $ARCH(1)$ con momento de cuarto orden finito exigimos que $0\leq\alpha_1^2<1/3$, de modo que para un modelo $ARCH$ de mayor orden las restricciones tienden a complicarse.
-
-
-### Estimación de un Modelo ARCH(p)
-
-### Predicción con modelos ARCH
-
-## Modelos GARCH
-
-### Estimación de un Modelo GARCH
-
-### Predicción con modelos GARCH
-
-
-
-<!--chapter:end:306-Modelos-ARCH-GARCH.Rmd-->
-=======
-## $fit
-## 
-## Call:
-## stats::arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, 
-##     Q), period = S), include.mean = !no.constant, transform.pars = trans, fixed = fixed, 
-##     optim.control = list(trace = trc, REPORT = 1, reltol = tol))
-## 
-## Coefficients:
-##          ar1    sma1
-##       -0.340  -0.562
-## s.e.   0.082   0.075
-## 
-## sigma^2 estimated as 0.00137:  log likelihood = 243.7,  aic = -481.5
-## 
-## $degrees_of_freedom
-## [1] 129
-## 
-## $ttable
-##      Estimate     SE t.value p.value
-## ar1   -0.3395 0.0822  -4.130   1e-04
-## sma1  -0.5619 0.0748  -7.511   0e+00
-## 
-## $AIC
-## [1] -3.391
-## 
-## $AICc
-## [1] -3.39
-## 
-## $BIC
-## [1] -3.33
 ```
 
 Todos los criterios de información prefieren el modelo $ARIMA(0,1,1)\times(0,1,1)_{12}$. En la Figura \@ref(fig:fig-residuales-pasajeros) mostramos los diagnósticos para los residuales y excepto para uno o dos datos atípicos, el modelo parece ajustarse bien.
@@ -6685,14 +6619,16 @@ h_t   &=& \alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2.
 
 Donde $\{\nu_t\}$ es una sucesión de variables aleatorias iid con media 0 y varianza 1, $\alpha_0>0,\alpha_p>0$ y $\alpha_i\geq0, i=1,\ldots,p-1$. La condición de no negatividad sobre los coeficinetes $\alpha_i$ garantizan que la varianza condicional $h_t$ sea positiva.
 
-\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota. </em></span>  \fi{}Algunos autores usan $\sigma_t^2$ para denotar la varianza condicional en la ecuación \@ref(eq:eq-modelos-ARCHp) en lugar de $h_t$ tal como lo denotamos. Así pues, el modelo $ARCH(p)$ también lo podemos escirbir de la siguiente manera:
+::: {.remark}
+Algunos autores usan $\sigma_t^2$ para denotar la varianza condicional en la ecuación \@ref(eq:eq-modelos-ARCHp) en lugar de $h_t$ tal como lo denotamos. Así pues, el modelo $ARCH(p)$ también lo podemos escirbir de la siguiente manera:
 
 \begin{eqnarray}
 w_t &=& \nu_t\sigma_t \\
 \sigma_t^2 &=& \alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2.
 \end{eqnarray}
 
-Sin embargo, en lo que sigue y por razones prácticas, usareos la primera notación que describimos en la ecuación \@ref(eq:eq-modelos-ARCHp).</div>\EndKnitrBlock{remark}
+Sin embargo, en lo que sigue y por razones prácticas, usareos la primera notación que describimos en la ecuación \@ref(eq:eq-modelos-ARCHp).
+:::
 
 ---
 
@@ -6805,7 +6741,9 @@ En general, para la predicción de $k$ pasos, tenemos
 $$\hat{h}_t(k)=\alpha_0+\alpha_1\hat{h}_t(k-1)+\cdots+\alpha_p\hat{h}_t(k-p),$$
 donde $\hat{h}_t(k-i)=w_{t+k-i}^2$ con $i=1,\ldots,p$, si $k-i\leq0$.
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-63"><strong>(\#exm:unnamed-chunk-63) </strong></span>Ejemplo ....</div>\EndKnitrBlock{example}
+::: {.example #unnamed-chunk-63}
+Ejemplo ....
+:::
 
 
 
@@ -6844,7 +6782,9 @@ w_t^2 = \alpha_0+\sum_{i=1}^m(\alpha_i+\beta_i)w_{t-1}^2-\sum_{j=1}^q\beta_j\eta
 
 donde $\alpha_{p+j}=\beta_{q+j}=0$ para $j\geq1$.
 
-\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota. </em></span>  \fi{}Se puede demostrar que el modelo $GARCH$ definido como un modelo $ARMA$ satisface $\mathbb{E}(\eta_t)=0$ y $Cov(\eta_t,\eta_{t-j})=0$ para $j\geq1$. Sin embargo $\{\eta_j\} no es, en general, una sucesión variables iid.</div>\EndKnitrBlock{remark}
+::: {.remark}
+Se puede demostrar que el modelo $GARCH$ definido como un modelo $ARMA$ satisface $\mathbb{E}(\eta_t)=0$ y $Cov(\eta_t,\eta_{t-j})=0$ para $j\geq1$. Sin embargo $\{\eta_j\} no es, en general, una sucesión variables iid.
+:::
 
 Similar a las consideraciones anteriores de los modelos de series de tiempo, consideraremos, por simplicidad el modelo $GARCH(1,1)$ para estudiar sus propiedades y que luego podemos generalizar.
 
@@ -6916,7 +6856,9 @@ $$L(\alpha_0,\vec{\alpha},\vec{\beta},v) = -\sum_{t=p+1}^T\frac{1}{2}\left[\ln(h
 
 En este caso, la kurtosis incondicional de $w_t$ es mayor que la obtenida cuando se asume que la disribución de $\nu_t$ es normal.
 
-\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota. </em></span>  \fi{}Los grados de libertad de la distribución $t$-de Student pueden ser especificados a priori o se pueden estimar con el resto de parámetros a partir de la función de verosimilitud.</div>\EndKnitrBlock{remark}
+::: {.remark}
+Los grados de libertad de la distribución $t$-de Student pueden ser especificados a priori o se pueden estimar con el resto de parámetros a partir de la función de verosimilitud.
+:::
 
 ### Predicción con modelos GARCH
 
@@ -6979,27 +6921,31 @@ Beran (1994) describió las características cualitativas de una trayectoria de 
 
 La definición matemática de un proceso estacionario con memoria larga, también conocido como dependencia o persistencia a largo plazo, se puede dar en términos de la función de autocorrelación.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-proceso-memoria-larga"><strong>(\#def:defi-proceso-memoria-larga) </strong></span>Un *proceso estacionario con memoria larga* $x_t$ tiene una función de autocorrelación $\rho_k$ que satisface la condición
+::: {.definition #defi-proceso-memoria-larga}
+Un *proceso estacionario con memoria larga* $x_t$ tiene una función de autocorrelación $\rho_k$ que satisface la condición
 
 \begin{equation}
 \lim_{k\to\infty}\rho_k=ck^{-\lambda}
 (\#eq:eq-condicion-proceso-memoria-larga)
 \end{equation}
 
-para algún $c>0$ y $0<\lambda<1$. Cuanto más cerca está $\lambda$ de 0, más pronunciada es la memoria larga.</div>\EndKnitrBlock{definition}
+para algún $c>0$ y $0<\lambda<1$. Cuanto más cerca está $\lambda$ de 0, más pronunciada es la memoria larga.
+:::
 
 ---
 
 El hidrólogo Harold Hurst halló que para muchos registros geofísicos, incluyendo los datos del río Nilo, el estadístico conocido como *rango reescalado* sobre un período $k$ es aproximadamente proporcional a $k^H$ para algún $H>1/2$. El parámetro de Hurst, $H$, se define como $H=1-\lambda/2$ y tiene rango $[1/2,1)$. Cuanto más cerca está $H$ de 1, más persistente es la serie. Si no hay efecto de memoria larga, entonces $H=1/2$.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-modelo-diferencia-fraccional"><strong>(\#def:defi-modelo-diferencia-fraccional) </strong></span>Un modelo de diferencia fraccional de defiene como
+::: {.definition #defi-modelo-diferencia-fraccional}
+Un modelo de diferencia fraccional de defiene como
 
 \begin{equation}
 (1-B)^dx_t=w_t,\quad -1/2<d>1/2,
 (\#eq:eq-modelo-diferencia-fraccional)
 \end{equation}
 
-donde $\{w_t\}$ es un proceso de ruido blanco.</div>\EndKnitrBlock{definition}
+donde $\{w_t\}$ es un proceso de ruido blanco.
+:::
 
 ---
 
@@ -7028,14 +6974,16 @@ f(\omega)\sim\omega^{-2d},\quad \omega\to0
 \end{equation}
 donde $\omega\in[0,2\pi]$ denota la frecuencia.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-diferencia-fraccional-ARIMA"><strong>(\#def:defi-diferencia-fraccional-ARIMA) </strong></span>Un proceso de diferencia fraccional ARIMA, denotado $FARIMA(p,d,q)$ tiene la forma 
+::: {.definition #defi-diferencia-fraccional-ARIMA}
+Un proceso de diferencia fraccional ARIMA, denotado $FARIMA(p,d,q)$ tiene la forma 
 
 \begin{equation}
 \phi(B)(1-B)^dx_t = \psi(B)w_t
 (\#eq:eq-FARIMApdq)
 \end{equation}
 
-para algún $-1/2<d<1/2$. El rango $o<d<1/2$ da el proceso de memoria larga.</div>\EndKnitrBlock{definition}
+para algún $-1/2<d<1/2$. El rango $o<d<1/2$ da el proceso de memoria larga.
+:::
 
 ----
 
@@ -7102,14 +7050,6 @@ En el siguiente script, la función 'fraccdiff.sim' genera una realizaci'pon de 
 
 ```r
 library(fracdiff)
-```
-
-```
-## Warning: package 'fracdiff' was built under R version
-## 3.5.2
-```
-
-```r
 set.seed(1)
 fds.sim=fracdiff.sim(10000,ar=0.9,d=0.4)
 x=fds.sim$series
@@ -7175,7 +7115,9 @@ summary(fds.fit)
 
 A continuación mostraremos tre ejemplos donde evaluaremos las dependencias a largo plazo. El primer ejemplo es con los datos en el archivo "Nilemin.txt", el cual contiene los nivéles mínimos de agua ($mm$) del río Nilo para los años 622 a 1284, medidos en la Isla de Roda cerca del Cairo. El segundo ejemplo son los números de llegadas de paquetes (bits) en 4000 intervalos consecutivos de $10ms$ vistos en una Ethernet en las instalaciones de Bellcore Morristown Research and Engineering, el archivo es "LAN.txt". El último ejemplo son los datos del porcentaje mensual de la tasa preferencial del Banco de la Reserva Federal de los Estados Unidos, cortesía de la Junta de Gobernadores del Sistema de la Reserva Federal, desde enero de 1949 hasta noviembre de 2007. El archivo es "mprime.txt". Todos los archivos de datos fueron obtenidos de: <https://github.com/AtefOuni/ts/tree/master/Data>.
 
-\BeginKnitrBlock{example}\iffalse{-91-78-105-118-233-108-101-115-32-109-237-110-105-109-111-32-100-101-108-32-114-237-111-32-78-105-108-111-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-minimo-Nilo"><strong>(\#exm:ejem-minimo-Nilo)  \iffalse (Nivéles mínimo del río Nilo) \fi{} </strong></span>Para estos datos, es probable que haya una tendencia creciente durante el período de 600 años debido a los cambios climáticos o a los cambios en los canales alrededor de la Isla de Roda. Iniciamos el análisis estimando y removiendo la tendencia usando regresión lineal. Luego elegimos el valor de 'nar' inicial para aplicar la función 'fracdiff' sobre los residuales de la regresión. El valor estimado de $d$ con $nar=5$ es 0.3456 con un error estándar de 0.0295. El mejor modelo para la serie fraccionadamente diferenciada es un $AR(1)$ con parámetro $\phi=0.076$ y $d=0.3420$.</div>\EndKnitrBlock{example}
+::: {.example #ejem-minimo-Nilo name="Nivéles mínimo del río Nilo"}
+Para estos datos, es probable que haya una tendencia creciente durante el período de 600 años debido a los cambios climáticos o a los cambios en los canales alrededor de la Isla de Roda. Iniciamos el análisis estimando y removiendo la tendencia usando regresión lineal. Luego elegimos el valor de 'nar' inicial para aplicar la función 'fracdiff' sobre los residuales de la regresión. El valor estimado de $d$ con $nar=5$ es 0.3456 con un error estándar de 0.0295. El mejor modelo para la serie fraccionadamente diferenciada es un $AR(1)$ con parámetro $\phi=0.076$ y $d=0.3420$.
+:::
 
 
 ```r
@@ -7266,7 +7208,9 @@ acf(Nilo.resid^2, main="ACF de los residuales cuadrados")
 
 ----
 
-\BeginKnitrBlock{example}\iffalse{-91-68-97-116-111-115-32-100-101-32-69-116-104-101-114-110-101-116-32-101-110-32-66-101-108-108-99-111-114-101-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-ethernet-bellcore"><strong>(\#exm:ejem-ethernet-bellcore)  \iffalse (Datos de Ethernet en Bellcore) \fi{} </strong></span>al trazar el historgramas de frecuencias de estos datos, nos damos cuenta que está notablemente sesgado, por lo que trabajamos con el logaritmo de uno más el número de bits. La ACF del log(bits) sugiere un modelo $FARIMA$ con un 'nar' mayor a 40. Usando $nar=48$, estimamos el modelo, el valor estimado para $d=0.3404$ y la serie fraccionadamente diferenciada no tiene correlación sustancial. Sin embargo, la función 'ar' fija un modelo $AR(26)$ a la serie, con un error estándar estimado de 2.10 el cual es ligeramente menor que 2.13 dado para el modelo $FARIMA$. Existe una autocrrelación notable en la serie de residuos cuadrados del modelo $AR(26)$, que es una característica de las series de tiempo con estallidos de actividad y que podemos modelar como un proceso $GARCH$.</div>\EndKnitrBlock{example}
+::: {.example #ejem-ethernet-bellcore name="Datos de Ethernet en Bellcore"}
+al trazar el historgramas de frecuencias de estos datos, nos damos cuenta que está notablemente sesgado, por lo que trabajamos con el logaritmo de uno más el número de bits. La ACF del log(bits) sugiere un modelo $FARIMA$ con un 'nar' mayor a 40. Usando $nar=48$, estimamos el modelo, el valor estimado para $d=0.3404$ y la serie fraccionadamente diferenciada no tiene correlación sustancial. Sin embargo, la función 'ar' fija un modelo $AR(26)$ a la serie, con un error estándar estimado de 2.10 el cual es ligeramente menor que 2.13 dado para el modelo $FARIMA$. Existe una autocrrelación notable en la serie de residuos cuadrados del modelo $AR(26)$, que es una característica de las series de tiempo con estallidos de actividad y que podemos modelar como un proceso $GARCH$.
+:::
 
 
 ```r
@@ -7373,9 +7317,11 @@ acf(bits.resid[27:4000]^2, main="ACF de los residuales cuadrado")
 
 ----
 
-\BeginKnitrBlock{example}\iffalse{-91-84-97-115-97-32-100-101-32-112-114-101-115-116-97-109-111-32-98-97-110-99-97-114-105-111-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-tasa-prestamo-bancario"><strong>(\#exm:ejem-tasa-prestamo-bancario)  \iffalse (Tasa de prestamo bancario) \fi{} </strong></span>La serie de tiempo es graficada en la parte superior de la figura \@ref(fig:fig-tasa-prestamo-bancario) y parece que  podría ser la realización de un paseo al azar. También tiene un período de alta variabilidad. El correlograma muestras correlaciones muy altas con pasos pequeños y correlaciones sustanciales de hasta paso 28. Ni un paseo al azar ni un modelo con tendencia son modelos adecuados para simulación a largo plazo de las tasa de interés en una economía estable. En lugar de ello ajustamos un modelo $FARIMA$ que tiene la ventaja de ser estacionario.
+::: {.example #ejem-tasa-prestamo-bancario name="Tasa de prestamo bancario"}
+La serie de tiempo es graficada en la parte superior de la figura \@ref(fig:fig-tasa-prestamo-bancario) y parece que  podría ser la realización de un paseo al azar. También tiene un período de alta variabilidad. El correlograma muestras correlaciones muy altas con pasos pequeños y correlaciones sustanciales de hasta paso 28. Ni un paseo al azar ni un modelo con tendencia son modelos adecuados para simulación a largo plazo de las tasa de interés en una economía estable. En lugar de ello ajustamos un modelo $FARIMA$ que tiene la ventaja de ser estacionario.
 
-La estimación de $d$ es casi 0, lo que implica que el decaimiento de las correlaciones a partir de un valor  inicial alto es más rápido que en el caso de un modelo $FARIMA$. El modelo $AR$ ajustado tiene un orden de 17 y no es del todo satisfactorio debido a la correlación estadísticamente significativa en el paso 1 de la serie de residuales. Las autocorrelaciones sustanciales de los residuales cuadrados del modelo $AR(17)$ sugieren que un modelo que se ajusta mejor es un modelo $GARCH$.</div>\EndKnitrBlock{example}
+La estimación de $d$ es casi 0, lo que implica que el decaimiento de las correlaciones a partir de un valor  inicial alto es más rápido que en el caso de un modelo $FARIMA$. El modelo $AR$ ajustado tiene un orden de 17 y no es del todo satisfactorio debido a la correlación estadísticamente significativa en el paso 1 de la serie de residuales. Las autocorrelaciones sustanciales de los residuales cuadrados del modelo $AR(17)$ sugieren que un modelo que se ajusta mejor es un modelo $GARCH$.
+:::
 
 
 ```r
@@ -7658,7 +7604,8 @@ y $\hat{\varepsilon}_t=y_t-\hat{y}_t=y_t-x_t^t\hat{\mathbf{\beta}}$. La varianza
 
 La relación entre dos series de tiempo resulta de gran interés en muchas aplicaciones. Veamos un ejemplo de dos series de tipos de interés con diferentes plazos de vencimiento y como ajustar una regresión lineal para ambas series.
 
-\BeginKnitrBlock{example}\iffalse{-91-77-101-114-99-97-100-111-32-73-110-116-101-114-98-97-110-99-97-114-105-111-32-69-117-114-111-112-101-111-32-40-69-85-82-73-66-79-82-41-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-euribor-regresion"><strong>(\#exm:ejem-euribor-regresion)  \iffalse (Mercado Interbancario Europeo (EURIBOR)) \fi{} </strong></span>Analicemos el modelo que considera la relación entre dos series de tipos de interés, con frecuencia diaria, del Mercado Intercambiario Europeo (EURIBOR):
+::: {.example #ejem-euribor-regresion name="Mercado Interbancario Europeo (EURIBOR)"}
+Analicemos el modelo que considera la relación entre dos series de tipos de interés, con frecuencia diaria, del Mercado Intercambiario Europeo (EURIBOR):
   
 - $r_{3t}$: serie de tipo de interés con plazo de vencimiento a 3 meses
 - $r_{6t}$: serie de tipo de interés con plazo de vencimiento a 6 meses
@@ -7671,7 +7618,8 @@ $$r_{6t}=\beta_0+\beta_1r_{3t}+\varepsilon,$$
   
 donde $r_{6t}$ y $r_{3t}$ son las series ya descritas y $\varepsilon_t$ el término de error.
 
-La gráfica \@ref(fig:fig-euribor-interes) muestra las dos series de tipo de interés, en azul con vencimiento a 3 meses yen rojo con vencimiento a 6 meses.</div>\EndKnitrBlock{example}
+La gráfica \@ref(fig:fig-euribor-interes) muestra las dos series de tipo de interés, en azul con vencimiento a 3 meses yen rojo con vencimiento a 6 meses.
+:::
 
 
 ```r
@@ -7773,7 +7721,7 @@ plot(d6t, type = "l", ylab = "Diferencias", xlab = "tiempo")
 
 ```r
 # Regresion diff
-data.diff=as.data.frame(cbind(d3t,diff(r3t$V3)))
+data.diff=as.data.frame(cbind(d3t,diff(r3t$V2)))
 dyt=lm(d6t~d3t, data = data.diff)
 summary(dyt)
 ```
@@ -7844,7 +7792,6 @@ $$w_j = 1-\frac{j}{l+1}.$$
 
 
 <!--chapter:end:307-Modelos-estacionales-no-estacionarios.Rmd-->
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 
 # Análisis Espectral
 
@@ -7904,7 +7851,8 @@ Note que la función de autocovarianza es la suma de componentes periódicas con
 que muestra la variación total como la suma de las varianzas de cada una de las componentes.
 
 
-\BeginKnitrBlock{example}\iffalse{-91-85-110-97-32-115-101-114-105-101-32-112-101-114-105-243-100-105-99-97-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-serie-periodica"><strong>(\#exm:ejem-serie-periodica)  \iffalse (Una serie periódica) \fi{} </strong></span>
+::: {.example #ejem-serie-periodica name="Una serie periódica"}
+
 La Figura \@ref(fig:fig-componentes-periodicas) muestra un ejemplo de mezcla \@ref(eq:eq-proceso-periodico-general) con $q=3$ construido de la siguiente manera. Primero para $t=1,\ldots,100$ generamos tres series
 
 \begin{eqnarray*}
@@ -7915,7 +7863,8 @@ La Figura \@ref(fig:fig-componentes-periodicas) muestra un ejemplo de mezcla \@r
 
 Estas tres series se muestran en la Figura \@ref(fig:fig-componentes-periodicas) junto con las correspondientes frecuencias y amplitudes cuadrada. Por ejemplo, la amplitud cuadrada de $x_{t1}$ es $2^3+3^2=13$. Por consiguiente, los valores máximos y mínimos de la serie $x_{t1}$ están restringidos a $\pm\sqrt{13}=\pm3.61$. Finalmente construimos la serie
 $$x_t=x_{t1}+x_{t2}+x_{t3}$$
-esta serie también se muestra en la Figura \@ref(fig:fig-componentes-periodicas). Note que la serie $x_t$ parece tener el comportamiento de alguna de las series periódicas vistas en los Capítulos [Características de series de tiempo] y [Modelos de series de tiempo]. La clasificación sistemática de los componentes esenciales de frecuencia en una serie de tiempo, incluyendo sus contribuciones relativas, constituye uno de los principales objetivos del análisis espectral.</div>\EndKnitrBlock{example}
+esta serie también se muestra en la Figura \@ref(fig:fig-componentes-periodicas). Note que la serie $x_t$ parece tener el comportamiento de alguna de las series periódicas vistas en los Capítulos [Características de series de tiempo] y [Modelos de series de tiempo]. La clasificación sistemática de los componentes esenciales de frecuencia en una serie de tiempo, incluyendo sus contribuciones relativas, constituye uno de los principales objetivos del análisis espectral.
+:::
 
 
 ```r
@@ -7940,7 +7889,8 @@ plot.ts(xt, ylim=c(-10,10), main="suma")
 
 ---
 
-\BeginKnitrBlock{example}\iffalse{-91-80-101-114-105-111-100-111-103-114-97-109-97-32-101-115-99-97-108-97-100-111-32-112-97-114-97-32-101-108-32-101-106-101-109-112-108-111-32-97-110-116-101-114-105-111-114-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-periodograma-escalado"><strong>(\#exm:ejem-periodograma-escalado)  \iffalse (Periodograma escalado para el ejemplo anterior) \fi{} </strong></span>
+::: {.example #ejem-periodograma-escalado name="Periodograma escalado para el ejemplo anterior"}
+
 En el Ejemplo \@ref(exm:ejem-regresion-senal-ruido) introdujimos el periodograma como una manera de descubrir las componentes periódicas de una serie de tiempo. Recuerde que el periodograma escalado está dado por
 
 \begin{equation}
@@ -7956,7 +7906,8 @@ $$P(6/100)=13\text{, }P(10/100)=41\text{, }P(40/100)=85\text{ y } P(j/n)=0 \text
 
 Estos son exactamente las amplitudes al cuadrado de las componentes generadas en el Ejemplo \@ref(exm:ejem-serie-periodica). Este resultado sugiere que el periodograma puede proporcionar una idea de la varianza de los componentes, \@ref(eq:eq-varianza-proceso-periodico), de un conjunto real de los datos.
 
-Las instrucciones en R para calcular el Periodograma y graficarlo son:</div>\EndKnitrBlock{example}
+Las instrucciones en R para calcular el Periodograma y graficarlo son:
+:::
 
 
 ```r
@@ -7995,16 +7946,19 @@ de modo que el periodograma escalado indica cuales componentes periódicas en \@
 
 La idea de que una serie de tiempo está formada por componentes periódicos, apareciendo en proporción a sus varianzas subyacentes es fundamental en la representación espectral dada por los siguientes Teoremas:
 
-\BeginKnitrBlock{theorem}<div class="theorem"><span class="theorem" id="thm:teo-funcion-hermitiana-no-negativa"><strong>(\#thm:teo-funcion-hermitiana-no-negativa) </strong></span>Una función $\gamma(h)$ para $h=0,\pm1,\pm2,\dots$ es Hermitiana no-negativa definida si y solo si se puede expresar como
+::: {.theorem #teo-funcion-hermitiana-no-negativa}
+Una función $\gamma(h)$ para $h=0,\pm1,\pm2,\dots$ es Hermitiana no-negativa definida si y solo si se puede expresar como
 
 \begin{equation}
     \gamma(h)=\int_{-1/2}^{1/2}\exp(2\pi i\omega h)dF(\omega)
 (\#eq:eq-funcion-hermitiana)
 \end{equation}
 
-donde $F(\cdot)$ es monótona no-decreciente. La función $F(\cdot)$ es continua a la derecha, acotada en $[-1/2,1/2]$ y únicamente determinada por las condiciones $F(-1/2)=0,F(1/2)=\gamma(0)$.</div>\EndKnitrBlock{theorem}
+donde $F(\cdot)$ es monótona no-decreciente. La función $F(\cdot)$ es continua a la derecha, acotada en $[-1/2,1/2]$ y únicamente determinada por las condiciones $F(-1/2)=0,F(1/2)=\gamma(0)$.
+:::
 
-\BeginKnitrBlock{proof}<div class="proof">\iffalse{} <span class="proof"><em>Demostración. </em></span>  \fi{}Para demostrar el resultado, note primero que si $\gamma(h)$ tiene la representación de arriba
+::: {.proof}
+Para demostrar el resultado, note primero que si $\gamma(h)$ tiene la representación de arriba
 
 \begin{eqnarray*}
   \sum_{s=1}^{n}\sum_{t=1}^{n}\bar{a}_s\gamma(s-t)a_t &=& \int_{-1/2}^{1/2}\bar{a}_s\gamma(s-t)a_te^{2\pi i\omega(s-t)}dF(\omega) \\
@@ -8046,7 +8000,8 @@ y del lado derecho de la ecuación anterior
 
 $$(1-|u|/n_k)\gamma(u)\to\gamma(u)$$
 
-cuando $n_k\to\infty$, y se obtiene el resultado requerido.</div>\EndKnitrBlock{proof}
+cuando $n_k\to\infty$, y se obtiene el resultado requerido.
+:::
 
 ---
 
@@ -8054,10 +8009,12 @@ cuando $n_k\to\infty$, y se obtiene el resultado requerido.</div>\EndKnitrBlock{
 
 Ahora presentamos una versión del Teorema de Representación Espectral en términos de un proceso estacionario de media cero $x_t$. Esta versión nos permite pensar en un proceso estacionario como un proceso generado (aproximadamente) por sumas aleatorias de senos y cosenos tal como se describe en \@ref(eq:eq-proceso-periodico-general).
 
-\BeginKnitrBlock{theorem}<div class="theorem"><span class="theorem" id="thm:teo-representacion-espectral-proceso-estacionario"><strong>(\#thm:teo-representacion-espectral-proceso-estacionario) </strong></span>Si $x_t$ es un proceso estacionario de media cero, con distribución espectral $F(\omega)$ como la dada en el Teorema \@ref(thm:teo-funcion-hermitiana-no-negativa), entonces existe un proceso estocástico a valores complejos $z(\omega)$ en el intervalo $\omega\in[-1/2,1/2]$ con incrementos estacionarios no-correlacionados, tal que $x_t$ se puede escribir como la integral estocástica
+::: {.theorem #teo-representacion-espectral-proceso-estacionario}
+Si $x_t$ es un proceso estacionario de media cero, con distribución espectral $F(\omega)$ como la dada en el Teorema \@ref(thm:teo-funcion-hermitiana-no-negativa), entonces existe un proceso estocástico a valores complejos $z(\omega)$ en el intervalo $\omega\in[-1/2,1/2]$ con incrementos estacionarios no-correlacionados, tal que $x_t$ se puede escribir como la integral estocástica
 $$x_t=\int_{-1/2}^{1/2}\exp(-2\pi it\omega)dz(\omega)$$
 donde, para $-1/2\leq\omega_1\leq\omega_2\leq1/2$
-$$\text{var}\{z(\omega_2)-z(\omega_1)\}=F(\omega_2)-F(\omega_1).$$</div>\EndKnitrBlock{theorem}
+$$\text{var}\{z(\omega_2)-z(\omega_1)\}=F(\omega_2)-F(\omega_1).$$
+:::
 
 ---
 
@@ -8065,7 +8022,8 @@ Este resultado es muy técnico porque envuelve integración estocástica; es dec
 
 Dado que \@ref(eq:eq-proceso-periodico-general) es aproximadamente cierta para toda serie de tiempo estacionaria, la siguiente pregunta es si una representación significativa para la función de autocovarianza, como la dada por \@ref(eq:eq-funcion-covarianza-proceso-periodico), también existirá. La respuesta es sí, y su representación es dada por el Teorema \@ref(thm:teo-funcion-hermitiana-no-negativa). El siguiente ejemplo, nos ayudará a explicar estos resultados.
 
-\BeginKnitrBlock{example}\iffalse{-91-85-110-32-112-114-111-99-101-115-111-32-101-115-116-97-99-105-111-110-97-114-105-111-32-112-101-114-105-243-100-105-99-111-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-proceso-estacionario-periodico"><strong>(\#exm:ejem-proceso-estacionario-periodico)  \iffalse (Un proceso estacionario periódico) \fi{} </strong></span>Considere un proceso aleatorio estacionario periódico dado por \@ref(eq:eq-proceso-periodico-2), con frecuencia fija $\omega_0$
+::: {.example #ejem-proceso-estacionario-periodico name="Un proceso estacionario periódico"}
+Considere un proceso aleatorio estacionario periódico dado por \@ref(eq:eq-proceso-periodico-2), con frecuencia fija $\omega_0$
 
 $$x_t=U_1\cos(2\pi\omega_0t)+U_2\sin(2\pi\omega_0t)$$
 
@@ -8085,7 +8043,8 @@ $$F(\omega)=\begin{cases}
 \sigma^2,&\omega\geq\omega_0
 \end{cases}.$$
 
-La función $F(\omega)$ se comporta como una función de distribución acumulada para una variable aleatoria discreta, excepto que $F(\infty)=\sigma^2=\gamma_x(0)$ en vez de uno. De hecho, $F(\omega)$ es una función de distribución acumulada, no una probabilidad, sino más bien de varianza asociada con la frecuencia $\omega_0$ en un análisis de varianza, siendo $F(\infty)$ la varianza total del proceso $x_t$. Por lo tanto, llamamos a $F(\omega)$ la *función de distribución espectral*.</div>\EndKnitrBlock{example}
+La función $F(\omega)$ se comporta como una función de distribución acumulada para una variable aleatoria discreta, excepto que $F(\infty)=\sigma^2=\gamma_x(0)$ en vez de uno. De hecho, $F(\omega)$ es una función de distribución acumulada, no una probabilidad, sino más bien de varianza asociada con la frecuencia $\omega_0$ en un análisis de varianza, siendo $F(\infty)$ la varianza total del proceso $x_t$. Por lo tanto, llamamos a $F(\omega)$ la *función de distribución espectral*.
+:::
 
 ---
 
@@ -8100,7 +8059,8 @@ El Teorema \@ref(thm:teo-funcion-hermitiana-no-negativa) establece que una repre
 
 Una situación más importante que usaremos repetidamente es cubierta por el Teorema \@ref(thm:teo-densidad-espectral), donde se muestra que, sujeto a la sumabilidad absoluta de la autocovarianza, la función de distribución espectral es absolutamente continua con $dF(\omega)=f(\omega)d\omega$ y la representación \@ref(eq:eq-funcion-distribucion-espectral) motiva la propiedad que sigue.
 
-\BeginKnitrBlock{theorem}<div class="theorem"><span class="theorem" id="thm:teo-densidad-espectral"><strong>(\#thm:teo-densidad-espectral) </strong></span>Si $\gamma(h)$ es la función de autocovarianza de un proceso estacionario $x_t$ con
+::: {.theorem #teo-densidad-espectral}
+Si $\gamma(h)$ es la función de autocovarianza de un proceso estacionario $x_t$ con
 
 \begin{equation}
   \sum_{h=-\infty}^{\infty}|\gamma(h)|<\infty
@@ -8112,10 +8072,12 @@ entonces la densidad espectral de $x_t$ está dada por
 \begin{equation}
   f(\omega)=\sum_{h=-\infty}^{\infty}\gamma(h)e^{-2\pi i\omega h}.
 (\#eq:eq-densidad-espectral)
-\end{equation}</div>\EndKnitrBlock{theorem}
+\end{equation}
+:::
 
 
-\BeginKnitrBlock{proposition}\iffalse{-91-76-97-32-68-101-110-115-105-100-97-100-32-69-115-112-101-99-116-114-97-108-93-}\fi{}<div class="proposition"><span class="proposition" id="prp:propie-densidad-espectral"><strong>(\#prp:propie-densidad-espectral)  \iffalse (La Densidad Espectral) \fi{} </strong></span>Si la función de autocovarianza $\gamma(h)$ de un proceso estacionario satisface
+::: {.proposition #propie-densidad-espectral name="La Densidad Espectral"}
+Si la función de autocovarianza $\gamma(h)$ de un proceso estacionario satisface
 
 \begin{equation}
   \sum_{h=-\infty}^{\infty}|\gamma(h)|<\infty
@@ -8134,7 +8096,8 @@ como la transformación inversa de la densidad espectral, la cual tiene la repre
 \begin{equation}
   f(\omega)=\sum_{h=-\infty}^{\infty}\gamma(h)e^{-2\pi i\omega h}\text{ con }-1/2\leq\omega\leq1/2.
 (\#eq:eq-densidad-espectral-covarianza)
-\end{equation}</div>\EndKnitrBlock{proposition}
+\end{equation}
+:::
 
 La densidad espectral definida en la Proposición \@ref(prp:propie-densidad-espectral) es análoga a la función de densidad de probabilidad; el hecho de que $\gamma(h)$ es no negativa definida asegura que
 
@@ -8162,7 +8125,8 @@ También debemos mencionar, que hasta ahora nos hemos enfocado en la frecuencia 
 
 Note que la función de autocovarianza $\gamma(h)$ en \@ref(eq:eq-representacion-covarianza) y la densidad espectral $f(\omega)$ en \@ref(eq:eq-densidad-espectral-covarianza) son pares de transformadas de Fourier. En general, tenemos la siguiente definición:
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-par-transformadas-fourier"><strong>(\#def:defi-par-transformadas-fourier) </strong></span>Para una función  general $\{a_t;t=0,\pm1,\pm2,\ldots\}$ que satisface la condición de sumabilidad absoluta
+::: {.definition #defi-par-transformadas-fourier}
+Para una función  general $\{a_t;t=0,\pm1,\pm2,\ldots\}$ que satisface la condición de sumabilidad absoluta
 
 \begin{equation}
   \sum_{t=-\infty}^{\infty}|a_t|<\infty,
@@ -8181,7 +8145,8 @@ y
 \begin{equation}\label{}
   a_t=\int_{-1/2}^{1/2}A(\omega)e^{2\pi i\omega t}d\omega
 (\#eq:eq-transformada-fourier-a)
-\end{equation}</div>\EndKnitrBlock{definition}
+\end{equation}
+:::
 
 El uso de \@ref(eq:eq-representacion-covarianza) y \@ref(eq:eq-densidad-espectral-covarianza) como par de transformadas de Fourier es fundamental en el estudio de procesos estacionarios a tiempo discreto. Bajo la condición de sumabilidad, el par de transformadas de Fourier \@ref(eq:eq-representacion-covarianza) y \@ref(eq:eq-densidad-espectral-covarianza) existirá y esta relación es única.
 
@@ -8203,16 +8168,19 @@ f(\omega)=g(\omega)
 casi siempre.
 
 
-\BeginKnitrBlock{example}\iffalse{-91-83-101-114-105-101-32-100-101-32-114-117-105-100-111-32-98-108-97-110-99-111-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-espectro-serie-ruido-blanco"><strong>(\#exm:ejem-espectro-serie-ruido-blanco)  \iffalse (Serie de ruido blanco) \fi{} </strong></span>
+::: {.example #ejem-espectro-serie-ruido-blanco name="Serie de ruido blanco"}
+
 Como un ejemplo sencillo, consideremos el espectro de potencias teórica de una sucesión de variables aleatorias no correlacionadas $w_t$ con varianza $\sigma_w^2$. Dado que la función de autocovarianza fue calculada en \@ref(eq:eq-funcion-autocovarianza-ruido-blanco) como $\gamma_w(h)=\sigma_w^2$ para $h=0$ y cero en cualquier otro caso, se sigue de \@ref(eq:eq-densidad-espectral-covarianza) que
 
 $$f_w(\omega)=\sigma_w^2$$
 
 para $-1/2\leq\omega\leq1/2$ con la misma potencia para todas las frecuencias. Esta propiedad se ve en la realización, el cual parece contener todas las diferentes frecuencias en proporciones similares. La figura \@ref(fig:fig-espectros-teoricos) (parte superior) muestra la gráfica del espectro de un ruido blanco con $\sigma_w^2=1$.
-</div>\EndKnitrBlock{example}
+
+:::
 
 
-\BeginKnitrBlock{example}\iffalse{-91-85-110-32-112-114-111-109-101-100-105-111-32-109-243-118-105-108-32-115-105-109-112-108-101-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-espectro-promedio-movil-simple"><strong>(\#exm:ejem-espectro-promedio-movil-simple)  \iffalse (Un promedio móvil simple) \fi{} </strong></span>
+::: {.example #ejem-espectro-promedio-movil-simple name="Un promedio móvil simple"}
+
 Una serie que no tiene una proporción igual de frecuencias es la serie de ruido blanco suavizada que se muestra en la parte inferior de la primera Figura del Ejemplo \@ref(exm:ejem-promedio-movil-ruido-blanco). Específicamente construimos una serie de promedio móvil de tres puntos definida por
 
 $$v_t=\frac{1}{3}(w_{t-1}+w_t+w_{t+1}).$$
@@ -8232,10 +8200,12 @@ f_v(\omega) &=& \sum_{h=-2}^{2}\gamma_v(h)e^{-2\pi i\omega h} \\
 \end{eqnarray*}
 
 Graficando el espectro para $\sigma_w^2=1$, como en la Figura \@ref(fig:fig-espectros-teoricos), se muestra que las frecuencias cercanas a cero tiene mayor potencia y las energías más grandes, $\omega>0.2$ tienen menor potencia.
-</div>\EndKnitrBlock{example}
+
+:::
 
 
-\BeginKnitrBlock{example}\iffalse{-91-85-110-97-32-115-101-114-105-101-32-97-117-116-111-114-101-103-114-101-115-105-118-97-32-100-101-32-115-101-103-117-110-100-111-32-111-114-100-101-110-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-espectro-AR2"><strong>(\#exm:ejem-espectro-AR2)  \iffalse (Una serie autoregresiva de segundo orden) \fi{} </strong></span>
+::: {.example #ejem-espectro-AR2 name="Una serie autoregresiva de segundo orden"}
+
 Consideremos el espectro de una serie AR(2) de la forma
 
 $$x_t-\phi_1x_{t-1}-\phi_2x_{t-2}=w_t$$
@@ -8265,7 +8235,8 @@ Pero, como ya hemos visto, $g_w(\omega)=\sigma_w^2$ de donde se deduce que
 $$f_x(\omega)=\frac{\sigma_w^2}{2.81-3.80\cos(2\pi\omega)+1.80\cos(4\pi\omega)}$$
 
 es el espectro de la serie autoregresiva. Haciendo $\sigma_w^2=1$ se tiene el espectro $f_x(\omega)$ mostrado en la Figura \@ref(fig:fig-espectros-teoricos), y donde muestra una componente de potencia fuerte alrededor de $\omega=0.16$ ciclos por puntos o un periodo entre seis y siete ciclos por puntos y potencias muy pequeñas en las otras frecuencias. En este caso, modificando la serie de ruido blanco aplicando un operador AR de orden dos ha concentrado la potencia o varianza de la serie resultante en una banda de frecuencia bastante estrecha.
-</div>\EndKnitrBlock{example}
+
+:::
 
 \begin{figure}[h!]
 \centering
@@ -8310,14 +8281,16 @@ Los ejemplos anteriores han sido dados para motivar el uso de los espectros de p
 
 Ahora estamos listos para unir el periodograma, que es el concepto basada en la muestra presentado en la sección [Comportamiento Cíclico y Periodicidad], con la densidad espectral, que es el concepto basado en la población descrito en la sección [La Densidad Espectral].
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-TDF"><strong>(\#def:defi-TDF) </strong></span>Dado los datos $x_1,x_2,\ldots,x_n$, definimos la **Transformada Discreta de Fourier (TDF)** como
+::: {.definition #defi-TDF}
+Dado los datos $x_1,x_2,\ldots,x_n$, definimos la **Transformada Discreta de Fourier (TDF)** como
 
 \begin{equation}
   d(\omega_j)=n^{-1/2}\sum_{t=1}^{n}x_te^{-2\pi i\omega_jt}
 (\#eq:eq-TDF)
 \end{equation}
 
-para $j=0,1,\ldots,n-1$, donde las frecuencias $\omega_j=j/n$ son llamadas las *frecuencias de Fourier* o *frecuencias fundamentales*.</div>\EndKnitrBlock{definition}
+para $j=0,1,\ldots,n-1$, donde las frecuencias $\omega_j=j/n$ son llamadas las *frecuencias de Fourier* o *frecuencias fundamentales*.
+:::
 
 ---
 
@@ -8330,14 +8303,16 @@ Si $n$ es un número altamente compuesto (i.e., tiene muchos factores), la TDF s
 
 para $t=1,2,\ldots,n$.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-periodograma"><strong>(\#def:defi-periodograma) </strong></span>Dados los datos $x_1,x_2,\ldots,x_n$ definimos el **periodograma** como
+::: {.definition #defi-periodograma}
+Dados los datos $x_1,x_2,\ldots,x_n$ definimos el **periodograma** como
 
 \begin{equation}
   I(\omega_j)=|d(\omega_j)|^2
 (\#eq:eq-periodograma-datos)
 \end{equation}
 
-para $j=0,1,2,\ldots,n-1$.\footnote{Si $z=a+ib$ es un número complejo, entonces $\bar{z}=a-ib$ y $|z|^2=z\bar{z}=a^2+b^2$.}</div>\EndKnitrBlock{definition}
+para $j=0,1,2,\ldots,n-1$.\footnote{Si $z=a+ib$ es un número complejo, entonces $\bar{z}=a-ib$ y $|z|^2=z\bar{z}=a^2+b^2$.}
+:::
 
 ---
 
@@ -8368,7 +8343,8 @@ $$ con $\hat{\gamma}(-h)=\hat{\gamma}(h)$ para $h=0,1,\ldots,n-1$.
 
 A veces es útil trabajar con las partes real e imaginarias de la TDF individualmente, de donde tenemos la siguiente definición:
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-transformadas-seno-coseno"><strong>(\#def:defi-transformadas-seno-coseno) </strong></span>Dados las datos $x_1,x_2,\ldots,x_n$ definimos la **transformada de cosenos** como
+::: {.definition #defi-transformadas-seno-coseno}
+Dados las datos $x_1,x_2,\ldots,x_n$ definimos la **transformada de cosenos** como
 
 \begin{equation}
   d_c(\omega_j)=n^{-1/2}\sum_{t=1}^{n}x_t\cos(2\pi\omega_jt)
@@ -8382,7 +8358,8 @@ y la **transformada de senos** como
 (\#eq:eq-transformada-seno)
 \end{equation}
 
-donde $\omega_j=j/n$ para $j=0,1,2,\ldots,n-1$.</div>\EndKnitrBlock{definition}
+donde $\omega_j=j/n$ para $j=0,1,2,\ldots,n-1$.
+:::
 
 ---
 
@@ -8393,7 +8370,8 @@ Note que $d(\omega_j)=d_c(\omega_j)-id_s(\omega_j)$ y por lo tanto
 (\#eq:eq-periodograma-transf-seno-coseno)
 \end{equation}
 
-\BeginKnitrBlock{example}\iffalse{-91-65-78-79-86-65-32-101-115-112-101-99-116-114-97-108-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-ANOVA-espectral"><strong>(\#exm:ejem-ANOVA-espectral)  \iffalse (ANOVA espectral) \fi{} </strong></span>Sea $x_1,x_2,\ldots,x_n$ una muestra de tamaño $n$, donde para simplificar $n$ es impar. Entonces, recordando el Ejemplo \@ref(exm:ejem-periodograma-escalado), se tiene
+::: {.example #ejem-ANOVA-espectral name="ANOVA espectral"}
+Sea $x_1,x_2,\ldots,x_n$ una muestra de tamaño $n$, donde para simplificar $n$ es impar. Entonces, recordando el Ejemplo \@ref(exm:ejem-periodograma-escalado), se tiene
 
 \begin{equation}
   x_t=a_0+\sum_{j=1}^{m}[a_j\cos(2\pi\omega_jt)+b_j\sin(2\pi\omega_jt)]
@@ -8431,7 +8409,8 @@ Esto nos lleva a la tabla ANOVA
 
 
 Esta descomposición significa que si los datos contienen alguna componente periódica fuerte, entonces los valores del periodograma correspondientes a estas frecuencias (o cercano a estas frecuencias) serán grandes. Por otra parte, los valores del periodograma serán pequeños para componentes periódicas no presentes en los datos.
-</div>\EndKnitrBlock{example}
+
+:::
 
 ---
 
@@ -8507,7 +8486,8 @@ donde el término de error $\epsilon_n$ en la aproximación se puede acotar por
 y $\theta$ está dado por \@ref(eq:eq-conv-absoluta-covarianza). Si $\omega_j=\omega_k=0$ o 1/2 en \@ref(eq:eq-cov-coseno-coseno-2) el múltiplo 1/2 desaparece; note que $d_s(0)=d_s(1/2)=0$, de modo que \@ref(eq:eq-cov-seno-seno-2) no aplica.
 
 
-\BeginKnitrBlock{example}\iffalse{-91-67-111-118-97-114-105-97-110-122-97-115-32-100-101-32-115-101-110-111-115-32-121-32-99-111-115-101-110-111-115-32-112-97-114-97-32-117-110-32-112-114-111-99-101-115-111-32-77-65-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-cov-seno-coseno-MA"><strong>(\#exm:ejem-cov-seno-coseno-MA)  \iffalse (Covarianzas de senos y cosenos para un proceso MA) \fi{} </strong></span>Para la serie de promedio móvil de tres puntos del Ejemplo \@ref(exm:ejem-espectro-promedio-movil-simple), el espectro teórico se mostraba en la Figura \@ref(fig:fig-espectros-teoricos). Para $n=256$ puntos, la matriz de covarianza teórica del vector
+::: {.example #ejem-cov-seno-coseno-MA name="Covarianzas de senos y cosenos para un proceso MA"}
+Para la serie de promedio móvil de tres puntos del Ejemplo \@ref(exm:ejem-espectro-promedio-movil-simple), el espectro teórico se mostraba en la Figura \@ref(fig:fig-espectros-teoricos). Para $n=256$ puntos, la matriz de covarianza teórica del vector
 
 $$\textbf{d}=(d_c(\omega_{26}),d_s(\omega_{26}),d_c(\omega_{27}),d_s(\omega_{27}))^t$$
 
@@ -8525,7 +8505,8 @@ $$\text{cov}(\textbf{d})=\left(
 Los elementos de la diagonal se pueden comparar con los valores del espectro teórico de 0,7548 para el espectro en frecuencia $\omega_{26}=0.102$ y de 0,7378 para el espectro en $\omega_{27}=0.105$.
 
 Por consiguiente, las transformadas de senos y cosenos produce variables casi no correlacionadas con varianzas aproximadamente igual a un medio del espectro teórico. Para este caso particular, la cota uniforme es determinada por $\theta=8/9$ obteniéndose $|\epsilon_{256}|\leq0.0035$ para la cota del error de aproximación.
-</div>\EndKnitrBlock{example}
+
+:::
 
 ---
 
@@ -8547,7 +8528,8 @@ con $I(\omega_{j:n})$ e $I(\omega_{k:n})$ siendo asintóticamente independientes
 
 [^nota17]: Si $Y_j\sim\text{iid}(0,\sigma^2)$ y $\{a_j\}$ son constantes para las cuales $\sum_{j=1}^{n}a_j^2/\max_{1\leq j\leq n}a_j^2\to\infty$ cuando $n\to\infty$, entonces $\sum_{j=1}^{n}a_jY_j\sim AN\left(0,\sigma^2\sum_{j=1}^{n}a_j^2\right)$; la notación $AN$ significa asintóticamente normal.
 
-\BeginKnitrBlock{proposition}\iffalse{-91-68-105-115-116-114-105-98-117-99-105-243-110-32-100-101-32-108-97-115-32-79-114-100-101-110-97-100-97-115-32-100-101-32-117-110-32-80-101-114-105-111-100-111-103-114-97-109-97-93-}\fi{}<div class="proposition"><span class="proposition" id="prp:propie-distrib-ordenadas-periodograma"><strong>(\#prp:propie-distrib-ordenadas-periodograma)  \iffalse (Distribución de las Ordenadas de un Periodograma) \fi{} </strong></span>Si
+::: {.proposition #propie-distrib-ordenadas-periodograma name="Distribución de las Ordenadas de un Periodograma"}
+Si
 
 \begin{equation}
   x_t=\sum_{j=-\infty}^{\infty}\psi_jw_{t-j}\text{,  }\sum_{j=-\infty}^{\infty}|\psi_j|<\infty
@@ -8561,7 +8543,8 @@ donde $w_t\sim\text{iid}(0,\sigma_w^2)$ y \@ref(eq:eq-conv-absoluta-covarianza) 
 (\#eq:eq-distrib-ordenadas-periodograma)
 \end{equation}
 
-siempre que $f(\omega_j)>0$ para $j=1,2,\ldots,m$.</div>\EndKnitrBlock{proposition}
+siempre que $f(\omega_j)>0$ para $j=1,2,\ldots,m$.
+:::
 
 ---
 
@@ -8580,7 +8563,8 @@ Entonces, un intervalo de confianza aproximado del $100(1-\alpha)\%$ para la fun
 \end{equation}
 
 
-\BeginKnitrBlock{example}\iffalse{-91-80-101-114-105-111-100-111-103-114-97-109-97-32-100-101-32-83-79-73-32-121-32-115-101-114-105-101-32-100-101-32-114-101-99-108-117-116-97-109-105-101-110-116-111-32-40-110-117-101-118-111-115-32-112-101-99-101-115-41-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-periodograma-SOI"><strong>(\#exm:ejem-periodograma-SOI)  \iffalse (Periodograma de SOI y serie de reclutamiento (nuevos peces)) \fi{} </strong></span>La Figura \@ref(fig:fig-periodograma-SOI) muestra el periodograma de las series SOI y nuevos peces.
+::: {.example #ejem-periodograma-SOI name="Periodograma de SOI y serie de reclutamiento (nuevos peces)"}
+La Figura \@ref(fig:fig-periodograma-SOI) muestra el periodograma de las series SOI y nuevos peces.
 
 Note que $\chi^2_2(0.025)=0.0506$ y $\chi^2_2(0.975)=7.3778$, de allí podemos obtener un intervalo de confianza aproximado del 95% para las frecuencias de interés, en este caso $\omega_j=1/12$. 
 Para este valor, se tiene $I_S(1/12)=2.6084$, luego un intervalo de confianza aproximado del 95% para el espectro $f_S(1/12)$ es
@@ -8593,11 +8577,11 @@ $$[2(0.3804)/7.3778; 2(0.3804)/0.0506]=[0.1031; 15.0355]$$
 
 el cual también es bastante amplio, pero en este caso no es posible establecer una significancia para el pico espectral.
 
-Los comandos en R para calcular los periodogramas y generar los gráficos son los siguientes:</div>\EndKnitrBlock{example}
+Los comandos en R para calcular los periodogramas y generar los gráficos son los siguientes:
+:::
 
 
 ```r
-<<<<<<< HEAD
 #soi=scan('data/soi.txt')
 #rec=scan('data/recruit.txt')
 #par(mfrow=c(2,1)) 
@@ -8609,68 +8593,16 @@ Los comandos en R para calcular los periodogramas y generar los gráficos son lo
 #abline(v=1/48,lty='dotted')
 ```
 
-=======
-soi=scan('data/soi.txt')
-rec=scan('data/recruit.txt')
-par(mfrow=c(2,1)) 
-soi.per=spec.pgram(soi,taper=0,log='no')
-abline(v=1/12,lty='dotted') 
-abline(v=1/48,lty='dotted') 
-rec.per=spec.pgram(rec,taper=0,log='no') 
-abline(v=1/12,lty='dotted') 
-abline(v=1/48,lty='dotted')
-```
-
-<div class="figure">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-periodograma-SOI-1.svg" alt="Periodograma de SOI y Reclutamiento (nuevos peces)"  />
-<p class="caption">(\#fig:fig-periodograma-SOI)Periodograma de SOI y Reclutamiento (nuevos peces)</p>
-</div>
-
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 Los intervalos de confianza de la serie SOI para el ciclo anual $w=1/12=40/480$ y los posibles ciclos de cuatro años de El Niño con $w=1/48=10/480$ se pueden calcular en Matlab y R con los siguientes comandos:
 
 
 ```r
-<<<<<<< HEAD
 #li=qchisq(0.975,2) 
 #ls=qchisq(0.025,2) 
 #2*soi.per$spec[10]/li
 #2*soi.per$spec[10]/ls
 #2*soi.per$spec[40]/li 
 #2*soi.per$spec[40]/ls
-=======
-li=qchisq(0.975,2) 
-ls=qchisq(0.025,2) 
-2*soi.per$spec[10]/li
-```
-
-```
-## [1] 0.1748
-```
-
-```r
-2*soi.per$spec[10]/ls
-```
-
-```
-## [1] 25.47
-```
-
-```r
-2*soi.per$spec[40]/li 
-```
-
-```
-## [1] 3.163
-```
-
-```r
-2*soi.per$spec[40]/ls
-```
-
-```
-## [1] 460.8
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ```
 
 ---
@@ -8755,24 +8687,20 @@ Podemos realizar también una prueba de hipótesis relativa a la igualdad del es
 [^nota20]: La transformación logarítmica  es la transformación de estabilización de la varianza en este caso.
 
 
-\BeginKnitrBlock{example}\iffalse{-91-80-101-114-105-111-100-111-103-114-97-109-97-32-115-117-97-118-105-122-97-100-111-32-100-101-32-108-97-115-32-115-101-114-105-101-115-32-83-79-73-32-121-32-114-101-99-108-117-116-97-109-105-101-110-116-111-32-40-110-117-101-118-111-115-32-112-101-99-101-115-41-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-periodograma-suavizado-SOI"><strong>(\#exm:ejem-periodograma-suavizado-SOI)  \iffalse (Periodograma suavizado de las series SOI y reclutamiento (nuevos peces)) \fi{} </strong></span>En la Figura \@ref(fig:fig-periodograma-SOI) graficamos los periodogramas para las series SOI y Reclutamiento (nuevos peces). En la gráfica se puede notar una frecuencia baja en el efecto El Niño, lo que sugiere que un suavizado nos permitirá identificar las frecuencias dominantes sobre todos los periodos. La elección del valor de $L=9$ luce razonable para el suavizado. El ancho de banda en este caso es $B_w=9/480=0.01875$ ciclos por meses para el espectro estimado. La Figura \@ref(fig:fig-periodograma-suavizado-SOI) muestra los periodogramas suavizados de ambas series. Allí se puede notar, (líneas punteadas) las cuatro frecuencias dominantes, estas son $\omega_j=1/12,2/12,3/12$ y $1/48$. También puede observar el ancho de banda que es $B_w=0.00541$.</div>\EndKnitrBlock{example}
+::: {.example #ejem-periodograma-suavizado-SOI name="Periodograma suavizado de las series SOI y reclutamiento (nuevos peces)"}
+En la Figura \@ref(fig:fig-periodograma-SOI) graficamos los periodogramas para las series SOI y Reclutamiento (nuevos peces). En la gráfica se puede notar una frecuencia baja en el efecto El Niño, lo que sugiere que un suavizado nos permitirá identificar las frecuencias dominantes sobre todos los periodos. La elección del valor de $L=9$ luce razonable para el suavizado. El ancho de banda en este caso es $B_w=9/480=0.01875$ ciclos por meses para el espectro estimado. La Figura \@ref(fig:fig-periodograma-suavizado-SOI) muestra los periodogramas suavizados de ambas series. Allí se puede notar, (líneas punteadas) las cuatro frecuencias dominantes, estas son $\omega_j=1/12,2/12,3/12$ y $1/48$. También puede observar el ancho de banda que es $B_w=0.00541$.
+:::
 
-<<<<<<< HEAD
 
-=======
-<div class="figure" style="text-align: center">
-<img src="images/ejemplo4p10.png" alt="Periodograma suavizado de las series SOI y Reclutamiento"  />
-<p class="caption">(\#fig:fig-periodograma-suavizado-SOI)Periodograma suavizado de las series SOI y Reclutamiento</p>
-</div>
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 
 ---
 
-\BeginKnitrBlock{example}\iffalse{-91-83-101-114-105-101-32-100-101-32-65-108-116-117-114-97-115-32-100-101-32-79-108-97-115-46-32-69-115-116-97-99-105-243-110-32-49-52-52-46-32-83-84-46-32-80-69-84-69-82-83-66-85-82-71-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-espectro-altura-olas"><strong>(\#exm:ejem-espectro-altura-olas)  \iffalse (Serie de Alturas de Olas. Estación 144. ST. PETERSBURG) \fi{} </strong></span>La Figura \@ref(fig:fig-periodograma-altura-olas) muestra el registro de alturas de olas y el correspondiente periodograma. Las alturas de olas fueron registrados por una boya ubicada en el Golfo de México, cercana a las costa de St. Petersburg, Florida, EE.UU, tomadas el 1ro. enero de 2009 con una frecuencia de muestreo de 1.28Hz. Los comandos en R son: </div>\EndKnitrBlock{example}
+::: {.example #ejem-espectro-altura-olas name="Serie de Alturas de Olas. Estación 144. ST. PETERSBURG"}
+La Figura \@ref(fig:fig-periodograma-altura-olas) muestra el registro de alturas de olas y el correspondiente periodograma. Las alturas de olas fueron registrados por una boya ubicada en el Golfo de México, cercana a las costa de St. Petersburg, Florida, EE.UU, tomadas el 1ro. enero de 2009 con una frecuencia de muestreo de 1.28Hz. Los comandos en R son: 
+:::
 
 
 ```r
-<<<<<<< HEAD
 # SP=matrix(scan("data/station14401.txt"), byrow=TRUE, ncol=2)
 # m<-matrix(c(1,1:3),2,2,byrow=TRUE)
 # layout(m)
@@ -8781,28 +8709,14 @@ Podemos realizar también una prueba de hipótesis relativa a la igualdad del es
 # I2=spectrum(SP[,2],log="no", main="Periodograma estacion 144")
 ```
 
-=======
-SP=matrix(scan("data/station14401.txt"), byrow=TRUE, ncol=2)
-m<-matrix(c(1,1:3),2,2,byrow=TRUE)
-layout(m)
-plot(SP[,1]/0.78,SP[,2],type="l", xlab="Tiempo (seg)",ylab="Alturas (m)", main="Altura de olas, Estacion 431, St. Petersburg, FL")
-I1=spectrum(SP[,2],spans=3,log="no", main="Periodograma suavizado estacion 144")
-I2=spectrum(SP[,2],log="no", main="Periodograma estacion 144")
-```
-
-<div class="figure">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-periodograma-altura-olas-1.svg" alt="Periodograma para las alturas de olas, Estación 144, St. Petersburg, FL."  />
-<p class="caption">(\#fig:fig-periodograma-altura-olas)Periodograma para las alturas de olas, Estación 144, St. Petersburg, FL.</p>
-</div>
-
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ---
 
-\BeginKnitrBlock{example}\iffalse{-91-80-101-114-105-111-100-111-103-114-97-109-97-115-32-112-97-114-97-32-108-97-115-32-115-101-114-105-101-115-32-100-101-32-84-101-114-114-101-109-111-116-111-115-32-121-32-69-120-112-108-111-115-105-111-110-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-periodograma-terremoto-explosiones"><strong>(\#exm:ejem-periodograma-terremoto-explosiones)  \iffalse (Periodogramas para las series de Terremotos y Explosiones) \fi{} </strong></span>La Figura \@ref(fig:fig-periodograma-terremoto-explosiones) muestra el espectro calculado por separado de las dos fases del terremoto y explosión en la Figura 2.7 del capítulo 2.</div>\EndKnitrBlock{example}
+::: {.example #ejem-periodograma-terremoto-explosiones name="Periodogramas para las series de Terremotos y Explosiones"}
+La Figura \@ref(fig:fig-periodograma-terremoto-explosiones) muestra el espectro calculado por separado de las dos fases del terremoto y explosión en la Figura 2.7 del capítulo 2.
+:::
 
 
 ```r
-<<<<<<< HEAD
 # x=matrix(scan("data/eq5exp6.txt"),ncol=2)
 # eqP=x[1:1024,1]; eqS=x[1025:2048,1]
 # exP=x[1:1024,2]; exS=x[1025:2048,2]
@@ -8813,67 +8727,59 @@ I2=spectrum(SP[,2],log="no", main="Periodograma estacion 144")
 # exSs=spectrum(exS, main="Espectro de explosiones (fase S)", log="no", xlim=c(0,0.25), ylim=c(0,0.4))
 ```
 
-=======
-x=matrix(scan("data/eq5exp6.txt"),ncol=2)
-eqP=x[1:1024,1]; eqS=x[1025:2048,1]
-exP=x[1:1024,2]; exS=x[1025:2048,2]
-par(mfrow=c(2,2))
-eqPs=spectrum(eqP, main="Espectro del sismo (fase P)", log="no", xlim=c(0,0.25), ylim=c(0,0.04))
-eqSs=spectrum(eqS, main="Espectro del sismo (fase S)", log="no", xlim=c(0,0.25), ylim=c(0,0.4))
-exPs=spectrum(exP, main="Espectro de explosiones (fase P)", log="no", xlim=c(0,0.25), ylim=c(0,0.04))
-exSs=spectrum(exS, main="Espectro de explosiones (fase S)", log="no", xlim=c(0,0.25), ylim=c(0,0.4))
-```
-
-<div class="figure">
-<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-periodograma-terremoto-explosiones-1.svg" alt="Periodogramas para las series de Terremotos y Explosiones"  />
-<p class="caption">(\#fig:fig-periodograma-terremoto-explosiones)Periodogramas para las series de Terremotos y Explosiones</p>
-</div>
-
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ---
 
 ## Procesos de Incremento Ortogonal sobre $[-\pi,\pi]$
 
 Con el fin de dar un significado preciso a la representación espectral \@ref(eq:eq-funcion-distribucion-espectral) mencionada anteriormente, es necesario introducir el concepto de integración estocástica de una función no-aleatoria con respecto a un proceso de incremento ortogonal $\{Z(\lambda)\}$ .
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-proceso-estacionario-complejo"><strong>(\#def:defi-proceso-estacionario-complejo) </strong></span>Un proceso $\{x_t\}$ es un *proceso estacionario a valores complejos* si $\mathbb{E}|x_t^2|<\infty$, $\mathbb{E}(X_t)$ es independiente de $t$ y $\mathbb{E}(x_{t+h}\bar{x}_t)$ es independiente de $t$</div>\EndKnitrBlock{definition}
+::: {.definition #defi-proceso-estacionario-complejo}
+Un proceso $\{x_t\}$ es un *proceso estacionario a valores complejos* si $\mathbb{E}|x_t^2|<\infty$, $\mathbb{E}(X_t)$ es independiente de $t$ y $\mathbb{E}(x_{t+h}\bar{x}_t)$ es independiente de $t$
+:::
 
 ---
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-autocovarianza-proceso-complejo"><strong>(\#def:defi-autocovarianza-proceso-complejo) </strong></span>La función de autocovarianza $\gamma(\cdot)$ de un proceso estacionario a valores complejos $\{x_t\}$ es
+::: {.definition #defi-autocovarianza-proceso-complejo}
+La función de autocovarianza $\gamma(\cdot)$ de un proceso estacionario a valores complejos $\{x_t\}$ es
 
 \begin{equation}
 \gamma(h) = \mathbb{E}(x_{t+h}\bar{x}_t) - \mathbb{E}(x_{t+h})\mathbb{E}(\bar{x}_t).
 (\#eq:eq-autocovarianza-proceso-complejo)
-\end{equation}</div>\EndKnitrBlock{definition}
+\end{equation}
+:::
 
 ---
 
-\BeginKnitrBlock{theorem}<div class="theorem"><span class="theorem" id="thm:teo-autocovarianza-hermitiana"><strong>(\#thm:teo-autocovarianza-hermitiana) </strong></span>Una función $K(\cdot)$ definida sobre los enteros en la función de autocovarianza de una serie estacionaria (posiblemente a valores complejos) si y solo si $K(\cdot)$ es Hermitiana y no-negativa definida, esto es, si y solo si $K(n)=\overline{K(-n)}$ y
+::: {.theorem #teo-autocovarianza-hermitiana}
+Una función $K(\cdot)$ definida sobre los enteros en la función de autocovarianza de una serie estacionaria (posiblemente a valores complejos) si y solo si $K(\cdot)$ es Hermitiana y no-negativa definida, esto es, si y solo si $K(n)=\overline{K(-n)}$ y
 
 \begin{equation}
 \sum_{i,j=1}^na_iK(i-j)\bar{a}_j\geq0,
 (\#eq:eq-k-no-negativa-definida)
 \end{equation}
 
-para todo entero positivo $n$ y todo vector $\mathbf{a}=(a_1,\ldots,a_n)^t\in\mathbb{C}^n$.</div>\EndKnitrBlock{theorem}
+para todo entero positivo $n$ y todo vector $\mathbf{a}=(a_1,\ldots,a_n)^t\in\mathbb{C}^n$.
+:::
 
 ---
 
 El Teorema \@ref(thm:teo-autocovarianza-hermitiana) caracteriza la función de autocovarianza a valores complejos sobre los enteros como aquellas funciones que son Hermitianas y no-negativa definida. El Teorema de Herglotz, el cual presentaremos a continuación, caracteriza estas como las funciones que pueden ser escritas en la forma \@ref(eq:eq-funcion-distribucion-espectral) para alguna función de distribución acotada $F$ con masa concentrada en $(-\pi,\pi]$.
 
-\BeginKnitrBlock{theorem}\iffalse{-91-84-101-111-114-101-109-97-32-100-101-32-72-101-114-103-108-111-116-122-93-}\fi{}<div class="theorem"><span class="theorem" id="thm:teo-Herglotz"><strong>(\#thm:teo-Herglotz)  \iffalse (Teorema de Herglotz) \fi{} </strong></span>Una función a valores complejos $\gamma(\cdot)$ definida sobre los enteros es no-negativa definida si y solo si
+::: {.theorem #teo-Herglotz name="Teorema de Herglotz"}
+Una función a valores complejos $\gamma(\cdot)$ definida sobre los enteros es no-negativa definida si y solo si
 
 \begin{equation}
 \gamma(h) = \int_{-\pi}^{\pi}e^{ihv}dF(v)\text{ para todo }h=0,\pm1,\pm2,\ldots,
 (\#eq:eq-no-negativa-definida-Herglotz)
 \end{equation}
 
-donde $F(\cdot)$ es una función acotada en $[-\pi,\pi]$ continua a la derecha, no decreciente y $F(-\pi)=0$.</div>\EndKnitrBlock{theorem}
+donde $F(\cdot)$ es una función acotada en $[-\pi,\pi]$ continua a la derecha, no decreciente y $F(-\pi)=0$.
+:::
 
 ---
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-proceso-incremento-ortogonal"><strong>(\#def:defi-proceso-incremento-ortogonal) </strong></span>Un *proceso de incremento ortogonal sobre $[-\pi,\pi]$* es un proceso estocástico a valores complejos $\{Z(\lambda),-\pi\leq\lambda\leq\pi\}$ tal que
+::: {.definition #defi-proceso-incremento-ortogonal}
+Un *proceso de incremento ortogonal sobre $[-\pi,\pi]$* es un proceso estocástico a valores complejos $\{Z(\lambda),-\pi\leq\lambda\leq\pi\}$ tal que
 
 \begin{eqnarray}
 \langle Z(\lambda),Z(\lambda)\rangle &<& \infty\text{, con }-\pi\leq\lambda\leq\pi (\#eq:eq-e4p6p1)  \\
@@ -8887,7 +8793,8 @@ y
 (\#eq:eq-e4p6p3)
 \end{equation}
 
-donde el producto interno se define como $\langle X,Y\rangle=\mathbb{E}(X\bar{Y})$.</div>\EndKnitrBlock{definition}
+donde el producto interno se define como $\langle X,Y\rangle=\mathbb{E}(X\bar{Y})$.
+:::
 
 ---
 
@@ -8895,7 +8802,8 @@ El proceso $\{Z(\lambda),-\pi\leq\lambda\leq\pi\}$ se llamará **continuo a la d
 
 $$\|Z(\lambda+\delta)-Z(\lambda)\|^2=\mathbb{E}|Z(\lambda+\delta)-Z(\lambda)|^2\to0\text{ cuando }\delta\downarrow0.$$
 
-\BeginKnitrBlock{proposition}<div class="proposition"><span class="proposition" id="prp:prop-incremento-ortogonal-distrib-unica"><strong>(\#prp:prop-incremento-ortogonal-distrib-unica) </strong></span>Si $\{Z(\lambda),-\pi\leq\lambda\leq\pi\}$ es un proceso de incremento ortogonal, entonces existe una única función de distribución $F$ (es decir, una única función continua a derecha no decreciente) tal que
+::: {.proposition #prop-incremento-ortogonal-distrib-unica}
+Si $\{Z(\lambda),-\pi\leq\lambda\leq\pi\}$ es un proceso de incremento ortogonal, entonces existe una única función de distribución $F$ (es decir, una única función continua a derecha no decreciente) tal que
 
 \begin{equation}
 \begin{array}{lclc}
@@ -8904,9 +8812,11 @@ F(\lambda) &=& F(\pi), &  \lambda\geq\pi  \\
 F(\mu)-F(\lambda) &=& \|Z(\mu)-Z(\lambda)\|^2, &   -\pi\leq\lambda\leq\mu\leq\pi\\
 \end{array}
 (\#eq:eq-e4p6p4)
-\end{equation}</div>\EndKnitrBlock{proposition}
+\end{equation}
+:::
 
-\BeginKnitrBlock{proof}<div class="proof">\iffalse{} <span class="proof"><em>Demostración. </em></span>  \fi{}Para $F$ satisfaciendo las condiciones prescritas es claro, haciendo $\lambda=-\pi$ que
+::: {.proof}
+Para $F$ satisfaciendo las condiciones prescritas es claro, haciendo $\lambda=-\pi$ que
 
 \begin{equation}
   F(\mu)=\|Z(\mu)-Z(-\pi)\|^2\text{, }-\pi\leq\mu\leq\pi
@@ -8925,45 +8835,55 @@ El mismo procedimiento nos da para $-\pi\leq\mu\leq\mu+\delta\leq\pi$
 
 $$F(\mu+\delta)-F(\mu)=\|Z(\mu+\delta)-Z(\mu)\|^2\to0\text{, cuando }\delta\downarrow0,$$
 
-por la suposición de continuidad a derecha de $\{Z(\lambda)\}$</div>\EndKnitrBlock{proof}
+por la suposición de continuidad a derecha de $\{Z(\lambda)\}$
+:::
 
 ---
 
-\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota. </em></span>  \fi{}La función de distribución $F$ de la Proposición \@ref(prp:prop-incremento-ortogonal-distrib-unica), definida en $[-\pi,\pi]$ por \@ref(eq:eq-e4p6p5) será referida como la función de distribución asociada con el proceso de incremento ortogonal $\{Z(\lambda),-\pi\leq\lambda\leq\pi\}$. Es común en la práctica en el análisis de series de tiempo usar la notación corta
+::: {.remark}
+La función de distribución $F$ de la Proposición \@ref(prp:prop-incremento-ortogonal-distrib-unica), definida en $[-\pi,\pi]$ por \@ref(eq:eq-e4p6p5) será referida como la función de distribución asociada con el proceso de incremento ortogonal $\{Z(\lambda),-\pi\leq\lambda\leq\pi\}$. Es común en la práctica en el análisis de series de tiempo usar la notación corta
 
 $$\mathbb{E}(dZ(\lambda),d\bar{Z(\mu)})=\delta_{\lambda,\mu}dF(\lambda)$$
 
-para las ecuaciones \@ref(eq:eq-e4p6p3) y \@ref(eq:eq-e4p6p4).</div>\EndKnitrBlock{remark}
+para las ecuaciones \@ref(eq:eq-e4p6p3) y \@ref(eq:eq-e4p6p4).
+:::
 
 ---
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-movimiento-browniano"><strong>(\#def:defi-movimiento-browniano) </strong></span>Un **Movimiento Browniano Estándar** iniciando en nivel cero es un proceso $\{B(t),t\geq0\}$ que satisface las siguientes condiciones:
+::: {.definition #defi-movimiento-browniano}
+Un **Movimiento Browniano Estándar** iniciando en nivel cero es un proceso $\{B(t),t\geq0\}$ que satisface las siguientes condiciones:
 
 * $B(0)=0$,
 
 * $B(t_2)-B(t_1),B(t_3)-B(t_2),\ldots,B(t_n)-B(t_{n-1})$ son independientes para cada $n\in\{3,4,\ldots\}$ y cada $t=(t_1,\ldots,t_n)^t$ tal que $0\leq t_1<t_2<\ldots<t_n$,
 
-* $B(t)-B(s)\sim N(0,t-s)$ para $t\geq s$.</div>\EndKnitrBlock{definition}
+* $B(t)-B(s)\sim N(0,t-s)$ para $t\geq s$.
+:::
 
 ---
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejem-movimiento-browniano"><strong>(\#exm:ejem-movimiento-browniano) </strong></span>Un movimiento browniano $\{B(\lambda),-\pi\leq\lambda\leq\pi\}$ con $\mathbb{E}B(\lambda)=0$ y $\text{var}(B(\lambda))=\sigma^2(\lambda+\pi)/2\pi\text{, }-\pi\leq\lambda\leq\pi$, es un proceso de incremento ortogonal sobre $[-\pi,\pi]$. La función de distribución asociada satisface $F(\lambda)=0\text{, para }\lambda\leq-\pi, F(\lambda)=\sigma^2\text{, para }\lambda\geq\pi$ y
+::: {.example #ejem-movimiento-browniano}
+Un movimiento browniano $\{B(\lambda),-\pi\leq\lambda\leq\pi\}$ con $\mathbb{E}B(\lambda)=0$ y $\text{var}(B(\lambda))=\sigma^2(\lambda+\pi)/2\pi\text{, }-\pi\leq\lambda\leq\pi$, es un proceso de incremento ortogonal sobre $[-\pi,\pi]$. La función de distribución asociada satisface $F(\lambda)=0\text{, para }\lambda\leq-\pi, F(\lambda)=\sigma^2\text{, para }\lambda\geq\pi$ y
 
-$$F(\lambda)=\sigma^2(\lambda+\pi)/2\pi\text{, para }-\pi\leq\lambda\leq\pi.$$</div>\EndKnitrBlock{example}
+$$F(\lambda)=\sigma^2(\lambda+\pi)/2\pi\text{, para }-\pi\leq\lambda\leq\pi.$$
+:::
 
 ---
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-proceso-poisson"><strong>(\#def:defi-proceso-poisson) </strong></span>Un **Proceso de Poisson con media $\lambda>0$** es un proceso $\{N(t),t\geq0\}$ que satisface:
+::: {.definition #defi-proceso-poisson}
+Un **Proceso de Poisson con media $\lambda>0$** es un proceso $\{N(t),t\geq0\}$ que satisface:
   
 * $N(0)=0$,
 
 * $N(t_2)-N(t_1),N(t_3)-N(t_2),\ldots,N(t_n)-N(t_{n-1})$ son independientes para cada $n\in\{3,4,\ldots\}$ y cada $t=(t_1,\ldots,t_n)$ tal que $0\leq t_1<t_2<\ldots<t_n$,
 
-* $N(t)-N(s)$ tiene distribución de Poisson con media $\lambda(t-s)$ para $t\geq s$.</div>\EndKnitrBlock{definition}
+* $N(t)-N(s)$ tiene distribución de Poisson con media $\lambda(t-s)$ para $t\geq s$.
+:::
 
 ---
 
-\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:ejem-proceso-poison"><strong>(\#exm:ejem-proceso-poison) </strong></span>Si $\{N(\lambda),-\pi\leq\lambda\leq\pi\}$ es un proceso de Poisson sobre $[-\pi,\pi]$ con intensidad constante $c$ entonces el proceso $Z(\lambda)=N(\lambda)-\mathbb{E}N(\lambda)\text{, }-\pi\leq\lambda\leq\pi$, es un proceso de incremento ortogonal con función de distribución asociada 
+::: {.example #ejem-proceso-poison}
+Si $\{N(\lambda),-\pi\leq\lambda\leq\pi\}$ es un proceso de Poisson sobre $[-\pi,\pi]$ con intensidad constante $c$ entonces el proceso $Z(\lambda)=N(\lambda)-\mathbb{E}N(\lambda)\text{, }-\pi\leq\lambda\leq\pi$, es un proceso de incremento ortogonal con función de distribución asociada 
 
 $$F(\lambda)=\begin{cases}
    0&\text{, para }\lambda\leq-\pi\\
@@ -8972,7 +8892,8 @@ $$F(\lambda)=\begin{cases}
 \end{cases}
 $$
 
-Si escogemos $c$ como $\sigma^2/2\pi$ entonces $\{Z(\lambda)\}$ tiene exactamente la misma función de distribución asociada como la de $\{B(\lambda)\}$ del Ejemplo \@ref(exm:ejem-movimiento-browniano).</div>\EndKnitrBlock{example}
+Si escogemos $c$ como $\sigma^2/2\pi$ entonces $\{Z(\lambda)\}$ tiene exactamente la misma función de distribución asociada como la de $\{B(\lambda)\}$ del Ejemplo \@ref(exm:ejem-movimiento-browniano).
+:::
 
 ---
 
@@ -9069,12 +8990,14 @@ Falta solo demostrar que $\bar{\mathcal{D}}=L^2(F)$. Para hacer esto primero obs
 
 Las ecuaciones \@ref(eq:eq-e4p7p2) y \@ref(eq:eq-e4p7p3) entonces definen $I$ como una aplicación lineal que preserva el producto interno sobre $\bar{\mathcal{D}}=L^2(F)$ en $L^2(\Omega,\mathcal{F},P)$. La imagen $I(\bar{\mathcal{D}})$ de $\bar{\mathcal{D}}$ es claramente un subespacio lineal cerrado de $L^2(\Omega,\mathcal{F},P)$ y la aplicación $I$ es un isomorfismo de $\bar{\mathcal{D}}$ en $I(\bar{\mathcal{D}})$. La aplicación $I$ que nos proporciona la definición necesita de la integral estocástica.
 
-\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-integral-estocastica"><strong>(\#def:defi-integral-estocastica) </strong></span>Si $\{Z(\lambda)\}$ es un proceso de incremento ortogonal sobre $[-\pi,\pi]$ con función de distribución asociada $F$ y si $f\in L^2(F)$, entonces \textbf{la integral estocástica} $\int_{(-\pi,\pi]}f(\lambda)dZ(\lambda)$ se define como la variable aleatoria $I(f)$ construida arriba, esto es,
+::: {.definition #defi-integral-estocastica}
+Si $\{Z(\lambda)\}$ es un proceso de incremento ortogonal sobre $[-\pi,\pi]$ con función de distribución asociada $F$ y si $f\in L^2(F)$, entonces \textbf{la integral estocástica} $\int_{(-\pi,\pi]}f(\lambda)dZ(\lambda)$ se define como la variable aleatoria $I(f)$ construida arriba, esto es,
 
 \begin{equation}
 \int_{(-\pi,\pi]}f(v)dZ(v):=I(f).
 (\#eq:eq-integral-estocastica)
-\end{equation}</div>\EndKnitrBlock{definition}
+\end{equation}
+:::
 
 ---
 
@@ -9170,34 +9093,41 @@ Esta es una definición consistente de $T$ en $\overline{\mathcal{H}}$ ya que si
 
 Finalmente, del teorema siguiente se tiene que $\mathcal{K}$ es uniformemente denso en el espacio de funciones continuas $\phi$ en $[-\pi,\pi]$ con $\phi(\pi)=\phi(-\pi)$, que a su vez es denso en $L^2(F)$. Por consiguiente $\overline{\mathcal{K}}=L^2(F)$.
 
-\BeginKnitrBlock{theorem}<div class="theorem"><span class="theorem" id="thm:teo-t2p11p1"><strong>(\#thm:teo-t2p11p1) </strong></span>Sea $f$ una función continua en $[-\pi,\pi]$ tal que $f(\pi)=f(-\pi)$. Entonces
+::: {.theorem #teo-t2p11p1}
+Sea $f$ una función continua en $[-\pi,\pi]$ tal que $f(\pi)=f(-\pi)$. Entonces
 
 \begin{equation}
   n^{-1}(S_0f+S_1f+\cdots+S_{n-1}f)\to f
 (\#eq:eq-e2p11p1)
 \end{equation}
 
-uniformemente en $[-\pi,\pi]$ cuando $n\to\infty$.\footnote{$S_i$ es la $i$-ésima aproximación de Fourier de $f$.}</div>\EndKnitrBlock{theorem}
+uniformemente en $[-\pi,\pi]$ cuando $n\to\infty$.\footnote{$S_i$ es la $i$-ésima aproximación de Fourier de $f$.}
+:::
 
 ---
 
 De los hechos anteriores, se tiene el siguiente teorema
 
-\BeginKnitrBlock{theorem}<div class="theorem"><span class="theorem" id="thm:teo-t4p8p1"><strong>(\#thm:teo-t4p8p1) </strong></span>Si $F$ es la función de distribución espectral del proceso estacionario $\{X_t,t\in\mathbb{Z}\}$, entonces existe un único isomorfismo $T$ de $\overline{sp}\{X_t,t\in\mathbb{Z}\}$ en $L^2(F)$ tal que
+::: {.theorem #teo-t4p8p1}
+Si $F$ es la función de distribución espectral del proceso estacionario $\{X_t,t\in\mathbb{Z}\}$, entonces existe un único isomorfismo $T$ de $\overline{sp}\{X_t,t\in\mathbb{Z}\}$ en $L^2(F)$ tal que
 
-$$TX_t=e^{it}\text{,   }t\in\mathbb{Z}.$$</div>\EndKnitrBlock{theorem}
+$$TX_t=e^{it}\text{,   }t\in\mathbb{Z}.$$
+:::
 
 ---
 
 El Teorema \@ref(thm:teo-t4p8p1) es particularmente útil en la teoría de predicción lineal. También es la clave para la identificación de los procesos de incremento ortogonal $\{Z(\lambda),-\pi\leq\lambda\leq\pi\}$ que aparecen en la representación espectral \@ref(eq:eq-e4p2p5). Introducimos el proceso $\{Z(\lambda)\}$ en la siguiente proposición.
 
-\BeginKnitrBlock{proposition}<div class="proposition"><span class="proposition" id="prp:propo-p4p8p1"><strong>(\#prp:propo-p4p8p1) </strong></span>Si $T$ es definimos como en el Teorema \@ref(thm:teo-t4p8p1) entonces el proceso $\{Z(\lambda),-\pi\leq\lambda\leq\pi\}$ definido por
+::: {.proposition #propo-p4p8p1}
+Si $T$ es definimos como en el Teorema \@ref(thm:teo-t4p8p1) entonces el proceso $\{Z(\lambda),-\pi\leq\lambda\leq\pi\}$ definido por
 
 $$Z(\lambda)=T^{-1}(I_{(-\pi,\lambda]}(\cdot))\text{, }-\pi\leq\lambda\leq\pi,$$
 
-es un proceso de incremento ortogonal. Más aún, la función de distribución asociada con $\{Z(\lambda)\}$ es exactamente la función de distribución espectral $F$ de $\{X_t\}$.</div>\EndKnitrBlock{proposition}
+es un proceso de incremento ortogonal. Más aún, la función de distribución asociada con $\{Z(\lambda)\}$ es exactamente la función de distribución espectral $F$ de $\{X_t\}$.
+:::
 
-\BeginKnitrBlock{proof}<div class="proof">\iffalse{} <span class="proof"><em>Demostración. </em></span>  \fi{}Para cada $\lambda\in[-\pi,\pi]$, $Z(\lambda)$ es un elemento bien definido de $\overline{sp}\{X_t,t\in\mathbb{Z}\}$ por el Teorema \@ref(thm:teo-t4p8p1). Por lo tanto $\langle Z(\lambda),Z(\lambda)\rangle<\infty$. Dado que $Z(\lambda)\in\overline{sp}\{X_t,t\in\mathbb{Z}\}$ existe una sucesión $\{Y_n\}$ de elementos de $\overline{sp}\{X_t,t\in\mathbb{Z}\}$ tal que $\|Y_n-Z(\lambda)\|\to0$ cuando $n\to\infty$. Por la continuidad del producto interior tenemos
+::: {.proof}
+Para cada $\lambda\in[-\pi,\pi]$, $Z(\lambda)$ es un elemento bien definido de $\overline{sp}\{X_t,t\in\mathbb{Z}\}$ por el Teorema \@ref(thm:teo-t4p8p1). Por lo tanto $\langle Z(\lambda),Z(\lambda)\rangle<\infty$. Dado que $Z(\lambda)\in\overline{sp}\{X_t,t\in\mathbb{Z}\}$ existe una sucesión $\{Y_n\}$ de elementos de $\overline{sp}\{X_t,t\in\mathbb{Z}\}$ tal que $\|Y_n-Z(\lambda)\|\to0$ cuando $n\to\infty$. Por la continuidad del producto interior tenemos
 
 $$\langle Z(\lambda),1\rangle=\lim_{n\to\infty}\langle Y_n,1\rangle=0$$
 
@@ -9213,21 +9143,25 @@ completando la demostración de que $\{Z(\lambda)\}$ tiene incrementos ortogonal
 
 $$\langle Z(\mu)-Z(\lambda),Z(\mu)-Z(\mu)\rangle=F(\mu_-F(\lambda),$$
 
-demostrando que $\{Z(\lambda)\}$ es continua a derecha con función de distribución asociada $F$ como afirma la proposición</div>\EndKnitrBlock{proof}
+demostrando que $\{Z(\lambda)\}$ es continua a derecha con función de distribución asociada $F$ como afirma la proposición
+:::
 
 ---
 
 Ahora es fácil establecer la representación espectral \@ref(eq:eq-e4p2p5).
 
-\BeginKnitrBlock{theorem}\iffalse{-91-69-108-32-84-101-111-114-101-109-97-32-100-101-32-82-101-112-114-101-115-101-110-116-97-99-105-243-110-32-69-115-112-101-99-116-114-97-108-93-}\fi{}<div class="theorem"><span class="theorem" id="thm:teo-representacion-espectral"><strong>(\#thm:teo-representacion-espectral)  \iffalse (El Teorema de Representación Espectral) \fi{} </strong></span>Si $\{X_t\}$ es una sucesión estacionaria con media cero y función de distribución espectral $F$, entonces existe un proceso de incremento ortogonal continua a la derecha $\{Z(\lambda),-\pi\leq\lambda\leq\pi\}$ tal que
+::: {.theorem #teo-representacion-espectral name="El Teorema de Representación Espectral"}
+Si $\{X_t\}$ es una sucesión estacionaria con media cero y función de distribución espectral $F$, entonces existe un proceso de incremento ortogonal continua a la derecha $\{Z(\lambda),-\pi\leq\lambda\leq\pi\}$ tal que
 
 $$\text{(i) }\mathbb{E}|Z(\lambda)-Z(-\pi)|^2=F(\lambda)\text{, }-\pi\leq\lambda\leq\pi,$$
 
 y
 
-$$\text{(ii) }X_t=\int_{(-\pi,\pi]}E^{itv}dZ(v)\text{ con probabilidad uno.}$$</div>\EndKnitrBlock{theorem}
+$$\text{(ii) }X_t=\int_{(-\pi,\pi]}E^{itv}dZ(v)\text{ con probabilidad uno.}$$
+:::
 
-\BeginKnitrBlock{proof}<div class="proof">\iffalse{} <span class="proof"><em>Demostración. </em></span>  \fi{}Sea $\{Z(\lambda)\}$ el proceso definido en la Proposición \@ref(prp:propo-p4p8p1) y sea $I$ el isomorfismo
+::: {.proof}
+Sea $\{Z(\lambda)\}$ el proceso definido en la Proposición \@ref(prp:propo-p4p8p1) y sea $I$ el isomorfismo
 
 $$I(f)=\int_{(-\pi,\pi]}f(v)dZ(v),$$
 
@@ -9244,19 +9178,23 @@ Por lo tanto tenemos que $I=T^{-1}$ (i.e. $TI(f)=f$ para todo $f\in L^2(F)$) y p
 
 $$X_t=I(e^{it\cdot})=\int_{(-\pi,\pi]}e^{itv}dZ(v),$$
 
-dando la representación requerida para $\{X_t\}$. La primera afirmación del Teorema es una consecuencia inmediata de la Proposición \@ref(prp:propo-p4p8p1).</div>\EndKnitrBlock{proof}
+dando la representación requerida para $\{X_t\}$. La primera afirmación del Teorema es una consecuencia inmediata de la Proposición \@ref(prp:propo-p4p8p1).
+:::
 
 ---
 
-\BeginKnitrBlock{corollary}<div class="corollary"><span class="corollary" id="cor:cor-c4p8p1"><strong>(\#cor:cor-c4p8p1) </strong></span>Si $\{X_t\}$ es una sucesión estacionaria de media cero entonces existe un proceso de incremento ortogonal continuo a la derecha $\{Z(\lambda),-\pi\leq\lambda\leq\pi\}$ tal que $Z(-\pi)=0$ y
+::: {.corollary #cor-c4p8p1}
+Si $\{X_t\}$ es una sucesión estacionaria de media cero entonces existe un proceso de incremento ortogonal continuo a la derecha $\{Z(\lambda),-\pi\leq\lambda\leq\pi\}$ tal que $Z(-\pi)=0$ y
 
 $$X_t=\int_{(-\pi,\pi]}e^{itv}dZ(v)\text{ con probabilidad uno.}$$
 
 Si $\{Y(\lambda)\}$ y $\{Z(\lambda)\}$ son dos de tales procesos entonces
 
-$$P(Y(\lambda)=Z(\lambda))=1\text{ para cada}\lambda\in[-\pi,\pi].$$</div>\EndKnitrBlock{corollary}
+$$P(Y(\lambda)=Z(\lambda))=1\text{ para cada}\lambda\in[-\pi,\pi].$$
+:::
 
-\BeginKnitrBlock{proof}<div class="proof">\iffalse{} <span class="proof"><em>Demostración. </em></span>  \fi{}Si denotamos por $\{Z^{\star}(\lambda)\}$ el proceso de incremento ortogonal definido por la Proposición \@ref(prp:propo-p4p8p1), entonces el proceso
+::: {.proof}
+Si denotamos por $\{Z^{\star}(\lambda)\}$ el proceso de incremento ortogonal definido por la Proposición \@ref(prp:propo-p4p8p1), entonces el proceso
 
 $$Z(\lambda)=Z^{\star}(\lambda)-Z^{\star}(-\pi)\text{, }-\pi\leq\lambda\leq\pi,$$
 
@@ -9288,7 +9226,8 @@ entonces tenemos de \@ref(eq:eq-e4p8p2)
 
 Dado que $I_Y$ e $I_Z$ son iguales en $sp\{e^{it\cdot},t\in\mathbb{Z}\}$ el cual es denso en $L^2(F)$, se sigue que $I_Y(f)=I_Z(f)$ para todo $f\in L^2(F)$. Eligiendo $f(v)=I_{(-\pi,\lambda]}(v)$ obtenemos (con probabilidad uno)
 
-$$Y(\lambda)=\int_{(-\pi,\pi]}f(v)dZ(v)=Z(\lambda)\text{,  }-\pi\leq\lambda\leq\pi$$</div>\EndKnitrBlock{proof}
+$$Y(\lambda)=\int_{(-\pi,\pi]}f(v)dZ(v)=Z(\lambda)\text{,  }-\pi\leq\lambda\leq\pi$$
+:::
 
 - **Observación 1.** En el transcurso de la demostración del Teorema \@ref(thm:teo-representacion-espectral) se estableció el siguiente resultado: $Y\in\overline{sp}\{X_t,t\in\mathbb{Z}\}$ si y solo si existe una función $f\in L^2(F)$ tal que $Y=I(f)=\int_{(-\pi,\pi]}f(v)dZ(v)$. Esto significa que $I$ es un isomorfismo de $L^2(F)$ en $\overline{sp}\{X_t,t\in\mathbb{Z}\}$ (con la propiedad de que $I(e^{it\cdot})=X_t$).
 
@@ -9297,7 +9236,8 @@ $$Y(\lambda)=\int_{(-\pi,\pi]}f(v)dZ(v)=Z(\lambda)\text{,  }-\pi\leq\lambda\leq\
 - **Observación 3.** El corolario establece que el proceso de incremento ortogonal en la representación espectral es único si usamos la normalización de $Z(-\pi)=0$. Dos proceso estacionarios diferentes pueden tener la misma función de distribución espectral, por ejemplo los procesos $X_t=\int_{(-\pi,\pi]}e^{it\lambda}dB(\lambda)$ e $Y_t=\int_{(-\pi,\pi]}e^{it\lambda}dN(\lambda)$ con $\{B(\lambda)\}$ y $\{N(\lambda)\}$ definidos como en los Ejemplos \@ref(exm:ejem-movimiento-browniano) y \@ref(exm:ejem-proceso-poison). En tales casos los procesos deben de hecho tener la misma función de autocovarianza.
 
 
-\BeginKnitrBlock{example}\iffalse{-91-82-101-112-114-101-115-101-110-116-97-99-105-243-110-32-101-115-112-101-99-116-114-97-108-32-100-101-32-117-110-32-109-111-118-105-109-105-101-110-116-111-32-98-114-111-119-110-105-97-110-111-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-representacion-espectral-movimiento-browniano"><strong>(\#exm:ejem-representacion-espectral-movimiento-browniano)  \iffalse (Representación espectral de un movimiento browniano) \fi{} </strong></span>Sea $Z(\lambda)=B(\lambda)$ un movimiento browniano en $[-\pi,\pi]$ como el definido en el Ejemplo \ref{ejem-movimiento-browniano} con $\mathbb{E}Z(\lambda)=0$ y $Var(Z(\lambda))=\sigma^2(\lambda+\pi)/2\pi,-\pi\leq\lambda\leq\pi$. Para $t\in\mathbb{Z}$, hagamos $g_t(v)=\sqrt{2}\cos(tv)I_{(-\pi,0]}(v)+\sqrt{2}\sin(tv)I_{(0,\pi]}(v)$ y
+::: {.example #ejem-representacion-espectral-movimiento-browniano name="Representación espectral de un movimiento browniano"}
+Sea $Z(\lambda)=B(\lambda)$ un movimiento browniano en $[-\pi,\pi]$ como el definido en el Ejemplo \ref{ejem-movimiento-browniano} con $\mathbb{E}Z(\lambda)=0$ y $Var(Z(\lambda))=\sigma^2(\lambda+\pi)/2\pi,-\pi\leq\lambda\leq\pi$. Para $t\in\mathbb{Z}$, hagamos $g_t(v)=\sqrt{2}\cos(tv)I_{(-\pi,0]}(v)+\sqrt{2}\sin(tv)I_{(0,\pi]}(v)$ y
 
 \begin{equation}
   X_t=\int_{(-\pi,\pi]}g_t(v)dB(v)=\sqrt{2}\left(\int_{(-\pi,0]}\cos(tv)dB(v)+\int_{(0,\pi]}\sin(tv)dB(v)\right).
@@ -9311,7 +9251,8 @@ Entonces $\mathbb{E}X_t=0$ por \@ref(eq:eq-e4p7p7) y por \@ref(eq:eq-e4p7p5),
 (\#eq:eq-e4p8p5)
 \end{equation}
 
-Por lo tanto $\mathbb{E}(X_{t+h}X_t)=\sigma^2\delta_{h,0}$ y en consecuencia $\{X_t\}\sim WN(0,\sigma^2)$.</div>\EndKnitrBlock{example}
+Por lo tanto $\mathbb{E}(X_{t+h}X_t)=\sigma^2\delta_{h,0}$ y en consecuencia $\{X_t\}\sim WN(0,\sigma^2)$.
+:::
 
 ---
 
@@ -9346,15 +9287,18 @@ Ya que esto es cierto para toda elección de $\theta_1,\ldots,\theta_k$ deducimo
 donde el lado derecho ya ha sido definido en la Sección [Integración con Respecto a un Proceso de Incremento Ortogonal].
 
 
-\BeginKnitrBlock{proposition}<div class="proposition"><span class="proposition" id="prp:propo-p4p8p2"><strong>(\#prp:propo-p4p8p2) </strong></span>Supóngase que la función de distribución espectral $F$ de un proceso estacionario $\{X_t\}$ tiene un punto de discontinuidad en $\lambda_0$ donde $-\pi<\lambda_0<\pi$. Entonces con probabilidad uno,
+::: {.proposition #propo-p4p8p2}
+Supóngase que la función de distribución espectral $F$ de un proceso estacionario $\{X_t\}$ tiene un punto de discontinuidad en $\lambda_0$ donde $-\pi<\lambda_0<\pi$. Entonces con probabilidad uno,
 
 $$X_t=\int_{(-\pi,\pi]\backslash\{\lambda_0\}}e^{itv}dZ(v)+(Z(\lambda_0)-Z(\lambda_0^-))e^{it\lambda_0}$$
 
 donde los dos términos del lado derecho son no-correlacionados y
 
-$$Var(Z(\lambda_0)-Z(\lambda_0^-))=F(\lambda_0)-F(\lambda_0^-).$$</div>\EndKnitrBlock{proposition}
+$$Var(Z(\lambda_0)-Z(\lambda_0^-))=F(\lambda_0)-F(\lambda_0^-).$$
+:::
 
-\BeginKnitrBlock{proof}<div class="proof">\iffalse{} <span class="proof"><em>Demostración. </em></span>  \fi{}El límite izquierdo $Z(\lambda_0^-)$ se define como
+::: {.proof}
+El límite izquierdo $Z(\lambda_0^-)$ se define como
 
 \begin{equation}
   Z(\lambda_0^-)=m.s.\lim_{n\to\infty}Z(\lambda_n)
@@ -9397,7 +9341,8 @@ La continuidad del producto interior y la ortogonalidad de las dos integrales en
 
 Más aún
 
-$$Var(Z(\lambda_0)-Z(\lambda_0^-))=\lim_{\lambda_n\uparrow\lambda_0}Var(Z(\lambda_0)-Z(\lambda_n))=F(\lambda_0)-F(\lambda_0^-).$$</div>\EndKnitrBlock{proof}
+$$Var(Z(\lambda_0)-Z(\lambda_0^-))=\lim_{\lambda_n\uparrow\lambda_0}Var(Z(\lambda_0)-Z(\lambda_n))=F(\lambda_0)-F(\lambda_0^-).$$
+:::
 
 ---
 

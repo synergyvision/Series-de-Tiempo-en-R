@@ -423,7 +423,7 @@ A continuación mostramos dos series del EURIBOR. La primera es la evolución hi
 
 ```{r,fig.align = "center",fig.cap="Evolución anual del EURIBOR (1999-2018)"}
 EURIBORa<-read_excel("data/EURIBOR-anual.xlsx")
-plot(EURIBORa,type="l", col = "blue", xlab = "Periodo", 
+plot(EURIBORa$Año,EURIBORa$Índice,type="l", col = "blue", xlab = "Periodo", 
      main="Serie EURIBOR anual (1999-2018)")
 grid(col = "gray")
 ```
@@ -6624,7 +6624,7 @@ par(mfrow=c(2,1))
 plot(d3t, type = "l", ylab = "Diferencias", xlab = "tiempo")
 plot(d6t, type = "l", ylab = "Diferencias", xlab = "tiempo")
 # Regresion diff
-data.diff=as.data.frame(cbind(d3t,diff(r3t$V3)))
+data.diff=as.data.frame(cbind(d3t,diff(r3t$V2)))
 dyt=lm(d6t~d3t, data = data.diff)
 summary(dyt)
 # Residuales diff
@@ -7439,26 +7439,26 @@ Los comandos en R para calcular los periodogramas y generar los gráficos son lo
 ```
 
 ```{r, fig.cap="Periodograma de SOI y Reclutamiento (nuevos peces)", fig-periodograma-SOI}
-soi=scan('data/soi.txt')
-rec=scan('data/recruit.txt')
-par(mfrow=c(2,1)) 
-soi.per=spec.pgram(soi,taper=0,log='no')
-abline(v=1/12,lty='dotted') 
-abline(v=1/48,lty='dotted') 
-rec.per=spec.pgram(rec,taper=0,log='no') 
-abline(v=1/12,lty='dotted') 
-abline(v=1/48,lty='dotted')
+#soi=scan('data/soi.txt')
+#rec=scan('data/recruit.txt')
+#par(mfrow=c(2,1)) 
+#soi.per=spec.pgram(soi,taper=0,log='no')
+#abline(v=1/12,lty='dotted') 
+#abline(v=1/48,lty='dotted') 
+#rec.per=spec.pgram(rec,taper=0,log='no') 
+#abline(v=1/12,lty='dotted') 
+#abline(v=1/48,lty='dotted')
 ```
 
 Los intervalos de confianza de la serie SOI para el ciclo anual $w=1/12=40/480$ y los posibles ciclos de cuatro años de El Niño con $w=1/48=10/480$ se pueden calcular en Matlab y R con los siguientes comandos:
 
 ```{r}
-li=qchisq(0.975,2) 
-ls=qchisq(0.025,2) 
-2*soi.per$spec[10]/li
-2*soi.per$spec[10]/ls
-2*soi.per$spec[40]/li 
-2*soi.per$spec[40]/ls
+#li=qchisq(0.975,2) 
+#ls=qchisq(0.025,2) 
+#2*soi.per$spec[10]/li
+#2*soi.per$spec[10]/ls
+#2*soi.per$spec[40]/li 
+#2*soi.per$spec[40]/ls
 ```
 
 ---
@@ -7548,7 +7548,7 @@ En la Figura \@ref(fig:fig-periodograma-SOI) graficamos los periodogramas para l
 ```
 
 ```{r echo=FALSE, fig.cap="Periodograma suavizado de las series SOI y Reclutamiento", fig.align="center", fig-periodograma-suavizado-SOI}
-knitr::include_graphics("images/ejemplo4p10.png")
+# knitr::include_graphics("images/ejemplo4p10.png")
 ```
 
 ---
@@ -7558,12 +7558,12 @@ La Figura \@ref(fig:fig-periodograma-altura-olas) muestra el registro de alturas
 ```
 
 ```{r, fig.cap="Periodograma para las alturas de olas, Estación 144, St. Petersburg, FL.", fig-periodograma-altura-olas}
-SP=matrix(scan("data/station14401.txt"), byrow=TRUE, ncol=2)
-m<-matrix(c(1,1:3),2,2,byrow=TRUE)
-layout(m)
-plot(SP[,1]/0.78,SP[,2],type="l", xlab="Tiempo (seg)",ylab="Alturas (m)", main="Altura de olas, Estacion 431, St. Petersburg, FL")
-I1=spectrum(SP[,2],spans=3,log="no", main="Periodograma suavizado estacion 144")
-I2=spectrum(SP[,2],log="no", main="Periodograma estacion 144")
+# SP=matrix(scan("data/station14401.txt"), byrow=TRUE, ncol=2)
+# m<-matrix(c(1,1:3),2,2,byrow=TRUE)
+# layout(m)
+# plot(SP[,1]/0.78,SP[,2],type="l", xlab="Tiempo (seg)",ylab="Alturas (m)", main="Altura de olas, Estacion 431, St. Petersburg, FL")
+# I1=spectrum(SP[,2],spans=3,log="no", main="Periodograma suavizado estacion 144")
+# I2=spectrum(SP[,2],log="no", main="Periodograma estacion 144")
 ```
 
 ---
@@ -7573,14 +7573,14 @@ La Figura \@ref(fig:fig-periodograma-terremoto-explosiones) muestra el espectro 
 ```
 
 ```{r, fig.cap="Periodogramas para las series de Terremotos y Explosiones", fig-periodograma-terremoto-explosiones}
-x=matrix(scan("data/eq5exp6.txt"),ncol=2)
-eqP=x[1:1024,1]; eqS=x[1025:2048,1]
-exP=x[1:1024,2]; exS=x[1025:2048,2]
-par(mfrow=c(2,2))
-eqPs=spectrum(eqP, main="Espectro del sismo (fase P)", log="no", xlim=c(0,0.25), ylim=c(0,0.04))
-eqSs=spectrum(eqS, main="Espectro del sismo (fase S)", log="no", xlim=c(0,0.25), ylim=c(0,0.4))
-exPs=spectrum(exP, main="Espectro de explosiones (fase P)", log="no", xlim=c(0,0.25), ylim=c(0,0.04))
-exSs=spectrum(exS, main="Espectro de explosiones (fase S)", log="no", xlim=c(0,0.25), ylim=c(0,0.4))
+# x=matrix(scan("data/eq5exp6.txt"),ncol=2)
+# eqP=x[1:1024,1]; eqS=x[1025:2048,1]
+# exP=x[1:1024,2]; exS=x[1025:2048,2]
+# par(mfrow=c(2,2))
+# eqPs=spectrum(eqP, main="Espectro del sismo (fase P)", log="no", xlim=c(0,0.25), ylim=c(0,0.04))
+# eqSs=spectrum(eqS, main="Espectro del sismo (fase S)", log="no", xlim=c(0,0.25), ylim=c(0,0.4))
+# exPs=spectrum(exP, main="Espectro de explosiones (fase P)", log="no", xlim=c(0,0.25), ylim=c(0,0.04))
+# exSs=spectrum(exS, main="Espectro de explosiones (fase S)", log="no", xlim=c(0,0.25), ylim=c(0,0.4))
 ```
 
 ---

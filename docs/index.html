@@ -5,18 +5,12 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Series de Tiempo en R</title>
-<<<<<<< HEAD
   <meta name="description" content="Series de Tiempo en R" />
-  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
-=======
-  <meta name="description" content="Series de Tiempo en R">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Series de Tiempo en R" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="http://synergy.vision/Series-de-Tiempo-en-R/" />
-  <meta property="og:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+  <meta property="og:image" content="http://synergy.vision/Series-de-Tiempo-en-R//images/cover.png" />
   
   <meta name="github-repo" content="synergyvision/Series-de-Tiempo-en-R/" />
 
@@ -24,16 +18,12 @@
   <meta name="twitter:title" content="Series de Tiempo en R" />
   
   
-  <meta name="twitter:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+  <meta name="twitter:image" content="http://synergy.vision/Series-de-Tiempo-en-R//images/cover.png" />
 
 <meta name="author" content="Synergy Vision" />
 
 
-<<<<<<< HEAD
 <meta name="date" content="2022-11-12" />
-=======
-<meta name="date" content="2020-01-31">
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -42,7 +32,8 @@
   
 
 <link rel="next" href="acerca-del-autor.html"/>
-<script src="libs/jquery/jquery.min.js"></script>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
@@ -58,47 +49,77 @@
 
 
 
-
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
 <script src="https://cdn.datacamp.com/datacamp-light-latest.min.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
@@ -116,7 +137,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="./"><img src="images/logovision-black.png" width="160"></img></a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a>
+<ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#por-qué-leer-este-libro"><i class="fa fa-check"></i>¿Por qué leer este libro?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-libro"><i class="fa fa-check"></i>Estructura del libro</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#información-sobre-los-programas-y-convenciones"><i class="fa fa-check"></i>Información sobre los programas y convenciones</a></li>
@@ -124,54 +146,67 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="acerca-del-autor.html"><a href="acerca-del-autor.html"><i class="fa fa-check"></i>Acerca del Autor</a></li>
-<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a><ul>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="introducción.html"><a href="introducción.html#conceptos-financieros-básicos"><i class="fa fa-check"></i><b>1.1</b> Conceptos financieros básicos</a></li>
 <li class="chapter" data-level="1.2" data-path="introducción.html"><a href="introducción.html#conceptos-básicos"><i class="fa fa-check"></i><b>1.2</b> Conceptos básicos</a></li>
-<li class="chapter" data-level="1.3" data-path="introducción.html"><a href="introducción.html#ejemplos"><i class="fa fa-check"></i><b>1.3</b> Ejemplos</a><ul>
+<li class="chapter" data-level="1.3" data-path="introducción.html"><a href="introducción.html#ejemplos"><i class="fa fa-check"></i><b>1.3</b> Ejemplos</a>
+<ul>
 <li class="chapter" data-level="1.3.1" data-path="introducción.html"><a href="introducción.html#clasificación-de-las-series-de-tiempo"><i class="fa fa-check"></i><b>1.3.1</b> Clasificación de las series de tiempo</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="introducción.html"><a href="introducción.html#componentes-de-una-serie-de-tiempo"><i class="fa fa-check"></i><b>1.4</b> Componentes de una serie de tiempo</a><ul>
+<li class="chapter" data-level="1.4" data-path="introducción.html"><a href="introducción.html#componentes-de-una-serie-de-tiempo"><i class="fa fa-check"></i><b>1.4</b> Componentes de una serie de tiempo</a>
+<ul>
 <li class="chapter" data-level="1.4.1" data-path="introducción.html"><a href="introducción.html#el-modelo-aditivo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.1</b> El Modelo Aditivo de Componentes de Series de Tiempo</a></li>
 <li class="chapter" data-level="1.4.2" data-path="introducción.html"><a href="introducción.html#el-modelo-multiplicativo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.2</b> El Modelo Multiplicativo de Componentes de Series de Tiempo</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>2</b> Características de series de tiempo</a><ul>
+<li class="chapter" data-level="2" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>2</b> Características de series de tiempo</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#medidas-de-dependencia-para-series-de-tiempo"><i class="fa fa-check"></i><b>2.1</b> Medidas de dependencia para series de tiempo</a></li>
-<li class="chapter" data-level="2.2" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia"><i class="fa fa-check"></i><b>2.2</b> Estimación de la Tendencia</a><ul>
+<li class="chapter" data-level="2.2" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia"><i class="fa fa-check"></i><b>2.2</b> Estimación de la Tendencia</a>
+<ul>
 <li class="chapter" data-level="2.2.1" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia-en-ausencia-de-estacionalidad"><i class="fa fa-check"></i><b>2.2.1</b> Estimación de la tendencia en ausencia de estacionalidad</a></li>
 <li class="chapter" data-level="2.2.2" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia-y-la-estacionalidad"><i class="fa fa-check"></i><b>2.2.2</b> Estimación de la tendencia y la estacionalidad</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia-por-regresión-clásica"><i class="fa fa-check"></i><b>2.3</b> Estimación de la tendencia por regresión clásica</a><ul>
+<li class="chapter" data-level="2.3" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia-por-regresión-clásica"><i class="fa fa-check"></i><b>2.3</b> Estimación de la tendencia por regresión clásica</a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#regresión-clásica"><i class="fa fa-check"></i><b>2.3.1</b> Regresión Clásica</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>3</b> Modelos de series de tiempo</a><ul>
-<li class="chapter" data-level="3.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-estocásticos"><i class="fa fa-check"></i><b>3.1</b> Modelos Estocásticos</a><ul>
+<li class="chapter" data-level="3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>3</b> Modelos de series de tiempo</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-estocásticos"><i class="fa fa-check"></i><b>3.1</b> Modelos Estocásticos</a>
+<ul>
 <li class="chapter" data-level="3.1.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#procesos-estocásticos"><i class="fa fa-check"></i><b>3.1.1</b> Procesos Estocásticos</a></li>
 <li class="chapter" data-level="3.1.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#momentos-varianza-covarianza-y-correlación"><i class="fa fa-check"></i><b>3.1.2</b> Momentos, Varianza, Covarianza y Correlación</a></li>
 <li class="chapter" data-level="3.1.3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#variación-de-un-proceso"><i class="fa fa-check"></i><b>3.1.3</b> Variación de un proceso</a></li>
 <li class="chapter" data-level="3.1.4" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#martingalas"><i class="fa fa-check"></i><b>3.1.4</b> Martingalas</a></li>
 <li class="chapter" data-level="3.1.5" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#propiedad-de-markov"><i class="fa fa-check"></i><b>3.1.5</b> Propiedad de Markov</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-lineales"><i class="fa fa-check"></i><b>3.2</b> Modelos lineales</a><ul>
+<li class="chapter" data-level="3.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-lineales"><i class="fa fa-check"></i><b>3.2</b> Modelos lineales</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#proceso-de-ruido-blanco"><i class="fa fa-check"></i><b>3.2.1</b> Proceso de Ruido Blanco</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="modelos-ar.html"><a href="modelos-ar.html"><i class="fa fa-check"></i><b>4</b> Modelos AR</a><ul>
+<li class="chapter" data-level="4" data-path="modelos-ar.html"><a href="modelos-ar.html"><i class="fa fa-check"></i><b>4</b> Modelos AR</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar1"><i class="fa fa-check"></i><b>4.1</b> Modelo AR(1)</a></li>
 <li class="chapter" data-level="4.2" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar2"><i class="fa fa-check"></i><b>4.2</b> Modelo AR(2)</a></li>
 <li class="chapter" data-level="4.3" data-path="modelos-ar.html"><a href="modelos-ar.html#procesos-arp"><i class="fa fa-check"></i><b>4.3</b> Procesos AR(p)</a></li>
 <li class="chapter" data-level="4.4" data-path="modelos-ar.html"><a href="modelos-ar.html#función-de-autocorrelación-parcial"><i class="fa fa-check"></i><b>4.4</b> Función de Autocorrelación Parcial</a></li>
 <li class="chapter" data-level="4.5" data-path="modelos-ar.html"><a href="modelos-ar.html#criterios-de-información"><i class="fa fa-check"></i><b>4.5</b> Criterios de Información</a></li>
 <li class="chapter" data-level="4.6" data-path="modelos-ar.html"><a href="modelos-ar.html#estimación-de-parámetros."><i class="fa fa-check"></i><b>4.6</b> Estimación de Parámetros.</a></li>
-<li class="chapter" data-level="4.7" data-path="modelos-ar.html"><a href="modelos-ar.html#predicciones-con-modelos-ar"><i class="fa fa-check"></i><b>4.7</b> Predicciones con modelos AR</a><ul>
+<li class="chapter" data-level="4.7" data-path="modelos-ar.html"><a href="modelos-ar.html#predicciones-con-modelos-ar"><i class="fa fa-check"></i><b>4.7</b> Predicciones con modelos AR</a>
+<ul>
 <li class="chapter" data-level="4.7.1" data-path="modelos-ar.html"><a href="modelos-ar.html#predicción-de-un-paso"><i class="fa fa-check"></i><b>4.7.1</b> Predicción de un paso</a></li>
 <li class="chapter" data-level="4.7.2" data-path="modelos-ar.html"><a href="modelos-ar.html#predicción-de-dos-pasos"><i class="fa fa-check"></i><b>4.7.2</b> Predicción de dos pasos</a></li>
 <li class="chapter" data-level="4.7.3" data-path="modelos-ar.html"><a href="modelos-ar.html#predicción-de-múltiples-pasos"><i class="fa fa-check"></i><b>4.7.3</b> Predicción de múltiples pasos</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="modelos-ma.html"><a href="modelos-ma.html"><i class="fa fa-check"></i><b>5</b> Modelos MA</a><ul>
-<li class="chapter" data-level="5.1" data-path="modelos-ma.html"><a href="modelos-ma.html#propiedades-de-los-modelos-ma"><i class="fa fa-check"></i><b>5.1</b> Propiedades de los modelos MA</a><ul>
+<li class="chapter" data-level="5" data-path="modelos-ma.html"><a href="modelos-ma.html"><i class="fa fa-check"></i><b>5</b> Modelos MA</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="modelos-ma.html"><a href="modelos-ma.html#propiedades-de-los-modelos-ma"><i class="fa fa-check"></i><b>5.1</b> Propiedades de los modelos MA</a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="modelos-ma.html"><a href="modelos-ma.html#estacionaridad"><i class="fa fa-check"></i><b>5.1.1</b> Estacionaridad</a></li>
 <li class="chapter" data-level="5.1.2" data-path="modelos-ma.html"><a href="modelos-ma.html#función-de-autocorrelación-acf"><i class="fa fa-check"></i><b>5.1.2</b> Función de autocorrelación (ACF)</a></li>
 </ul></li>
@@ -179,73 +214,74 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.3" data-path="modelos-ma.html"><a href="modelos-ma.html#estimación"><i class="fa fa-check"></i><b>5.3</b> Estimación</a></li>
 <li class="chapter" data-level="5.4" data-path="modelos-ma.html"><a href="modelos-ma.html#predicciones-usando-modelos-ma"><i class="fa fa-check"></i><b>5.4</b> Predicciones usando modelos MA</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="modelos-arma.html"><a href="modelos-arma.html"><i class="fa fa-check"></i><b>6</b> Modelos ARMA</a><ul>
+<li class="chapter" data-level="6" data-path="modelos-arma.html"><a href="modelos-arma.html"><i class="fa fa-check"></i><b>6</b> Modelos ARMA</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="modelos-arma.html"><a href="modelos-arma.html#propiedades-de-los-modelos-armapq"><i class="fa fa-check"></i><b>6.1</b> Propiedades de los modelos ARMA(p,q)</a></li>
-<<<<<<< HEAD
-<li class="chapter" data-level="6.2" data-path="modelos-arma.html"><a href="modelos-arma.html#ecuaciones-en-diferencias"><i class="fa fa-check"></i><b>6.2</b> Ecuaciones en Diferencias</a></li>
-<li class="chapter" data-level="6.3" data-path="modelos-arma.html"><a href="modelos-arma.html#la-densidad-espectral"><i class="fa fa-check"></i><b>6.3</b> La Densidad Espectral</a></li>
-<li class="chapter" data-level="6.4" data-path="modelos-arma.html"><a href="modelos-arma.html#periodograma-y-transformada-discreta-de-fourier"><i class="fa fa-check"></i><b>6.4</b> Periodograma y Transformada Discreta de Fourier</a></li>
-<li class="chapter" data-level="6.5" data-path="modelos-arma.html"><a href="modelos-arma.html#estimación-espectral-no-paramétrica"><i class="fa fa-check"></i><b>6.5</b> Estimación Espectral No-paramétrica</a></li>
-<li class="chapter" data-level="6.6" data-path="modelos-arma.html"><a href="modelos-arma.html#procesos-de-incremento-ortogonal-sobre--pipi"><i class="fa fa-check"></i><b>6.6</b> Procesos de Incremento Ortogonal sobre <span class="math inline">\([-\pi,\pi]\)</span></a></li>
-<li class="chapter" data-level="6.7" data-path="modelos-arma.html"><a href="modelos-arma.html#integración-con-respecto-a-un-proceso-de-incremento-ortogonal"><i class="fa fa-check"></i><b>6.7</b> Integración con Respecto a un Proceso de Incremento Ortogonal</a><ul>
-<li class="chapter" data-level="6.7.1" data-path="modelos-arma.html"><a href="modelos-arma.html#propiedades-de-la-integral-estocástica"><i class="fa fa-check"></i><b>6.7.1</b> Propiedades de la Integral Estocástica</a></li>
+<li class="chapter" data-level="6.2" data-path="modelos-arma.html"><a href="modelos-arma.html#ecuaciones-en-diferencias"><i class="fa fa-check"></i><b>6.2</b> Ecuaciones en Diferencias</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="modelos-arma.html"><a href="modelos-arma.html#función-de-autocorrelación-acf-para-modelos-arma"><i class="fa fa-check"></i><b>6.2.1</b> Función de Autocorrelación (ACF) para modelos ARMA</a></li>
 </ul></li>
-<li class="chapter" data-level="6.8" data-path="modelos-arma.html"><a href="modelos-arma.html#la-representación-espectral"><i class="fa fa-check"></i><b>6.8</b> La Representación Espectral</a></li>
-=======
-<li class="chapter" data-level="6.2" data-path="modelos-arma.html"><a href="modelos-arma.html#ecuaciones-en-diferencias"><i class="fa fa-check"></i><b>6.2</b> Ecuaciones en Diferencias</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="modelos-arma.html"><a href="modelos-arma.html#funcion-de-autocorrelacion-acf-para-modelos-arma"><i class="fa fa-check"></i><b>6.2.1</b> Función de Autocorrelación (ACF) para modelos ARMA</a></li>
-</ul></li>
-<li class="chapter" data-level="6.3" data-path="modelos-arma.html"><a href="modelos-arma.html#pronosticos"><i class="fa fa-check"></i><b>6.3</b> Pronósticos</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="modelos-arma.html"><a href="modelos-arma.html#pronosticos-para-procesos-arma"><i class="fa fa-check"></i><b>6.3.1</b> Pronósticos para procesos ARMA</a></li>
+<li class="chapter" data-level="6.3" data-path="modelos-arma.html"><a href="modelos-arma.html#pronósticos"><i class="fa fa-check"></i><b>6.3</b> Pronósticos</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="modelos-arma.html"><a href="modelos-arma.html#pronósticos-para-procesos-arma"><i class="fa fa-check"></i><b>6.3.1</b> Pronósticos para procesos ARMA</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html"><i class="fa fa-check"></i><b>7</b> Estimación de parámetros</a><ul>
-<li class="chapter" data-level="7.1" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#estimacion-1"><i class="fa fa-check"></i><b>7.1</b> Estimación</a></li>
-<li class="chapter" data-level="7.2" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#sect-EMV"><i class="fa fa-check"></i><b>7.2</b> Estimación por Máxima Verosimilitud y Mínimos Cuadrados</a></li>
-<li class="chapter" data-level="7.3" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#estimacion-de-minimos-cuadrados-para-modelos-armapq"><i class="fa fa-check"></i><b>7.3</b> Estimación de mínimos cuadrados para modelos ARMA(p,q)</a></li>
+<li class="chapter" data-level="7" data-path="estimación-de-parámetros.html"><a href="estimación-de-parámetros.html"><i class="fa fa-check"></i><b>7</b> Estimación de parámetros</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="estimación-de-parámetros.html"><a href="estimación-de-parámetros.html#estimación-1"><i class="fa fa-check"></i><b>7.1</b> Estimación</a></li>
+<li class="chapter" data-level="7.2" data-path="estimación-de-parámetros.html"><a href="estimación-de-parámetros.html#sect-EMV"><i class="fa fa-check"></i><b>7.2</b> Estimación por Máxima Verosimilitud y Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="7.3" data-path="estimación-de-parámetros.html"><a href="estimación-de-parámetros.html#estimación-de-mínimos-cuadrados-para-modelos-armapq"><i class="fa fa-check"></i><b>7.3</b> Estimación de mínimos cuadrados para modelos ARMA(p,q)</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="modelos-arima.html"><a href="modelos-arima.html"><i class="fa fa-check"></i><b>8</b> Modelos ARIMA</a><ul>
-<li class="chapter" data-level="8.1" data-path="modelos-arima.html"><a href="modelos-arima.html#construccion-de-modelos-arima"><i class="fa fa-check"></i><b>8.1</b> Construcción de modelos ARIMA</a></li>
+<li class="chapter" data-level="8" data-path="modelos-arima.html"><a href="modelos-arima.html"><i class="fa fa-check"></i><b>8</b> Modelos ARIMA</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="modelos-arima.html"><a href="modelos-arima.html#construcción-de-modelos-arima"><i class="fa fa-check"></i><b>8.1</b> Construcción de modelos ARIMA</a></li>
 <li class="chapter" data-level="8.2" data-path="modelos-arima.html"><a href="modelos-arima.html#modelos-sarima"><i class="fa fa-check"></i><b>8.2</b> Modelos SARIMA</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html"><i class="fa fa-check"></i><b>9</b> Modelos ARCH y GARCH</a><ul>
+<li class="chapter" data-level="9" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html"><i class="fa fa-check"></i><b>9</b> Modelos ARCH y GARCH</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estructura-de-los-modelos"><i class="fa fa-check"></i><b>9.1</b> Estructura de los Modelos</a></li>
-<li class="chapter" data-level="9.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-arch"><i class="fa fa-check"></i><b>9.2</b> Modelos ARCH</a><ul>
-<li class="chapter" data-level="9.2.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimacion-de-un-modelo-archp"><i class="fa fa-check"></i><b>9.2.1</b> Estimación de un Modelo ARCH(p)</a></li>
-<li class="chapter" data-level="9.2.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#prediccion-con-modelos-arch"><i class="fa fa-check"></i><b>9.2.2</b> Predicción con modelos ARCH</a></li>
+<li class="chapter" data-level="9.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-arch"><i class="fa fa-check"></i><b>9.2</b> Modelos ARCH</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimación-de-un-modelo-archp"><i class="fa fa-check"></i><b>9.2.1</b> Estimación de un Modelo ARCH(p)</a></li>
+<li class="chapter" data-level="9.2.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#predicción-con-modelos-arch"><i class="fa fa-check"></i><b>9.2.2</b> Predicción con modelos ARCH</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-garch"><i class="fa fa-check"></i><b>9.3</b> Modelos GARCH</a><ul>
-<li class="chapter" data-level="9.3.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimacion-de-un-modelo-garch"><i class="fa fa-check"></i><b>9.3.1</b> Estimación de un Modelo GARCH</a></li>
-<li class="chapter" data-level="9.3.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#prediccion-con-modelos-garch"><i class="fa fa-check"></i><b>9.3.2</b> Predicción con modelos GARCH</a></li>
+<li class="chapter" data-level="9.3" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-garch"><i class="fa fa-check"></i><b>9.3</b> Modelos GARCH</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimación-de-un-modelo-garch"><i class="fa fa-check"></i><b>9.3.1</b> Estimación de un Modelo GARCH</a></li>
+<li class="chapter" data-level="9.3.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#predicción-con-modelos-garch"><i class="fa fa-check"></i><b>9.3.2</b> Predicción con modelos GARCH</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><i class="fa fa-check"></i><b>10</b> Modelos lineales estacionales y modelos no-estacionarios</a><ul>
+<li class="chapter" data-level="10" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><i class="fa fa-check"></i><b>10</b> Modelos lineales estacionales y modelos no-estacionarios</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-estacionales"><i class="fa fa-check"></i><b>10.1</b> Modelos Estacionales</a></li>
-<li class="chapter" data-level="10.2" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-de-memoria-larga"><i class="fa fa-check"></i><b>10.2</b> Modelos de memoria larga</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#diferenciacion-fraccionada"><i class="fa fa-check"></i><b>10.2.1</b> Diferenciación fraccionada</a></li>
+<li class="chapter" data-level="10.2" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-de-memoria-larga"><i class="fa fa-check"></i><b>10.2</b> Modelos de memoria larga</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#diferenciación-fraccionada"><i class="fa fa-check"></i><b>10.2.1</b> Diferenciación fraccionada</a></li>
 <li class="chapter" data-level="10.2.2" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#ajuste-de-datos-simulados"><i class="fa fa-check"></i><b>10.2.2</b> Ajuste de datos simulados</a></li>
-<li class="chapter" data-level="10.2.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#evaluacion-de-las-pruebas-de-dependencia-a-largo-plazo"><i class="fa fa-check"></i><b>10.2.3</b> Evaluación de las pruebas de dependencia a largo plazo</a></li>
-<li class="chapter" data-level="10.2.4" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#simulacion"><i class="fa fa-check"></i><b>10.2.4</b> Simulación</a></li>
+<li class="chapter" data-level="10.2.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#evaluación-de-las-pruebas-de-dependencia-a-largo-plazo"><i class="fa fa-check"></i><b>10.2.3</b> Evaluación de las pruebas de dependencia a largo plazo</a></li>
+<li class="chapter" data-level="10.2.4" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#simulación"><i class="fa fa-check"></i><b>10.2.4</b> Simulación</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-no-estacionarios"><i class="fa fa-check"></i><b>10.3</b> Modelos no estacionarios</a><ul>
+<li class="chapter" data-level="10.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-no-estacionarios"><i class="fa fa-check"></i><b>10.3</b> Modelos no estacionarios</a>
+<ul>
 <li class="chapter" data-level="10.3.1" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#no-estacionarios-en-varianza"><i class="fa fa-check"></i><b>10.3.1</b> No estacionarios en Varianza</a></li>
 <li class="chapter" data-level="10.3.2" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#no-estacionarios-en-media"><i class="fa fa-check"></i><b>10.3.2</b> No estacionarios en Media</a></li>
-<li class="chapter" data-level="10.3.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#test-de-raiz-unitaria"><i class="fa fa-check"></i><b>10.3.3</b> Test de raíz unitaria</a></li>
+<li class="chapter" data-level="10.3.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#test-de-raíz-unitaria"><i class="fa fa-check"></i><b>10.3.3</b> Test de raíz unitaria</a></li>
 </ul></li>
-<li class="chapter" data-level="10.4" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-de-regresion"><i class="fa fa-check"></i><b>10.4</b> Modelos de regresión</a></li>
-<li class="chapter" data-level="10.5" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#estimacion-consistente-de-la-matriz-de-covarianza"><i class="fa fa-check"></i><b>10.5</b> Estimación consistente de la matriz de covarianza</a></li>
+<li class="chapter" data-level="10.4" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-de-regresión"><i class="fa fa-check"></i><b>10.4</b> Modelos de regresión</a></li>
+<li class="chapter" data-level="10.5" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#estimación-consistente-de-la-matriz-de-covarianza"><i class="fa fa-check"></i><b>10.5</b> Estimación consistente de la matriz de covarianza</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="analisis-espectral.html"><a href="analisis-espectral.html"><i class="fa fa-check"></i><b>11</b> Análisis Espectral</a><ul>
-<li class="chapter" data-level="11.1" data-path="analisis-espectral.html"><a href="analisis-espectral.html#comportamiento-ciclico-y-periodicidad"><i class="fa fa-check"></i><b>11.1</b> Comportamiento Cíclico y Periodicidad</a></li>
-<li class="chapter" data-level="11.2" data-path="analisis-espectral.html"><a href="analisis-espectral.html#la-densidad-espectral"><i class="fa fa-check"></i><b>11.2</b> La Densidad Espectral</a></li>
-<li class="chapter" data-level="11.3" data-path="analisis-espectral.html"><a href="analisis-espectral.html#periodograma-y-transformada-discreta-de-fourier"><i class="fa fa-check"></i><b>11.3</b> Periodograma y Transformada Discreta de Fourier</a></li>
-<li class="chapter" data-level="11.4" data-path="analisis-espectral.html"><a href="analisis-espectral.html#estimacion-espectral-no-parametrica"><i class="fa fa-check"></i><b>11.4</b> Estimación Espectral No-paramétrica</a></li>
-<li class="chapter" data-level="11.5" data-path="analisis-espectral.html"><a href="analisis-espectral.html#procesos-de-incremento-ortogonal-sobre--pipi"><i class="fa fa-check"></i><b>11.5</b> Procesos de Incremento Ortogonal sobre <span class="math inline">\([-\pi,\pi]\)</span></a></li>
-<li class="chapter" data-level="11.6" data-path="analisis-espectral.html"><a href="analisis-espectral.html#integracion-con-respecto-a-un-proceso-de-incremento-ortogonal"><i class="fa fa-check"></i><b>11.6</b> Integración con Respecto a un Proceso de Incremento Ortogonal</a><ul>
-<li class="chapter" data-level="11.6.1" data-path="analisis-espectral.html"><a href="analisis-espectral.html#propiedades-de-la-integral-estocastica"><i class="fa fa-check"></i><b>11.6.1</b> Propiedades de la Integral Estocástica</a></li>
+<li class="chapter" data-level="11" data-path="análisis-espectral.html"><a href="análisis-espectral.html"><i class="fa fa-check"></i><b>11</b> Análisis Espectral</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="análisis-espectral.html"><a href="análisis-espectral.html#comportamiento-cíclico-y-periodicidad"><i class="fa fa-check"></i><b>11.1</b> Comportamiento Cíclico y Periodicidad</a></li>
+<li class="chapter" data-level="11.2" data-path="análisis-espectral.html"><a href="análisis-espectral.html#la-densidad-espectral"><i class="fa fa-check"></i><b>11.2</b> La Densidad Espectral</a></li>
+<li class="chapter" data-level="11.3" data-path="análisis-espectral.html"><a href="análisis-espectral.html#periodograma-y-transformada-discreta-de-fourier"><i class="fa fa-check"></i><b>11.3</b> Periodograma y Transformada Discreta de Fourier</a></li>
+<li class="chapter" data-level="11.4" data-path="análisis-espectral.html"><a href="análisis-espectral.html#estimación-espectral-no-paramétrica"><i class="fa fa-check"></i><b>11.4</b> Estimación Espectral No-paramétrica</a></li>
+<li class="chapter" data-level="11.5" data-path="análisis-espectral.html"><a href="análisis-espectral.html#procesos-de-incremento-ortogonal-sobre--pipi"><i class="fa fa-check"></i><b>11.5</b> Procesos de Incremento Ortogonal sobre <span class="math inline">\([-\pi,\pi]\)</span></a></li>
+<li class="chapter" data-level="11.6" data-path="análisis-espectral.html"><a href="análisis-espectral.html#integración-con-respecto-a-un-proceso-de-incremento-ortogonal"><i class="fa fa-check"></i><b>11.6</b> Integración con Respecto a un Proceso de Incremento Ortogonal</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="análisis-espectral.html"><a href="análisis-espectral.html#propiedades-de-la-integral-estocástica"><i class="fa fa-check"></i><b>11.6.1</b> Propiedades de la Integral Estocástica</a></li>
 </ul></li>
-<li class="chapter" data-level="11.7" data-path="analisis-espectral.html"><a href="analisis-espectral.html#la-representacion-espectral"><i class="fa fa-check"></i><b>11.7</b> La Representación Espectral</a></li>
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
+<li class="chapter" data-level="11.7" data-path="análisis-espectral.html"><a href="análisis-espectral.html#la-representación-espectral"><i class="fa fa-check"></i><b>11.7</b> La Representación Espectral</a></li>
 </ul></li>
 <li class="appendix"><span><b>Apéndice</b></span></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
@@ -273,41 +309,47 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1 class="title">Series de Tiempo en R</h1>
 <h2 class="subtitle"><em>Ciencia de los Datos Financieros</em></h2>
 <p class="author"><em>Synergy Vision</em></p>
-<<<<<<< HEAD
 <p class="date"><em>2022-11-12</em></p>
-=======
-<p class="date"><em>2020-01-31</em></p>
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 </div>
-<div id="prefacio" class="section level1 unnumbered">
-<h1>Prefacio</h1>
+<div id="prefacio" class="section level1 unnumbered hasAnchor">
+<h1>Prefacio<a href="index.html#prefacio" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><a href="https://synergy.vision/LibrosInteractivos/" target="_blank"><img src="images/cover.png" style="display: block; margin: auto;" /></a></p>
 <p><img src="images/by-nc-sa.png" alt="Creative Commons License" /><br />
 La versión en línea de este libro se comparte bajo la licencia <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
-<div id="por-qué-leer-este-libro" class="section level2 unnumbered">
-<h2>¿Por qué leer este libro?</h2>
+<div id="por-qué-leer-este-libro" class="section level2 unnumbered hasAnchor">
+<h2>¿Por qué leer este libro?<a href="index.html#por-qué-leer-este-libro" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 </div>
-<div id="estructura-del-libro" class="section level2 unnumbered">
-<h2>Estructura del libro</h2>
+<div id="estructura-del-libro" class="section level2 unnumbered hasAnchor">
+<h2>Estructura del libro<a href="index.html#estructura-del-libro" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 </div>
-<div id="información-sobre-los-programas-y-convenciones" class="section level2 unnumbered">
-<h2>Información sobre los programas y convenciones</h2>
+<div id="información-sobre-los-programas-y-convenciones" class="section level2 unnumbered hasAnchor">
+<h2>Información sobre los programas y convenciones<a href="index.html#información-sobre-los-programas-y-convenciones" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Este libro es posible gracias a una gran cantidad de desarrolladores que contribuyen en la construcción de herramientas para generar documentos enriquecidos e interactivos. En particular al autor de los paquetes Yihui Xie xie2015.</p>
 </div>
-<div id="prácticas-interactivas-con-r" class="section level2 unnumbered">
-<h2>Prácticas interactivas con R</h2>
+<div id="prácticas-interactivas-con-r" class="section level2 unnumbered hasAnchor">
+<h2>Prácticas interactivas con R<a href="index.html#prácticas-interactivas-con-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Vamos a utilizar el paquete <a href="https://github.com/datacamp/tutorial">Datacamp Tutorial</a> que utiliza la librería en JavaScript <a href="https://github.com/datacamp/datacamp-light">Datacamp Light</a> para crear ejercicios y prácticas con <code>R</code>. De esta forma el libro es completamente interactivo y con prácticas incluidas. De esta forma estamos creando una experiencia única de aprendizaje en línea.</p>
-<div data-datacamp-exercise="" data-height="300" data-encoded="true">
-eyJsYW5ndWFnZSI6InIiLCJwcmVfZXhlcmNpc2VfY29kZSI6ImIgPC0gNSIsInNhbXBsZSI6IiMgQ3JlYSB1bmEgdmFyaWFibGUgYSwgaWd1YWwgYSA1XG5cblxuIyBNdWVzdHJhIGVsIHZhbG9yIGRlIGEiLCJzb2x1dGlvbiI6IiMgQ3JlYSB1bmEgdmFyaWFibGUgYSwgaWd1YWwgYSA1XG5hIDwtIDVcblxuIyBNdWVzdHJhIGVsIHZhbG9yIGRlIGFcbmEiLCJzY3QiOiJ0ZXN0X29iamVjdChcImFcIilcbnRlc3Rfb3V0cHV0X2NvbnRhaW5zKFwiYVwiLCBpbmNvcnJlY3RfbXNnID0gXCJBc2VnJnVhY3V0ZTtyYXRlIGRlIG1vc3RyYXIgZWwgdmFsb3IgZGUgYGFgLlwiKVxuc3VjY2Vzc19tc2coXCJFeGNlbGVudGUhXCIpIn0=
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">5</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crea una variable a, igual a 5</span></span>
+<span id="cb2-2"><a href="index.html#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="index.html#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="index.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Muestra el valor de a</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="index.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crea una variable a, igual a 5</span></span>
+<span id="cb3-2"><a href="index.html#cb3-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb3-3"><a href="index.html#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="index.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Muestra el valor de a</span></span>
+<span id="cb3-5"><a href="index.html#cb3-5" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="index.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#test_object(&quot;a&quot;)</span></span>
+<span id="cb5-2"><a href="index.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#test_output_contains(&quot;a&quot;, incorrect_msg = &quot;Aseg&amp;uacute;rate de mostrar el valor de `a`.&quot;)</span></span>
+<span id="cb5-3"><a href="index.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#success_msg(&quot;Excelente!&quot;)</span></span></code></pre></div>
 </div>
-</div>
-<div id="agradecimientos" class="section level2 unnumbered">
-<h2>Agradecimientos</h2>
+<div id="agradecimientos" class="section level2 unnumbered hasAnchor">
+<h2>Agradecimientos<a href="index.html#agradecimientos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 
 <p class="flushright">
 Synergy Vision, Caracas, Venezuela
 </p>
-
 
 </div>
 </div>
@@ -327,7 +369,6 @@ ga('send', 'pageview');
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
-<script src="libs/gitbook/js/lunr.js"></script>
 <script src="libs/gitbook/js/clipboard.min.js"></script>
 <script src="libs/gitbook/js/plugin-search.js"></script>
 <script src="libs/gitbook/js/plugin-sharing.js"></script>
@@ -346,6 +387,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -361,14 +403,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
-<<<<<<< HEAD
 "view": {
 "link": null,
 "text": null
 },
-=======
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 "download": ["Serie-de-Tiempo-en-R.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "none"
 }
@@ -381,16 +424,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-<<<<<<< HEAD
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
-=======
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

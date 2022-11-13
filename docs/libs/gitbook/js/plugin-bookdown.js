@@ -28,7 +28,6 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
       }
     });
 
-<<<<<<< HEAD
     // add the View button (file view on Github)
     var view = config.view;
     if (view && view.link) gitbook.toolbar.createButton({
@@ -42,8 +41,6 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     });
 
     // add the Download button
-=======
->>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
     var down = config.download;
     var normalizeDownload = function() {
       if (!down || !(down instanceof Array) || down.length === 0) return;
@@ -150,7 +147,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     if (typeof pos !== 'undefined') summary.scrollTop(pos);
 
     // highlight the TOC item that has same text as the heading in view as scrolling
-    if (toc && toc.scroll_highlight !== false) (function() {
+    if (toc && toc.scroll_highlight !== false && li.length > 0) (function() {
       // scroll the current TOC item into viewport
       var ht = $(window).height(), rect = li[0].getBoundingClientRect();
       if (rect.top >= ht || rect.top <= 0 || rect.bottom <= 0) {
