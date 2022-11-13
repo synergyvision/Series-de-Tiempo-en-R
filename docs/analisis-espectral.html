@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Capítulo 11 Análisis Espectral | Series de Tiempo en R</title>
+  <meta name="description" content="Capítulo 11 Análisis Espectral | Series de Tiempo en R">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Capítulo 11 Análisis Espectral | Series de Tiempo en R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://synergy.vision/Series-de-Tiempo-en-R/" />
+  <meta property="og:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+  
+  <meta name="github-repo" content="synergyvision/Series-de-Tiempo-en-R/" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 11 Análisis Espectral | Series de Tiempo en R" />
+  
+  
+  <meta name="twitter:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+
+<meta name="author" content="Synergy Vision">
+
+
+<meta name="date" content="2020-01-31">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html">
+<link rel="next" href="referencias.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="https://cdn.datacamp.com/datacamp-light-latest.min.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="images/logovision-black.png" width="160"></img></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#por-que-leer-este-libro"><i class="fa fa-check"></i>¿Por qué leer este libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-libro"><i class="fa fa-check"></i>Estructura del libro</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#informacion-sobre-los-programas-y-convenciones"><i class="fa fa-check"></i>Información sobre los programas y convenciones</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#practicas-interactivas-con-r"><i class="fa fa-check"></i>Prácticas interactivas con R</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="acerca-del-autor.html"><a href="acerca-del-autor.html"><i class="fa fa-check"></i>Acerca del Autor</a></li>
+<li class="chapter" data-level="1" data-path="introduccion.html"><a href="introduccion.html"><i class="fa fa-check"></i><b>1</b> Introducción</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduccion.html"><a href="introduccion.html#conceptos-financieros-basicos"><i class="fa fa-check"></i><b>1.1</b> Conceptos financieros básicos</a></li>
+<li class="chapter" data-level="1.2" data-path="introduccion.html"><a href="introduccion.html#conceptos-basicos"><i class="fa fa-check"></i><b>1.2</b> Conceptos básicos</a></li>
+<li class="chapter" data-level="1.3" data-path="introduccion.html"><a href="introduccion.html#ejemplos"><i class="fa fa-check"></i><b>1.3</b> Ejemplos</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduccion.html"><a href="introduccion.html#clasificacion-de-las-series-de-tiempo"><i class="fa fa-check"></i><b>1.3.1</b> Clasificación de las series de tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduccion.html"><a href="introduccion.html#componentes-de-una-serie-de-tiempo"><i class="fa fa-check"></i><b>1.4</b> Componentes de una serie de tiempo</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduccion.html"><a href="introduccion.html#el-modelo-aditivo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.1</b> El Modelo Aditivo de Componentes de Series de Tiempo</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduccion.html"><a href="introduccion.html#el-modelo-multiplicativo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.2</b> El Modelo Multiplicativo de Componentes de Series de Tiempo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>2</b> Características de series de tiempo</a><ul>
+<li class="chapter" data-level="2.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#medidas-de-dependencia-para-series-de-tiempo"><i class="fa fa-check"></i><b>2.1</b> Medidas de dependencia para series de tiempo</a></li>
+<li class="chapter" data-level="2.2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia"><i class="fa fa-check"></i><b>2.2</b> Estimación de la Tendencia</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-en-ausencia-de-estacionalidad"><i class="fa fa-check"></i><b>2.2.1</b> Estimación de la tendencia en ausencia de estacionalidad</a></li>
+<li class="chapter" data-level="2.2.2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-y-la-estacionalidad"><i class="fa fa-check"></i><b>2.2.2</b> Estimación de la tendencia y la estacionalidad</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-por-regresion-clasica"><i class="fa fa-check"></i><b>2.3</b> Estimación de la tendencia por regresión clásica</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#regresion-clasica"><i class="fa fa-check"></i><b>2.3.1</b> Regresión Clásica</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>3</b> Modelos de series de tiempo</a><ul>
+<li class="chapter" data-level="3.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-estocasticos"><i class="fa fa-check"></i><b>3.1</b> Modelos Estocásticos</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#procesos-estocasticos"><i class="fa fa-check"></i><b>3.1.1</b> Procesos Estocásticos</a></li>
+<li class="chapter" data-level="3.1.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#momentos-varianza-covarianza-y-correlacion"><i class="fa fa-check"></i><b>3.1.2</b> Momentos, Varianza, Covarianza y Correlación</a></li>
+<li class="chapter" data-level="3.1.3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#variacion-de-un-proceso"><i class="fa fa-check"></i><b>3.1.3</b> Variación de un proceso</a></li>
+<li class="chapter" data-level="3.1.4" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#martingalas"><i class="fa fa-check"></i><b>3.1.4</b> Martingalas</a></li>
+<li class="chapter" data-level="3.1.5" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#propiedad-de-markov"><i class="fa fa-check"></i><b>3.1.5</b> Propiedad de Markov</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-lineales"><i class="fa fa-check"></i><b>3.2</b> Modelos lineales</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#proceso-de-ruido-blanco"><i class="fa fa-check"></i><b>3.2.1</b> Proceso de Ruido Blanco</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="modelos-ar.html"><a href="modelos-ar.html"><i class="fa fa-check"></i><b>4</b> Modelos AR</a><ul>
+<li class="chapter" data-level="4.1" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar1"><i class="fa fa-check"></i><b>4.1</b> Modelo AR(1)</a></li>
+<li class="chapter" data-level="4.2" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar2"><i class="fa fa-check"></i><b>4.2</b> Modelo AR(2)</a></li>
+<li class="chapter" data-level="4.3" data-path="modelos-ar.html"><a href="modelos-ar.html#procesos-arp"><i class="fa fa-check"></i><b>4.3</b> Procesos AR(p)</a></li>
+<li class="chapter" data-level="4.4" data-path="modelos-ar.html"><a href="modelos-ar.html#funcion-de-autocorrelacion-parcial"><i class="fa fa-check"></i><b>4.4</b> Función de Autocorrelación Parcial</a></li>
+<li class="chapter" data-level="4.5" data-path="modelos-ar.html"><a href="modelos-ar.html#criterios-de-informacion"><i class="fa fa-check"></i><b>4.5</b> Criterios de Información</a></li>
+<li class="chapter" data-level="4.6" data-path="modelos-ar.html"><a href="modelos-ar.html#estimacion-de-parametros."><i class="fa fa-check"></i><b>4.6</b> Estimación de Parámetros.</a></li>
+<li class="chapter" data-level="4.7" data-path="modelos-ar.html"><a href="modelos-ar.html#predicciones-con-modelos-ar"><i class="fa fa-check"></i><b>4.7</b> Predicciones con modelos AR</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-un-paso"><i class="fa fa-check"></i><b>4.7.1</b> Predicción de un paso</a></li>
+<li class="chapter" data-level="4.7.2" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-dos-pasos"><i class="fa fa-check"></i><b>4.7.2</b> Predicción de dos pasos</a></li>
+<li class="chapter" data-level="4.7.3" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-multiples-pasos"><i class="fa fa-check"></i><b>4.7.3</b> Predicción de múltiples pasos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="modelos-ma.html"><a href="modelos-ma.html"><i class="fa fa-check"></i><b>5</b> Modelos MA</a><ul>
+<li class="chapter" data-level="5.1" data-path="modelos-ma.html"><a href="modelos-ma.html#propiedades-de-los-modelos-ma"><i class="fa fa-check"></i><b>5.1</b> Propiedades de los modelos MA</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="modelos-ma.html"><a href="modelos-ma.html#estacionaridad"><i class="fa fa-check"></i><b>5.1.1</b> Estacionaridad</a></li>
+<li class="chapter" data-level="5.1.2" data-path="modelos-ma.html"><a href="modelos-ma.html#funcion-de-autocorrelacion-acf"><i class="fa fa-check"></i><b>5.1.2</b> Función de autocorrelación (ACF)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="modelos-ma.html"><a href="modelos-ma.html#identificacion-del-orden-de-un-ma"><i class="fa fa-check"></i><b>5.2</b> Identificación del orden de un MA</a></li>
+<li class="chapter" data-level="5.3" data-path="modelos-ma.html"><a href="modelos-ma.html#estimacion"><i class="fa fa-check"></i><b>5.3</b> Estimación</a></li>
+<li class="chapter" data-level="5.4" data-path="modelos-ma.html"><a href="modelos-ma.html#predicciones-usando-modelos-ma"><i class="fa fa-check"></i><b>5.4</b> Predicciones usando modelos MA</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="modelos-arma.html"><a href="modelos-arma.html"><i class="fa fa-check"></i><b>6</b> Modelos ARMA</a><ul>
+<li class="chapter" data-level="6.1" data-path="modelos-arma.html"><a href="modelos-arma.html#propiedades-de-los-modelos-armapq"><i class="fa fa-check"></i><b>6.1</b> Propiedades de los modelos ARMA(p,q)</a></li>
+<li class="chapter" data-level="6.2" data-path="modelos-arma.html"><a href="modelos-arma.html#ecuaciones-en-diferencias"><i class="fa fa-check"></i><b>6.2</b> Ecuaciones en Diferencias</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="modelos-arma.html"><a href="modelos-arma.html#funcion-de-autocorrelacion-acf-para-modelos-arma"><i class="fa fa-check"></i><b>6.2.1</b> Función de Autocorrelación (ACF) para modelos ARMA</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="modelos-arma.html"><a href="modelos-arma.html#pronosticos"><i class="fa fa-check"></i><b>6.3</b> Pronósticos</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="modelos-arma.html"><a href="modelos-arma.html#pronosticos-para-procesos-arma"><i class="fa fa-check"></i><b>6.3.1</b> Pronósticos para procesos ARMA</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html"><i class="fa fa-check"></i><b>7</b> Estimación de parámetros</a><ul>
+<li class="chapter" data-level="7.1" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#estimacion-1"><i class="fa fa-check"></i><b>7.1</b> Estimación</a></li>
+<li class="chapter" data-level="7.2" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#sect-EMV"><i class="fa fa-check"></i><b>7.2</b> Estimación por Máxima Verosimilitud y Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="7.3" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#estimacion-de-minimos-cuadrados-para-modelos-armapq"><i class="fa fa-check"></i><b>7.3</b> Estimación de mínimos cuadrados para modelos ARMA(p,q)</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="modelos-arima.html"><a href="modelos-arima.html"><i class="fa fa-check"></i><b>8</b> Modelos ARIMA</a><ul>
+<li class="chapter" data-level="8.1" data-path="modelos-arima.html"><a href="modelos-arima.html#construccion-de-modelos-arima"><i class="fa fa-check"></i><b>8.1</b> Construcción de modelos ARIMA</a></li>
+<li class="chapter" data-level="8.2" data-path="modelos-arima.html"><a href="modelos-arima.html#modelos-sarima"><i class="fa fa-check"></i><b>8.2</b> Modelos SARIMA</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html"><i class="fa fa-check"></i><b>9</b> Modelos ARCH y GARCH</a><ul>
+<li class="chapter" data-level="9.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estructura-de-los-modelos"><i class="fa fa-check"></i><b>9.1</b> Estructura de los Modelos</a></li>
+<li class="chapter" data-level="9.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-arch"><i class="fa fa-check"></i><b>9.2</b> Modelos ARCH</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimacion-de-un-modelo-archp"><i class="fa fa-check"></i><b>9.2.1</b> Estimación de un Modelo ARCH(p)</a></li>
+<li class="chapter" data-level="9.2.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#prediccion-con-modelos-arch"><i class="fa fa-check"></i><b>9.2.2</b> Predicción con modelos ARCH</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-garch"><i class="fa fa-check"></i><b>9.3</b> Modelos GARCH</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimacion-de-un-modelo-garch"><i class="fa fa-check"></i><b>9.3.1</b> Estimación de un Modelo GARCH</a></li>
+<li class="chapter" data-level="9.3.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#prediccion-con-modelos-garch"><i class="fa fa-check"></i><b>9.3.2</b> Predicción con modelos GARCH</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><i class="fa fa-check"></i><b>10</b> Modelos lineales estacionales y modelos no-estacionarios</a><ul>
+<li class="chapter" data-level="10.1" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-estacionales"><i class="fa fa-check"></i><b>10.1</b> Modelos Estacionales</a></li>
+<li class="chapter" data-level="10.2" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-de-memoria-larga"><i class="fa fa-check"></i><b>10.2</b> Modelos de memoria larga</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#diferenciacion-fraccionada"><i class="fa fa-check"></i><b>10.2.1</b> Diferenciación fraccionada</a></li>
+<li class="chapter" data-level="10.2.2" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#ajuste-de-datos-simulados"><i class="fa fa-check"></i><b>10.2.2</b> Ajuste de datos simulados</a></li>
+<li class="chapter" data-level="10.2.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#evaluacion-de-las-pruebas-de-dependencia-a-largo-plazo"><i class="fa fa-check"></i><b>10.2.3</b> Evaluación de las pruebas de dependencia a largo plazo</a></li>
+<li class="chapter" data-level="10.2.4" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#simulacion"><i class="fa fa-check"></i><b>10.2.4</b> Simulación</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-no-estacionarios"><i class="fa fa-check"></i><b>10.3</b> Modelos no estacionarios</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#no-estacionarios-en-varianza"><i class="fa fa-check"></i><b>10.3.1</b> No estacionarios en Varianza</a></li>
+<li class="chapter" data-level="10.3.2" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#no-estacionarios-en-media"><i class="fa fa-check"></i><b>10.3.2</b> No estacionarios en Media</a></li>
+<li class="chapter" data-level="10.3.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#test-de-raiz-unitaria"><i class="fa fa-check"></i><b>10.3.3</b> Test de raíz unitaria</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-de-regresion"><i class="fa fa-check"></i><b>10.4</b> Modelos de regresión</a></li>
+<li class="chapter" data-level="10.5" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#estimacion-consistente-de-la-matriz-de-covarianza"><i class="fa fa-check"></i><b>10.5</b> Estimación consistente de la matriz de covarianza</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="analisis-espectral.html"><a href="analisis-espectral.html"><i class="fa fa-check"></i><b>11</b> Análisis Espectral</a><ul>
+<li class="chapter" data-level="11.1" data-path="analisis-espectral.html"><a href="analisis-espectral.html#comportamiento-ciclico-y-periodicidad"><i class="fa fa-check"></i><b>11.1</b> Comportamiento Cíclico y Periodicidad</a></li>
+<li class="chapter" data-level="11.2" data-path="analisis-espectral.html"><a href="analisis-espectral.html#la-densidad-espectral"><i class="fa fa-check"></i><b>11.2</b> La Densidad Espectral</a></li>
+<li class="chapter" data-level="11.3" data-path="analisis-espectral.html"><a href="analisis-espectral.html#periodograma-y-transformada-discreta-de-fourier"><i class="fa fa-check"></i><b>11.3</b> Periodograma y Transformada Discreta de Fourier</a></li>
+<li class="chapter" data-level="11.4" data-path="analisis-espectral.html"><a href="analisis-espectral.html#estimacion-espectral-no-parametrica"><i class="fa fa-check"></i><b>11.4</b> Estimación Espectral No-paramétrica</a></li>
+<li class="chapter" data-level="11.5" data-path="analisis-espectral.html"><a href="analisis-espectral.html#procesos-de-incremento-ortogonal-sobre--pipi"><i class="fa fa-check"></i><b>11.5</b> Procesos de Incremento Ortogonal sobre <span class="math inline">\([-\pi,\pi]\)</span></a></li>
+<li class="chapter" data-level="11.6" data-path="analisis-espectral.html"><a href="analisis-espectral.html#integracion-con-respecto-a-un-proceso-de-incremento-ortogonal"><i class="fa fa-check"></i><b>11.6</b> Integración con Respecto a un Proceso de Incremento Ortogonal</a><ul>
+<li class="chapter" data-level="11.6.1" data-path="analisis-espectral.html"><a href="analisis-espectral.html#propiedades-de-la-integral-estocastica"><i class="fa fa-check"></i><b>11.6.1</b> Propiedades de la Integral Estocástica</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="analisis-espectral.html"><a href="analisis-espectral.html#la-representacion-espectral"><i class="fa fa-check"></i><b>11.7</b> La Representación Espectral</a></li>
+</ul></li>
+<li class="appendix"><span><b>Apéndice</b></span></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Series de Tiempo en R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="analisis-espectral" class="section level1">
+<h1><span class="header-section-number">Capítulo 11</span> Análisis Espectral</h1>
+<p>La representación espectral de un proceso estacionario <span class="math inline">\(x_t\)</span> esencialmente descompone <span class="math inline">\(x_t\)</span> en suma de componentes senosoidales con coeficientes no correlacionados. En relación con esta descomposición existe una correspondiente descomposición en senosoidales de la función de autocovarianza de <span class="math inline">\(x_t\)</span>. La descomposición espectral es así una analogía para procesos estocásticos estacionarios de la conocida representación de Fourier para funciones determinísticas. El análisis de procesos estacionarios por medio de su representación espectral es usualmente referido como el análisis en el <em>dominio de frecuencias</em> de la serie de tiempo. Este es equivalente al análisis en el <em>dominio de tiempo</em> basado en la función de autocovarianza, pero provee una manera alternativa de ver el proceso para el cual en algunas aplicaciones puede ser más significativo. Por ejemplo en el diseño de una estructura sujeta a una fluctuación de carga aleatoria es importante tener cuidado con la presencia en la fuerza de carga de una gran armónica con frecuencia particular para asegurar que la frecuencia en cuestión no sea una frecuencia resonante de la estructura. El punto de vista espectral es particularmente ventajoso en el análisis de procesos estacionarios multivariantes y en el análisis de conjuntos de datos grandes, para los cuales los cálculos numéricos se pueden realizar rápidamente usando la <em>Transformada Rápida de Fourier (FFT)</em>.</p>
+<div id="comportamiento-ciclico-y-periodicidad" class="section level2">
+<h2><span class="header-section-number">11.1</span> Comportamiento Cíclico y Periodicidad</h2>
+<p>Ya hemos visto la noción de periodicidad en varios ejemplos de los capítulos anteriores. La noción general de periodicidad se puede hacer con más precisión introduciendo algunas terminologías. De interés descriptivo es el período de una serie temporal, definido como el número de puntos en un ciclo, es decir,</p>
+<span class="math display" id="eq:eq-periodo-serie-tiempo">\[\begin{equation}
+    T=\frac{1}{\omega}.
+\tag{11.1}
+\end{equation}\]</span>
+<p>De manera de definir la tasa de cambio a la cual una serie oscila, primero definiremos un ciclo como un periodo completo de una función seno o de coseno sobre un intervalo de tiempo de longitud <span class="math inline">\(2\pi\)</span>. Consideremos el siguiente proceso periódico</p>
+<span class="math display" id="eq:eq-proceso-periodico">\[\begin{equation}
+x_t=A\cos(2\pi\omega t+\phi)
+\tag{11.2}
+\end{equation}\]</span>
+<p>para <span class="math inline">\(t=0,\pm1,\pm2,\ldots\)</span>, donde <span class="math inline">\(\omega\)</span> es un índice de frecuencias, definida en ciclos por unidad de tiempo con <span class="math inline">\(A\)</span> la altura o <strong>amplitud</strong> de la función y <span class="math inline">\(\phi\)</span> la <strong>fase</strong> la cual determina el punto de inicio de la función coseno. Podemos introducir una variación aleatoria en esta serie de tiempo haciendo que la <em>amplitud</em> o la <em>fase</em> varíen aleatoriamente. De esta manera es fácil usar identidad trigonométrica<a href="#fn13" class="footnoteRef" id="fnref13"><sup>13</sup></a> y escribir <a href="analisis-espectral.html#eq:eq-proceso-periodico">(11.2)</a> como</p>
+<span class="math display" id="eq:eq-proceso-periodico-2">\[\begin{equation}
+    x_t=U_1\cos(2\pi\omega t)+U_2\sin(2\pi\omega t)
+\tag{11.3}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(U_1=A\cos\phi\)</span> y <span class="math inline">\(U_2=-A\sin\phi\)</span> son en general tomados de manera que sean variables aleatorias normalmente distribuidas. En este caso la amplitud es <span class="math inline">\(A=\sqrt{U_1^2+U_2^2}\)</span> y la fase es <span class="math inline">\(\phi=\arctan(-U_2/U_1)\)</span>. De este hecho se puede demostrar que si y solo si, en <a href="analisis-espectral.html#eq:eq-proceso-periodico">(11.2)</a>, <span class="math inline">\(A\)</span> y <span class="math inline">\(\phi\)</span> son variables aleatorias independientes, donde <span class="math inline">\(A^2\)</span> es una chi-cuadrado con 2 grados de libertad, y <span class="math inline">\(\phi\)</span> es uniforme en <span class="math inline">\((-\pi,\pi)\)</span>, entonces <span class="math inline">\(U_1\)</span> y <span class="math inline">\(U_2\)</span> son variables aleatorias normal estándar independientes.</p>
+<p>Considere una generalización de <a href="analisis-espectral.html#eq:eq-proceso-periodico-2">(11.3)</a> que nos permita mezclas de series periódicas con multiples frecuencias y amplitudes</p>
+<span class="math display" id="eq:eq-proceso-periodico-general">\[\begin{equation}
+    x_t=\sum_{k=1}^{q}\left[U_{k1}\cos(2\pi\omega_kt)+U_{k2}\sin(2\pi\omega_kt)\right]
+\tag{11.4}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(U_{k1},U_{k2}\)</span> para <span class="math inline">\(k=1,2,\ldots,q\)</span>, son variables aleatorias independientes con media cero y varianza <span class="math inline">\(\sigma_k^2\)</span> y las <span class="math inline">\(\omega_k\)</span> son distintas frecuencias. Note que <a href="analisis-espectral.html#eq:eq-proceso-periodico-general">(11.4)</a> muestra el proceso como una suma de componentes independientes, con varianza <span class="math inline">\(\sigma_k^2\)</span> para frecuencia <span class="math inline">\(\omega_k\)</span>. Usando la independencia de <span class="math inline">\(Us\)</span> e identidad trigonométrica, es fácil demostrar que la función de autocovarianza del proceso es</p>
+<span class="math display" id="eq:eq-funcion-covarianza-proceso-periodico">\[\begin{equation}
+ \gamma(h)=\sum_{k=1}^{q}\sigma_k^2\cos(2\pi\omega_kh)
+\tag{11.5}
+\end{equation}\]</span>
+<p>Note que la función de autocovarianza es la suma de componentes periódicas con pesos proporcionales a la varianza <span class="math inline">\(\sigma_k^2\)</span>. Por consiguiente, <span class="math inline">\(x_t\)</span> es un proceso estacionario de media cero con varianza</p>
+<span class="math display" id="eq:eq-varianza-proceso-periodico">\[\begin{equation}
+    \gamma(0)=\mathbb{E}(x_t^2)=\sum_{k=1}^{q}\sigma_k^2
+\tag{11.6}
+\end{equation}\]</span>
+<p>que muestra la variación total como la suma de las varianzas de cada una de las componentes.</p>
+
+<div class="example">
+<p><span id="exm:ejem-serie-periodica" class="example"><strong>Ejemplo 11.1  (Una serie periódica)  </strong></span> La Figura <a href="analisis-espectral.html#fig:fig-componentes-periodicas">11.1</a> muestra un ejemplo de mezcla <a href="analisis-espectral.html#eq:eq-proceso-periodico-general">(11.4)</a> con <span class="math inline">\(q=3\)</span> construido de la siguiente manera. Primero para <span class="math inline">\(t=1,\ldots,100\)</span> generamos tres series</p>
+<span class="math display">\[\begin{eqnarray*}
+  x_{t1} &amp;=&amp; 2\cos(2\pi t6/100)+3\sin(2\pi t6/100) \\
+  x_{t2} &amp;=&amp; 4\cos(2\pi t10/100)+5\sin(2\pi t10/100) \\
+  x_{t3} &amp;=&amp; 6\cos(2\pi t40/100)+7\sin(2\pi t40/100)
+\end{eqnarray*}\]</span>
+Estas tres series se muestran en la Figura <a href="analisis-espectral.html#fig:fig-componentes-periodicas">11.1</a> junto con las correspondientes frecuencias y amplitudes cuadrada. Por ejemplo, la amplitud cuadrada de <span class="math inline">\(x_{t1}\)</span> es <span class="math inline">\(2^3+3^2=13\)</span>. Por consiguiente, los valores máximos y mínimos de la serie <span class="math inline">\(x_{t1}\)</span> están restringidos a <span class="math inline">\(\pm\sqrt{13}=\pm3.61\)</span>. Finalmente construimos la serie <span class="math display">\[x_t=x_{t1}+x_{t2}+x_{t3}\]</span> esta serie también se muestra en la Figura <a href="analisis-espectral.html#fig:fig-componentes-periodicas">11.1</a>. Note que la serie <span class="math inline">\(x_t\)</span> parece tener el comportamiento de alguna de las series periódicas vistas en los Capítulos <a href="caracteristicas-de-series-de-tiempo.html#caracteristicas-de-series-de-tiempo">Características de series de tiempo</a> y <a href="modelos-de-series-de-tiempo.html#modelos-de-series-de-tiempo">Modelos de series de tiempo</a>. La clasificación sistemática de los componentes esenciales de frecuencia en una serie de tiempo, incluyendo sus contribuciones relativas, constituye uno de los principales objetivos del análisis espectral.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x1=<span class="dv">2</span><span class="op">*</span><span class="kw">cos</span>(<span class="dv">2</span><span class="op">*</span>pi<span class="op">*</span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span><span class="op">*</span><span class="dv">6</span><span class="op">/</span><span class="dv">100</span>)<span class="op">+</span><span class="dv">3</span><span class="op">*</span><span class="kw">sin</span>(<span class="dv">2</span><span class="op">*</span>pi<span class="op">*</span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span><span class="op">*</span><span class="dv">6</span><span class="op">/</span><span class="dv">100</span>) 
+x2=<span class="dv">4</span><span class="op">*</span><span class="kw">cos</span>(<span class="dv">2</span><span class="op">*</span>pi<span class="op">*</span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span><span class="op">*</span><span class="dv">10</span><span class="op">/</span><span class="dv">100</span>)<span class="op">+</span><span class="dv">5</span><span class="op">*</span><span class="kw">sin</span>(<span class="dv">2</span><span class="op">*</span>pi<span class="op">*</span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span><span class="op">*</span><span class="dv">10</span><span class="op">/</span><span class="dv">100</span>)
+x3=<span class="dv">6</span><span class="op">*</span><span class="kw">cos</span>(<span class="dv">2</span><span class="op">*</span>pi<span class="op">*</span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span><span class="op">*</span><span class="dv">40</span><span class="op">/</span><span class="dv">100</span>)<span class="op">+</span><span class="dv">7</span><span class="op">*</span><span class="kw">sin</span>(<span class="dv">2</span><span class="op">*</span>pi<span class="op">*</span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span><span class="op">*</span><span class="dv">40</span><span class="op">/</span><span class="dv">100</span>)
+xt=x1<span class="op">+</span>x2<span class="op">+</span>x3   
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))   
+<span class="kw">plot.ts</span>(x1, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">10</span>,<span class="dv">10</span>),
+        <span class="dt">main=</span><span class="kw">expression</span>(omega<span class="op">==</span><span class="dv">6</span><span class="op">/</span><span class="dv">100</span><span class="op">~</span><span class="er">~~</span>A<span class="op">^</span><span class="dv">2</span><span class="op">==</span><span class="dv">13</span>))
+<span class="kw">plot.ts</span>(x2, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">10</span>,<span class="dv">10</span>),
+        <span class="dt">main=</span><span class="kw">expression</span>(omega<span class="op">==</span><span class="dv">10</span><span class="op">/</span><span class="dv">100</span><span class="op">~</span><span class="er">~~</span>A<span class="op">^</span><span class="dv">2</span><span class="op">==</span><span class="dv">41</span>))
+<span class="kw">plot.ts</span>(x3, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">10</span>,<span class="dv">10</span>),
+        <span class="dt">main=</span><span class="kw">expression</span>(omega<span class="op">==</span><span class="dv">40</span><span class="op">/</span><span class="dv">100</span><span class="op">~</span><span class="er">~~</span>A<span class="op">^</span><span class="dv">2</span><span class="op">==</span><span class="dv">85</span>))
+<span class="kw">plot.ts</span>(xt, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">10</span>,<span class="dv">10</span>), <span class="dt">main=</span><span class="st">&quot;suma&quot;</span>)</code></pre></div>
+<div class="figure"><span id="fig:fig-componentes-periodicas"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-componentes-periodicas-1.svg" alt="Componentes periódicas y su suma como se describe en el Ejemplo"  />
+<p class="caption">
+Figura 11.1: Componentes periódicas y su suma como se describe en el Ejemplo
+</p>
+</div>
+<hr />
+
+<div class="example">
+<p><span id="exm:ejem-periodograma-escalado" class="example"><strong>Ejemplo 11.2  (Periodograma escalado para el ejemplo anterior)  </strong></span> En el Ejemplo <a href="caracteristicas-de-series-de-tiempo.html#exm:ejem-regresion-senal-ruido">2.7</a> introdujimos el periodograma como una manera de descubrir las componentes periódicas de una serie de tiempo. Recuerde que el periodograma escalado está dado por</p>
+<span class="math display" id="eq:eq-periodograma-escalado">\[\begin{equation}
+    P(j/n)=\left(\frac{2}{n}\sum_{t=1}^{n}x_t\cos(2\pi tj/n)\right)^2+\left(\frac{2}{n}\sum_{t=1}^{n}x_t\sin(2\pi tj/n)\right)^2
+\tag{11.7}
+\end{equation}\]</span>
+<p>y se podia considerar como una medida de la correlación cuadrada de los datos con las oscilaciones senosoidales a frecuencia <span class="math inline">\(\omega_j=j/n\)</span> o <span class="math inline">\(j\)</span> ciclos en <span class="math inline">\(n\)</span> puntos de tiempo.</p>
+<p>El periodograma escalado de los datos <span class="math inline">\(x_t\)</span> simulados en el Ejemplo <a href="analisis-espectral.html#exm:ejem-serie-periodica">11.1</a> se muestran en la Figura <a href="analisis-espectral.html#fig:fig-periodograma-escalado">11.2</a> y claramente se identifican las tres componentes <span class="math inline">\(x_{t1},x_{t2}\)</span> y <span class="math inline">\(x_{t3}\)</span> de <span class="math inline">\(x_t\)</span>. Más aún, los pesos del periodograma escalado mostrados en la Figura <a href="analisis-espectral.html#fig:fig-periodograma-escalado">11.2</a> son</p>
+<p><span class="math display">\[P(6/100)=13\text{, }P(10/100)=41\text{, }P(40/100)=85\text{ y } P(j/n)=0 \text{ en otro caso.}\]</span></p>
+<p>Estos son exactamente las amplitudes al cuadrado de las componentes generadas en el Ejemplo <a href="analisis-espectral.html#exm:ejem-serie-periodica">11.1</a>. Este resultado sugiere que el periodograma puede proporcionar una idea de la varianza de los componentes, <a href="analisis-espectral.html#eq:eq-varianza-proceso-periodico">(11.6)</a>, de un conjunto real de los datos.</p>
+Las instrucciones en R para calcular el Periodograma y graficarlo son:
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">P=<span class="kw">abs</span>(<span class="dv">2</span><span class="op">*</span><span class="kw">fft</span>(xt)<span class="op">/</span><span class="dv">100</span>)<span class="op">^</span><span class="dv">2</span>
+f=<span class="dv">0</span><span class="op">:</span><span class="dv">50</span><span class="op">/</span><span class="dv">100</span>
+<span class="kw">plot</span>(f,P[<span class="dv">1</span><span class="op">:</span><span class="dv">51</span>], <span class="dt">type=</span><span class="st">&quot;o&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Frecuencia&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;periodograma&quot;</span>) </code></pre></div>
+<div class="figure"><span id="fig:fig-periodograma-escalado"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-periodograma-escalado-1.svg" alt="Periodograma de los datos generados en el Ejemplo ..."  />
+<p class="caption">
+Figura 11.2: Periodograma de los datos generados en el Ejemplo …
+</p>
+</div>
+<hr />
+<p>Si consideramos los datos <span class="math inline">\(x_t\)</span> en el Ejemplo <a href="analisis-espectral.html#exm:ejem-serie-periodica">11.1</a> como un color (forma de onda) hecho con colores primarios <span class="math inline">\(x_{t1},x_{t2},x_{t3}\)</span> en varias intensidades (amplitudes), entonces podemos considerar el periodograma como un prisma que descompone el color <span class="math inline">\(x_t\)</span> en sus colores primarios (espectro). Por consiguiente el término <strong>análisis espectral</strong>.</p>
+<p>Otro hecho que podemos usar para entender el concepto de periodograma es que para cada muestra <span class="math inline">\(x_1,\ldots,x_n\)</span> de una serie temporal donde <span class="math inline">\(n\)</span> es impar, podemos escribir, exactamente</p>
+<span class="math display" id="eq:eq-serie-periodograma-impar">\[\begin{equation}
+x_t=a_0 + \sum_{j=1}^{(n-1)/2}\left[a_j\cos(2\pi tj/n) + b_j\sin(2\pi tj/n)\right],
+\tag{11.8}
+\end{equation}\]</span>
+<p>para <span class="math inline">\(t=1,\ldots,n\)</span> y coeficientes convenientemente elegidos. Si <span class="math inline">\(n\)</span> es par, la representación () se puede modificar sumando hasta <span class="math inline">\((n/2-1)\)</span> y añadiendo una componente adicional dada por <span class="math inline">\(a_{n/2}\cos(2\pi t1/2)=a_{n/2}(-1)^t\)</span>. El punto crucial aquí es que <a href="analisis-espectral.html#eq:eq-serie-periodograma-impar">(11.8)</a> es exacto para cada muestra. Dado que <a href="analisis-espectral.html#eq:eq-proceso-periodico-general">(11.4)</a> se puede pensar como una aproximación de <a href="analisis-espectral.html#eq:eq-serie-periodograma-impar">(11.8)</a>, la idea es que muchos de los coeficientes en <a href="analisis-espectral.html#eq:eq-serie-periodograma-impar">(11.8)</a> pueden estar cerca de cero. Recuerde del Ejemplo 3.4.5 que</p>
+<span class="math display" id="eq:eq-periodograma-simple">\[\begin{equation}
+P(j/n) = a_j^2+b_j^2
+\tag{11.9}
+\end{equation}\]</span>
+<p>de modo que el periodograma escalado indica cuales componentes periódicas en <a href="analisis-espectral.html#eq:eq-serie-periodograma-impar">(11.8)</a> son grandes y cuales componentes son pequeñas.</p>
+</div>
+<div id="la-densidad-espectral" class="section level2">
+<h2><span class="header-section-number">11.2</span> La Densidad Espectral</h2>
+<p>La idea de que una serie de tiempo está formada por componentes periódicos, apareciendo en proporción a sus varianzas subyacentes es fundamental en la representación espectral dada por los siguientes Teoremas:</p>
+
+<div class="theorem">
+<p><span id="thm:teo-funcion-hermitiana-no-negativa" class="theorem"><strong>Teorema 11.1  </strong></span>Una función <span class="math inline">\(\gamma(h)\)</span> para <span class="math inline">\(h=0,\pm1,\pm2,\dots\)</span> es Hermitiana no-negativa definida si y solo si se puede expresar como</p>
+<span class="math display" id="eq:eq-funcion-hermitiana">\[\begin{equation}
+    \gamma(h)=\int_{-1/2}^{1/2}\exp(2\pi i\omega h)dF(\omega)
+\tag{11.10}
+\end{equation}\]</span>
+donde <span class="math inline">\(F(\cdot)\)</span> es monótona no-decreciente. La función <span class="math inline">\(F(\cdot)\)</span> es continua a la derecha, acotada en <span class="math inline">\([-1/2,1/2]\)</span> y únicamente determinada por las condiciones <span class="math inline">\(F(-1/2)=0,F(1/2)=\gamma(0)\)</span>.
+</div>
+
+
+<div class="proof">
+<p> <span class="proof"><em>Demostración. </em></span> Para demostrar el resultado, note primero que si <span class="math inline">\(\gamma(h)\)</span> tiene la representación de arriba</p>
+<span class="math display">\[\begin{eqnarray*}
+  \sum_{s=1}^{n}\sum_{t=1}^{n}\bar{a}_s\gamma(s-t)a_t &amp;=&amp; \int_{-1/2}^{1/2}\bar{a}_s\gamma(s-t)a_te^{2\pi i\omega(s-t)}dF(\omega) \\
+        &amp;=&amp; \int_{-1/2}^{1/2}\left|\sum_{s=1}^{n}a_se^{-2\pi i\omega s}\right|^2dF(\omega) \\
+        &amp;=&amp; \geq 0
+\end{eqnarray*}\]</span>
+<p>y <span class="math inline">\(\gamma(h)\)</span> es no-negativa definida. Recíprocamente, suponga que <span class="math inline">\(\gamma(h)\)</span> es una función no-negativa definida, y definamos la función no-negativa</p>
+<span class="math display" id="eq:eq-funcion-no-negativa">\[\begin{eqnarray}
+  f_n(\omega) &amp;=&amp; \frac{1}{n}\sum_{s=1}^{n}\sum_{t=1}^{n}e^{-2\pi i\omega s}\gamma(s-t)e^{2\pi i\omega t} \nonumber\\
+         &amp;=&amp; \frac{1}{n}\sum_{u=-(n-1)}^{(n-1)}(n-|u|)e^{-2\pi i\omega u}\gamma(u) \tag{11.11} \\
+         &amp;=&amp; \geq 0. \nonumber
+\end{eqnarray}\]</span>
+<p>Ahora, sea <span class="math inline">\(F_n(\omega)\)</span> la función de distribución correspondiente a <span class="math inline">\(f_n(\omega)I_{(-1/2,1/2]}\)</span> donde <span class="math inline">\(I_{(\cdot)}\)</span> denota la función indicatriz del intervalo en el subíndice. Note que <span class="math inline">\(F_n(\omega)=0, \omega\leq-1/2\)</span> y <span class="math inline">\(F_n(\omega)=F_n(1/2)\)</span> para <span class="math inline">\(\omega\geq1/2\)</span>. Entonces</p>
+<span class="math display">\[\begin{eqnarray*}
+  \int_{-1/2}^{1/2}e^{2\pi i\omega u}dF_n(\omega) &amp;=&amp; \int_{-1/2}^{1/2}e^{2\pi i\omega u}f_n(\omega)d\omega \\
+         &amp;=&amp; \begin{cases}
+         (1-|u|/n)\gamma(u)&amp;\text{, }|u|&lt;n\\
+         0&amp;\text{, en otro caso}
+         \end{cases}
+\end{eqnarray*}\]</span>
+<p>También tenemos</p>
+<span class="math display">\[\begin{eqnarray*}
+  F_n(1/2) &amp;=&amp; \int_{-1/2}^{1/2}f_n(\omega)d\omega \\
+         &amp;=&amp; \int_{-1/2}^{1/2}\sum_{|u|&lt;n}(1-|u|/n)\gamma(u)e^{-2\pi i\omega u}d\omega \\
+         &amp;=&amp; \gamma(0).
+\end{eqnarray*}\]</span>
+<p>Ahora, por el primer teorema de convergencia de Helly,<a href="#fn14" class="footnoteRef" id="fnref14"><sup>14</sup></a> existe una subsucesión <span class="math inline">\(F_{n_k}\)</span> convergente a <span class="math inline">\(F\)</span> y por el lema de Helly-Bray, esto implica que</p>
+<p><span class="math display">\[\int_{-1/2}^{1/2}e^{2\pi i\omega u}dF_{n_k}(\omega)\to\int_{-1/2}^{1/2}e^{2\pi i\omega u}dF(\omega)\]</span></p>
+<p>y del lado derecho de la ecuación anterior</p>
+<p><span class="math display">\[(1-|u|/n_k)\gamma(u)\to\gamma(u)\]</span></p>
+cuando <span class="math inline">\(n_k\to\infty\)</span>, y se obtiene el resultado requerido.
+</div>
+
+<hr />
+<p>Ahora presentamos una versión del Teorema de Representación Espectral en términos de un proceso estacionario de media cero <span class="math inline">\(x_t\)</span>. Esta versión nos permite pensar en un proceso estacionario como un proceso generado (aproximadamente) por sumas aleatorias de senos y cosenos tal como se describe en <a href="analisis-espectral.html#eq:eq-proceso-periodico-general">(11.4)</a>.</p>
+
+<div class="theorem">
+<span id="thm:teo-representacion-espectral-proceso-estacionario" class="theorem"><strong>Teorema 11.2  </strong></span>Si <span class="math inline">\(x_t\)</span> es un proceso estacionario de media cero, con distribución espectral <span class="math inline">\(F(\omega)\)</span> como la dada en el Teorema <a href="analisis-espectral.html#thm:teo-funcion-hermitiana-no-negativa">11.1</a>, entonces existe un proceso estocástico a valores complejos <span class="math inline">\(z(\omega)\)</span> en el intervalo <span class="math inline">\(\omega\in[-1/2,1/2]\)</span> con incrementos estacionarios no-correlacionados, tal que <span class="math inline">\(x_t\)</span> se puede escribir como la integral estocástica <span class="math display">\[x_t=\int_{-1/2}^{1/2}\exp(-2\pi it\omega)dz(\omega)\]</span> donde, para <span class="math inline">\(-1/2\leq\omega_1\leq\omega_2\leq1/2\)</span> <span class="math display">\[\text{var}\{z(\omega_2)-z(\omega_1)\}=F(\omega_2)-F(\omega_1).\]</span>
+</div>
+
+<hr />
+<p>Este resultado es muy técnico porque envuelve integración estocástica; es decir, integración respecto a un proceso estocástico. En términos no técnico, el Teorema <a href="analisis-espectral.html#thm:teo-representacion-espectral-proceso-estacionario">11.2</a> dice que <a href="analisis-espectral.html#eq:eq-proceso-periodico-general">(11.4)</a> es aproximadamente verdadero para cada serie de tiempo estacionaria. En otras palabras, <em>cada serie de tiempo estacionaria se puede pensar, aproximadamente, como una superposición aleatoria de senos y cosenos oscilando a distintas frecuencias.</em></p>
+<p>Dado que <a href="analisis-espectral.html#eq:eq-proceso-periodico-general">(11.4)</a> es aproximadamente cierta para toda serie de tiempo estacionaria, la siguiente pregunta es si una representación significativa para la función de autocovarianza, como la dada por <a href="analisis-espectral.html#eq:eq-funcion-covarianza-proceso-periodico">(11.5)</a>, también existirá. La respuesta es sí, y su representación es dada por el Teorema <a href="analisis-espectral.html#thm:teo-funcion-hermitiana-no-negativa">11.1</a>. El siguiente ejemplo, nos ayudará a explicar estos resultados.</p>
+
+<div class="example">
+<p><span id="exm:ejem-proceso-estacionario-periodico" class="example"><strong>Ejemplo 11.3  (Un proceso estacionario periódico)  </strong></span>Considere un proceso aleatorio estacionario periódico dado por <a href="analisis-espectral.html#eq:eq-proceso-periodico-2">(11.3)</a>, con frecuencia fija <span class="math inline">\(\omega_0\)</span></p>
+<p><span class="math display">\[x_t=U_1\cos(2\pi\omega_0t)+U_2\sin(2\pi\omega_0t)\]</span></p>
+<p>donde <span class="math inline">\(U_1\)</span> y <span class="math inline">\(U_2\)</span> son variables aleatorias independientes de media cero y varianza igual <span class="math inline">\(\sigma^2\)</span>. El número de periodos de tiempo necesario para que la serie de arriba complete un ciclo es exactamente <span class="math inline">\(1/\omega_0\)</span>, y el proceso hace exactamente <span class="math inline">\(\omega_0\)</span> ciclos por puntos para <span class="math inline">\(t=0,\pm1,\pm2,\ldots\)</span>. Es fácil demostrar que<a href="#fn15" class="footnoteRef" id="fnref15"><sup>15</sup></a></p>
+<span class="math display">\[\begin{eqnarray*}
+  \gamma(h) &amp;=&amp; \sigma^2\cos(2\pi\omega_0h)=\frac{\sigma^2}{2}e^{-2\pi i\omega_0h}+\frac{\sigma^2}{2}e^{2\pi i\omega_0h} \\
+         &amp;=&amp; \int_{-1/2}^{1/2}e^{2\pi i\omega h}dF(\omega)
+\end{eqnarray*}\]</span>
+<p>usando la integración de Riemann-Stieltjes, donde <span class="math inline">\(F(\omega)\)</span> es la función definida por</p>
+<p><span class="math display">\[F(\omega)=\begin{cases}
+0,&amp;\omega&lt;-\omega_0\\
+\sigma^2/2,&amp;-\omega_0\leq\omega&lt;\omega_0\\
+\sigma^2,&amp;\omega\geq\omega_0
+\end{cases}.\]</span></p>
+La función <span class="math inline">\(F(\omega)\)</span> se comporta como una función de distribución acumulada para una variable aleatoria discreta, excepto que <span class="math inline">\(F(\infty)=\sigma^2=\gamma_x(0)\)</span> en vez de uno. De hecho, <span class="math inline">\(F(\omega)\)</span> es una función de distribución acumulada, no una probabilidad, sino más bien de varianza asociada con la frecuencia <span class="math inline">\(\omega_0\)</span> en un análisis de varianza, siendo <span class="math inline">\(F(\infty)\)</span> la varianza total del proceso <span class="math inline">\(x_t\)</span>. Por lo tanto, llamamos a <span class="math inline">\(F(\omega)\)</span> la <em>función de distribución espectral</em>.
+</div>
+
+<hr />
+<p>El Teorema <a href="analisis-espectral.html#thm:teo-funcion-hermitiana-no-negativa">11.1</a> establece que una representación como la dada en el Ejemplo <a href="analisis-espectral.html#exm:ejem-proceso-estacionario-periodico">11.3</a> siempre existirá para un proceso estacionario. En particular, si <span class="math inline">\(x_t\)</span> es estacionario con autocovarianza <span class="math inline">\(\gamma(h)=\mathbb{E}[(x_{t+h}-\mu)(x_t-\mu)]\)</span>, entonces existe una única función monótona creciente <span class="math inline">\(F(\omega)\)</span>, llamada la <strong>función de distribución espectral</strong>, que es acotada, con <span class="math inline">\(F(-\infty)=F(-1/2)=0\)</span> y <span class="math inline">\(F(\infty)=F(1/2)=\gamma(0)\)</span> tal que</p>
+<span class="math display" id="eq:eq-funcion-distribucion-espectral">\[\begin{equation}
+  \gamma(h)=\int_{-1/2}^{1/2}e^{2\pi i\omega h}dF(\omega).
+\tag{11.12}
+\end{equation}\]</span>
+<p>Una situación más importante que usaremos repetidamente es cubierta por el Teorema <a href="analisis-espectral.html#thm:teo-densidad-espectral">11.3</a>, donde se muestra que, sujeto a la sumabilidad absoluta de la autocovarianza, la función de distribución espectral es absolutamente continua con <span class="math inline">\(dF(\omega)=f(\omega)d\omega\)</span> y la representación <a href="analisis-espectral.html#eq:eq-funcion-distribucion-espectral">(11.12)</a> motiva la propiedad que sigue.</p>
+
+<div class="theorem">
+<p><span id="thm:teo-densidad-espectral" class="theorem"><strong>Teorema 11.3  </strong></span>Si <span class="math inline">\(\gamma(h)\)</span> es la función de autocovarianza de un proceso estacionario <span class="math inline">\(x_t\)</span> con</p>
+<span class="math display" id="eq:eq-covarianza-convergente">\[\begin{equation}
+  \sum_{h=-\infty}^{\infty}|\gamma(h)|&lt;\infty
+\tag{11.13}
+\end{equation}\]</span>
+<p>entonces la densidad espectral de <span class="math inline">\(x_t\)</span> está dada por</p>
+<span class="math display" id="eq:eq-densidad-espectral">\[\begin{equation}
+  f(\omega)=\sum_{h=-\infty}^{\infty}\gamma(h)e^{-2\pi i\omega h}.
+\tag{11.14}
+\end{equation}\]</span>
+</div>
+
+
+<div class="proposition">
+<p><span id="prp:propie-densidad-espectral" class="proposition"><strong>Proposición 11.1  (La Densidad Espectral)  </strong></span>Si la función de autocovarianza <span class="math inline">\(\gamma(h)\)</span> de un proceso estacionario satisface</p>
+<span class="math display" id="eq:eq-covarianza-finita">\[\begin{equation}
+  \sum_{h=-\infty}^{\infty}|\gamma(h)|&lt;\infty
+\tag{11.15}
+\end{equation}\]</span>
+<p>entonces esta tiene representación espectral</p>
+<span class="math display" id="eq:eq-representacion-covarianza">\[\begin{equation}
+  \gamma(h)=\int_{-1/2}^{1/2}e^{2\pi i\omega h}f(\omega)d\omega\text{ para }h=0,\pm1,\pm2,\ldots
+\tag{11.16}
+\end{equation}\]</span>
+<p>como la transformación inversa de la densidad espectral, la cual tiene la representación</p>
+<span class="math display" id="eq:eq-densidad-espectral-covarianza">\[\begin{equation}
+  f(\omega)=\sum_{h=-\infty}^{\infty}\gamma(h)e^{-2\pi i\omega h}\text{ con }-1/2\leq\omega\leq1/2.
+\tag{11.17}
+\end{equation}\]</span>
+</div>
+
+<p>La densidad espectral definida en la Proposición <a href="analisis-espectral.html#prp:propie-densidad-espectral">11.1</a> es análoga a la función de densidad de probabilidad; el hecho de que <span class="math inline">\(\gamma(h)\)</span> es no negativa definida asegura que</p>
+<p><span class="math display">\[f(\omega)\geq0\]</span></p>
+<p>para todo <span class="math inline">\(\omega\)</span>. Se sigue inmediatamente de <a href="analisis-espectral.html#eq:eq-representacion-covarianza">(11.16)</a> y <a href="analisis-espectral.html#eq:eq-densidad-espectral-covarianza">(11.17)</a> que</p>
+<p><span class="math display">\[f(\omega)=f(-\omega)\]</span></p>
+<p>y</p>
+<p><span class="math display">\[f(\omega+1)=f(\omega)\]</span></p>
+<p>verificando que la densidad espectral es una función par de periodo uno. Debido a que <span class="math inline">\(f(\omega)\)</span> es una función par, normalmente se graficará solo <span class="math inline">\(f(\omega)\)</span> para <span class="math inline">\(\omega\geq0\)</span>.</p>
+<p>Adicionalmente, haciendo <span class="math inline">\(h=0\)</span> en <a href="analisis-espectral.html#eq:eq-representacion-covarianza">(11.16)</a> se obtiene</p>
+<p><span class="math display">\[\gamma(0)=\text{var}(x_t)=\int_{-1/2}^{1/2}f(\omega)d\omega\]</span></p>
+<p>lo cual expresa la varianza total como la integral de la densidad espectral sobre todas las frecuencias. Demostraremos luego, que un filtro lineal puede aislar la varianza en ciertos intervalos de frecuencias o bandas.</p>
+<p>Análogo a la teoría de probabilidades, <span class="math inline">\(\gamma(h)\)</span> en <a href="analisis-espectral.html#eq:eq-representacion-covarianza">(11.16)</a> es la función característica de la densidad espectral <span class="math inline">\(f(\omega)\)</span> en <a href="analisis-espectral.html#eq:eq-densidad-espectral-covarianza">(11.17)</a>. Estos hechos deben dejar claro que, cuando la condición de la Proposición <a href="analisis-espectral.html#prp:propie-densidad-espectral">11.1</a> es satisfecha, la función de autocovarianza <span class="math inline">\(\gamma(h)\)</span> y la función de densidad espectral <span class="math inline">\(f(\omega)\)</span> contienen la misma información. Esta información, sin embargo, es expresada de distintas maneras. La función de autocovarianza expresa la información en términos de pasos o saltos, mientras que la densidad espectral expresa la misma información en término de ciclos. Algunos de los problemas son más fáciles de trabajar cuando consideramos la información de pasos o saltos y tendemos a manejar los problemas en el dominio del tiempo. Sin embargo, otros problemas son más fáciles de trabajar teniendo en cuenta la información periódica y tendemos a manejar los problemas en el dominio espectral o de frecuencias.</p>
+<p>También debemos mencionar, que hasta ahora nos hemos enfocado en la frecuencia <span class="math inline">\(\omega\)</span> expresada en ciclos por puntos de tiempo, en lugar de la más común (en estadística) alternativa <span class="math inline">\(\lambda=2\pi\omega\)</span> que nos da radianes por puntos. Finalmente, la condición de sumabilidad absoluta <a href="analisis-espectral.html#eq:eq-covarianza-finita">(11.15)</a> no es satisfecha por <a href="analisis-espectral.html#eq:eq-funcion-covarianza-proceso-periodico">(11.5)</a>, el ejemplo que introdujimos para dar las ideas de representación espectral. La condición, sin embargo, es satisfecha para modelos ARMA.</p>
+<p>Note que la función de autocovarianza <span class="math inline">\(\gamma(h)\)</span> en <a href="analisis-espectral.html#eq:eq-representacion-covarianza">(11.16)</a> y la densidad espectral <span class="math inline">\(f(\omega)\)</span> en <a href="analisis-espectral.html#eq:eq-densidad-espectral-covarianza">(11.17)</a> son pares de transformadas de Fourier. En general, tenemos la siguiente definición:</p>
+
+<div class="definition">
+<p><span id="def:defi-par-transformadas-fourier" class="definition"><strong>Definición 11.1  </strong></span>Para una función general <span class="math inline">\(\{a_t;t=0,\pm1,\pm2,\ldots\}\)</span> que satisface la condición de sumabilidad absoluta</p>
+<span class="math display" id="eq:eq-cond-sumabilidad-absoluta">\[\begin{equation}
+  \sum_{t=-\infty}^{\infty}|a_t|&lt;\infty,
+\tag{11.18}
+\end{equation}\]</span>
+<p>definimos el <strong>par de transformadas de Fourier</strong> de la forma</p>
+<span class="math display" id="eq:eq-transformada-fourier-A">\[\begin{equation}\label{}
+  A(\omega)=\sum_{t=-\infty}^{\infty}a_te^{-2\pi i\omega t}
+\tag{11.19}
+\end{equation}\]</span>
+<p>y</p>
+<span class="math display" id="eq:eq-transformada-fourier-a">\[\begin{equation}\label{}
+  a_t=\int_{-1/2}^{1/2}A(\omega)e^{2\pi i\omega t}d\omega
+\tag{11.20}
+\end{equation}\]</span>
+</div>
+
+<p>El uso de <a href="analisis-espectral.html#eq:eq-representacion-covarianza">(11.16)</a> y <a href="analisis-espectral.html#eq:eq-densidad-espectral-covarianza">(11.17)</a> como par de transformadas de Fourier es fundamental en el estudio de procesos estacionarios a tiempo discreto. Bajo la condición de sumabilidad, el par de transformadas de Fourier <a href="analisis-espectral.html#eq:eq-representacion-covarianza">(11.16)</a> y <a href="analisis-espectral.html#eq:eq-densidad-espectral-covarianza">(11.17)</a> existirá y esta relación es única.</p>
+<p>Si <span class="math inline">\(f(\omega)\)</span> y <span class="math inline">\(g(\omega)\)</span> son dos densidades espectrales para lo cual</p>
+<span class="math display" id="eq:eq-igualdad-densidades-f-g">\[\begin{equation}
+\int_{-1/2}^{1/2}f(\omega)e^{2\pi i\omega h}d\omega=\int_{-1/2}^{1/2}g(\omega)e^{2\pi i\omega h}d\omega
+\tag{11.21}
+\end{equation}\]</span>
+<p>para todo <span class="math inline">\(h=0,\pm1,\pm2,\ldots\)</span>, entonces</p>
+<span class="math display" id="eq:eq-igualdad-densidades-f-g-cs">\[\begin{equation}
+f(\omega)=g(\omega)
+\tag{11.22}
+\end{equation}\]</span>
+<p>casi siempre.</p>
+
+<div class="example">
+<p><span id="exm:ejem-espectro-serie-ruido-blanco" class="example"><strong>Ejemplo 11.4  (Serie de ruido blanco)  </strong></span> Como un ejemplo sencillo, consideremos el espectro de potencias teórica de una sucesión de variables aleatorias no correlacionadas <span class="math inline">\(w_t\)</span> con varianza <span class="math inline">\(\sigma_w^2\)</span>. Dado que la función de autocovarianza fue calculada en <a href="#eq:eq-funcion-autocovarianza-ruido-blanco">(<strong>??</strong>)</a> como <span class="math inline">\(\gamma_w(h)=\sigma_w^2\)</span> para <span class="math inline">\(h=0\)</span> y cero en cualquier otro caso, se sigue de <a href="analisis-espectral.html#eq:eq-densidad-espectral-covarianza">(11.17)</a> que</p>
+<p><span class="math display">\[f_w(\omega)=\sigma_w^2\]</span></p>
+<p>para <span class="math inline">\(-1/2\leq\omega\leq1/2\)</span> con la misma potencia para todas las frecuencias. Esta propiedad se ve en la realización, el cual parece contener todas las diferentes frecuencias en proporciones similares. La figura <a href="analisis-espectral.html#fig:fig-espectros-teoricos">11.3</a> (parte superior) muestra la gráfica del espectro de un ruido blanco con <span class="math inline">\(\sigma_w^2=1\)</span>.</p>
+</div>
+
+
+<div class="example">
+<p><span id="exm:ejem-espectro-promedio-movil-simple" class="example"><strong>Ejemplo 11.5  (Un promedio móvil simple)  </strong></span> Una serie que no tiene una proporción igual de frecuencias es la serie de ruido blanco suavizada que se muestra en la parte inferior de la primera Figura del Ejemplo <a href="modelos-de-series-de-tiempo.html#exm:ejem-promedio-movil-ruido-blanco">3.4</a>. Específicamente construimos una serie de promedio móvil de tres puntos definida por</p>
+<p><span class="math display">\[v_t=\frac{1}{3}(w_{t-1}+w_t+w_{t+1}).\]</span></p>
+<p>Es claro de la realización del ejemplo que la serie tiene menos frecuencias altas, calculando su espectro de potencias se verifica este hecho. En el Ejemplo <a href="modelos-de-series-de-tiempo.html#exm:ejem-ACF-MA">3.6</a> calculamos su función de autocovarianza, obteniendo</p>
+<p><span class="math display">\[\gamma_v(h)=\frac{\sigma_w^2}{9}(3-|h|)\]</span></p>
+<p>para <span class="math inline">\(|h|\leq2\)</span> y <span class="math inline">\(\gamma_v(h)=0\)</span> para <span class="math inline">\(|h|&gt;2\)</span>.</p>
+<p>Entonces, usando <a href="analisis-espectral.html#eq:eq-densidad-espectral-covarianza">(11.17)</a> nos da</p>
+<span class="math display">\[\begin{eqnarray*}
+f_v(\omega) &amp;=&amp; \sum_{h=-2}^{2}\gamma_v(h)e^{-2\pi i\omega h} \\
+         &amp;=&amp; \frac{\sigma_w^2}{9}(e^{-4\pi i\omega}+e^{4\pi i\omega})+\frac{2\sigma_w^2}{9}(e^{-2\pi i\omega}+e^{2\pi\omega})+\frac{3\sigma_w^2}{9} \\
+         &amp;=&amp; \frac{\sigma_w^2}{9}[3+4\cos(2\pi\omega)+2\cos(4\pi\omega)]
+\end{eqnarray*}\]</span>
+<p>Graficando el espectro para <span class="math inline">\(\sigma_w^2=1\)</span>, como en la Figura <a href="analisis-espectral.html#fig:fig-espectros-teoricos">11.3</a>, se muestra que las frecuencias cercanas a cero tiene mayor potencia y las energías más grandes, <span class="math inline">\(\omega&gt;0.2\)</span> tienen menor potencia.</p>
+</div>
+
+
+<div class="example">
+<p><span id="exm:ejem-espectro-AR2" class="example"><strong>Ejemplo 11.6  (Una serie autoregresiva de segundo orden)  </strong></span> Consideremos el espectro de una serie AR(2) de la forma</p>
+<p><span class="math display">\[x_t-\phi_1x_{t-1}-\phi_2x_{t-2}=w_t\]</span></p>
+<p>para el caso especial <span class="math inline">\(\phi_1=1\)</span> y <span class="math inline">\(\phi_2=-0.9\)</span>. Recuerde el Ejemplo <a href="modelos-de-series-de-tiempo.html#exm:ejem-ACF-MA">3.6</a> el cual muestra una realización de este proceso con <span class="math inline">\(\sigma_w^2=1\)</span>. Note que los datos exhiben una fuerte componente periódica de un ciclo cada seis puntos. Primero, calculemos la función de autocovarianza del lado derecho e igualemos este a la autocovarianza de la parte izquierda</p>
+<span class="math display">\[\begin{eqnarray*}
+  \gamma_w(h) &amp;=&amp; \mathbb{E}[(x_{t+h}-\phi_1x_{t+h-1}-\phi_2x_{t+h-2})(x_t-\phi_1x_{t-1}-\phi_2x_{t-2})] \\
+         &amp;=&amp; [1+\phi_1^2+\phi_2^2]\gamma_x(h)+(\phi_1\phi_2-\phi_1)[\gamma_x(h+1)+\gamma_x(h-1)]-\phi_2[\gamma_x(h+2)+\gamma_x(h-2)] \\
+         &amp;=&amp; 2.81\gamma_x(h)-1.9[\gamma_x(h+1)+\gamma_x(h-1)]+0.9[\gamma_x(h+2)+\gamma_x(h-2)],
+\end{eqnarray*}\]</span>
+<p>hemos sustituido los valores de <span class="math inline">\(\phi_1=1\)</span> y <span class="math inline">\(\phi_2=-0.9\)</span> en la ecuación.</p>
+<p>Ahora, sustituyendo la representación espectral para <span class="math inline">\(\gamma_x(h)\)</span> en la ecuación anterior, se tiene</p>
+<span class="math display">\[\begin{eqnarray*}
+  \gamma_w(h) &amp;=&amp; \int_{-1/2}^{1/2}[2.81-1.90(e^{2\pi i\omega}+e^{-2\pi i\omega})+0.90(e^{4\pi i\omega}+e^{-4\pi i\omega})]e^{2\pi i\omega h}f_x(\omega)d\omega \\
+         &amp;=&amp; \int_{-1/2}^{1/2}[2.81-3.80\cos(2\pi\omega)+1.80\cos(4\pi\omega)]e^{2\pi i\omega h}f_x(\omega)d\omega.
+\end{eqnarray*}\]</span>
+<p>Si el espectro del proceso de ruido blanco es <span class="math inline">\(g_w(\omega)\)</span>, la unicidad de la transformada de Fourier nos permite identificar <span class="math display">\[g_w(\omega)=[2.81-3.80\cos(2\pi\omega)+1.80\cos(4\pi\omega)]f_x(\omega).\]</span></p>
+<p>Pero, como ya hemos visto, <span class="math inline">\(g_w(\omega)=\sigma_w^2\)</span> de donde se deduce que</p>
+<p><span class="math display">\[f_x(\omega)=\frac{\sigma_w^2}{2.81-3.80\cos(2\pi\omega)+1.80\cos(4\pi\omega)}\]</span></p>
+<p>es el espectro de la serie autoregresiva. Haciendo <span class="math inline">\(\sigma_w^2=1\)</span> se tiene el espectro <span class="math inline">\(f_x(\omega)\)</span> mostrado en la Figura <a href="analisis-espectral.html#fig:fig-espectros-teoricos">11.3</a>, y donde muestra una componente de potencia fuerte alrededor de <span class="math inline">\(\omega=0.16\)</span> ciclos por puntos o un periodo entre seis y siete ciclos por puntos y potencias muy pequeñas en las otras frecuencias. En este caso, modificando la serie de ruido blanco aplicando un operador AR de orden dos ha concentrado la potencia o varianza de la serie resultante en una banda de frecuencia bastante estrecha.</p>
+</div>
+
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n=<span class="dv">100</span>
+sigma2=<span class="dv">1</span>
+w=<span class="kw">seq</span>(<span class="dv">0</span>,<span class="fl">0.5</span>,<span class="dt">length=</span>n)
+<span class="co"># Calculo de las densidades espectrales</span>
+fw=<span class="kw">numeric</span>(n)
+fv=<span class="kw">numeric</span>(n)
+fx=<span class="kw">numeric</span>(n)
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){
+  fw[i]=sigma2
+  fv[i]=(sigma2<span class="op">/</span><span class="dv">9</span>)<span class="op">*</span>(<span class="dv">3</span><span class="op">+</span><span class="dv">4</span><span class="op">*</span><span class="kw">cos</span>(<span class="dv">2</span><span class="op">*</span>pi<span class="op">*</span>w[i])<span class="op">+</span><span class="dv">2</span><span class="op">*</span><span class="kw">cos</span>(<span class="dv">4</span><span class="op">*</span>pi<span class="op">*</span>w[i]))
+  fx[i]=sigma2<span class="op">/</span>(<span class="fl">2.81</span><span class="op">-</span><span class="fl">3.80</span><span class="op">*</span><span class="kw">cos</span>(<span class="dv">2</span><span class="op">*</span>pi<span class="op">*</span>w[i])<span class="op">+</span><span class="fl">1.80</span><span class="op">*</span><span class="kw">cos</span>(<span class="dv">4</span><span class="op">*</span>pi<span class="op">*</span>w[i]))
+}
+<span class="co"># Graficos</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))
+<span class="kw">plot</span>(w,fw,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Ruido blanco&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Potencia&quot;</span>)
+<span class="kw">plot</span>(w,fv,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Promedio movil del ruido blanco&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Potencia&quot;</span>)
+<span class="kw">plot</span>(w,fx,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">main=</span><span class="st">&quot;AR(2)&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Potencia&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Frecuencia&quot;</span>)</code></pre></div>
+<div class="figure"><span id="fig:fig-espectros-teoricos"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-espectros-teoricos-1.svg" alt="Espectros teóricos de un ruido blanco (superior), promedio móvil de ruido blanco (medio) y proceso AR(2) (inferior)"  />
+<p class="caption">
+Figura 11.3: Espectros teóricos de un ruido blanco (superior), promedio móvil de ruido blanco (medio) y proceso AR(2) (inferior)
+</p>
+</div>
+<hr />
+<p>Los ejemplos anteriores han sido dados para motivar el uso de los espectros de potencias para describir las fluctuaciones de la varianza teórica de una serie estacionaria. Es más, la interpretación de la función de densidad espectral como la varianza de la serie de tiempo sobre una banda de frecuencia dada nos da una explicación intuitiva del significado físico. La gráfica de la función <span class="math inline">\(f(\omega)\)</span>sobre el argumento de frecuencia <span class="math inline">\(\omega\)</span> puede ser pensado como un análisis de varianza, en el cual las columnas o bloques efectivos son las frecuencias indexadas por <span class="math inline">\(\omega\)</span>.</p>
+</div>
+<div id="periodograma-y-transformada-discreta-de-fourier" class="section level2">
+<h2><span class="header-section-number">11.3</span> Periodograma y Transformada Discreta de Fourier</h2>
+<p>Ahora estamos listos para unir el periodograma, que es el concepto basada en la muestra presentado en la sección <a href="analisis-espectral.html#comportamiento-ciclico-y-periodicidad">Comportamiento Cíclico y Periodicidad</a>, con la densidad espectral, que es el concepto basado en la población descrito en la sección <a href="analisis-espectral.html#la-densidad-espectral">La Densidad Espectral</a>.</p>
+
+<div class="definition">
+<p><span id="def:defi-TDF" class="definition"><strong>Definición 11.2  </strong></span>Dado los datos <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span>, definimos la <strong>Transformada Discreta de Fourier (TDF)</strong> como</p>
+<span class="math display" id="eq:eq-TDF">\[\begin{equation}
+  d(\omega_j)=n^{-1/2}\sum_{t=1}^{n}x_te^{-2\pi i\omega_jt}
+\tag{11.23}
+\end{equation}\]</span>
+para <span class="math inline">\(j=0,1,\ldots,n-1\)</span>, donde las frecuencias <span class="math inline">\(\omega_j=j/n\)</span> son llamadas las <em>frecuencias de Fourier</em> o <em>frecuencias fundamentales</em>.
+</div>
+
+<hr />
+<p>Si <span class="math inline">\(n\)</span> es un número altamente compuesto (i.e., tiene muchos factores), la TDF se puede calcular usando la Transformada Rápida de Fourier (FFT). A veces es útil explotar el resultado de inversión para TDF que muestra que la transformación lineal es de uno a uno. Para la inversa de TDF, tenemos</p>
+<span class="math display" id="eq:eq-inversa-TDF">\[\begin{equation}
+  x_t=n^{-1/2}\sum_{j=0}^{n-1}d(\omega_j)e^{2\pi i\omega_jt}
+\tag{11.24}
+\end{equation}\]</span>
+<p>para <span class="math inline">\(t=1,2,\ldots,n\)</span>.</p>
+
+<div class="definition">
+<p><span id="def:defi-periodograma" class="definition"><strong>Definición 11.3  </strong></span>Dados los datos <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span> definimos el <strong>periodograma</strong> como</p>
+<span class="math display" id="eq:eq-periodograma-datos">\[\begin{equation}
+  I(\omega_j)=|d(\omega_j)|^2
+\tag{11.25}
+\end{equation}\]</span>
+para <span class="math inline">\(j=0,1,2,\ldots,n-1\)</span>.
+</div>
+
+<hr />
+<p>Note que <span class="math inline">\(I(0)=n\bar{x}^2\)</span>, donde <span class="math inline">\(\bar{x}\)</span> es la media muestral. Además, dado que <span class="math inline">\(\sum_{t=1}^{n}\exp(-2\pi i\omega_jt)=0\)</span> para <span class="math inline">\(j\neq0\)</span>,<a href="#fn16" class="footnoteRef" id="fnref16"><sup>16</sup></a> podemos escribir la TDF como</p>
+<span class="math display" id="eq:eq-TDF-2">\[\begin{equation}
+  d(\omega_j)=n^{-1/2}\sum_{t=1}^{n}(x_t-\bar{x})e^{-2\pi i\omega_jt}
+\tag{11.26}
+\end{equation}\]</span>
+<p>para <span class="math inline">\(j\neq0\)</span>.</p>
+<p>Entonces, para <span class="math inline">\(j\neq0\)</span>,</p>
+<span class="math display" id="eq:eq-periodograma-acf">\[\begin{eqnarray}
+  I(\omega_j)=|d(\omega_j)|^2 &amp;=&amp; n^{-1}\sum_{t=1}^{n}\sum_{s=1}^{n}(x_t-\bar{x})(x_s-\bar{x})e^{-2\pi i\omega_j(t-s)} \nonumber\\
+         &amp;=&amp; n^{-1}\sum_{t=1}^{n}\sum_{s=1}^{n}(x_{t+|h|}-\bar{x})(x_t-\bar{x})e^{-2\pi i\omega_jh} \nonumber \\
+         &amp;=&amp; \sum_{h=-(n-1)}^{n-1}\hat{\gamma}(h)e^{-2\pi i\omega_jh} \tag{11.27}
+\end{eqnarray}\]</span>
+<p>donde hemos hecho <span class="math inline">\(h=t-s\)</span> con <span class="math inline">\(\hat{\gamma}(h)\)</span>.<a href="#fn17" class="footnoteRef" id="fnref17"><sup>17</sup></a> Recuerde que <span class="math inline">\(P(\omega_j)=(4/n)I(\omega_j)\)</span> donde <span class="math inline">\(P(\omega_j)\)</span> es el periodograma escalado definido en <a href="analisis-espectral.html#eq:eq-periodograma-escalado">(11.7)</a>. Por consiguiente, trabajaremos con <span class="math inline">\(I(\omega_j)\)</span> en vez de <span class="math inline">\(P(\omega_j)\)</span>.</p>
+<p>A veces es útil trabajar con las partes real e imaginarias de la TDF individualmente, de donde tenemos la siguiente definición:</p>
+
+<div class="definition">
+<p><span id="def:defi-transformadas-seno-coseno" class="definition"><strong>Definición 11.4  </strong></span>Dados las datos <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span> definimos la <strong>transformada de cosenos</strong> como</p>
+<span class="math display" id="eq:eq-transformada-coseno">\[\begin{equation}
+  d_c(\omega_j)=n^{-1/2}\sum_{t=1}^{n}x_t\cos(2\pi\omega_jt)
+\tag{11.28}
+\end{equation}\]</span>
+<p>y la <strong>transformada de senos</strong> como</p>
+<span class="math display" id="eq:eq-transformada-seno">\[\begin{equation}
+  d_s(\omega_j)=n^{-1/2}\sum_{t=1}^{n}x_t\sin(2\pi\omega_jt)
+\tag{11.29}
+\end{equation}\]</span>
+donde <span class="math inline">\(\omega_j=j/n\)</span> para <span class="math inline">\(j=0,1,2,\ldots,n-1\)</span>.
+</div>
+
+<hr />
+<p>Note que <span class="math inline">\(d(\omega_j)=d_c(\omega_j)-id_s(\omega_j)\)</span> y por lo tanto</p>
+<span class="math display" id="eq:eq-periodograma-transf-seno-coseno">\[\begin{equation}
+  I(\omega_j)=d_c^2(\omega_j)+d_s^2(\omega_j)
+\tag{11.30}
+\end{equation}\]</span>
+
+<div class="example">
+<p><span id="exm:ejem-ANOVA-espectral" class="example"><strong>Ejemplo 11.7  (ANOVA espectral)  </strong></span>Sea <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span> una muestra de tamaño <span class="math inline">\(n\)</span>, donde para simplificar <span class="math inline">\(n\)</span> es impar. Entonces, recordando el Ejemplo <a href="analisis-espectral.html#exm:ejem-periodograma-escalado">11.2</a>, se tiene</p>
+<span class="math display" id="eq:eq-e4p27">\[\begin{equation}
+  x_t=a_0+\sum_{j=1}^{m}[a_j\cos(2\pi\omega_jt)+b_j\sin(2\pi\omega_jt)]
+\tag{11.31}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(m=(n-1)/2\)</span> es exacto para <span class="math inline">\(t=1,2,\ldots,n\)</span>. En particular, usando la fórmula de regresión multiples, tenemos <span class="math inline">\(a_0=\bar{x}\)</span></p>
+<span class="math display">\[\begin{eqnarray*}
+  a_j &amp;=&amp; \frac{2}{n}\sum_{t=1}^{n}x_t\cos(2\pi\omega_jt)=\frac{2}{\sqrt{n}}d_c(\omega_j) \\
+  b_j &amp;=&amp; \frac{2}{n}\sum_{t=1}^{n}x_t\sin(2\pi\omega_jt)=\frac{2}{\sqrt{n}}d_s(\omega_j)
+\end{eqnarray*}\]</span>
+<p>Por consiguiente, podemos escribir</p>
+<p><span class="math display">\[(x_t\bar{x})=\frac{2}{\sqrt{n}}\sum_{j=1}^{m}[d_c(\omega_j)\cos(2\pi\omega_jt)+d_s(\omega_j)\sin(2\pi\omega_jt)]\]</span></p>
+<p>para <span class="math inline">\(t=1,2,\ldots,n\)</span>. Elevando al cuadrado ambos miembros y sumando tenemos<a href="#fn18" class="footnoteRef" id="fnref18"><sup>18</sup></a></p>
+<p><span class="math display">\[\sum_{t=1}^{n}(x_t-\bar{x})^2=2\sum_{j=1}^{m}\left[d_c^2(\omega_j)+d_s^2(\omega_j)\right]=2\sum_{j=1}^{m}I(\omega_j)\]</span></p>
+<p>En consecuencia, hemos particionado la suma de cuadrados en componentes armónicas representadas por las frecuencias <span class="math inline">\(\omega_j\)</span> con el periodograma <span class="math inline">\(I(\omega_j)\)</span> siendo la regresión cuadrada media.</p>
+<p>Esto nos lleva a la tabla ANOVA</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Fuente</th>
+<th align="center">g.l.</th>
+<th align="center">SC</th>
+<th align="center">MS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><span class="math inline">\(\omega_1\)</span></td>
+<td align="center">2</td>
+<td align="center"><span class="math inline">\(2I(\omega_1)\)</span></td>
+<td align="center"><span class="math inline">\(I(\omega_1)\)</span></td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(\omega_2\)</span></td>
+<td align="center">2</td>
+<td align="center"><span class="math inline">\(2I(\omega_2)\)</span></td>
+<td align="center"><span class="math inline">\(I(\omega_2)\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center"><span class="math inline">\(\vdots\)</span></td>
+<td align="center"><span class="math inline">\(\vdots\)</span></td>
+<td align="center"><span class="math inline">\(\vdots\)</span></td>
+<td align="center"><span class="math inline">\(\vdots\)</span></td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(\omega_m\)</span></td>
+<td align="center">2</td>
+<td align="center"><span class="math inline">\(2I(\omega_m)\)</span></td>
+<td align="center"><span class="math inline">\(I(\omega_m)\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center">Total</td>
+<td align="center"><span class="math inline">\(n-1\)</span></td>
+<td align="center"><span class="math inline">\(\sum_{t=1}^{n}(x_t-\bar{x})^2\)</span></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p>Esta descomposición significa que si los datos contienen alguna componente periódica fuerte, entonces los valores del periodograma correspondientes a estas frecuencias (o cercano a estas frecuencias) serán grandes. Por otra parte, los valores del periodograma serán pequeños para componentes periódicas no presentes en los datos.</p>
+</div>
+
+<hr />
+<p>Ahora estamos listos para presentar algunas propiedades de muestras grandes del periodograma. Primero, sea <span class="math inline">\(\mu\)</span> la media de un proceso estacionario <span class="math inline">\(x_t\)</span> con función de autocovarianza absolutamente sumable <span class="math inline">\(\gamma(h)\)</span> y densidad espectral <span class="math inline">\(f(\omega)\)</span>. Podemos usar el mismo argumento como en <a href="analisis-espectral.html#eq:eq-periodograma-acf">(11.27)</a> reemplazando <span class="math inline">\(\bar{x}\)</span> por <span class="math inline">\(\mu\)</span> en <a href="analisis-espectral.html#eq:eq-TDF-2">(11.26)</a> para escribir</p>
+<span class="math display" id="eq:eq-periodograma-dobe-suma">\[\begin{equation}
+  I(\omega_j)=n^{-1}\sum_{h=-(n-1)}^{n-1}\sum_{t=1}^{n-|h|}(x_{t+|h|}-\mu)(x_t-\mu)e^{-2\pi i\omega_jh}
+\tag{11.32}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(\omega_j\)</span> es una frecuencia fundamental no cero. Tomando esperanza en <a href="analisis-espectral.html#eq:eq-periodograma-dobe-suma">(11.32)</a> obtenemos</p>
+<span class="math display" id="eq:eq-esperanza-periodograma">\[\begin{equation}
+  \mathbb{E}[I(\omega_j)]=\sum_{h=-(n-1)}^{n-1}\left(\frac{n-|h|}{n}\right)\gamma(h)e^{-2\pi i\omega_jh}.
+\tag{11.33}
+\end{equation}\]</span>
+<p>Para cada <span class="math inline">\(\omega\neq0\)</span> dado, elegimos una frecuencia fundamental <span class="math inline">\(\omega_{j:n}\to\omega\)</span> cuando <span class="math inline">\(n\to\infty\)</span><a href="#fn19" class="footnoteRef" id="fnref19"><sup>19</sup></a> de lo cual se sigue por <a href="analisis-espectral.html#eq:eq-esperanza-periodograma">(11.33)</a> que</p>
+<span class="math display" id="eq:eq-convergencia-esperanza-periodograma-densidad">\[\begin{equation}
+  \mathbb{E}(I(\omega_{j:n})]\to f(\omega)=\sum_{h=-\infty}^{\infty}\gamma(h)e^{-2\pi  ih\omega}
+\tag{11.34}
+\end{equation}\]</span>
+<p>cuando <span class="math inline">\(n\to\infty\)</span>.<a href="#fn20" class="footnoteRef" id="fnref20"><sup>20</sup></a> En otras palabras, bajo la sumabilidad absoluta de <span class="math inline">\(\gamma(h)\)</span>, la densidad espectral es la media a largo plazo del periodograma.</p>
+<p>Para examinar la distribución asintótica del periodograma, note que si <span class="math inline">\(x_t\)</span> es una serie de tiempo normal, las transformadas de senos y cosenos serán conjuntamente normal, porque sus combinaciones lineales son variables aleatorias conjuntamente normal <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span>. En este caso, la suposición de que la función de covarianza satisface la condición</p>
+<span class="math display" id="eq:eq-conv-absoluta-covarianza">\[\begin{equation}
+  \theta=\sum_{h=-\infty}^{\infty}|h||\gamma(h)|&lt;\infty
+\tag{11.35}
+\end{equation}\]</span>
+<p>es suficiente para obtener aproximaciones de muestras grandes simples de la varianza y la covarianza.</p>
+<p>Usando el mismo argumento para desarrollar <a href="analisis-espectral.html#eq:eq-esperanza-periodograma">(11.33)</a> tenemos</p>
+<span class="math display" id="eq:eq-covarianza-seno-seno" id="eq:eq-covarianza-coseno-seno" id="eq:eq-covarianza-coseno-coseno">\[\begin{eqnarray}
+  \text{cov}[d_c(\omega_j),d_c(\omega_k)] &amp;=&amp; n^{-1}\sum_{s=1}^{n}\sum_{t=1}^{n}\gamma(s-t)\cos(2\pi\omega_js)\cos(2\pi\omega_kt) \tag{11.36} \\
+  \text{cov}[d_c(\omega_j),d_s(\omega_k)] &amp;=&amp; n^{-1}\sum_{s=1}^{n}\sum_{t=1}^{n}\gamma(s-t)\cos(2\pi\omega_js)\sin(2\pi\omega_kt) \tag{11.37} \\
+  \text{cov}[d_s(\omega_j),d_s(\omega_k)] &amp;=&amp; n^{-1}\sum_{s=1}^{n}\sum_{t=1}^{n}\gamma(s-t)\sin(2\pi\omega_js)\sin(2\pi\omega_kt) \tag{11.38}
+\end{eqnarray}\]</span>
+<p>donde los términos de la varianza se obtienen haciendo <span class="math inline">\(\omega_j=\omega_k\)</span> en <a href="analisis-espectral.html#eq:eq-covarianza-coseno-coseno">(11.36)</a> y <a href="analisis-espectral.html#eq:eq-covarianza-seno-seno">(11.38)</a>.</p>
+<p>Se puede demostrar que los términos en <a href="analisis-espectral.html#eq:eq-covarianza-coseno-coseno">(11.36)</a> y <a href="analisis-espectral.html#eq:eq-covarianza-seno-seno">(11.38)</a> tienen propiedades interesantes bajo la suposición <a href="analisis-espectral.html#eq:eq-conv-absoluta-covarianza">(11.35)</a>, por ejemplo, para <span class="math inline">\(\omega_j,\omega_k\neq0\)</span> o 1/2.</p>
+<span class="math display" id="eq:eq-cov-seno-seno-2" id="eq:eq-cov-coseno-coseno-2">\[\begin{eqnarray}
+  \text{cov}[d_c(\omega_j),d_c(\omega_k)] &amp;=&amp; \begin{cases}f(\omega_j)/2+\epsilon_n, &amp; \omega_j=\omega_k\\
+                                                            \epsilon_n,&amp; \omega_j\neq\omega_k \end{cases} \tag{11.39} \\
+  \text{cov}[d_s(\omega_j),d_s(\omega_k)] &amp;=&amp; \begin{cases}f(\omega_j)/2+\epsilon_n, &amp; \omega_j=\omega_k\\
+                                                            \epsilon_n,&amp; \omega_j\neq\omega_k \end{cases} \tag{11.40}
+\end{eqnarray}\]</span>
+<p>y</p>
+<span class="math display" id="eq:eq-cov-coseno-seno-2">\[\begin{equation}
+  \text{cov}[d_c(\omega_j),d_s(\omega_k)] = \epsilon_n
+\tag{11.41}
+\end{equation}\]</span>
+<p>donde el término de error <span class="math inline">\(\epsilon_n\)</span> en la aproximación se puede acotar por</p>
+<span class="math display" id="eq:eq-cota-epsilon-n">\[\begin{equation}
+  |\epsilon_n|\leq\theta/n
+\tag{11.42}
+\end{equation}\]</span>
+<p>y <span class="math inline">\(\theta\)</span> está dado por <a href="analisis-espectral.html#eq:eq-conv-absoluta-covarianza">(11.35)</a>. Si <span class="math inline">\(\omega_j=\omega_k=0\)</span> o 1/2 en <a href="analisis-espectral.html#eq:eq-cov-coseno-coseno-2">(11.39)</a> el múltiplo 1/2 desaparece; note que <span class="math inline">\(d_s(0)=d_s(1/2)=0\)</span>, de modo que <a href="analisis-espectral.html#eq:eq-cov-seno-seno-2">(11.40)</a> no aplica.</p>
+
+<div class="example">
+<p><span id="exm:ejem-cov-seno-coseno-MA" class="example"><strong>Ejemplo 11.8  (Covarianzas de senos y cosenos para un proceso MA)  </strong></span>Para la serie de promedio móvil de tres puntos del Ejemplo <a href="analisis-espectral.html#exm:ejem-espectro-promedio-movil-simple">11.5</a>, el espectro teórico se mostraba en la Figura <a href="analisis-espectral.html#fig:fig-espectros-teoricos">11.3</a>. Para <span class="math inline">\(n=256\)</span> puntos, la matriz de covarianza teórica del vector</p>
+<p><span class="math display">\[\textbf{d}=(d_c(\omega_{26}),d_s(\omega_{26}),d_c(\omega_{27}),d_s(\omega_{27}))^t\]</span></p>
+<p>es</p>
+<p><span class="math display">\[\text{cov}(\textbf{d})=\left(
+                         \begin{array}{cccc}
+                            0.3752 &amp; -0.0009 &amp; -0.0022 &amp; -0.0010 \\
+                           -0.0009 &amp;  0.3777 &amp; -0.0009 &amp;  0.0003 \\
+                           -0.0022 &amp; -0.0009 &amp;  0.3667 &amp; -0.0010 \\
+                           -0.0010 &amp;  0.0003 &amp; -0.0010 &amp;  0.3692 \\
+                         \end{array}
+                       \right)\]</span></p>
+<p>Los elementos de la diagonal se pueden comparar con los valores del espectro teórico de 0,7548 para el espectro en frecuencia <span class="math inline">\(\omega_{26}=0.102\)</span> y de 0,7378 para el espectro en <span class="math inline">\(\omega_{27}=0.105\)</span>.</p>
+<p>Por consiguiente, las transformadas de senos y cosenos produce variables casi no correlacionadas con varianzas aproximadamente igual a un medio del espectro teórico. Para este caso particular, la cota uniforme es determinada por <span class="math inline">\(\theta=8/9\)</span> obteniéndose <span class="math inline">\(|\epsilon_{256}|\leq0.0035\)</span> para la cota del error de aproximación.</p>
+</div>
+
+<hr />
+<p>Si <span class="math inline">\(x_t\sim\text{iid}(0,\sigma^2)\)</span>, entonces se sigue de <a href="analisis-espectral.html#eq:eq-conv-absoluta-covarianza">(11.35)</a> a <a href="analisis-espectral.html#eq:eq-cov-coseno-seno-2">(11.41)</a> y del Teorema Central del Límite<a href="#fn21" class="footnoteRef" id="fnref21"><sup>21</sup></a> que</p>
+<span class="math display" id="eq:eq-convergencia-AN-transf-seno-coseno">\[\begin{equation}
+  d_c(\omega_{j:n})\sim AN(0,\sigma^2/2)\text{   y   }d_s(\omega_{j:n})\sim AN(0,\sigma^2/2)
+\tag{11.43}
+\end{equation}\]</span>
+<p>conjunta e independientemente, e independiente de <span class="math inline">\(d_c(\omega_{k:n})\)</span> y <span class="math inline">\(d_s(\omega_{k:n})\)</span> siempre que <span class="math inline">\(\omega_{j:n}\to\omega_1\)</span> y <span class="math inline">\(\omega_{k:n}\to\omega_2\)</span> donde <span class="math inline">\(0&lt;\omega_1\neq\omega_2&lt;1/2\)</span>. Note que en este caso <span class="math inline">\(f(\omega)=\sigma^2\)</span>. En vista de <a href="analisis-espectral.html#eq:eq-convergencia-AN-transf-seno-coseno">(11.43)</a> se sigue inmediatamente que cuando <span class="math inline">\(n\to\infty\)</span></p>
+<span class="math display" id="eq:eq-conv-distribucion-periodograma">\[\begin{equation}
+  \frac{2I(\omega_{j:n})}{\sigma^2}\overset{d}{\to}\chi_2^2\text{   y   }\frac{2I(\omega_{k:n})}{\sigma^2}\overset{d}{\to}\chi_2^2
+\tag{11.44}
+\end{equation}\]</span>
+<p>con <span class="math inline">\(I(\omega_{j:n})\)</span> e <span class="math inline">\(I(\omega_{k:n})\)</span> siendo asintóticamente independientes, donde <span class="math inline">\(\chi^2_{\nu}\)</span> denota una variable aleatoria chi-cuadrado con <span class="math inline">\(\nu\)</span> grados de libertad. Usando el Teorema Central del Límite es bastante fácil extender los resultados del caso iid al caso de procesos lineales.</p>
+
+<div class="proposition">
+<p><span id="prp:propie-distrib-ordenadas-periodograma" class="proposition"><strong>Proposición 11.2  (Distribución de las Ordenadas de un Periodograma)  </strong></span>Si</p>
+<span class="math display" id="eq:eq-condicion-proceso-MA">\[\begin{equation}
+  x_t=\sum_{j=-\infty}^{\infty}\psi_jw_{t-j}\text{,  }\sum_{j=-\infty}^{\infty}|\psi_j|&lt;\infty
+\tag{11.45}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(w_t\sim\text{iid}(0,\sigma_w^2)\)</span> y <a href="analisis-espectral.html#eq:eq-conv-absoluta-covarianza">(11.35)</a> vale, entonces para cada sucesión de <span class="math inline">\(m\)</span> frecuencias distintas <span class="math inline">\(\omega_j\)</span> con <span class="math inline">\(\omega_{j:n}\to\omega_j\)</span></p>
+<span class="math display" id="eq:eq-distrib-ordenadas-periodograma">\[\begin{equation}
+  \frac{2I(\omega_{j:n})}{f(\omega_j)}\overset{d}{\to}\text{iid}\chi^2_2
+\tag{11.46}
+\end{equation}\]</span>
+siempre que <span class="math inline">\(f(\omega_j)&gt;0\)</span> para <span class="math inline">\(j=1,2,\ldots,m\)</span>.
+</div>
+
+<hr />
+<p>La distribución resultante en <a href="analisis-espectral.html#eq:eq-distrib-ordenadas-periodograma">(11.46)</a> se puede usar para obtener un intervalo de confianza aproximado para el espectro en la manera usual. Sea <span class="math inline">\(\chi^2_{\nu}(\alpha)\)</span> la probabilidad <span class="math inline">\(\alpha\)</span> de cola inferior para la distribución chi-cuadrado con <span class="math inline">\(\nu\)</span> grados de libertad, esto es,</p>
+<span class="math display" id="eq:eq-probabilidad-chi-2-cola-inferior">\[\begin{equation}
+  P\{\chi^2_{\nu}\leq\chi^2_{\nu}(\alpha)\}=\alpha.
+\tag{11.47}
+\end{equation}\]</span>
+<p>Entonces, un intervalo de confianza aproximado del <span class="math inline">\(100(1-\alpha)\%\)</span> para la función de densidad espectral es de la forma</p>
+<span class="math display" id="eq:eq-intervalo-confianza-densidad-espectral">\[\begin{equation}
+  \frac{2I(\omega_{j:n})}{\chi^2_2(1-\alpha/2)}\leq f(\omega)\leq\frac{2I(\omega_{j:n})}{\chi^2_2(\alpha/2)}
+\tag{11.48}
+\end{equation}\]</span>
+
+<div class="example">
+<p><span id="exm:ejem-periodograma-SOI" class="example"><strong>Ejemplo 11.9  (Periodograma de SOI y serie de reclutamiento (nuevos peces))  </strong></span>La Figura <a href="analisis-espectral.html#fig:fig-periodograma-SOI">11.4</a> muestra el periodograma de las series SOI y nuevos peces.</p>
+<p>Note que <span class="math inline">\(\chi^2_2(0.025)=0.0506\)</span> y <span class="math inline">\(\chi^2_2(0.975)=7.3778\)</span>, de allí podemos obtener un intervalo de confianza aproximado del 95% para las frecuencias de interés, en este caso <span class="math inline">\(\omega_j=1/12\)</span>. Para este valor, se tiene <span class="math inline">\(I_S(1/12)=2.6084\)</span>, luego un intervalo de confianza aproximado del 95% para el espectro <span class="math inline">\(f_S(1/12)\)</span> es</p>
+<p><span class="math display">\[[2(2.6084)/7.3778; 2(2.6084)/0.0506]=[0.7071;103.0254]\]</span></p>
+<p>lo cual es muy amplio para que sea de utilidad, sin embargo ese valor es mayor que cualquier otro valor de la ordenada del periodograma, así podemos decir que este valor es significativo. Por otra parte un intervalo de confianza aproximado del 95% para la otra frecuencia de interés (<span class="math inline">\(\omega_j=1/48\)</span>) para <span class="math inline">\(f_S(1/48)\)</span> es de la forma</p>
+<p><span class="math display">\[[2(0.3804)/7.3778; 2(0.3804)/0.0506]=[0.1031; 15.0355]\]</span></p>
+<p>el cual también es bastante amplio, pero en este caso no es posible establecer una significancia para el pico espectral.</p>
+Los comandos en R para calcular los periodogramas y generar los gráficos son los siguientes:
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">soi=<span class="kw">scan</span>(<span class="st">&#39;data/soi.txt&#39;</span>)
+rec=<span class="kw">scan</span>(<span class="st">&#39;data/recruit.txt&#39;</span>)
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>)) 
+soi.per=<span class="kw">spec.pgram</span>(soi,<span class="dt">taper=</span><span class="dv">0</span>,<span class="dt">log=</span><span class="st">&#39;no&#39;</span>)
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">1</span><span class="op">/</span><span class="dv">12</span>,<span class="dt">lty=</span><span class="st">&#39;dotted&#39;</span>) 
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">1</span><span class="op">/</span><span class="dv">48</span>,<span class="dt">lty=</span><span class="st">&#39;dotted&#39;</span>) 
+rec.per=<span class="kw">spec.pgram</span>(rec,<span class="dt">taper=</span><span class="dv">0</span>,<span class="dt">log=</span><span class="st">&#39;no&#39;</span>) 
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">1</span><span class="op">/</span><span class="dv">12</span>,<span class="dt">lty=</span><span class="st">&#39;dotted&#39;</span>) 
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">1</span><span class="op">/</span><span class="dv">48</span>,<span class="dt">lty=</span><span class="st">&#39;dotted&#39;</span>)</code></pre></div>
+<div class="figure"><span id="fig:fig-periodograma-SOI"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-periodograma-SOI-1.svg" alt="Periodograma de SOI y Reclutamiento (nuevos peces)"  />
+<p class="caption">
+Figura 11.4: Periodograma de SOI y Reclutamiento (nuevos peces)
+</p>
+</div>
+<p>Los intervalos de confianza de la serie SOI para el ciclo anual <span class="math inline">\(w=1/12=40/480\)</span> y los posibles ciclos de cuatro años de El Niño con <span class="math inline">\(w=1/48=10/480\)</span> se pueden calcular en Matlab y R con los siguientes comandos:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">li=<span class="kw">qchisq</span>(<span class="fl">0.975</span>,<span class="dv">2</span>) 
+ls=<span class="kw">qchisq</span>(<span class="fl">0.025</span>,<span class="dv">2</span>) 
+<span class="dv">2</span><span class="op">*</span>soi.per<span class="op">$</span>spec[<span class="dv">10</span>]<span class="op">/</span>li</code></pre></div>
+<pre><code>## [1] 0.1748</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span><span class="op">*</span>soi.per<span class="op">$</span>spec[<span class="dv">10</span>]<span class="op">/</span>ls</code></pre></div>
+<pre><code>## [1] 25.47</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span><span class="op">*</span>soi.per<span class="op">$</span>spec[<span class="dv">40</span>]<span class="op">/</span>li </code></pre></div>
+<pre><code>## [1] 3.163</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span><span class="op">*</span>soi.per<span class="op">$</span>spec[<span class="dv">40</span>]<span class="op">/</span>ls</code></pre></div>
+<pre><code>## [1] 460.8</code></pre>
+<hr />
+</div>
+<div id="estimacion-espectral-no-parametrica" class="section level2">
+<h2><span class="header-section-number">11.4</span> Estimación Espectral No-paramétrica</h2>
+<p>Definamos una banda de frecuencia <span class="math inline">\(\mathcal{B}\)</span> de <span class="math inline">\(L\ll n\)</span> frecuencias fundamentales contiguas centradas alrededor <span class="math inline">\(\omega_j=j/n\)</span> que estén cercanas a la frecuencia de interés <span class="math inline">\(\omega\)</span> como</p>
+<span class="math display" id="eq:eq-banda-frecuencia">\[\begin{equation}
+  \mathcal{B}=\left\{\omega:\omega_j\frac{m}{n}\leq\omega\leq\omega_j+\frac{m}{n}\right\}
+\tag{11.49}
+\end{equation}\]</span>
+<p>donde</p>
+<span class="math display" id="eq:eq-frecuencias-fundamentales">\[\begin{equation}
+  L=2m+1
+\tag{11.50}
+\end{equation}\]</span>
+<p>es un número impar, elegido tal que los valores espectrales en el intervalo <span class="math inline">\(\mathcal{B}\)</span></p>
+<p><span class="math display">\[f(\omega_j+k/n)\text{, }k=-m,\ldots,0,\ldots,m\]</span></p>
+<p>son aproximadamente igual a <span class="math inline">\(f(\omega)\)</span>. Esta estructura se puede desarrollar para un muestra grande. Los valores del espectro en esta banda de frecuencia serán relativamente constantes, así también será un buen estimador para el espectro suavizado que definimos a continuación.</p>
+<p>Usando la banda anterior, podemos definir un periodograma suavizado o de media como el promedio de los valores del periodograma, esto es,</p>
+<span class="math display" id="eq:eq-periodograma-suavizado">\[\begin{equation}
+  \bar{f}(\omega)=\frac{1}{L}\sum_{k=-m}^{m}I(\omega_j+k/n)
+\tag{11.51}
+\end{equation}\]</span>
+<p>como el promedio sobre la banda <span class="math inline">\(\mathcal{B}\)</span>.</p>
+<p>Bajo la suposición que la densidad espectral es casi constante en la banda <span class="math inline">\(\mathcal{B}\)</span> y en vista de <a href="analisis-espectral.html#eq:eq-distrib-ordenadas-periodograma">(11.46)</a> podemos demostrar que bajo condiciones apropiadas,<a href="#fn22" class="footnoteRef" id="fnref22"><sup>22</sup></a> para <span class="math inline">\(n\)</span> grande, los periodogramas en <a href="analisis-espectral.html#eq:eq-periodograma-suavizado">(11.51)</a> son variables aleatorias distribuidas aproximadamente como variables <span class="math inline">\(f(\omega)\chi^2_2/2\)</span> independientes, para <span class="math inline">\(0&lt;\omega&lt;1/2\)</span>, siempre y cuando mantengamos <span class="math inline">\(L\)</span> bastante pequeño con relación a <span class="math inline">\(n\)</span>. Por consiguiente, bajo estas condiciones, <span class="math inline">\(L\bar{f}(\omega)\)</span> es la suma de <span class="math inline">\(L\)</span> variables aleatorias <span class="math inline">\(f(\omega)\chi^2_2/2\)</span> aproximadamente independientes.</p>
+<p>Se sigue que para <span class="math inline">\(n\)</span> grande</p>
+<span class="math display" id="eq:eq-distrib-periodograma-suavizado">\[\begin{equation}
+  \frac{2L\bar{f}(\omega)}{f(\omega)}\overset{\cdot}{\sim}\chi^2_{2L}
+\tag{11.52}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(\overset{\cdot}{\sim}\)</span> significa <em>aproximadamente distribuida como</em>.</p>
+<p>De esta manera, es razonable llamar a la longitud del intervalo definido por <a href="analisis-espectral.html#eq:eq-banda-frecuencia">(11.49)</a></p>
+<span class="math display" id="eq:eq-ancho-banda">\[\begin{equation}
+  B_w=\frac{L}{n}
+\tag{11.53}
+\end{equation}\]</span>
+<p>el <em>ancho de banda</em>. El ancho de banda en este caso, se refiere al ancho de la banda de frecuencia usada para suavizar el periodograma. El concepto de ancho de banda, sin embargo, se hace más complicado con la introducción de los estimadores espectrales que suavizan con pesos desiguales. Note que <a href="analisis-espectral.html#eq:eq-ancho-banda">(11.53)</a> implica que los grados de libertad los podemos expresar como</p>
+<span class="math display" id="eq:eq-grados-libertad">\[\begin{equation}
+  2L=2B_wn
+\tag{11.54}
+\end{equation}\]</span>
+<p>o dos veces el producto del ancho de banda por tiempo. El resultado <a href="analisis-espectral.html#eq:eq-distrib-periodograma-suavizado">(11.52)</a> se puede reordenar para obtener un intervalo de confianza aproximado del <span class="math inline">\(100(1-\alpha)\%\)</span> de la forma</p>
+<span class="math display" id="eq:eq-intervalo-confianza-espectro">\[\begin{equation}
+  \frac{2L\bar{f}(\omega)}{\chi^2_{2L}(1-\alpha/2)}\leq f(\omega)\leq\frac{2L\bar{f}(\omega)}{\chi^2_{2L}(\alpha/2)}
+\tag{11.55}
+\end{equation}\]</span>
+<p>para el espectro verdadero <span class="math inline">\(f(\omega)\)</span>.</p>
+<p>Muchas veces el impacto visual del gráfico de la densidad espectral se puede mejorar, graficando el logaritmo del espectro en vez del espectro.<a href="#fn23" class="footnoteRef" id="fnref23"><sup>23</sup></a> Este fenómeno puede ocurrir cuando en algunas regiones del espectro existen picos de interés mucho más pequeños que los de las componentes principales. Para el logaritmo del espectro obtenemos un intervalo de confianza de la forma</p>
+<span class="math display" id="eq:eq-intervalo-confianza-log-espectro">\[\begin{equation}
+  \left[\ln\bar{f}(\omega)+\ln2L-\ln\chi^2_{2L}(1-\alpha/2),\ln\bar{f}(\omega)+\ln2L-\ln\chi^2_{2L}(\alpha/2)\right].
+\tag{11.56}
+\end{equation}\]</span>
+<p>Podemos realizar también una prueba de hipótesis relativa a la igualdad del espectro usando el hecho de que la distribución resultante <a href="analisis-espectral.html#eq:eq-distrib-periodograma-suavizado">(11.52)</a> implica que el radio del espectro basado en una muestra aproximadamente independiente tiene distribución aproximada <span class="math inline">\(F_{2L}^{2L}\)</span>.</p>
+
+<div class="example">
+<span id="exm:ejem-periodograma-suavizado-SOI" class="example"><strong>Ejemplo 11.10  (Periodograma suavizado de las series SOI y reclutamiento (nuevos peces))  </strong></span>En la Figura <a href="analisis-espectral.html#fig:fig-periodograma-SOI">11.4</a> graficamos los periodogramas para las series SOI y Reclutamiento (nuevos peces). En la gráfica se puede notar una frecuencia baja en el efecto El Niño, lo que sugiere que un suavizado nos permitirá identificar las frecuencias dominantes sobre todos los periodos. La elección del valor de <span class="math inline">\(L=9\)</span> luce razonable para el suavizado. El ancho de banda en este caso es <span class="math inline">\(B_w=9/480=0.01875\)</span> ciclos por meses para el espectro estimado. La Figura <a href="analisis-espectral.html#fig:fig-periodograma-suavizado-SOI">11.5</a> muestra los periodogramas suavizados de ambas series. Allí se puede notar, (líneas punteadas) las cuatro frecuencias dominantes, estas son <span class="math inline">\(\omega_j=1/12,2/12,3/12\)</span> y <span class="math inline">\(1/48\)</span>. También puede observar el ancho de banda que es <span class="math inline">\(B_w=0.00541\)</span>.
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:fig-periodograma-suavizado-SOI"></span>
+<img src="images/ejemplo4p10.png" alt="Periodograma suavizado de las series SOI y Reclutamiento"  />
+<p class="caption">
+Figura 11.5: Periodograma suavizado de las series SOI y Reclutamiento
+</p>
+</div>
+<hr />
+
+<div class="example">
+<span id="exm:ejem-espectro-altura-olas" class="example"><strong>Ejemplo 11.11  (Serie de Alturas de Olas. Estación 144. ST. PETERSBURG)  </strong></span>La Figura <a href="analisis-espectral.html#fig:fig-periodograma-altura-olas">11.6</a> muestra el registro de alturas de olas y el correspondiente periodograma. Las alturas de olas fueron registrados por una boya ubicada en el Golfo de México, cercana a las costa de St. Petersburg, Florida, EE.UU, tomadas el 1ro. enero de 2009 con una frecuencia de muestreo de 1.28Hz. Los comandos en R son:
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SP=<span class="kw">matrix</span>(<span class="kw">scan</span>(<span class="st">&quot;data/station14401.txt&quot;</span>), <span class="dt">byrow=</span><span class="ot">TRUE</span>, <span class="dt">ncol=</span><span class="dv">2</span>)
+m&lt;-<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>),<span class="dv">2</span>,<span class="dv">2</span>,<span class="dt">byrow=</span><span class="ot">TRUE</span>)
+<span class="kw">layout</span>(m)
+<span class="kw">plot</span>(SP[,<span class="dv">1</span>]<span class="op">/</span><span class="fl">0.78</span>,SP[,<span class="dv">2</span>],<span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Tiempo (seg)&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Alturas (m)&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Altura de olas, Estacion 431, St. Petersburg, FL&quot;</span>)
+I1=<span class="kw">spectrum</span>(SP[,<span class="dv">2</span>],<span class="dt">spans=</span><span class="dv">3</span>,<span class="dt">log=</span><span class="st">&quot;no&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Periodograma suavizado estacion 144&quot;</span>)
+I2=<span class="kw">spectrum</span>(SP[,<span class="dv">2</span>],<span class="dt">log=</span><span class="st">&quot;no&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Periodograma estacion 144&quot;</span>)</code></pre></div>
+<div class="figure"><span id="fig:fig-periodograma-altura-olas"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-periodograma-altura-olas-1.svg" alt="Periodograma para las alturas de olas, Estación 144, St. Petersburg, FL."  />
+<p class="caption">
+Figura 11.6: Periodograma para las alturas de olas, Estación 144, St. Petersburg, FL.
+</p>
+</div>
+<hr />
+
+<div class="example">
+<span id="exm:ejem-periodograma-terremoto-explosiones" class="example"><strong>Ejemplo 11.12  (Periodogramas para las series de Terremotos y Explosiones)  </strong></span>La Figura <a href="analisis-espectral.html#fig:fig-periodograma-terremoto-explosiones">11.7</a> muestra el espectro calculado por separado de las dos fases del terremoto y explosión en la Figura 2.7 del capítulo 2.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x=<span class="kw">matrix</span>(<span class="kw">scan</span>(<span class="st">&quot;data/eq5exp6.txt&quot;</span>),<span class="dt">ncol=</span><span class="dv">2</span>)
+eqP=x[<span class="dv">1</span><span class="op">:</span><span class="dv">1024</span>,<span class="dv">1</span>]; eqS=x[<span class="dv">1025</span><span class="op">:</span><span class="dv">2048</span>,<span class="dv">1</span>]
+exP=x[<span class="dv">1</span><span class="op">:</span><span class="dv">1024</span>,<span class="dv">2</span>]; exS=x[<span class="dv">1025</span><span class="op">:</span><span class="dv">2048</span>,<span class="dv">2</span>]
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+eqPs=<span class="kw">spectrum</span>(eqP, <span class="dt">main=</span><span class="st">&quot;Espectro del sismo (fase P)&quot;</span>, <span class="dt">log=</span><span class="st">&quot;no&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.25</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.04</span>))
+eqSs=<span class="kw">spectrum</span>(eqS, <span class="dt">main=</span><span class="st">&quot;Espectro del sismo (fase S)&quot;</span>, <span class="dt">log=</span><span class="st">&quot;no&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.25</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.4</span>))
+exPs=<span class="kw">spectrum</span>(exP, <span class="dt">main=</span><span class="st">&quot;Espectro de explosiones (fase P)&quot;</span>, <span class="dt">log=</span><span class="st">&quot;no&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.25</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.04</span>))
+exSs=<span class="kw">spectrum</span>(exS, <span class="dt">main=</span><span class="st">&quot;Espectro de explosiones (fase S)&quot;</span>, <span class="dt">log=</span><span class="st">&quot;no&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.25</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.4</span>))</code></pre></div>
+<div class="figure"><span id="fig:fig-periodograma-terremoto-explosiones"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-periodograma-terremoto-explosiones-1.svg" alt="Periodogramas para las series de Terremotos y Explosiones"  />
+<p class="caption">
+Figura 11.7: Periodogramas para las series de Terremotos y Explosiones
+</p>
+</div>
+<hr />
+</div>
+<div id="procesos-de-incremento-ortogonal-sobre--pipi" class="section level2">
+<h2><span class="header-section-number">11.5</span> Procesos de Incremento Ortogonal sobre <span class="math inline">\([-\pi,\pi]\)</span></h2>
+<p>Con el fin de dar un significado preciso a la representación espectral <a href="analisis-espectral.html#eq:eq-funcion-distribucion-espectral">(11.12)</a> mencionada anteriormente, es necesario introducir el concepto de integración estocástica de una función no-aleatoria con respecto a un proceso de incremento ortogonal <span class="math inline">\(\{Z(\lambda)\}\)</span> .</p>
+
+<div class="definition">
+<span id="def:defi-proceso-estacionario-complejo" class="definition"><strong>Definición 11.5  </strong></span>Un proceso <span class="math inline">\(\{x_t\}\)</span> es un <em>proceso estacionario a valores complejos</em> si <span class="math inline">\(\mathbb{E}|x_t^2|&lt;\infty\)</span>, <span class="math inline">\(\mathbb{E}(X_t)\)</span> es independiente de <span class="math inline">\(t\)</span> y <span class="math inline">\(\mathbb{E}(x_{t+h}\bar{x}_t)\)</span> es independiente de <span class="math inline">\(t\)</span>
+</div>
+
+<hr />
+
+<div class="definition">
+<p><span id="def:defi-autocovarianza-proceso-complejo" class="definition"><strong>Definición 11.6  </strong></span>La función de autocovarianza <span class="math inline">\(\gamma(\cdot)\)</span> de un proceso estacionario a valores complejos <span class="math inline">\(\{x_t\}\)</span> es</p>
+<span class="math display" id="eq:eq-autocovarianza-proceso-complejo">\[\begin{equation}
+\gamma(h) = \mathbb{E}(x_{t+h}\bar{x}_t) - \mathbb{E}(x_{t+h})\mathbb{E}(\bar{x}_t).
+\tag{11.57}
+\end{equation}\]</span>
+</div>
+
+<hr />
+
+<div class="theorem">
+<p><span id="thm:teo-autocovarianza-hermitiana" class="theorem"><strong>Teorema 11.4  </strong></span>Una función <span class="math inline">\(K(\cdot)\)</span> definida sobre los enteros en la función de autocovarianza de una serie estacionaria (posiblemente a valores complejos) si y solo si <span class="math inline">\(K(\cdot)\)</span> es Hermitiana y no-negativa definida, esto es, si y solo si <span class="math inline">\(K(n)=\overline{K(-n)}\)</span> y</p>
+<span class="math display" id="eq:eq-k-no-negativa-definida">\[\begin{equation}
+\sum_{i,j=1}^na_iK(i-j)\bar{a}_j\geq0,
+\tag{11.58}
+\end{equation}\]</span>
+para todo entero positivo <span class="math inline">\(n\)</span> y todo vector <span class="math inline">\(\mathbf{a}=(a_1,\ldots,a_n)^t\in\mathbb{C}^n\)</span>.
+</div>
+
+<hr />
+<p>El Teorema <a href="analisis-espectral.html#thm:teo-autocovarianza-hermitiana">11.4</a> caracteriza la función de autocovarianza a valores complejos sobre los enteros como aquellas funciones que son Hermitianas y no-negativa definida. El Teorema de Herglotz, el cual presentaremos a continuación, caracteriza estas como las funciones que pueden ser escritas en la forma <a href="analisis-espectral.html#eq:eq-funcion-distribucion-espectral">(11.12)</a> para alguna función de distribución acotada <span class="math inline">\(F\)</span> con masa concentrada en <span class="math inline">\((-\pi,\pi]\)</span>.</p>
+
+<div class="theorem">
+<p><span id="thm:teo-Herglotz" class="theorem"><strong>Teorema 11.5  (Teorema de Herglotz)  </strong></span>Una función a valores complejos <span class="math inline">\(\gamma(\cdot)\)</span> definida sobre los enteros es no-negativa definida si y solo si</p>
+<span class="math display" id="eq:eq-no-negativa-definida-Herglotz">\[\begin{equation}
+\gamma(h) = \int_{-\pi}^{\pi}e^{ihv}dF(v)\text{ para todo }h=0,\pm1,\pm2,\ldots,
+\tag{11.59}
+\end{equation}\]</span>
+donde <span class="math inline">\(F(\cdot)\)</span> es una función acotada en <span class="math inline">\([-\pi,\pi]\)</span> continua a la derecha, no decreciente y <span class="math inline">\(F(-\pi)=0\)</span>.
+</div>
+
+<hr />
+
+<div class="definition">
+<p><span id="def:defi-proceso-incremento-ortogonal" class="definition"><strong>Definición 11.7  </strong></span>Un <em>proceso de incremento ortogonal sobre <span class="math inline">\([-\pi,\pi]\)</span></em> es un proceso estocástico a valores complejos <span class="math inline">\(\{Z(\lambda),-\pi\leq\lambda\leq\pi\}\)</span> tal que</p>
+<span class="math display" id="eq:eq-e4p6p2" id="eq:eq-e4p6p1">\[\begin{eqnarray}
+\langle Z(\lambda),Z(\lambda)\rangle &amp;&lt;&amp; \infty\text{, con }-\pi\leq\lambda\leq\pi \tag{11.60}  \\
+\langle Z(\lambda),1\rangle &amp;=&amp; 0 \text{, con }-\pi\leq\lambda\leq\pi \tag{11.61}
+\end{eqnarray}\]</span>
+<p>y</p>
+<span class="math display" id="eq:eq-e4p6p3">\[\begin{equation}
+\langle Z(\lambda_4)-Z(\lambda_3),Z(\lambda_2)-Z(\lambda_1)\rangle=0\text{, si }(\lambda_1,\lambda_2]\cap(\lambda_3,\lambda_4]=\emptyset
+\tag{11.62}
+\end{equation}\]</span>
+donde el producto interno se define como <span class="math inline">\(\langle X,Y\rangle=\mathbb{E}(X\bar{Y})\)</span>.
+</div>
+
+<hr />
+<p>El proceso <span class="math inline">\(\{Z(\lambda),-\pi\leq\lambda\leq\pi\}\)</span> se llamará <strong>continuo a la derecha</strong> si para todo <span class="math inline">\(\lambda\in[-\pi,\pi)\)</span></p>
+<p><span class="math display">\[\|Z(\lambda+\delta)-Z(\lambda)\|^2=\mathbb{E}|Z(\lambda+\delta)-Z(\lambda)|^2\to0\text{ cuando }\delta\downarrow0.\]</span></p>
+
+<div class="proposition">
+<p><span id="prp:prop-incremento-ortogonal-distrib-unica" class="proposition"><strong>Proposición 11.3  </strong></span>Si <span class="math inline">\(\{Z(\lambda),-\pi\leq\lambda\leq\pi\}\)</span> es un proceso de incremento ortogonal, entonces existe una única función de distribución <span class="math inline">\(F\)</span> (es decir, una única función continua a derecha no decreciente) tal que</p>
+<span class="math display" id="eq:eq-e4p6p4">\[\begin{equation}
+\begin{array}{lclc}
+F(\lambda) &amp;=&amp;0, &amp;   \lambda\leq-\pi  \\
+F(\lambda) &amp;=&amp; F(\pi), &amp;  \lambda\geq\pi  \\
+F(\mu)-F(\lambda) &amp;=&amp; \|Z(\mu)-Z(\lambda)\|^2, &amp;   -\pi\leq\lambda\leq\mu\leq\pi\\
+\end{array}
+\tag{11.63}
+\end{equation}\]</span>
+</div>
+
+
+<div class="proof">
+<p> <span class="proof"><em>Demostración. </em></span> Para <span class="math inline">\(F\)</span> satisfaciendo las condiciones prescritas es claro, haciendo <span class="math inline">\(\lambda=-\pi\)</span> que</p>
+<span class="math display" id="eq:eq-e4p6p5">\[\begin{equation}
+  F(\mu)=\|Z(\mu)-Z(-\pi)\|^2\text{, }-\pi\leq\mu\leq\pi
+\tag{11.64}
+\end{equation}\]</span>
+<p>Para verificar que la función así definida es no decreciente, usamos la ortogonalidad de <span class="math inline">\(Z(\mu)-Z(\lambda)\)</span> y <span class="math inline">\(Z(\lambda)-Z(-\pi), -\pi\leq\lambda\leq\mu\leq\pi\)</span> para escribir</p>
+<span class="math display">\[\begin{eqnarray*}
+  F(\mu) &amp;=&amp; \|Z(\mu)-Z(\lambda)+Z(\lambda)-Z(-\pi)\|^2 \\
+         &amp;=&amp; \|Z(\mu)-Z(\lambda)\|^2+\|Z(\lambda)-Z(-\pi)\|^2 \\
+         &amp;\geq&amp; F(\lambda)
+\end{eqnarray*}\]</span>
+<p>El mismo procedimiento nos da para <span class="math inline">\(-\pi\leq\mu\leq\mu+\delta\leq\pi\)</span></p>
+<p><span class="math display">\[F(\mu+\delta)-F(\mu)=\|Z(\mu+\delta)-Z(\mu)\|^2\to0\text{, cuando }\delta\downarrow0,\]</span></p>
+por la suposición de continuidad a derecha de <span class="math inline">\(\{Z(\lambda)\}\)</span>
+</div>
+
+<hr />
+
+<div class="remark">
+<p> <span class="remark"><em>Nota. </em></span> La función de distribución <span class="math inline">\(F\)</span> de la Proposición <a href="analisis-espectral.html#prp:prop-incremento-ortogonal-distrib-unica">11.3</a>, definida en <span class="math inline">\([-\pi,\pi]\)</span> por <a href="analisis-espectral.html#eq:eq-e4p6p5">(11.64)</a> será referida como la función de distribución asociada con el proceso de incremento ortogonal <span class="math inline">\(\{Z(\lambda),-\pi\leq\lambda\leq\pi\}\)</span>. Es común en la práctica en el análisis de series de tiempo usar la notación corta</p>
+<p><span class="math display">\[\mathbb{E}(dZ(\lambda),d\bar{Z(\mu)})=\delta_{\lambda,\mu}dF(\lambda)\]</span></p>
+para las ecuaciones <a href="analisis-espectral.html#eq:eq-e4p6p3">(11.62)</a> y <a href="analisis-espectral.html#eq:eq-e4p6p4">(11.63)</a>.
+</div>
+
+<hr />
+
+<div class="definition">
+<p><span id="def:defi-movimiento-browniano" class="definition"><strong>Definición 11.8  </strong></span>Un <strong>Movimiento Browniano Estándar</strong> iniciando en nivel cero es un proceso <span class="math inline">\(\{B(t),t\geq0\}\)</span> que satisface las siguientes condiciones:</p>
+<ul>
+<li><p><span class="math inline">\(B(0)=0\)</span>,</p></li>
+<li><p><span class="math inline">\(B(t_2)-B(t_1),B(t_3)-B(t_2),\ldots,B(t_n)-B(t_{n-1})\)</span> son independientes para cada <span class="math inline">\(n\in\{3,4,\ldots\}\)</span> y cada <span class="math inline">\(t=(t_1,\ldots,t_n)^t\)</span> tal que <span class="math inline">\(0\leq t_1&lt;t_2&lt;\ldots&lt;t_n\)</span>,</p></li>
+<li><span class="math inline">\(B(t)-B(s)\sim N(0,t-s)\)</span> para <span class="math inline">\(t\geq s\)</span>.
+</div>
+</li>
+</ul>
+<hr />
+
+<div class="example">
+<p><span id="exm:ejem-movimiento-browniano" class="example"><strong>Ejemplo 11.13  </strong></span>Un movimiento browniano <span class="math inline">\(\{B(\lambda),-\pi\leq\lambda\leq\pi\}\)</span> con <span class="math inline">\(\mathbb{E}B(\lambda)=0\)</span> y <span class="math inline">\(\text{var}(B(\lambda))=\sigma^2(\lambda+\pi)/2\pi\text{, }-\pi\leq\lambda\leq\pi\)</span>, es un proceso de incremento ortogonal sobre <span class="math inline">\([-\pi,\pi]\)</span>. La función de distribución asociada satisface <span class="math inline">\(F(\lambda)=0\text{, para }\lambda\leq-\pi, F(\lambda)=\sigma^2\text{, para }\lambda\geq\pi\)</span> y</p>
+<span class="math display">\[F(\lambda)=\sigma^2(\lambda+\pi)/2\pi\text{, para }-\pi\leq\lambda\leq\pi.\]</span>
+</div>
+
+<hr />
+
+<div class="definition">
+<p><span id="def:defi-proceso-poisson" class="definition"><strong>Definición 11.9  </strong></span>Un <strong>Proceso de Poisson con media <span class="math inline">\(\lambda&gt;0\)</span></strong> es un proceso <span class="math inline">\(\{N(t),t\geq0\}\)</span> que satisface:</p>
+<ul>
+<li><p><span class="math inline">\(N(0)=0\)</span>,</p></li>
+<li><p><span class="math inline">\(N(t_2)-N(t_1),N(t_3)-N(t_2),\ldots,N(t_n)-N(t_{n-1})\)</span> son independientes para cada <span class="math inline">\(n\in\{3,4,\ldots\}\)</span> y cada <span class="math inline">\(t=(t_1,\ldots,t_n)\)</span> tal que <span class="math inline">\(0\leq t_1&lt;t_2&lt;\ldots&lt;t_n\)</span>,</p></li>
+<li><span class="math inline">\(N(t)-N(s)\)</span> tiene distribución de Poisson con media <span class="math inline">\(\lambda(t-s)\)</span> para <span class="math inline">\(t\geq s\)</span>.
+</div>
+</li>
+</ul>
+<hr />
+
+<div class="example">
+<p><span id="exm:ejem-proceso-poison" class="example"><strong>Ejemplo 11.14  </strong></span>Si <span class="math inline">\(\{N(\lambda),-\pi\leq\lambda\leq\pi\}\)</span> es un proceso de Poisson sobre <span class="math inline">\([-\pi,\pi]\)</span> con intensidad constante <span class="math inline">\(c\)</span> entonces el proceso <span class="math inline">\(Z(\lambda)=N(\lambda)-\mathbb{E}N(\lambda)\text{, }-\pi\leq\lambda\leq\pi\)</span>, es un proceso de incremento ortogonal con función de distribución asociada</p>
+<p><span class="math display">\[F(\lambda)=\begin{cases}
+   0&amp;\text{, para }\lambda\leq-\pi\\
+   2\pi c&amp;\text{, para }\lambda\geq\pi\\
+   c(\lambda+\pi)&amp;\text{, para }-\pi\leq\lambda\leq\pi
+\end{cases}
+\]</span></p>
+Si escogemos <span class="math inline">\(c\)</span> como <span class="math inline">\(\sigma^2/2\pi\)</span> entonces <span class="math inline">\(\{Z(\lambda)\}\)</span> tiene exactamente la misma función de distribución asociada como la de <span class="math inline">\(\{B(\lambda)\}\)</span> del Ejemplo <a href="analisis-espectral.html#exm:ejem-movimiento-browniano">11.13</a>.
+</div>
+
+<hr />
+</div>
+<div id="integracion-con-respecto-a-un-proceso-de-incremento-ortogonal" class="section level2">
+<h2><span class="header-section-number">11.6</span> Integración con Respecto a un Proceso de Incremento Ortogonal</h2>
+<p>En esta sección demostraremos como definir la integral estocástica</p>
+<p><span class="math display">\[I(f)=\int_{(-\pi,\pi]}f(v)dZ(v)\]</span></p>
+<p>donde <span class="math inline">\(\{Z(\lambda)\text{, }-\pi\leq\lambda\leq\pi\}\)</span> es un proceso de incremento ortogonal definido sobre el espacio de probabilidad <span class="math inline">\((\Omega,\mathcal{F},P)\)</span> y <span class="math inline">\(f\)</span> es cada función en <span class="math inline">\([-\pi,\pi]\)</span> cuadrado integrable con respecto a la función de distribución <span class="math inline">\(F\)</span> asociada con <span class="math inline">\(Z(\lambda)\)</span>. Procederemos paso por paso, primero definiremos <span class="math inline">\(I(f)\)</span> para cada función <span class="math inline">\(f\)</span> de la forma</p>
+<span class="math display" id="eq:eq-e4p7p1">\[\begin{equation}
+  f(\lambda)=\sum_{i=0}^{n}f_iI_{(\lambda_i,\lambda_{i+1}]}(\lambda)\text{,    }-\pi=\lambda_0&lt;\lambda_1&lt;\cdots&lt;\lambda_{n+1}=\pi
+\tag{11.65}
+\end{equation}\]</span>
+<p>como</p>
+<span class="math display" id="eq:eq-e4p7p2">\[\begin{equation}
+    I(f)=\sum_{i=0}^{n}f_i[Z(\lambda_{i+1})-Z(\lambda_i)]
+\tag{11.66}
+\end{equation}\]</span>
+<p>Entonces, extendemos la aplicación <span class="math inline">\(I\)</span> a un isomorfismo de <span class="math inline">\(L^2([-\pi,\pi],\mathcal{B},F)\equiv L^2(F)\)</span> a un subespacio de <span class="math inline">\(L^2(\Omega,\mathcal{F},P)\)</span>.</p>
+<p>Sea <span class="math inline">\(\mathcal{D}\)</span> la clase de todas las funciones que tiene la forma <a href="analisis-espectral.html#eq:eq-e4p7p1">(11.65)</a> para algún <span class="math inline">\(n\in\{0,1,2,\ldots\}\)</span>. Entonces la definición <a href="analisis-espectral.html#eq:eq-e4p7p2">(11.66)</a> es consistente en <span class="math inline">\(\mathcal{D}\)</span> dado que para cada <span class="math inline">\(f\in\mathcal{D}\)</span> existe una <em>única</em> representación de <span class="math inline">\(f\)</span>,</p>
+<p><span class="math display">\[f(\lambda)=\sum_{i=0}^{n}r_iI_{(v_i,v_{i+1}]}(\lambda)\text{,    }-\pi=v_0&lt;v_1&lt;\cdots&lt;v_{m+1}=\pi,\]</span></p>
+<p>en la cual <span class="math inline">\(r_i\neq r_{i+1}, 0\leq i&lt;m\)</span>. Todas las otras representaciones de <span class="math inline">\(f\)</span> que tienen la forma <a href="analisis-espectral.html#eq:eq-e4p7p1">(11.65)</a> son obtenidas por medio de reexpresar una o más funciones indicatrices <span class="math inline">\(I_{(v_i,v_{i+1}]}\)</span> como una suma de funciones indicatrices de intervalos adjuntos. Sin embargo, esto no hace ninguna diferencia en el valor de <span class="math inline">\(I(f)\)</span>, y por consiguiente la definición <a href="analisis-espectral.html#eq:eq-e4p7p2">(11.66)</a> es la misma para todas las representaciones <a href="analisis-espectral.html#eq:eq-e4p7p1">(11.65)</a> de <span class="math inline">\(f\)</span>. Es claro que <a href="analisis-espectral.html#eq:eq-e4p7p2">(11.66)</a> define <span class="math inline">\(I\)</span> como una aplicación lineal sobre <span class="math inline">\(\mathcal{D}\)</span>.</p>
+<p>Más aún, la aplicación preserva el producto interno ya que si <span class="math inline">\(f\in\mathcal{D}\)</span> y <span class="math inline">\(g\in\mathcal{D}\)</span> entonces existen representaciones</p>
+<p><span class="math display">\[f(\lambda)=\sum_{i=0}^{n}f_iI_{(\lambda_i,\lambda_{i+1}]}(\lambda)\]</span></p>
+<p><span class="math display">\[g(\lambda)=\sum_{i=0}^{n}g_iI_{(\lambda_i,\lambda_{i+1}]}(\lambda)\]</span></p>
+<p>en términos de una partición simple <span class="math inline">\(-\pi=\lambda_0&lt;\lambda_1&lt;\cdots&lt;\lambda_{n+1}=\pi\)</span>. Por lo tanto, el producto interno de <span class="math inline">\(I(f)\)</span> e <span class="math inline">\(I(g)\)</span> en <span class="math inline">\(L^2(\Omega,\mathcal{F},P)\)</span> es</p>
+<span class="math display">\[\begin{eqnarray*}
+  \langle I(f),I(g)\rangle &amp;=&amp; \left\langle\sum_{i=0}^{n}f_i[Z(\lambda_{i+1})-Z(\lambda_i)],\sum_{i=0}^{n}g_i[Z(\lambda_{i+1})-Z(\lambda_i)\right\rangle \\
+         &amp;=&amp; \sum_{i=0}^{n}f_i\bar{g}_i(F(\lambda_{i+1})-F(\lambda_i))
+\end{eqnarray*}\]</span>
+<p>por la ortogonalidad de los incrementos de <span class="math inline">\(\{Z(\lambda)\}\)</span> y la Proposición <a href="analisis-espectral.html#prp:prop-incremento-ortogonal-distrib-unica">11.3</a>.</p>
+<p>La última expresión la podemos escribir como</p>
+<p><span class="math display">\[\int_{(-\pi,\pi]}f(v)\bar{g}(v)dF(v)=\langle f,g\rangle_{L^2(F)}\]</span></p>
+<p>el producto interno en <span class="math inline">\(L^2(F)\)</span> de <span class="math inline">\(f\)</span> y <span class="math inline">\(g\)</span>. Por lo tanto la aplicación I sobre <span class="math inline">\(\mathcal{D}\)</span> preserva los productos internos.</p>
+<p>Ahora, denotemos <span class="math inline">\(\bar{\mathcal{D}}\)</span> la clausura en <span class="math inline">\(L^2(F)\)</span> del conjunto <span class="math inline">\(\mathcal{D}\)</span>. Si <span class="math inline">\(f\in\bar{\mathcal{D}}\)</span> entonces existe una sucesión <span class="math inline">\(\{f_n\}\)</span> de elementos de <span class="math inline">\(\mathcal{D}\)</span> tal que <span class="math inline">\(\|f_n-f\|_{L^2(f)}\to0\)</span>. Por lo tanto definimos <span class="math inline">\(I(f)\)</span> como el límite en media cuadrado</p>
+<span class="math display" id="eq:eq-e4p7p3">\[\begin{equation}
+    I(f)=\underset{n\to\infty}{m.s.\lim}I(f_n)
+\tag{11.67}
+\end{equation}\]</span>
+<p>Primero comprobemos (a) que el límite existe y (b) que el límite es el mismo para todas las sucesiones <span class="math inline">\(\{f_n\}\)</span> tal que <span class="math inline">\(\|f_n-f\|_{L^2(F)}\to0\)</span>.</p>
+<p>Para comprobar (a) simplemente observe que para <span class="math inline">\(f_m,f_n\in\mathcal{D}\)</span>,</p>
+<span class="math display">\[\begin{eqnarray*}
+\|I(f_n)-I(f_m)\| &amp;=&amp; \|I(f_n-f_m)\| \\
+                  &amp;=&amp; \|f_n-f_m\|_{L^2(F)},
+\end{eqnarray*}\]</span>
+<p>de modo que si <span class="math inline">\(\|f_n-f_m\|_{L^2(F)}\to0\)</span>, la sucesión <span class="math inline">\(\{I(f_n)\}\)</span> es una sucesión de Cauchy y por lo tanto converge en <span class="math inline">\(L^2(\Omega,\mathcal{F},P)\)</span>.</p>
+<p>Para comprobar (b), supóngase que <span class="math inline">\(\|f_n-f\|_{L^2(F)}\to0\)</span> y <span class="math inline">\(\|g_n-f\|_{L^2(F)}\to0\)</span> donde <span class="math inline">\(f_n,g_n\in\mathcal{D}\)</span>. Entonces la sucesión <span class="math inline">\(f_1,g_1,f_2,g_2,\ldots\)</span>, debe converger en norma y por lo tanto la sucesión <span class="math inline">\(I(f_1), I(g_1)\)</span>, <span class="math inline">\(I(f_2), I(g_2), \ldots\)</span>, debe converger en <span class="math inline">\(L^2(\Omega,\mathcal{D},P)\)</span>. Sin embargo, esto no es posible a menos que las subsucesiones <span class="math inline">\(I(f_n)\)</span> e <span class="math inline">\(I(g_n)\)</span> tengan el mismo límite en media cuadrado. Esto completa la prueba de que la definición <a href="analisis-espectral.html#eq:eq-e4p7p3">(11.67)</a> es válida y consistente para <span class="math inline">\(f\in\bar{\mathcal{D}}\)</span>.</p>
+<p>La aplicación <span class="math inline">\(I\)</span> sobre <span class="math inline">\(\bar{\mathcal{D}}\)</span> es lineal y preserva el producto interno ya que si <span class="math inline">\(f^{(i)}\in\bar{\mathcal{D}}\)</span> y \ <span class="math inline">\(\|f_n^{(i)}-f^{(i)}\|_{L^2(F)}\to0, f_n^{(i)}\in\mathcal{D},i=1,2\)</span>, entonces por linealidad de <span class="math inline">\(I\)</span> en <span class="math inline">\(\mathcal{D}\)</span></p>
+<span class="math display">\[\begin{eqnarray*}
+I(a_1f^{(1)}+a_2f^{(2)}) &amp;=&amp; \lim_{n\to\infty}I(a_1f_n^{(1)}+a_2f_n^{(2)}) \\
+     &amp;=&amp; \lim_{n\to\infty}(a_1I(f_n^{(1)})+a_2I(f_n^{(2)})) \\
+     &amp;=&amp; a_1I(f^{(1)})+a_2I(f^{(2)})
+\end{eqnarray*}\]</span>
+<p>y por continuidad del producto interno</p>
+<span class="math display">\[\begin{eqnarray*}
+  \langle I(f^{(1)},I(f^{(2)}\rangle &amp;=&amp; \lim_{n\to\infty}\langle I(f_n^{(1)}),I(f_n^{(2)})\rangle \\
+         &amp;=&amp; \lim_{n\to\infty}\langle f_n^{(1)},f_n^{(2)}\rangle_{L^2(F)} \\
+         &amp;=&amp; \langle f^{(1)},f^{(2)}\rangle_{L^2(F)}\rangle.
+\end{eqnarray*}\]</span>
+<p>Falta solo demostrar que <span class="math inline">\(\bar{\mathcal{D}}=L^2(F)\)</span>. Para hacer esto primero observe que las funciones continuas en <span class="math inline">\([-\pi,\pi]\)</span> son densas en <span class="math inline">\(L^2(F)\)</span> ya que <span class="math inline">\(F\)</span> es una función de distribución acotada. Más aún <span class="math inline">\(\mathcal{D}\)</span> es un subconjunto denso (en el sentido <span class="math inline">\(L^2(F)\)</span>) del conjunto de funciones continuas sobre <span class="math inline">\([-\pi,\pi]\)</span>. Por consiguiente <span class="math inline">\(\bar{\mathcal{D}}=L^2(F)\)</span>.</p>
+<p>Las ecuaciones <a href="analisis-espectral.html#eq:eq-e4p7p2">(11.66)</a> y <a href="analisis-espectral.html#eq:eq-e4p7p3">(11.67)</a> entonces definen <span class="math inline">\(I\)</span> como una aplicación lineal que preserva el producto interno sobre <span class="math inline">\(\bar{\mathcal{D}}=L^2(F)\)</span> en <span class="math inline">\(L^2(\Omega,\mathcal{F},P)\)</span>. La imagen <span class="math inline">\(I(\bar{\mathcal{D}})\)</span> de <span class="math inline">\(\bar{\mathcal{D}}\)</span> es claramente un subespacio lineal cerrado de <span class="math inline">\(L^2(\Omega,\mathcal{F},P)\)</span> y la aplicación <span class="math inline">\(I\)</span> es un isomorfismo de <span class="math inline">\(\bar{\mathcal{D}}\)</span> en <span class="math inline">\(I(\bar{\mathcal{D}})\)</span>. La aplicación <span class="math inline">\(I\)</span> que nos proporciona la definición necesita de la integral estocástica.</p>
+
+<div class="definition">
+<p><span id="def:defi-integral-estocastica" class="definition"><strong>Definición 11.10  </strong></span>Si <span class="math inline">\(\{Z(\lambda)\}\)</span> es un proceso de incremento ortogonal sobre <span class="math inline">\([-\pi,\pi]\)</span> con función de distribución asociada <span class="math inline">\(F\)</span> y si <span class="math inline">\(f\in L^2(F)\)</span>, entonces  <span class="math inline">\(\int_{(-\pi,\pi]}f(\lambda)dZ(\lambda)\)</span> se define como la variable aleatoria <span class="math inline">\(I(f)\)</span> construida arriba, esto es,</p>
+<span class="math display" id="eq:eq-integral-estocastica">\[\begin{equation}
+\int_{(-\pi,\pi]}f(v)dZ(v):=I(f).
+\tag{11.68}
+\end{equation}\]</span>
+</div>
+
+<hr />
+<div id="propiedades-de-la-integral-estocastica" class="section level3">
+<h3><span class="header-section-number">11.6.1</span> Propiedades de la Integral Estocástica</h3>
+<p>Para cada par de funciones <span class="math inline">\(f\)</span> y <span class="math inline">\(g\)</span> en <span class="math inline">\(L^2(F)\)</span> hemos establecidos las propiedades</p>
+<span class="math display" id="eq:eq-e4p7p5" id="eq:eq-e4p7p4">\[\begin{eqnarray}
+  I(a_1f+a_2g) &amp;=&amp; a_1I(f)+a_2I(g)\text{, }a_1,a_2\in\mathbb{C} \tag{11.69}\\
+  \mathbb{E}(I(f)\bar{I(g)}) &amp;=&amp; \int_{(-\pi,\pi]}f(v)\bar{g(v)}dF(v) \tag{11.70}
+\end{eqnarray}\]</span>
+<p>Más aún, si <span class="math inline">\(\{f_n\}\)</span> y <span class="math inline">\(\{g_n\}\)</span> son sucesiones en <span class="math inline">\(L^2(F)\)</span> tal que <span class="math inline">\(\|f_n-f\|_{L^2(F)}\to0\)</span> y <span class="math inline">\(\|g_n-g\|_{L^2(F)}\to0\)</span>, entonces por continuidad del producto interno</p>
+<span class="math display" id="eq:eq-e4p7p6">\[\begin{equation}
+  \mathbb{E}(I(f_n)\bar{I(g_n)})\to\mathbb{E}(I(f)\bar{I(g)})=\int_{(-\pi,\pi]}f(v)\bar{g(v)}dF(v)
+\tag{11.71}
+\end{equation}\]</span>
+<p>De <a href="analisis-espectral.html#eq:eq-e4p7p2">(11.66)</a> es claro que</p>
+<span class="math display" id="eq:eq-e4p7p7">\[\begin{equation}
+    \mathbb{E}(I(f))=0
+\tag{11.72}
+\end{equation}\]</span>
+<p>para todo <span class="math inline">\(f\in\mathcal{D}\)</span>; si <span class="math inline">\(f\in\bar{\mathcal{D}}\)</span> entonces existe una sucesión <span class="math inline">\(\{f_n\}, f_n\in\mathcal{D}\)</span> tal que <span class="math inline">\(f_n\overset{L^2(F)}{\longrightarrow}f\)</span> y <span class="math inline">\(I(f_n)\overset{m.s.}{\longrightarrow}I(f)\)</span>, de modo que <span class="math inline">\(\mathbb{E}(I(f))=\lim_{n\to\infty}\mathbb{E}(I(f_n))\)</span> y <a href="analisis-espectral.html#eq:eq-e4p7p7">(11.72)</a> sigue siendo válido. Este argumento es frecuentemente usado para establecer las propiedades de integral estocástica.</p>
+<p>Finalmente notamos de <a href="analisis-espectral.html#eq:eq-e4p7p5">(11.70)</a> y <a href="analisis-espectral.html#eq:eq-e4p7p7">(11.72)</a> que si <span class="math inline">\(\{Z(\lambda)\}\)</span> es cada proceso de incremento ortogonal sobre <span class="math inline">\([-\pi,\pi]\)</span> con función de distribución asociada <span class="math inline">\(F\)</span>, entonces</p>
+<span class="math display" id="eq:eq-e4p7p8">\[\begin{equation}
+  X_t=I(e^{it})=\int_{(-\pi,\pi]}e^{itv}dZ(v)\text{,  }t\in\mathbb{Z},
+\tag{11.73}
+\end{equation}\]</span>
+<p>es un proceso estacionario con media cero y función de autocovarianza</p>
+<span class="math display" id="eq:eq-e4p7p9">\[\begin{equation}
+  \mathbb{E}(X_{t+h}\bar{X}_t)=\int_{(-\pi,\pi]}e^{ivh}dF(v).
+\tag{11.74}
+\end{equation}\]</span>
+</div>
+</div>
+<div id="la-representacion-espectral" class="section level2">
+<h2><span class="header-section-number">11.7</span> La Representación Espectral</h2>
+<p>Sea <span class="math inline">\(\{X_t\}\)</span> un proceso estacionario de media cero con función de distribución espectral <span class="math inline">\(F\)</span>. Para establecer la representación espectral</p>
+<span class="math display" id="eq:eq-e4p2p5">\[\begin{equation}
+X_t=\int_{(-\pi,\pi]}e^{itv}dZ(v)
+\tag{11.75}
+\end{equation}\]</span>
+<p>del proceso <span class="math inline">\(\{X_t\}\)</span> necesitamos primero identificar un proceso de incremento ortogonal apropiado <span class="math inline">\(\{Z(\lambda),\lambda\in[-\pi,\pi]\}\)</span>. La identificación de <span class="math inline">\(\{Z(\lambda)\}\)</span> y la demostración de la representación se logrará mediante la definición de un isomorfismo entre ciertos subespacios <span class="math inline">\(\overline{\mathcal{H}}=\overline{sp}\{X_t,t\in\mathbb{Z}\}\)</span> de <span class="math inline">\(L^2(\Omega,\mathfrak{F},P)\)</span> y <span class="math inline">\(\overline{\mathcal{K}}=\overline{sp}\{e^{it},t\in\mathbb{Z}\}\)</span><a href="#fn24" class="footnoteRef" id="fnref24"><sup>24</sup></a> de <span class="math inline">\(L^2(F)\)</span>. Este isomorfismo proporcionará un vínculo entre las variables aleatorias en el <em>dominio del tiempo</em> y las funciones sobre <span class="math inline">\([-\pi, \pi]\)</span> en el <em>dominio de la frecuencia</em>.</p>
+<p>Sean <span class="math inline">\(\mathcal{H}=\{X_t,t\in\mathbb{Z}\}\)</span> y <span class="math inline">\(\mathcal{K}=sp\{e^{it},t\in\mathbb{Z}\}\)</span> subespacios (no necesariamente cerrados) de <span class="math inline">\(\mathcal{H}\subset L^2(\Omega,\mathfrak{F},P)\)</span> y <span class="math inline">\(\mathcal{K}\subset L^2(F)\)</span> consistentes de combinaciones lineales finitas de <span class="math inline">\(X_t,t\in\mathbb{Z}\)</span> y <span class="math inline">\(e^{it},t\in\mathbb{Z}\)</span>, respectivamente. Demostraremos primero que la aplicación</p>
+<span class="math display" id="eq:eq-e4p8p1">\[\begin{equation}
+  T\left(\sum_{j=1}^{n}a_jX_{t_j}\right)=\sum_{j=1}^{n}a_je^{it_j}
+\tag{11.76}
+\end{equation}\]</span>
+<p>define un isomorfismo entre <span class="math inline">\(\mathcal{H}\)</span> y <span class="math inline">\(\mathcal{K}\)</span>.</p>
+<p>Para verificar que <span class="math inline">\(T\)</span> está bien definida, supóngase que <span class="math inline">\(\|\sum_{j=1}^{n}a_jX_{t_j}-\sum_{k=1}^{m}b_kX_{t_k}\|=0\)</span>. Entonces por definición de la norma <span class="math inline">\(L^2(F)\)</span> y el teorema de Herglotz (Teorema <a href="analisis-espectral.html#thm:teo-Herglotz">11.5</a>)</p>
+<span class="math display">\[\begin{eqnarray*}
+  \left\|T\left(\sum_{j=1}^{n}a_jX_{t_j}\right)-T\left(\sum_{k=1}^{m}b_kX_{t_k}\right)\right\|^2_{L^2(F)}&amp;=&amp;\int_{(-\pi,\pi]}\left|\sum_{j=1}^{n}a_je^{it_jv}-\sum_{k=1}^{m}b_ke^{it_kv}\right|^2dF(v)\\
+            &amp;=&amp;\mathbb{E}\left|\sum_{j=1}^{n}a_jX_{t_j}-\sum_{k=1}^{m}b_kX_{t_k}\right|^2=0,
+\end{eqnarray*}\]</span>
+<p>muestra que <a href="analisis-espectral.html#eq:eq-e4p8p1">(11.76)</a> define <span class="math inline">\(T\)</span> consistentemente en <span class="math inline">\(\mathcal{H}\)</span>. La linealidad de <span class="math inline">\(T\)</span> se sigue de este hecho.</p>
+<p>Adicionalmente</p>
+<span class="math display">\[\begin{eqnarray*}
+  \left\langle T\left(\sum_{j=1}^{n}a_jX_{t_j}\right),T\left(\sum_{k=1}^{m}b_kX_{s_k}\right)\right\rangle &amp;=&amp; \sum_{j=1}^{n}\sum_{k=1}^{m}a_j\bar{b}_k\langle e^{it_j},e^{is_k}\rangle_{L^2(F)} \\
+   &amp;=&amp; \sum_{j=1}^{n}\sum_{k=1}^{m}a_j\bar{b}_k\int_{(-\pi,\pi]}e^{i(t_j-s_k)v}dF(v) \\
+   &amp;=&amp; \sum_{j=1}^{n}\sum_{k=1}^{m}a_j\bar{b}_k\langle X_{t_j},X_{s_k}\rangle \\
+   &amp;=&amp; \left\langle\sum_{j=1}^{n}a_jX_{t_j},\sum_{k=1}^{m}b_kX_{s_k}\right\rangle
+\end{eqnarray*}\]</span>
+<p>mostrando que <span class="math inline">\(T\)</span> de hecho define un isomorfismo entre <span class="math inline">\(\mathcal{H}\)</span> y <span class="math inline">\(\mathcal{K}\)</span>.</p>
+<p>Demostraremos ahora que la aplicación <span class="math inline">\(T\)</span> se puede extender de manera única a un isomorfismo de <span class="math inline">\(\overline{\mathcal{H}}\)</span> en <span class="math inline">\(\overline{\mathcal{K}}\)</span>. Si <span class="math inline">\(Y\in\overline{\mathcal{H}}\)</span> entones existe una sucesión <span class="math inline">\(Y_n\in\mathcal{H}\)</span> tal que <span class="math inline">\(\|Y_n-Y\|\to0\)</span>. Esto implica que <span class="math inline">\(\{Y_n\}\)</span> es una sucesión de Cauchy y por consiguiente, dado que <span class="math inline">\(T\)</span> preserva la norma, la sucesión <span class="math inline">\(\{TY_n\}\)</span> es Cauchy en <span class="math inline">\(L^2(F)\)</span>. La sucesión <span class="math inline">\(\{TY_n\}\)</span> por lo tanto converge en norma a un elemento de <span class="math inline">\(\overline{\mathcal{K}}\)</span>. Si <span class="math inline">\(T\)</span> preserva la norma sobre <span class="math inline">\(\overline{\mathcal{H}}\)</span> definimos</p>
+<p><span class="math display">\[TY=m.s.\lim_{n\to\infty}TY_n.\]</span></p>
+<p>Esta es una definición consistente de <span class="math inline">\(T\)</span> en <span class="math inline">\(\overline{\mathcal{H}}\)</span> ya que si <span class="math inline">\(\|\tilde{Y}_n-Y\|\to0\)</span> entonces la sucesión <span class="math inline">\(TY_1,T\tilde{Y}_1\)</span>, <span class="math inline">\(TY_2,T\tilde{Y}_2,\ldots\)</span> es convergente, lo que implica que las subsucesiones <span class="math inline">\(\{TY_n\}\)</span> y <span class="math inline">\(\{T\tilde{Y}_n\}\)</span> tienen el mismo límite, llamémoslo <span class="math inline">\(TY\)</span>. Más aún, usando el mismo argumento dado en la sección <a href="analisis-espectral.html#integracion-con-respecto-a-un-proceso-de-incremento-ortogonal">Integración con Respecto a un Proceso de Incremento Ortogonal</a> es fácil demostrar que la aplicación <span class="math inline">\(T\)</span> extendida a <span class="math inline">\(\overline{\mathcal{H}}\)</span> es lineal y preserva el producto interno.</p>
+<p>Finalmente, del teorema siguiente se tiene que <span class="math inline">\(\mathcal{K}\)</span> es uniformemente denso en el espacio de funciones continuas <span class="math inline">\(\phi\)</span> en <span class="math inline">\([-\pi,\pi]\)</span> con <span class="math inline">\(\phi(\pi)=\phi(-\pi)\)</span>, que a su vez es denso en <span class="math inline">\(L^2(F)\)</span>. Por consiguiente <span class="math inline">\(\overline{\mathcal{K}}=L^2(F)\)</span>.</p>
+
+<div class="theorem">
+<p><span id="thm:teo-t2p11p1" class="theorem"><strong>Teorema 11.6  </strong></span>Sea <span class="math inline">\(f\)</span> una función continua en <span class="math inline">\([-\pi,\pi]\)</span> tal que <span class="math inline">\(f(\pi)=f(-\pi)\)</span>. Entonces</p>
+<span class="math display" id="eq:eq-e2p11p1">\[\begin{equation}
+  n^{-1}(S_0f+S_1f+\cdots+S_{n-1}f)\to f
+\tag{11.77}
+\end{equation}\]</span>
+uniformemente en <span class="math inline">\([-\pi,\pi]\)</span> cuando <span class="math inline">\(n\to\infty\)</span>.
+</div>
+
+<hr />
+<p>De los hechos anteriores, se tiene el siguiente teorema</p>
+
+<div class="theorem">
+<p><span id="thm:teo-t4p8p1" class="theorem"><strong>Teorema 11.7  </strong></span>Si <span class="math inline">\(F\)</span> es la función de distribución espectral del proceso estacionario <span class="math inline">\(\{X_t,t\in\mathbb{Z}\}\)</span>, entonces existe un único isomorfismo <span class="math inline">\(T\)</span> de <span class="math inline">\(\overline{sp}\{X_t,t\in\mathbb{Z}\}\)</span> en <span class="math inline">\(L^2(F)\)</span> tal que</p>
+<span class="math display">\[TX_t=e^{it}\text{,   }t\in\mathbb{Z}.\]</span>
+</div>
+
+<hr />
+<p>El Teorema <a href="analisis-espectral.html#thm:teo-t4p8p1">11.7</a> es particularmente útil en la teoría de predicción lineal. También es la clave para la identificación de los procesos de incremento ortogonal <span class="math inline">\(\{Z(\lambda),-\pi\leq\lambda\leq\pi\}\)</span> que aparecen en la representación espectral <a href="analisis-espectral.html#eq:eq-e4p2p5">(11.75)</a>. Introducimos el proceso <span class="math inline">\(\{Z(\lambda)\}\)</span> en la siguiente proposición.</p>
+
+<div class="proposition">
+<p><span id="prp:propo-p4p8p1" class="proposition"><strong>Proposición 11.4  </strong></span>Si <span class="math inline">\(T\)</span> es definimos como en el Teorema <a href="analisis-espectral.html#thm:teo-t4p8p1">11.7</a> entonces el proceso <span class="math inline">\(\{Z(\lambda),-\pi\leq\lambda\leq\pi\}\)</span> definido por</p>
+<p><span class="math display">\[Z(\lambda)=T^{-1}(I_{(-\pi,\lambda]}(\cdot))\text{, }-\pi\leq\lambda\leq\pi,\]</span></p>
+es un proceso de incremento ortogonal. Más aún, la función de distribución asociada con <span class="math inline">\(\{Z(\lambda)\}\)</span> es exactamente la función de distribución espectral <span class="math inline">\(F\)</span> de <span class="math inline">\(\{X_t\}\)</span>.
+</div>
+
+
+<div class="proof">
+<p> <span class="proof"><em>Demostración. </em></span> Para cada <span class="math inline">\(\lambda\in[-\pi,\pi]\)</span>, <span class="math inline">\(Z(\lambda)\)</span> es un elemento bien definido de <span class="math inline">\(\overline{sp}\{X_t,t\in\mathbb{Z}\}\)</span> por el Teorema <a href="analisis-espectral.html#thm:teo-t4p8p1">11.7</a>. Por lo tanto <span class="math inline">\(\langle Z(\lambda),Z(\lambda)\rangle&lt;\infty\)</span>. Dado que <span class="math inline">\(Z(\lambda)\in\overline{sp}\{X_t,t\in\mathbb{Z}\}\)</span> existe una sucesión <span class="math inline">\(\{Y_n\}\)</span> de elementos de <span class="math inline">\(\overline{sp}\{X_t,t\in\mathbb{Z}\}\)</span> tal que <span class="math inline">\(\|Y_n-Z(\lambda)\|\to0\)</span> cuando <span class="math inline">\(n\to\infty\)</span>. Por la continuidad del producto interior tenemos</p>
+<p><span class="math display">\[\langle Z(\lambda),1\rangle=\lim_{n\to\infty}\langle Y_n,1\rangle=0\]</span></p>
+<p>ya que cada <span class="math inline">\(X_t\)</span>, y por consiguiente cada <span class="math inline">\(Y_t\)</span> tiene media cero. Finalmente, si <span class="math inline">\(-\pi\leq\lambda_1\leq\lambda_2\leq\lambda_3\leq\lambda_4\leq\pi\)</span>,</p>
+<span class="math display">\[\begin{eqnarray*}
+  \langle Z(\lambda_4)-Z(\lambda_3),Z(\lambda_2)-Z(\lambda_1)\rangle &amp;=&amp; \langle TZ(\lambda_4)-TZ(\lambda_3),TZ(\lambda_2)-TZ(\lambda_1)\rangle \\
+     &amp;=&amp; \langle I_{(\lambda_3,\lambda_4]}(\cdot),I_{(\lambda_1,\lambda_2]}(\cdot)\rangle_{L^2(F)} \\
+     &amp;=&amp; \int_{(-\pi,\pi]}I_{(\lambda_3,\lambda_4]}(v)I_{(\lambda_1,\lambda_2]}(v)dF(v)=0
+\end{eqnarray*}\]</span>
+<p>completando la demostración de que <span class="math inline">\(\{Z(\lambda)\}\)</span> tiene incrementos ortogonales. Un cálculo casi idéntico a los cálculos previos nos da</p>
+<p><span class="math display">\[\langle Z(\mu)-Z(\lambda),Z(\mu)-Z(\mu)\rangle=F(\mu_-F(\lambda),\]</span></p>
+demostrando que <span class="math inline">\(\{Z(\lambda)\}\)</span> es continua a derecha con función de distribución asociada <span class="math inline">\(F\)</span> como afirma la proposición
+</div>
+
+<hr />
+<p>Ahora es fácil establecer la representación espectral <a href="analisis-espectral.html#eq:eq-e4p2p5">(11.75)</a>.</p>
+
+<div class="theorem">
+<p><span id="thm:teo-representacion-espectral" class="theorem"><strong>Teorema 11.8  (El Teorema de Representación Espectral)  </strong></span>Si <span class="math inline">\(\{X_t\}\)</span> es una sucesión estacionaria con media cero y función de distribución espectral <span class="math inline">\(F\)</span>, entonces existe un proceso de incremento ortogonal continua a la derecha <span class="math inline">\(\{Z(\lambda),-\pi\leq\lambda\leq\pi\}\)</span> tal que</p>
+<p><span class="math display">\[\text{(i) }\mathbb{E}|Z(\lambda)-Z(-\pi)|^2=F(\lambda)\text{, }-\pi\leq\lambda\leq\pi,\]</span></p>
+<p>y</p>
+<span class="math display">\[\text{(ii) }X_t=\int_{(-\pi,\pi]}E^{itv}dZ(v)\text{ con probabilidad uno.}\]</span>
+</div>
+
+
+<div class="proof">
+<p> <span class="proof"><em>Demostración. </em></span> Sea <span class="math inline">\(\{Z(\lambda)\}\)</span> el proceso definido en la Proposición <a href="analisis-espectral.html#prp:propo-p4p8p1">11.4</a> y sea <span class="math inline">\(I\)</span> el isomorfismo</p>
+<p><span class="math display">\[I(f)=\int_{(-\pi,\pi]}f(v)dZ(v),\]</span></p>
+<p>de <span class="math inline">\(\overline{\mathcal{D}}=L^2(F)\)</span> en <span class="math inline">\(I(\overline{\mathcal{D}}\subseteq L^2(\Omega,\mathfrak{F},P)\)</span> discutido en la Sección <a href="analisis-espectral.html#integracion-con-respecto-a-un-proceso-de-incremento-ortogonal">Integración con Respecto a un Proceso de Incremento Ortogonal</a>. Si <span class="math inline">\(f\in\mathcal{D}\)</span> tiene la representación <a href="analisis-espectral.html#eq:eq-e4p7p1">(11.65)</a> entonces</p>
+<span class="math display">\[\begin{eqnarray*}
+  I(f) &amp;=&amp; \sum_{i=0}^{n}f_i(Z(\lambda_{i+1})-Z(\lambda_i)) \\
+       &amp;=&amp; T^{-1}(f).
+\end{eqnarray*}\]</span>
+<p>Esta relación se mantiene válida para toda <span class="math inline">\(f\in\overline{\mathcal{D}}=L^2(F)\)</span> ya que tanto <span class="math inline">\(I\)</span> como <span class="math inline">\(T^{-1}\)</span> son isomorfismos.</p>
+<p>Por lo tanto tenemos que <span class="math inline">\(I=T^{-1}\)</span> (i.e. <span class="math inline">\(TI(f)=f\)</span> para todo <span class="math inline">\(f\in L^2(F)\)</span>) y por consiguiente del Teorema <a href="analisis-espectral.html#thm:teo-t4p8p1">11.7</a></p>
+<p><span class="math display">\[X_t=I(e^{it\cdot})=\int_{(-\pi,\pi]}e^{itv}dZ(v),\]</span></p>
+dando la representación requerida para <span class="math inline">\(\{X_t\}\)</span>. La primera afirmación del Teorema es una consecuencia inmediata de la Proposición <a href="analisis-espectral.html#prp:propo-p4p8p1">11.4</a>.
+</div>
+
+<hr />
+
+<div class="corollary">
+<p><span id="cor:cor-c4p8p1" class="corollary"><strong>Corolario 11.1  </strong></span>Si <span class="math inline">\(\{X_t\}\)</span> es una sucesión estacionaria de media cero entonces existe un proceso de incremento ortogonal continuo a la derecha <span class="math inline">\(\{Z(\lambda),-\pi\leq\lambda\leq\pi\}\)</span> tal que <span class="math inline">\(Z(-\pi)=0\)</span> y</p>
+<p><span class="math display">\[X_t=\int_{(-\pi,\pi]}e^{itv}dZ(v)\text{ con probabilidad uno.}\]</span></p>
+<p>Si <span class="math inline">\(\{Y(\lambda)\}\)</span> y <span class="math inline">\(\{Z(\lambda)\}\)</span> son dos de tales procesos entonces</p>
+<span class="math display">\[P(Y(\lambda)=Z(\lambda))=1\text{ para cada}\lambda\in[-\pi,\pi].\]</span>
+</div>
+
+
+<div class="proof">
+<p> <span class="proof"><em>Demostración. </em></span> Si denotamos por <span class="math inline">\(\{Z^{\star}(\lambda)\}\)</span> el proceso de incremento ortogonal definido por la Proposición <a href="analisis-espectral.html#prp:propo-p4p8p1">11.4</a>, entonces el proceso</p>
+<p><span class="math display">\[Z(\lambda)=Z^{\star}(\lambda)-Z^{\star}(-\pi)\text{, }-\pi\leq\lambda\leq\pi,\]</span></p>
+<p>no solo satisface <span class="math inline">\(Z(-\pi)=0\)</span>, sino también tiene exactamente el mismo incremento que <span class="math inline">\(\{Z^{\star}(\lambda)\}\)</span>. Por consiguiente</p>
+<p><span class="math display">\[X_t=\int_{(-\pi,\pi]}e^{itv}dZ^{\star}(v)=\int_{(-\pi,\pi]}e^{itv}dZ(v).\]</span></p>
+<p>Supóngase ahora que <span class="math inline">\(\{Y(\lambda)\}\)</span> es otro proceso de incremento ortogonal tal que <span class="math inline">\(Y(-\pi)=0\)</span> y</p>
+<span class="math display" id="eq:eq-e4p8p2">\[\begin{equation}
+  X_t=\int_{(-\pi,\pi]}e^{itv}dY(v)=\int_{(-\pi,\pi]}e^{itv}dZ(v)\text{ con probabilidad uno.}
+\tag{11.78}
+\end{equation}\]</span>
+<p>Si definimos para <span class="math inline">\(f\in L^2(F)\)</span></p>
+<p><span class="math display">\[I_Y(f)=\int_{(-\pi,\pi]}f(v)dY(v)\]</span></p>
+<p>e</p>
+<p><span class="math display">\[I_Z(f)=\int_{(-\pi,\pi]}f(v)dZ(v)\]</span></p>
+<p>entonces tenemos de <a href="analisis-espectral.html#eq:eq-e4p8p2">(11.78)</a></p>
+<span class="math display" id="eq:eq-e4p8p3">\[\begin{equation}
+  I_y(e^{it\cdot})=I_z(e^{it\cdot})\text{ para todo }t\in\mathbb{Z}.
+\tag{11.79}
+\end{equation}\]</span>
+<p>Dado que <span class="math inline">\(I_Y\)</span> e <span class="math inline">\(I_Z\)</span> son iguales en <span class="math inline">\(sp\{e^{it\cdot},t\in\mathbb{Z}\}\)</span> el cual es denso en <span class="math inline">\(L^2(F)\)</span>, se sigue que <span class="math inline">\(I_Y(f)=I_Z(f)\)</span> para todo <span class="math inline">\(f\in L^2(F)\)</span>. Eligiendo <span class="math inline">\(f(v)=I_{(-\pi,\lambda]}(v)\)</span> obtenemos (con probabilidad uno)</p>
+<span class="math display">\[Y(\lambda)=\int_{(-\pi,\pi]}f(v)dZ(v)=Z(\lambda)\text{,  }-\pi\leq\lambda\leq\pi\]</span>
+</div>
+
+<ul>
+<li><p><strong>Observación 1.</strong> En el transcurso de la demostración del Teorema <a href="analisis-espectral.html#thm:teo-representacion-espectral">11.8</a> se estableció el siguiente resultado: <span class="math inline">\(Y\in\overline{sp}\{X_t,t\in\mathbb{Z}\}\)</span> si y solo si existe una función <span class="math inline">\(f\in L^2(F)\)</span> tal que <span class="math inline">\(Y=I(f)=\int_{(-\pi,\pi]}f(v)dZ(v)\)</span>. Esto significa que <span class="math inline">\(I\)</span> es un isomorfismo de <span class="math inline">\(L^2(F)\)</span> en <span class="math inline">\(\overline{sp}\{X_t,t\in\mathbb{Z}\}\)</span> (con la propiedad de que <span class="math inline">\(I(e^{it\cdot})=X_t\)</span>).</p></li>
+<li><p><strong>Observación 2.</strong> Los argumentos aportados por el Teorema <a href="analisis-espectral.html#thm:teo-representacion-espectral">11.8</a> es una prueba de existencia que no revela de manera explícita cómo se construye <span class="math inline">\(\{Z(\lambda)\}\)</span>.</p></li>
+<li><p><strong>Observación 3.</strong> El corolario establece que el proceso de incremento ortogonal en la representación espectral es único si usamos la normalización de <span class="math inline">\(Z(-\pi)=0\)</span>. Dos proceso estacionarios diferentes pueden tener la misma función de distribución espectral, por ejemplo los procesos <span class="math inline">\(X_t=\int_{(-\pi,\pi]}e^{it\lambda}dB(\lambda)\)</span> e <span class="math inline">\(Y_t=\int_{(-\pi,\pi]}e^{it\lambda}dN(\lambda)\)</span> con <span class="math inline">\(\{B(\lambda)\}\)</span> y <span class="math inline">\(\{N(\lambda)\}\)</span> definidos como en los Ejemplos <a href="analisis-espectral.html#exm:ejem-movimiento-browniano">11.13</a> y <a href="analisis-espectral.html#exm:ejem-proceso-poison">11.14</a>. En tales casos los procesos deben de hecho tener la misma función de autocovarianza.</p></li>
+</ul>
+
+<div class="example">
+<p><span id="exm:ejem-representacion-espectral-movimiento-browniano" class="example"><strong>Ejemplo 11.15  (Representación espectral de un movimiento browniano)  </strong></span>Sea <span class="math inline">\(Z(\lambda)=B(\lambda)\)</span> un movimiento browniano en <span class="math inline">\([-\pi,\pi]\)</span> como el definido en el Ejemplo  con <span class="math inline">\(\mathbb{E}Z(\lambda)=0\)</span> y <span class="math inline">\(Var(Z(\lambda))=\sigma^2(\lambda+\pi)/2\pi,-\pi\leq\lambda\leq\pi\)</span>. Para <span class="math inline">\(t\in\mathbb{Z}\)</span>, hagamos <span class="math inline">\(g_t(v)=\sqrt{2}\cos(tv)I_{(-\pi,0]}(v)+\sqrt{2}\sin(tv)I_{(0,\pi]}(v)\)</span> y</p>
+<span class="math display" id="eq:eq-e4p8p4">\[\begin{equation}
+  X_t=\int_{(-\pi,\pi]}g_t(v)dB(v)=\sqrt{2}\left(\int_{(-\pi,0]}\cos(tv)dB(v)+\int_{(0,\pi]}\sin(tv)dB(v)\right).
+\tag{11.80}
+\end{equation}\]</span>
+<p>Entonces <span class="math inline">\(\mathbb{E}X_t=0\)</span> por <a href="analisis-espectral.html#eq:eq-e4p7p7">(11.72)</a> y por <a href="analisis-espectral.html#eq:eq-e4p7p5">(11.70)</a>,</p>
+<span class="math display" id="eq:eq-e4p8p5">\[\begin{equation}
+  \mathbb{E}(X_{t+h}X_t)=\frac{\sigma^2}{2\pi}\int_{(-\pi,\pi]}g_{t+h}(v)g_t(v)dv=\frac{\sigma^2}{2\pi}2\int_0^{\pi}\cos(hv)dv.
+\tag{11.81}
+\end{equation}\]</span>
+Por lo tanto <span class="math inline">\(\mathbb{E}(X_{t+h}X_t)=\sigma^2\delta_{h,0}\)</span> y en consecuencia <span class="math inline">\(\{X_t\}\sim WN(0,\sigma^2)\)</span>.
+</div>
+
+<hr />
+<p>Sin embargo, dado que <span class="math inline">\(B(\lambda)\)</span> es gaussiano podemos ir más allá y demostrar que las variables aleatorias <span class="math inline">\(X_t,t=0,\pm1,\ldots\)</span>, son independientes con <span class="math inline">\(X_t\sim N(0,\sigma^2)\)</span>. Para demostrar esto, sea <span class="math inline">\(s_1,\ldots,s_k\)</span>, <span class="math inline">\(k\)</span> enteros distintos y para cada <span class="math inline">\(j\)</span> fijo sea <span class="math inline">\(\{f_j^{(n)}\}\)</span> una sucesión de elementos de <span class="math inline">\(\mathcal{D}\)</span>, esto es, funciones de la forma (), tal que <span class="math inline">\(f_j^{(n)}\to g_{sj}(\cdot)\)</span> en <span class="math inline">\(L^2(F)\)</span>. Dado que la aplicación <span class="math inline">\(I_n\)</span> es un isomorfismo de <span class="math inline">\(\overline{\mathcal{D}}=L^2(F)\)</span> en <span class="math inline">\(I_B(\overline{\mathcal{D}})\)</span>, concluimos de <a href="analisis-espectral.html#eq:eq-e4p8p4">(11.80)</a> que</p>
+<span class="math display" id="eq:eq-e4p8p6">\[\begin{equation}
+  \theta_1I_B(f_1^{(n)})+\cdots+\theta_kI_B(f_k^{(n)})\overset{m.s}{\to}\theta_1X_{s_1}+\cdots+\theta_kX_{s_k}.
+\tag{11.82}
+\end{equation}\]</span>
+<p>El lado izquierdo <span class="math inline">\(I_B(\sum_{j=1}^{k}\theta_jf_j^{(n)})\)</span> es claramente normalmente distribuido con media cero y varianza <span class="math inline">\(\|\sum_{j=1}^{k}\theta_jf_j^{(n)}\|^2\)</span>.</p>
+<p>La función característica de <span class="math inline">\(I_B(\sum_{j=1}^{k}\theta_jf_j^{(n)})\)</span> es por lo tanto</p>
+<p><span class="math display">\[\phi_n(u)=\exp\left[-\frac{1}{2}u^2\left\|\sum_{j=1}^{k}\theta_jf_j^{(n)}\right\|_{L^2(F)}^2\right].\]</span></p>
+<p>Por continuidad del producto interior en <span class="math inline">\(L^2(F)\)</span>, cuando <span class="math inline">\(n\to\infty\)</span></p>
+<p><span class="math display">\[\left\|\sum_{j=1}^{k}\theta_jf_j^{(n)}\right\|_{L^2(F)}^2\to\left\|\sum_{j=1}^{n}\theta_je^{s_j\cdot}\right\|_{L^2(F)}^2=\sigma^2\sum_{j=1}^{k}\theta_j^2.\]</span></p>
+<p>De <a href="analisis-espectral.html#eq:eq-e4p8p6">(11.82)</a> concluimos por lo tanto que <span class="math inline">\(\sum_{j=1}^{k}\theta_jX_{s_j}\)</span> tiene función característica gaussiana</p>
+<p><span class="math display">\[\phi(u)=\lim_{n\to\infty}\phi_n(u)=\exp\left[-\frac{1}{2}u^2\sigma^2\sum_{j=1}^{k}\theta_j^2\right].\]</span></p>
+<p>Ya que esto es cierto para toda elección de <span class="math inline">\(\theta_1,\ldots,\theta_k\)</span> deducimos que <span class="math inline">\(X_{s_1},\ldots,X_{s_k}\)</span> son conjuntamente normal. De la covarianza <a href="analisis-espectral.html#eq:eq-e4p8p5">(11.81)</a> se sigue entonces que las variables aleatorias <span class="math inline">\(X_t,t=0,\pm1,\ldots\)</span>, son iid<span class="math inline">\(N(0,\sigma^2)\)</span>.</p>
+<ul>
+<li><strong>Observación 4.</strong> Si <span class="math inline">\(A\)</span> es un subconjunto de Borel de <span class="math inline">\([-\pi,\pi]\)</span>, es conveniente en la siguiente proposición (y en otros lugares) definir
+<span class="math display" id="eq:eq-e4p8p7">\[\begin{equation}
+  \int_A f(v)dZ(v)=\int_{(-\pi,\pi]}f(v)I_A(v)dZ(v),
+\tag{11.83}  
+\end{equation}\]</span>
+donde el lado derecho ya ha sido definido en la Sección <a href="analisis-espectral.html#integracion-con-respecto-a-un-proceso-de-incremento-ortogonal">Integración con Respecto a un Proceso de Incremento Ortogonal</a>.</li>
+</ul>
+
+<div class="proposition">
+<p><span id="prp:propo-p4p8p2" class="proposition"><strong>Proposición 11.5  </strong></span>Supóngase que la función de distribución espectral <span class="math inline">\(F\)</span> de un proceso estacionario <span class="math inline">\(\{X_t\}\)</span> tiene un punto de discontinuidad en <span class="math inline">\(\lambda_0\)</span> donde <span class="math inline">\(-\pi&lt;\lambda_0&lt;\pi\)</span>. Entonces con probabilidad uno,</p>
+<p><span class="math display">\[X_t=\int_{(-\pi,\pi]\backslash\{\lambda_0\}}e^{itv}dZ(v)+(Z(\lambda_0)-Z(\lambda_0^-))e^{it\lambda_0}\]</span></p>
+<p>donde los dos términos del lado derecho son no-correlacionados y</p>
+<span class="math display">\[Var(Z(\lambda_0)-Z(\lambda_0^-))=F(\lambda_0)-F(\lambda_0^-).\]</span>
+</div>
+
+
+<div class="proof">
+<p> <span class="proof"><em>Demostración. </em></span> El límite izquierdo <span class="math inline">\(Z(\lambda_0^-)\)</span> se define como</p>
+<span class="math display" id="eq:eq-e4p8p8">\[\begin{equation}
+  Z(\lambda_0^-)=m.s.\lim_{n\to\infty}Z(\lambda_n)
+\tag{11.84}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(\lambda_n\)</span> es una sucesión tal que <span class="math inline">\(\lambda_n\uparrow\lambda_0\)</span>.\ Para verificar que <a href="analisis-espectral.html#eq:eq-e4p8p8">(11.84)</a> tiene sentido, note que <span class="math inline">\(\{Z(\lambda_n)\}\)</span> es una sucesión de Cauchy ya que <span class="math inline">\(\|Z(\lambda_n)-Z(\lambda_m)\|^2=|F(\lambda_n)-F(\lambda_m)|\to0\)</span> cuando <span class="math inline">\(m,n\to\infty\)</span>. Por lo tanto el límite en <a href="analisis-espectral.html#eq:eq-e4p8p8">(11.84)</a> existe. Más aún, si <span class="math inline">\(\nu_n\uparrow\lambda_0\)</span> cuando <span class="math inline">\(n\to\infty\)</span> entonces <span class="math inline">\(\|Z(\lambda_n)-Z(\nu_n)\|^2=|F(\lambda_n)-F(\nu_n)|\to0\)</span> cuando <span class="math inline">\(n\to\infty\)</span>, y en consecuencia el límite () es el mismo para toda sucesión no decreciente con límite <span class="math inline">\(\lambda_0\)</span>.\ Para <span class="math inline">\(\delta&gt;0\)</span> definamos <span class="math inline">\(\lambda_{\pm\delta}=\lambda_0\pm\delta\)</span>. Ahora por representación espectral, si <span class="math inline">\(0&lt;\delta&lt;\pi-|\lambda_0|\)</span>,</p>
+<span class="math display" id="eq:eq-e4p8p9">\[\begin{equation}
+  X_t=\int_{(-\pi,\pi]\backslash(\lambda_{-\delta},\lambda_{\delta}]}e^{itv}dZ(v)+\int_{(\lambda_{-\delta},\lambda_{\delta}]}e^{itv}dZ(v).
+\tag{11.85}
+\end{equation}\]</span>
+<p>Note que los dos términos son no-correlacionados ya que las regiones de integración son disjuntas. Ahora cuando <span class="math inline">\(\delta\to0\)</span> el primer término converge en media cuadrado a <span class="math inline">\(\int_{(-\pi,\pi]\backslash\{\lambda_0\}}e^{itv}dZ(v)\)</span> dado que</p>
+<p><span class="math display">\[e^{it\cdot}I_{90-\pi,\pi]\backslash(\lambda_{-\delta},\lambda_{\delta}]}\to e^{it\cdot}I_{(-\pi,\pi]\backslash\{\lambda_0\}}\text{ en }L^2(F).\]</span></p>
+<p>Para ver cómo el último término de <a href="analisis-espectral.html#eq:eq-e4p8p9">(11.85)</a> se comporta como <span class="math inline">\(\delta\to0\)</span> usamos la desigualdad</p>
+<span class="math display" id="eq:eq-e4p8p10">\[\begin{eqnarray}
+  \left\|\int_{(\lambda_{-\delta},\lambda_{\delta}]}e^{itv}dZ(v)-e^{it\lambda_0}(Z(\lambda_0)-Z(\lambda_0^-))\right\|&amp;\leq&amp;\left\|\int_{(\lambda_{-\delta},\lambda_{\delta}]}e^{itv}dZ(v)-e^{it\lambda_0}(Z(\lambda_{\delta})-Z(\lambda_{-\delta}))\right\| \nonumber\\
+  &amp;+&amp;\left\|Z(\lambda_{\delta})-Z(\lambda_{-\delta})-(Z(\lambda_0)-Z(\lambda_0^-))\right\| \tag{11.86}
+\end{eqnarray}\]</span>
+<p>Cuando <span class="math inline">\(\delta\to0\)</span> el segundo término de la derecha de <a href="analisis-espectral.html#eq:eq-e4p8p10">(11.86)</a> tiende a cero por la continuidad a la derecha de <span class="math inline">\(\{Z(\lambda)\}\)</span> y la definición de <span class="math inline">\(Z(\lambda_0^-)\)</span>. El primer término del lado derecho de <a href="analisis-espectral.html#eq:eq-e4p8p10">(11.86)</a> se puede escribir como</p>
+<span class="math display">\[\begin{eqnarray*}
+\left\|\int_{(-\pi,\pi]}(e^{itv}-e^{it\lambda_0})I_{(\lambda_{-\delta},\lambda_{\delta}]}(v)dZ(v)\right\|&amp;=&amp;\left\|(e^{it\cdot}-e^{it\lambda_0})I_{(\lambda_{-\delta},\lambda_{\delta}]}(\cdot)\right\|_{L^2(F)}\\
+&amp;\leq&amp;\left[\sup_{\lambda_{-\delta}\leq\lambda\leq\lambda_{\delta}}|e^{it\lambda}-e^{it\lambda_0}|^2(F(\lambda_{\delta})-F(\lambda_{-\delta}))\right]^{1/2}
+\end{eqnarray*}\]</span>
+<p>este tiende 0 cuando <span class="math inline">\(\delta\to0\)</span>, por la continuidad de la función <span class="math inline">\(e^{it\cdot}\)</span>. Por lo tanto, deducimos de <a href="analisis-espectral.html#eq:eq-e4p8p10">(11.86)</a> que</p>
+<p><span class="math display">\[\int_{(\lambda_{-\delta},\lambda_{\delta}]}e^{itv}dZ(v)\overset{m.s.}{\to}e^{it\lambda_0}(Z(\lambda_0)-Z(\lambda_0^-))\text{ cuando }\delta\to0.\]</span></p>
+<p>La continuidad del producto interior y la ortogonalidad de las dos integrales en <a href="analisis-espectral.html#eq:eq-e4p8p9">(11.85)</a> garantiza que sus límites en media cuadrado son también ortogonales.</p>
+<p>Más aún</p>
+<span class="math display">\[Var(Z(\lambda_0)-Z(\lambda_0^-))=\lim_{\lambda_n\uparrow\lambda_0}Var(Z(\lambda_0)-Z(\lambda_n))=F(\lambda_0)-F(\lambda_0^-).\]</span>
+</div>
+
+<hr />
+<p>Si la función de densidad espectral tiene <span class="math inline">\(k\)</span> puntos de discontinuidad en <span class="math inline">\(\lambda_1,\ldots,\lambda_k\)</span> entonces <span class="math inline">\(\{X_t\}\)</span> tiene la representación</p>
+<span class="math display" id="eq:eq-e4p8p11">\[\begin{equation}
+  X_t=\int_{(-\pi,\pi]\backslash\{\lambda_1,\ldots,\lambda_k\}}e^{itv}dZ(v)+\sum_{j=1}^{k}(Z(\lambda_j)-Z(\lambda_j^-))e^{it\lambda_j},
+\tag{11.87}
+\end{equation}\]</span>
+<p>donde los <span class="math inline">\((k+1)\)</span> términos del lado derecho son no-correlacionados.</p>
+<p>La importancia de <a href="analisis-espectral.html#eq:eq-e4p8p11">(11.87)</a> en el análisis de series de tiempo es inmenso. El proceso <span class="math inline">\(Y_t=(Z(\lambda_0)-Z(\lambda_0^-))e^{it\lambda_0}\)</span> se dice ser determinístico ya que <span class="math inline">\(Y_t\)</span> está determinado para todo <span class="math inline">\(t\)</span> si <span class="math inline">\(Y_{t_0}\)</span> es conocido para algún <span class="math inline">\(t_0\)</span>. La existencia de una discontinuidad en la función de densidad espectral en una frecuencia dada <span class="math inline">\(\lambda_0\)</span> por lo tanto indica la presencia en la serie de tiempo de una componente determinística sinusoidal con frecuencia <span class="math inline">\(\lambda_0\)</span>.</p>
+
+
+</div>
+</div>
+
+
+
+</div>
+<div class="footnotes">
+<hr />
+<ol start="13">
+<li id="fn13"><p><span class="math inline">\(\cos(\alpha\pm\beta)=\cos(\alpha)\cos(\beta)\mp\sin(\alpha)\sin(\beta)\)</span><a href="analisis-espectral.html#fnref13">↩</a></p></li>
+<li id="fn14"><p>Véase Bhat, R.R. (1985). <em>Modern Probability Theory, 2nd ed.</em> New York, Wiley, pag157.<a href="analisis-espectral.html#fnref14">↩</a></p></li>
+<li id="fn15"><p>Algunas identidades que pueden ayudar aquí: <span class="math inline">\(e^{i\alpha}=\cos(\alpha)+i\sin(\alpha)\)</span>, así <span class="math inline">\(\cos(\alpha)=(e^{i\alpha}+e^{-i\alpha})/2\)</span> y <span class="math inline">\(\sin(\alpha)=(e^{i\alpha}-e^{-i\alpha})/2i\)</span>.<a href="analisis-espectral.html#fnref15">↩</a></p></li>
+<li id="fn16"><p>Note que <span class="math inline">\(\sum_{t=1}^{n}z^t=z\frac{1-z^n}{1-z}\)</span> para <span class="math inline">\(z\neq1\)</span>.<a href="analisis-espectral.html#fnref16">↩</a></p></li>
+<li id="fn17"><p>Aquí usamos la <em>función de autocovarianza muestral</em> definida como <span class="math display">\[
+\hat{\gamma}(h)=n^{-1}\sum_{t=1}^{n-h}(x_{t+h}-\bar{x})(x_t-\bar{x})
+\]</span> con <span class="math inline">\(\hat{\gamma}(-h)=\hat{\gamma}(h)\)</span> para <span class="math inline">\(h=0,1,\ldots,n-1\)</span>.<a href="analisis-espectral.html#fnref17">↩</a></p></li>
+<li id="fn18"><p>Recuerde que <span class="math inline">\(\sum_{t=1}^{n}\cos^2(2\pi\omega_jt)=\sum_{t=1}^{n}\sin^2(2\pi\omega_jt)=n/2\)</span> para <span class="math inline">\(j\neq0\)</span> o un múltiplo de <span class="math inline">\(n\)</span>. También <span class="math inline">\(\sum_{t=1}^{n}\cos(2\pi\omega_jt)\sin(2\pi\omega_kt)=0\)</span> para cada <span class="math inline">\(j\)</span> y <span class="math inline">\(k\)</span>.<a href="analisis-espectral.html#fnref18">↩</a></p></li>
+<li id="fn19"><p>Esto significa que <span class="math inline">\(\omega_{j:n}\)</span> es una frecuencia de la forma <span class="math inline">\(j_n/n\)</span> donde <span class="math inline">\(\{j_n\}\)</span> es una sucesión de enteros elegidos de modo que <span class="math inline">\(j_n/n\to\omega\)</span> cuando <span class="math inline">\(n\to\infty\)</span>.<a href="analisis-espectral.html#fnref19">↩</a></p></li>
+<li id="fn20"><p>De la definición <a href="analisis-espectral.html#def:defi-periodograma">11.3</a> tenemos que <span class="math inline">\(I(0)=n\bar{x}^2\)</span>, así, el resultado análogo para el caso <span class="math inline">\(\omega=0\)</span> es <span class="math inline">\(\mathbb{E}[I(0)]-n\mu^2=n\text{var}(\bar{x})\to f(0)\)</span> cuando <span class="math inline">\(n\to\infty\)</span>.<a href="analisis-espectral.html#fnref20">↩</a></p></li>
+<li id="fn21"><p>Si <span class="math inline">\(Y_j\sim\text{iid}(0,\sigma^2)\)</span> y <span class="math inline">\(\{a_j\}\)</span> son constantes para las cuales <span class="math inline">\(\sum_{j=1}^{n}a_j^2/\max_{1\leq j\leq n}a_j^2\to\infty\)</span> cuando <span class="math inline">\(n\to\infty\)</span>, entonces <span class="math inline">\(\sum_{j=1}^{n}a_jY_j\sim AN\left(0,\sigma^2\sum_{j=1}^{n}a_j^2\right)\)</span>; la notación <span class="math inline">\(AN\)</span> significa asintóticamente normal.<a href="analisis-espectral.html#fnref21">↩</a></p></li>
+<li id="fn22"><p>Las condiciones, las cuales son suficientes, son que <span class="math inline">\(x_t\)</span> es un proceso lineal, como el descrito en la Proposición <a href="analisis-espectral.html#prp:propie-distrib-ordenadas-periodograma">11.2</a>, con <span class="math inline">\(\sum_{j&gt;0}\sqrt{j}|\psi_j|&lt;\infty\)</span>, y <span class="math inline">\(w_t\)</span> tiene momento finito de orden cuarto.<a href="analisis-espectral.html#fnref22">↩</a></p></li>
+<li id="fn23"><p>La transformación logarítmica es la transformación de estabilización de la varianza en este caso.<a href="analisis-espectral.html#fnref23">↩</a></p></li>
+<li id="fn24"><p>El espacio cerrado <span class="math inline">\(\overline{sp}\{x_t,t\in T\}\)</span> de cada subconjunto <span class="math inline">\(\{x_t,t\in T\}\)</span> de un espacio de Hilbert <span class="math inline">\(\mathcal{H}\)</span> se define como el subespacio cerrado más pequeño de <span class="math inline">\(\mathcal{H}\)</span> el cual contiene todos los elementos <span class="math inline">\(x_t, t\in T\)</span>.<a href="analisis-espectral.html#fnref24">↩</a></p></li>
+</ol>
+</div>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-78759535-1', 'auto');
+ga('send', 'pageview');  
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="referencias.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/synergyvision/Teoria-de-Portafolio/edit/master/bookdown/308-Analisis-espectral.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["Serie-de-Tiempo-en-R.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

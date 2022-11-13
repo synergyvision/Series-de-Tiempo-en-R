@@ -85,6 +85,7 @@
     <rect x='0.00' y='0.00' width='504.00' height='180.00' />
   </clipPath>
 </defs>
+<<<<<<< HEAD
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MTgwLjAwfDAuMDA=)'><text x='214.36' y='34.67' style='font-size: 14.40px; font-family: Arial;' textLength='21.00px' lengthAdjust='spacingAndGlyphs'>MA</text></g>
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MTgwLjAwfDAuMDA=)'><text x='235.36' y='34.67' style='font-size: 18.00px; font-family: PT Serif;' textLength='6.17px' lengthAdjust='spacingAndGlyphs'>(</text></g>
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MTgwLjAwfDAuMDA=)'><text x='241.54' y='34.67' style='font-size: 14.40px; font-family: Arial;' textLength='7.79px' lengthAdjust='spacingAndGlyphs'>1</text></g>
@@ -96,6 +97,19 @@
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MTgwLjAwfDAuMDA=)'><text x='278.87' y='34.67' style='font-size: 14.40px; font-family: PT Serif;' textLength='7.46px' lengthAdjust='spacingAndGlyphs'>=</text></g>
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MTgwLjAwfDAuMDA=)'><text x='289.57' y='34.67' style='font-size: 14.40px; font-family: PT Serif;' textLength='7.46px' lengthAdjust='spacingAndGlyphs'>+</text></g>
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MTgwLjAwfDAuMDA=)'><text x='298.98' y='34.67' style='font-size: 14.40px; font-family: Arial;' textLength='19.46px' lengthAdjust='spacingAndGlyphs'>0.5</text></g>
+=======
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MTgwLjAwfDAuMDA=)'><text x='212.54' y='35.12' style='font-size: 14.40px; font-family: Arial;' textLength='21.00px' lengthAdjust='spacingAndGlyphs'>MA</text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MTgwLjAwfDAuMDA=)'><text x='233.54' y='35.12' style='font-size: 18.00px; font-family: Century Gothic;' textLength='6.64px' lengthAdjust='spacingAndGlyphs'>(</text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MTgwLjAwfDAuMDA=)'><text x='240.18' y='35.12' style='font-size: 14.40px; font-family: Arial;' textLength='7.79px' lengthAdjust='spacingAndGlyphs'>1</text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MTgwLjAwfDAuMDA=)'><text x='247.97' y='35.12' style='font-size: 18.00px; font-family: Century Gothic;' textLength='6.64px' lengthAdjust='spacingAndGlyphs'>)</text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MTgwLjAwfDAuMDA=)'><text x='254.61' y='35.12' style='font-size: 14.40px; font-family: Century Gothic;' textLength='3.88px' lengthAdjust='spacingAndGlyphs'> </text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MTgwLjAwfDAuMDA=)'><text x='258.49' y='35.12' style='font-size: 14.40px; font-family: Century Gothic;' textLength='3.88px' lengthAdjust='spacingAndGlyphs'> </text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MTgwLjAwfDAuMDA=)'><text x='262.37' y='35.12' style='font-size: 14.40px; font-family: Century Gothic;' textLength='3.88px' lengthAdjust='spacingAndGlyphs'> </text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MTgwLjAwfDAuMDA=)'><text x='266.24' y='35.12' style='font-size: 14.40px; font-family: Century Gothic;' textLength='9.17px' lengthAdjust='spacingAndGlyphs'>θ</text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MTgwLjAwfDAuMDA=)'><text x='278.65' y='35.12' style='font-size: 14.40px; font-family: Century Gothic;' textLength='8.48px' lengthAdjust='spacingAndGlyphs'>=</text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MTgwLjAwfDAuMDA=)'><text x='290.37' y='35.12' style='font-size: 14.40px; font-family: Century Gothic;' textLength='8.48px' lengthAdjust='spacingAndGlyphs'>+</text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MTgwLjAwfDAuMDA=)'><text x='300.80' y='35.12' style='font-size: 14.40px; font-family: Arial;' textLength='19.46px' lengthAdjust='spacingAndGlyphs'>0.5</text></g>
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 <defs>
   <clipPath id='cpNTkuMDR8NDczLjc2fDI4Ni41NnwyMzkuMDQ='>
     <rect x='59.04' y='239.04' width='414.72' height='47.52' />
@@ -166,6 +180,7 @@
     <rect x='0.00' y='180.00' width='504.00' height='180.00' />
   </clipPath>
 </defs>
+<<<<<<< HEAD
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDE4MC4wMA==)'><text x='214.36' y='214.67' style='font-size: 14.40px; font-family: Arial;' textLength='21.00px' lengthAdjust='spacingAndGlyphs'>MA</text></g>
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDE4MC4wMA==)'><text x='235.36' y='214.67' style='font-size: 18.00px; font-family: PT Serif;' textLength='6.17px' lengthAdjust='spacingAndGlyphs'>(</text></g>
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDE4MC4wMA==)'><text x='241.54' y='214.67' style='font-size: 14.40px; font-family: Arial;' textLength='7.79px' lengthAdjust='spacingAndGlyphs'>1</text></g>
@@ -177,4 +192,17 @@
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDE4MC4wMA==)'><text x='278.87' y='214.67' style='font-size: 14.40px; font-family: PT Serif;' textLength='7.46px' lengthAdjust='spacingAndGlyphs'>=</text></g>
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDE4MC4wMA==)'><text x='289.57' y='214.67' style='font-size: 14.40px; font-family: PT Serif;' textLength='7.46px' lengthAdjust='spacingAndGlyphs'>−</text></g>
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDE4MC4wMA==)'><text x='298.98' y='214.67' style='font-size: 14.40px; font-family: Arial;' textLength='19.46px' lengthAdjust='spacingAndGlyphs'>0.5</text></g>
+=======
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDE4MC4wMA==)'><text x='212.54' y='215.11' style='font-size: 14.40px; font-family: Arial;' textLength='21.00px' lengthAdjust='spacingAndGlyphs'>MA</text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDE4MC4wMA==)'><text x='233.54' y='215.11' style='font-size: 18.00px; font-family: Century Gothic;' textLength='6.64px' lengthAdjust='spacingAndGlyphs'>(</text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDE4MC4wMA==)'><text x='240.18' y='215.11' style='font-size: 14.40px; font-family: Arial;' textLength='7.79px' lengthAdjust='spacingAndGlyphs'>1</text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDE4MC4wMA==)'><text x='247.97' y='215.11' style='font-size: 18.00px; font-family: Century Gothic;' textLength='6.64px' lengthAdjust='spacingAndGlyphs'>)</text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDE4MC4wMA==)'><text x='254.61' y='215.11' style='font-size: 14.40px; font-family: Century Gothic;' textLength='3.88px' lengthAdjust='spacingAndGlyphs'> </text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDE4MC4wMA==)'><text x='258.49' y='215.11' style='font-size: 14.40px; font-family: Century Gothic;' textLength='3.88px' lengthAdjust='spacingAndGlyphs'> </text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDE4MC4wMA==)'><text x='262.37' y='215.11' style='font-size: 14.40px; font-family: Century Gothic;' textLength='3.88px' lengthAdjust='spacingAndGlyphs'> </text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDE4MC4wMA==)'><text x='266.24' y='215.11' style='font-size: 14.40px; font-family: Century Gothic;' textLength='9.17px' lengthAdjust='spacingAndGlyphs'>θ</text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDE4MC4wMA==)'><text x='278.65' y='215.11' style='font-size: 14.40px; font-family: Century Gothic;' textLength='8.48px' lengthAdjust='spacingAndGlyphs'>=</text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDE4MC4wMA==)'><text x='290.37' y='215.11' style='font-size: 14.40px; font-family: Century Gothic;' textLength='8.48px' lengthAdjust='spacingAndGlyphs'>−</text></g>
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDE4MC4wMA==)'><text x='300.80' y='215.11' style='font-size: 14.40px; font-family: Arial;' textLength='19.46px' lengthAdjust='spacingAndGlyphs'>0.5</text></g>
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 </svg>

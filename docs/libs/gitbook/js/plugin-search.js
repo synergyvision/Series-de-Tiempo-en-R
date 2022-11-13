@@ -1,8 +1,13 @@
 gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     var index = null;
     var $searchInput, $searchLabel, $searchForm;
+<<<<<<< HEAD
     var $highlighted = [], hi, hiOpts = { className: 'search-highlight' };
     var collapse = false, toc_visible = [];
+=======
+    var $highlighted, hi = 0, hiOpts = { className: 'search-highlight' };
+    var collapse = false;
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 
     // Use a specific index
     function loadIndex(data) {

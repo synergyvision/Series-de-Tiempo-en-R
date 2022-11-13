@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Capítulo 10 Modelos lineales estacionales y modelos no-estacionarios | Series de Tiempo en R</title>
+  <meta name="description" content="Capítulo 10 Modelos lineales estacionales y modelos no-estacionarios | Series de Tiempo en R">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Capítulo 10 Modelos lineales estacionales y modelos no-estacionarios | Series de Tiempo en R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://synergy.vision/Series-de-Tiempo-en-R/" />
+  <meta property="og:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+  
+  <meta name="github-repo" content="synergyvision/Series-de-Tiempo-en-R/" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 10 Modelos lineales estacionales y modelos no-estacionarios | Series de Tiempo en R" />
+  
+  
+  <meta name="twitter:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+
+<meta name="author" content="Synergy Vision">
+
+
+<meta name="date" content="2020-01-31">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="modelos-arch-y-garch.html">
+<link rel="next" href="analisis-espectral.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="https://cdn.datacamp.com/datacamp-light-latest.min.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="images/logovision-black.png" width="160"></img></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#por-que-leer-este-libro"><i class="fa fa-check"></i>¿Por qué leer este libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-libro"><i class="fa fa-check"></i>Estructura del libro</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#informacion-sobre-los-programas-y-convenciones"><i class="fa fa-check"></i>Información sobre los programas y convenciones</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#practicas-interactivas-con-r"><i class="fa fa-check"></i>Prácticas interactivas con R</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="acerca-del-autor.html"><a href="acerca-del-autor.html"><i class="fa fa-check"></i>Acerca del Autor</a></li>
+<li class="chapter" data-level="1" data-path="introduccion.html"><a href="introduccion.html"><i class="fa fa-check"></i><b>1</b> Introducción</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduccion.html"><a href="introduccion.html#conceptos-financieros-basicos"><i class="fa fa-check"></i><b>1.1</b> Conceptos financieros básicos</a></li>
+<li class="chapter" data-level="1.2" data-path="introduccion.html"><a href="introduccion.html#conceptos-basicos"><i class="fa fa-check"></i><b>1.2</b> Conceptos básicos</a></li>
+<li class="chapter" data-level="1.3" data-path="introduccion.html"><a href="introduccion.html#ejemplos"><i class="fa fa-check"></i><b>1.3</b> Ejemplos</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduccion.html"><a href="introduccion.html#clasificacion-de-las-series-de-tiempo"><i class="fa fa-check"></i><b>1.3.1</b> Clasificación de las series de tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduccion.html"><a href="introduccion.html#componentes-de-una-serie-de-tiempo"><i class="fa fa-check"></i><b>1.4</b> Componentes de una serie de tiempo</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduccion.html"><a href="introduccion.html#el-modelo-aditivo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.1</b> El Modelo Aditivo de Componentes de Series de Tiempo</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduccion.html"><a href="introduccion.html#el-modelo-multiplicativo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.2</b> El Modelo Multiplicativo de Componentes de Series de Tiempo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>2</b> Características de series de tiempo</a><ul>
+<li class="chapter" data-level="2.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#medidas-de-dependencia-para-series-de-tiempo"><i class="fa fa-check"></i><b>2.1</b> Medidas de dependencia para series de tiempo</a></li>
+<li class="chapter" data-level="2.2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia"><i class="fa fa-check"></i><b>2.2</b> Estimación de la Tendencia</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-en-ausencia-de-estacionalidad"><i class="fa fa-check"></i><b>2.2.1</b> Estimación de la tendencia en ausencia de estacionalidad</a></li>
+<li class="chapter" data-level="2.2.2" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-y-la-estacionalidad"><i class="fa fa-check"></i><b>2.2.2</b> Estimación de la tendencia y la estacionalidad</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#estimacion-de-la-tendencia-por-regresion-clasica"><i class="fa fa-check"></i><b>2.3</b> Estimación de la tendencia por regresión clásica</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="caracteristicas-de-series-de-tiempo.html"><a href="caracteristicas-de-series-de-tiempo.html#regresion-clasica"><i class="fa fa-check"></i><b>2.3.1</b> Regresión Clásica</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>3</b> Modelos de series de tiempo</a><ul>
+<li class="chapter" data-level="3.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-estocasticos"><i class="fa fa-check"></i><b>3.1</b> Modelos Estocásticos</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#procesos-estocasticos"><i class="fa fa-check"></i><b>3.1.1</b> Procesos Estocásticos</a></li>
+<li class="chapter" data-level="3.1.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#momentos-varianza-covarianza-y-correlacion"><i class="fa fa-check"></i><b>3.1.2</b> Momentos, Varianza, Covarianza y Correlación</a></li>
+<li class="chapter" data-level="3.1.3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#variacion-de-un-proceso"><i class="fa fa-check"></i><b>3.1.3</b> Variación de un proceso</a></li>
+<li class="chapter" data-level="3.1.4" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#martingalas"><i class="fa fa-check"></i><b>3.1.4</b> Martingalas</a></li>
+<li class="chapter" data-level="3.1.5" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#propiedad-de-markov"><i class="fa fa-check"></i><b>3.1.5</b> Propiedad de Markov</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-lineales"><i class="fa fa-check"></i><b>3.2</b> Modelos lineales</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#proceso-de-ruido-blanco"><i class="fa fa-check"></i><b>3.2.1</b> Proceso de Ruido Blanco</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="modelos-ar.html"><a href="modelos-ar.html"><i class="fa fa-check"></i><b>4</b> Modelos AR</a><ul>
+<li class="chapter" data-level="4.1" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar1"><i class="fa fa-check"></i><b>4.1</b> Modelo AR(1)</a></li>
+<li class="chapter" data-level="4.2" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar2"><i class="fa fa-check"></i><b>4.2</b> Modelo AR(2)</a></li>
+<li class="chapter" data-level="4.3" data-path="modelos-ar.html"><a href="modelos-ar.html#procesos-arp"><i class="fa fa-check"></i><b>4.3</b> Procesos AR(p)</a></li>
+<li class="chapter" data-level="4.4" data-path="modelos-ar.html"><a href="modelos-ar.html#funcion-de-autocorrelacion-parcial"><i class="fa fa-check"></i><b>4.4</b> Función de Autocorrelación Parcial</a></li>
+<li class="chapter" data-level="4.5" data-path="modelos-ar.html"><a href="modelos-ar.html#criterios-de-informacion"><i class="fa fa-check"></i><b>4.5</b> Criterios de Información</a></li>
+<li class="chapter" data-level="4.6" data-path="modelos-ar.html"><a href="modelos-ar.html#estimacion-de-parametros."><i class="fa fa-check"></i><b>4.6</b> Estimación de Parámetros.</a></li>
+<li class="chapter" data-level="4.7" data-path="modelos-ar.html"><a href="modelos-ar.html#predicciones-con-modelos-ar"><i class="fa fa-check"></i><b>4.7</b> Predicciones con modelos AR</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-un-paso"><i class="fa fa-check"></i><b>4.7.1</b> Predicción de un paso</a></li>
+<li class="chapter" data-level="4.7.2" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-dos-pasos"><i class="fa fa-check"></i><b>4.7.2</b> Predicción de dos pasos</a></li>
+<li class="chapter" data-level="4.7.3" data-path="modelos-ar.html"><a href="modelos-ar.html#prediccion-de-multiples-pasos"><i class="fa fa-check"></i><b>4.7.3</b> Predicción de múltiples pasos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="modelos-ma.html"><a href="modelos-ma.html"><i class="fa fa-check"></i><b>5</b> Modelos MA</a><ul>
+<li class="chapter" data-level="5.1" data-path="modelos-ma.html"><a href="modelos-ma.html#propiedades-de-los-modelos-ma"><i class="fa fa-check"></i><b>5.1</b> Propiedades de los modelos MA</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="modelos-ma.html"><a href="modelos-ma.html#estacionaridad"><i class="fa fa-check"></i><b>5.1.1</b> Estacionaridad</a></li>
+<li class="chapter" data-level="5.1.2" data-path="modelos-ma.html"><a href="modelos-ma.html#funcion-de-autocorrelacion-acf"><i class="fa fa-check"></i><b>5.1.2</b> Función de autocorrelación (ACF)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="modelos-ma.html"><a href="modelos-ma.html#identificacion-del-orden-de-un-ma"><i class="fa fa-check"></i><b>5.2</b> Identificación del orden de un MA</a></li>
+<li class="chapter" data-level="5.3" data-path="modelos-ma.html"><a href="modelos-ma.html#estimacion"><i class="fa fa-check"></i><b>5.3</b> Estimación</a></li>
+<li class="chapter" data-level="5.4" data-path="modelos-ma.html"><a href="modelos-ma.html#predicciones-usando-modelos-ma"><i class="fa fa-check"></i><b>5.4</b> Predicciones usando modelos MA</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="modelos-arma.html"><a href="modelos-arma.html"><i class="fa fa-check"></i><b>6</b> Modelos ARMA</a><ul>
+<li class="chapter" data-level="6.1" data-path="modelos-arma.html"><a href="modelos-arma.html#propiedades-de-los-modelos-armapq"><i class="fa fa-check"></i><b>6.1</b> Propiedades de los modelos ARMA(p,q)</a></li>
+<li class="chapter" data-level="6.2" data-path="modelos-arma.html"><a href="modelos-arma.html#ecuaciones-en-diferencias"><i class="fa fa-check"></i><b>6.2</b> Ecuaciones en Diferencias</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="modelos-arma.html"><a href="modelos-arma.html#funcion-de-autocorrelacion-acf-para-modelos-arma"><i class="fa fa-check"></i><b>6.2.1</b> Función de Autocorrelación (ACF) para modelos ARMA</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="modelos-arma.html"><a href="modelos-arma.html#pronosticos"><i class="fa fa-check"></i><b>6.3</b> Pronósticos</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="modelos-arma.html"><a href="modelos-arma.html#pronosticos-para-procesos-arma"><i class="fa fa-check"></i><b>6.3.1</b> Pronósticos para procesos ARMA</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html"><i class="fa fa-check"></i><b>7</b> Estimación de parámetros</a><ul>
+<li class="chapter" data-level="7.1" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#estimacion-1"><i class="fa fa-check"></i><b>7.1</b> Estimación</a></li>
+<li class="chapter" data-level="7.2" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#sect-EMV"><i class="fa fa-check"></i><b>7.2</b> Estimación por Máxima Verosimilitud y Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="7.3" data-path="estimacion-de-parametros.html"><a href="estimacion-de-parametros.html#estimacion-de-minimos-cuadrados-para-modelos-armapq"><i class="fa fa-check"></i><b>7.3</b> Estimación de mínimos cuadrados para modelos ARMA(p,q)</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="modelos-arima.html"><a href="modelos-arima.html"><i class="fa fa-check"></i><b>8</b> Modelos ARIMA</a><ul>
+<li class="chapter" data-level="8.1" data-path="modelos-arima.html"><a href="modelos-arima.html#construccion-de-modelos-arima"><i class="fa fa-check"></i><b>8.1</b> Construcción de modelos ARIMA</a></li>
+<li class="chapter" data-level="8.2" data-path="modelos-arima.html"><a href="modelos-arima.html#modelos-sarima"><i class="fa fa-check"></i><b>8.2</b> Modelos SARIMA</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html"><i class="fa fa-check"></i><b>9</b> Modelos ARCH y GARCH</a><ul>
+<li class="chapter" data-level="9.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estructura-de-los-modelos"><i class="fa fa-check"></i><b>9.1</b> Estructura de los Modelos</a></li>
+<li class="chapter" data-level="9.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-arch"><i class="fa fa-check"></i><b>9.2</b> Modelos ARCH</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimacion-de-un-modelo-archp"><i class="fa fa-check"></i><b>9.2.1</b> Estimación de un Modelo ARCH(p)</a></li>
+<li class="chapter" data-level="9.2.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#prediccion-con-modelos-arch"><i class="fa fa-check"></i><b>9.2.2</b> Predicción con modelos ARCH</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#modelos-garch"><i class="fa fa-check"></i><b>9.3</b> Modelos GARCH</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#estimacion-de-un-modelo-garch"><i class="fa fa-check"></i><b>9.3.1</b> Estimación de un Modelo GARCH</a></li>
+<li class="chapter" data-level="9.3.2" data-path="modelos-arch-y-garch.html"><a href="modelos-arch-y-garch.html#prediccion-con-modelos-garch"><i class="fa fa-check"></i><b>9.3.2</b> Predicción con modelos GARCH</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><i class="fa fa-check"></i><b>10</b> Modelos lineales estacionales y modelos no-estacionarios</a><ul>
+<li class="chapter" data-level="10.1" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-estacionales"><i class="fa fa-check"></i><b>10.1</b> Modelos Estacionales</a></li>
+<li class="chapter" data-level="10.2" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-de-memoria-larga"><i class="fa fa-check"></i><b>10.2</b> Modelos de memoria larga</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#diferenciacion-fraccionada"><i class="fa fa-check"></i><b>10.2.1</b> Diferenciación fraccionada</a></li>
+<li class="chapter" data-level="10.2.2" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#ajuste-de-datos-simulados"><i class="fa fa-check"></i><b>10.2.2</b> Ajuste de datos simulados</a></li>
+<li class="chapter" data-level="10.2.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#evaluacion-de-las-pruebas-de-dependencia-a-largo-plazo"><i class="fa fa-check"></i><b>10.2.3</b> Evaluación de las pruebas de dependencia a largo plazo</a></li>
+<li class="chapter" data-level="10.2.4" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#simulacion"><i class="fa fa-check"></i><b>10.2.4</b> Simulación</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-no-estacionarios"><i class="fa fa-check"></i><b>10.3</b> Modelos no estacionarios</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#no-estacionarios-en-varianza"><i class="fa fa-check"></i><b>10.3.1</b> No estacionarios en Varianza</a></li>
+<li class="chapter" data-level="10.3.2" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#no-estacionarios-en-media"><i class="fa fa-check"></i><b>10.3.2</b> No estacionarios en Media</a></li>
+<li class="chapter" data-level="10.3.3" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#test-de-raiz-unitaria"><i class="fa fa-check"></i><b>10.3.3</b> Test de raíz unitaria</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#modelos-de-regresion"><i class="fa fa-check"></i><b>10.4</b> Modelos de regresión</a></li>
+<li class="chapter" data-level="10.5" data-path="modelos-lineales-estacionales-y-modelos-no-estacionarios.html"><a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#estimacion-consistente-de-la-matriz-de-covarianza"><i class="fa fa-check"></i><b>10.5</b> Estimación consistente de la matriz de covarianza</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="analisis-espectral.html"><a href="analisis-espectral.html"><i class="fa fa-check"></i><b>11</b> Análisis Espectral</a><ul>
+<li class="chapter" data-level="11.1" data-path="analisis-espectral.html"><a href="analisis-espectral.html#comportamiento-ciclico-y-periodicidad"><i class="fa fa-check"></i><b>11.1</b> Comportamiento Cíclico y Periodicidad</a></li>
+<li class="chapter" data-level="11.2" data-path="analisis-espectral.html"><a href="analisis-espectral.html#la-densidad-espectral"><i class="fa fa-check"></i><b>11.2</b> La Densidad Espectral</a></li>
+<li class="chapter" data-level="11.3" data-path="analisis-espectral.html"><a href="analisis-espectral.html#periodograma-y-transformada-discreta-de-fourier"><i class="fa fa-check"></i><b>11.3</b> Periodograma y Transformada Discreta de Fourier</a></li>
+<li class="chapter" data-level="11.4" data-path="analisis-espectral.html"><a href="analisis-espectral.html#estimacion-espectral-no-parametrica"><i class="fa fa-check"></i><b>11.4</b> Estimación Espectral No-paramétrica</a></li>
+<li class="chapter" data-level="11.5" data-path="analisis-espectral.html"><a href="analisis-espectral.html#procesos-de-incremento-ortogonal-sobre--pipi"><i class="fa fa-check"></i><b>11.5</b> Procesos de Incremento Ortogonal sobre <span class="math inline">\([-\pi,\pi]\)</span></a></li>
+<li class="chapter" data-level="11.6" data-path="analisis-espectral.html"><a href="analisis-espectral.html#integracion-con-respecto-a-un-proceso-de-incremento-ortogonal"><i class="fa fa-check"></i><b>11.6</b> Integración con Respecto a un Proceso de Incremento Ortogonal</a><ul>
+<li class="chapter" data-level="11.6.1" data-path="analisis-espectral.html"><a href="analisis-espectral.html#propiedades-de-la-integral-estocastica"><i class="fa fa-check"></i><b>11.6.1</b> Propiedades de la Integral Estocástica</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="analisis-espectral.html"><a href="analisis-espectral.html#la-representacion-espectral"><i class="fa fa-check"></i><b>11.7</b> La Representación Espectral</a></li>
+</ul></li>
+<li class="appendix"><span><b>Apéndice</b></span></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Series de Tiempo en R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="modelos-lineales-estacionales-y-modelos-no-estacionarios" class="section level1">
+<h1><span class="header-section-number">Capítulo 10</span> Modelos lineales estacionales y modelos no-estacionarios</h1>
+<div id="modelos-estacionales" class="section level2">
+<h2><span class="header-section-number">10.1</span> Modelos Estacionales</h2>
+<p>Algunas series en finanzas tales como los ingresos trimestrales de los activos de una empresa presentan un cierto comportamiento cíclico o periódico. Tales tipos de series se denominan <em>series de tiempo estacionales</em>. En ciertas aplicaciones la estacionalidad la podemos considerar como algo secundario y por tanto la podemos remover, obteniendo una serie de tiempo estacionalmente ajustada la cula procedemos a estudiar. Sin embargo, en predicción de series financieras la estacionalidad es muy importante, tanto como otras características de los datos y por consiguiente la debemos considerar cuando hacemos el análisis de series de tiempo. En el capítulo <a href="modelos-arma.html#modelos-arma">Modelos ARMA</a>, en la sección <a href="modelos-arima.html#modelos-sarima">Modelos SARIMA</a> ya vimos un modelo estacional, el modelo SARIMA. Ahora veremos algunos modelos econométricos útiles para modelar series estacionales.</p>
+<p>Para una serie de tiempo estacional <span class="math inline">\(x_t\)</span> con periodo estacinal <span class="math inline">\(s\)</span>, la <em>diferenciación estacional</em> se define como</p>
+<span class="math display" id="eq:eq-diferencia-estacional-s">\[\begin{equation}
+\Delta sx_t = x_t-x_{t-s}.
+\tag{10.1}
+\end{equation}\]</span>
+<p>La diferencia convencional <span class="math inline">\(\Delta x_t=x_t-x_{t-1} = (1-B)x_t\)</span> la llamaremos <em>diferenciación usual</em>. Consideremos ahora el caso especial de la siguiente serie estacional</p>
+<span class="math display" id="eq:eq-serie-estacional-s">\[\begin{equation}
+(1-B^s)(1-B)x_t = (1-\theta B)(1-\Theta B^s)w_t,
+\tag{10.2}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(s\)</span> es el período estacional de la serie, <span class="math inline">\(w_t\)</span> es un ruido blanco, <span class="math inline">\(|\theta|&lt;1\)</span> y <span class="math inline">\(|\Theta|&lt;1\)</span>. Este modelo se conoce como el <em>modelo de aerolinea</em> (ver Box et. al (1994), Cap. 9). La parte autorregresiva <span class="math inline">\(AR\)</span> (lado izquierdo de <a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#eq:eq-serie-estacional-s">(10.2)</a>) del modelo consta de diferencias estacionales y usuales, mientras que el promedio móvil, <span class="math inline">\(MA\)</span> (lado derecho de <a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#eq:eq-serie-estacional-s">(10.2)</a>) involucra dos parámetros, <span class="math inline">\(\theta\)</span> y <span class="math inline">\(\Theta\)</span>. Consideremos la parte <span class="math inline">\(MA\)</span>,</p>
+<p><span class="math display">\[w_t = (1-\theta B)(1-\Theta B^s)w_t = w_t-\theta w_{t-1}-\Theta w_{t-s}+\theta\Theta w_{t-s-1},\]</span></p>
+<p>donde <span class="math inline">\(w_t=(1-B^s)(1-B)x_t\)</span>. El proceso <span class="math inline">\(w_t\)</span> se denomina <em>modelo estacional multiplicativo MA</em>. En aplicaciones, un modelo estacional multiplicativo supone que la dinámica de las componentes regular y estacional de la serie son aproximadamente ortogonales.</p>
+</div>
+<div id="modelos-de-memoria-larga" class="section level2">
+<h2><span class="header-section-number">10.2</span> Modelos de memoria larga</h2>
+<p>Algunas series de tiempo muestran marcadas correlaciones a rezagos grandes, nos referiremos a ellos como proceos de memoria larga. La <em>memoria larga</em> es una característica de muchas series de tiempo geofísicas. Los caudales en el río Nilo tienen correlación en rezagos grandes y Hurst (1951) demostró que esto afectaba la capacidad de diseño optima de una presa. Mudelsee (2007) demostró que la memoria larga es una propiedad hidrológica que puede conducir a sequías prolongadas o al agrupamiento temporal de inundaciones extremas. A una escala bastante diferente, Leland et. al (1993) encontraron que el tráfico de la red de área local (LAN) Ethernet parece ser estadísticamente autosimilar y un proceso de memoria larga. Demostraron que la naturaleza de la congestión producida por el tráfico autosimilar difiere drásticamente de la prevista por los modelos de tráfico utilizados en ese momento. Mandelbrot y sus compañeros de trabajo investigaron la relación entre la autosimilaridad y la memoria a largo plazo y desempeñaron un papel fundamental en el establecimiento de la geometría fractal como tema de estudio.</p>
+<div id="diferenciacion-fraccionada" class="section level3">
+<h3><span class="header-section-number">10.2.1</span> Diferenciación fraccionada</h3>
+<p>Beran (1994) describió las características cualitativas de una trayectoria de muesteo típica (realización) de un proceso de memoria larga. Hay períodos relativmanete largos durante el cual las observaciones tienden a mantenerse a un nivel alto y periodos largos similares durante el cual las observaicones tienden a ser de bajo nivel. Puede parecer que hay tendencias o ciclos sobre períodos de tiempos cortos, pero no persisten y toda la serie parece estacionaria. Un criteio más objetivo es que la correlación muestral <span class="math inline">\(r_k\)</span> decaiga a cero a una tasa que es aproximadamente proporcional a <span class="math inline">\(k^{-\lambda}\)</span> para algún <span class="math inline">\(0&lt;\lambda&lt;1\)</span>. Esto es notablemente más lento que la tasa de decaimiento de <span class="math inline">\(r_k\)</span> para realizaciones a partir de un proceso <span class="math inline">\(AR(1)\)</span>, por ejemplo, el cual es aproximadamente proporcional a <span class="math inline">\(\lambda^k\)</span> para algún <span class="math inline">\(0&lt;\lambda&lt;1\)</span>.</p>
+<p>La definición matemática de un proceso estacionario con memoria larga, también conocido como dependencia o persistencia a largo plazo, se puede dar en términos de la función de autocorrelación.</p>
+
+<div class="definition">
+<p><span id="def:defi-proceso-memoria-larga" class="definition"><strong>Definición 10.1  </strong></span>Un <em>proceso estacionario con memoria larga</em> <span class="math inline">\(x_t\)</span> tiene una función de autocorrelación <span class="math inline">\(\rho_k\)</span> que satisface la condición</p>
+<span class="math display" id="eq:eq-condicion-proceso-memoria-larga">\[\begin{equation}
+\lim_{k\to\infty}\rho_k=ck^{-\lambda}
+\tag{10.3}
+\end{equation}\]</span>
+para algún <span class="math inline">\(c&gt;0\)</span> y <span class="math inline">\(0&lt;\lambda&lt;1\)</span>. Cuanto más cerca está <span class="math inline">\(\lambda\)</span> de 0, más pronunciada es la memoria larga.
+</div>
+
+<hr />
+<p>El hidrólogo Harold Hurst halló que para muchos registros geofísicos, incluyendo los datos del río Nilo, el estadístico conocido como <em>rango reescalado</em> sobre un período <span class="math inline">\(k\)</span> es aproximadamente proporcional a <span class="math inline">\(k^H\)</span> para algún <span class="math inline">\(H&gt;1/2\)</span>. El parámetro de Hurst, <span class="math inline">\(H\)</span>, se define como <span class="math inline">\(H=1-\lambda/2\)</span> y tiene rango <span class="math inline">\([1/2,1)\)</span>. Cuanto más cerca está <span class="math inline">\(H\)</span> de 1, más persistente es la serie. Si no hay efecto de memoria larga, entonces <span class="math inline">\(H=1/2\)</span>.</p>
+
+<div class="definition">
+<p><span id="def:defi-modelo-diferencia-fraccional" class="definition"><strong>Definición 10.2  </strong></span>Un modelo de diferencia fraccional de defiene como</p>
+<span class="math display" id="eq:eq-modelo-diferencia-fraccional">\[\begin{equation}
+(1-B)^dx_t=w_t,\quad -1/2&lt;d&gt;1/2,
+\tag{10.4}
+\end{equation}\]</span>
+donde <span class="math inline">\(\{w_t\}\)</span> es un proceso de ruido blanco.
+</div>
+
+<hr />
+<p>Algunas de las propiedades para este modelo son las siguientes:</p>
+<ul>
+<li>Si <span class="math inline">\(d&lt;1/2\)</span>, entonces <span class="math inline">\(x_t\)</span> es un proceso débilmente estacionario con representación <span class="math inline">\(MA\)</span> infinita
+<span class="math display">\[\begin{eqnarray*}
+x_t &amp;=&amp; w_t = \sum_{i=1}^{\infty}\psi_iw_{t-i}\text{; con }\psi_k=\frac{d(d+1)\cdots(k-1+d)}{k!} \\
+&amp;=&amp; \frac{(k+d+1)!}{k!(d-1)!}
+\end{eqnarray*}\]</span></li>
+<li>Si <span class="math inline">\(d&gt;1/2\)</span>, entonces <span class="math inline">\(x_t\)</span> es invertible con representación <span class="math inline">\(AR\)</span> infinita
+<span class="math display">\[\begin{eqnarray*}
+x_t &amp;=&amp; \sum_{i=1}^{\infty}\pi_ix_{t-i}+w_t\text{, con }\pi_k=\frac{-d(1-d)\cdots(k-1-d)}{k!} \\
+&amp;=&amp; \frac{(k-d-1)!}{k!(-d-1)!}
+\end{eqnarray*}\]</span></li>
+<li><p>Para <span class="math inline">\(-1/2&lt;d&lt;1/2\)</span>, la ACF de <span class="math inline">\(x_t\)</span> es <span class="math display">\[\rho_k=\frac{d(d+1)\cdots(k-1+d)}{(1-d)(2-d)\cdots(k-d)},\quad k=1,2,\ldots.\]</span> En particular <span class="math inline">\(\rho_1=\frac{d}{1-d}\)</span> y <span class="math display">\[\rho_k\approx\frac{(-d)!}{(d-1)!}k^{2d-1}\text{, cuando }k\to \infty.\]</span></p></li>
+<li><p>Para <span class="math inline">\(-1/2&lt;d&lt;1/2\)</span>, la PACF de <span class="math inline">\(x_t\)</span> es <span class="math inline">\(\phi_{kk}=\frac{d}{k-d}\)</span> para <span class="math inline">\(k=1,2,\ldots\)</span>.</p></li>
+<li>Para <span class="math inline">\(-1/2&lt;d&lt;1/2\)</span>, la función de densidad epsectral <span class="math inline">\(f(\omega)\)</span> de <span class="math inline">\(x_t\)</span>, que es la transformada de Fourier de la ACF de <span class="math inline">\(x_t\)</span> satisface
+<span class="math display" id="eq:eq-densidad-espectral-proceso-memoria-larga">\[\begin{equation}
+f(\omega)\sim\omega^{-2d},\quad \omega\to0
+\tag{10.5}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(\omega\in[0,2\pi]\)</span> denota la frecuencia.</p></li>
+</ul>
+
+<div class="definition">
+<p><span id="def:defi-diferencia-fraccional-ARIMA" class="definition"><strong>Definición 10.3  </strong></span>Un proceso de diferencia fraccional ARIMA, denotado <span class="math inline">\(FARIMA(p,d,q)\)</span> tiene la forma</p>
+<span class="math display" id="eq:eq-FARIMApdq">\[\begin{equation}
+\phi(B)(1-B)^dx_t = \psi(B)w_t
+\tag{10.6}
+\end{equation}\]</span>
+para algún <span class="math inline">\(-1/2&lt;d&lt;1/2\)</span>. El rango <span class="math inline">\(o&lt;d&lt;1/2\)</span> da el proceso de memoria larga.
+</div>
+
+<hr />
+<p>Es útil introducir la serie fraccionadamente diferenciada <span class="math inline">\(\{y_t\}\)</span> y expresar la ecuación <a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#eq:eq-FARIMApdq">(10.6)</a> como</p>
+<span class="math display" id="eq:eq-serie-fraccionada-diferenciada">\[\begin{equation}
+y_t = (1-B)^dx_t = [\phi(B)]^{-1}\psi(B)w_t,
+\tag{10.7}
+\end{equation}\]</span>
+<p>porque esto sugiere un medio para adaptar un modelo <span class="math inline">\(FARIMA\)</span> a las series de tiempo.</p>
+<p>Para un valor de prueba <span class="math inline">\(d\)</span>, calculamos la serie fraccionadamente diferenciada <span class="math inline">\(\{y_t\}\)</span>, ajustamos un modelo <span class="math inline">\(ARIMA\)</span> a <span class="math inline">\(\{y_t\}\)</span> y luego investigamos los residuos. El cálculo de las series fraccionadamente diferenciadas <span class="math inline">\(\{y_t\}\)</span> resulta de una expansión binomial formal de <span class="math inline">\((1-B)^d\)</span> y está dada por</p>
+<p><span class="math display">\[(1-B)^d = 1-dB+\frac{d(d-1)}{2!}B^2-\frac{d(d-1)(d-2)}{3!}B^3+\cdots\]</span></p>
+<p>truncada para algún retardo convenientemente grande (<span class="math inline">\(L\)</span>), que podríamos fijar razonablemente en 40. Por ejemplo, si <span class="math inline">\(d=0.45\)</span>, entonces</p>
+<span class="math display">\[\begin{eqnarray*}
+y_t &amp;=&amp; x_t-0.45x_{t-1}+\frac{0.45(0.45-1)}{2!}x_{t-2}-\frac{0.45(0.45-1)(0.45-2)}{3!}x_{t-3}+\cdots\\
+    &amp;=&amp; x_t-0.450x_{t-1}-0.12375x_{t-2}-0.0639375x_{t-3}-\cdots-0.001287312x_{t-40}.
+\end{eqnarray*}\]</span>
+<p>El código en <span class="math inline">\(R\)</span> para calcular los coeficientes es</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cf=<span class="kw">rep</span>(<span class="dv">40</span>)
+d=<span class="fl">0.45</span>
+cf[<span class="dv">1</span>]=<span class="op">-</span>d
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">39</span>) cf[i<span class="op">+</span><span class="dv">1</span>]=<span class="op">-</span>cf[i]<span class="op">*</span>(d<span class="op">-</span>i)<span class="op">/</span>(i<span class="op">+</span><span class="dv">1</span>)</code></pre></div>
+<p>Otra expresión equivalente para la ecuación <a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#eq:eq-FARIMApdq">(10.6)</a>, la cual resulta muy útil para simulación, es</p>
+<span class="math display" id="eq:eq-FARIMA-simulacion">\[\begin{equation}
+x_t = [\phi(B)]^{-1}\psi(B)(1-B)^{-d}w_t.
+\tag{10.8}
+\end{equation}\]</span>
+<p>En simulación, el primer paso es calcular <span class="math inline">\((1-B)^{-d}w_t\)</span>. El operador <span class="math inline">\((1-B)^{-d}\)</span> lo desarrollamos como</p>
+<p><span class="math display">\[(1-B)^{-d} = 1-d(-B)+\frac{-d(-d-1)}{2!}B^2-\frac{-d(-d-1)(-d-2)}{3!}B^3+\cdots,\]</span></p>
+<p>con la serie truncada en algún paso <span class="math inline">\(L\)</span> convenientemente largo. Las distribuciones de la serie independiente de ruido blanco la podemos elegir de modo que se adapten a la aplicación. Cabe destacar que en finanzas y telecomunicaciones las distirbuciones de colas pesadas a menudo son apropiadas. En particular una distribución <span class="math inline">\(t\)</span> con <span class="math inline">\(\nu (&gt;4)\)</span> grados de libertad tiene curtosis <span class="math inline">\(6/\nu-4\)</span> y es también de cola pesada. Si, por ejemplo, <span class="math inline">\(d=0.45\)</span> y <span class="math inline">\(L=40\)</span>, entonces</p>
+<span class="math display">\[\begin{eqnarray*}
+(1-B)^{-d}w_t &amp;=&amp; w_t+0.45w_{t-1}+0.32625w_{t-2}+0.2664375w_{t-3}+\cdots\\
+              &amp; &amp; \cdots + 0.0657056w_{t-40}. 
+\end{eqnarray*}\]</span>
+<p>La función de autocorrelación <span class="math inline">\(\rho_k\)</span> de un proceso <span class="math inline">\(FARIMA(0,d,0)\)</span> tiende a</p>
+<p><span class="math display">\[\frac{\Gamma(1-d)}{\Gamma(d)}|k|^{2d-1},\]</span></p>
+<p>para <span class="math inline">\(n\)</span> grande.</p>
+<p>Un modelo <span class="math inline">\(FARIMA(0,d,0)\)</span> con <span class="math inline">\(0&lt;d&lt;1/2\)</span>, está entre un modelo <span class="math inline">\(AR(1)\)</span> y un camino aleatorio no estacionario. En la práctica, para ajustar o simular , debemos truncar el modelo <span class="math inline">\(FARIMA(0,d,0)\)</span> en algún paso <span class="math inline">\(L\)</span>. Entonces, este es equivalente a un modelo <span class="math inline">\(AR(L)\)</span>, pero todos los coeficientes en el modelo <span class="math inline">\(FARIMA(0,d,0)\)</span> dependen un solo parámetro <span class="math inline">\(d\)</span>.</p>
+</div>
+<div id="ajuste-de-datos-simulados" class="section level3">
+<h3><span class="header-section-number">10.2.2</span> Ajuste de datos simulados</h3>
+<p>En el siguiente script, la función ‘fraccdiff.sim’ genera una realizaci’pon de un proceso <span class="math inline">\(FARIMA\)</span>. El primer parámetro es la longitud de larealización, los parámetros <span class="math inline">\(AR\)</span> y <span class="math inline">\(MA\)</span> los podemos especificar usando la función ‘c()’ si hay más de uno para cada un de ellos, el siguiente parámetro es el valor de <span class="math inline">\(d\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(fracdiff)</code></pre></div>
+<pre><code>## Warning: package &#39;fracdiff&#39; was built under R version
+## 3.5.2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+fds.sim=<span class="kw">fracdiff.sim</span>(<span class="dv">10000</span>,<span class="dt">ar=</span><span class="fl">0.9</span>,<span class="dt">d=</span><span class="fl">0.4</span>)
+x=fds.sim<span class="op">$</span>series
+fds.fit=<span class="kw">fracdiff</span>(x,<span class="dt">nar =</span> <span class="dv">1</span>)</code></pre></div>
+<p>En el siguiente script, el primer ‘for loop’ calcula los coeficientes para los términos de rezago en las diferencias fraccionales usando el valor ajustado para <span class="math inline">\(d\)</span>. El siguiente ciclo anidado calcula entonces la serie de tiempo fraccionadamente diferenciada. A continuación, se ajusta un modelo <span class="math inline">\(AR\)</span> a la serie diferenciada y se grafica la ACF de los residuales. Los residuales deben parecer una realización de un ruido blanco discreto.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="kw">length</span>(x)
+L &lt;-<span class="st"> </span><span class="dv">30</span>
+d &lt;-<span class="st"> </span>fds.fit<span class="op">$</span>d
+fdc &lt;-<span class="st"> </span>d
+fdc[<span class="dv">1</span>] &lt;-<span class="st"> </span>fdc
+<span class="co"># Calculo de los coeficientes</span>
+<span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span>L) fdc[k] &lt;-<span class="st"> </span>fdc[k<span class="op">-</span><span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>(d<span class="op">+</span><span class="dv">1</span><span class="op">-</span>k) <span class="op">/</span><span class="st"> </span>k
+y &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, L)
+<span class="co"># Calculo de la serie fraccionadamente diferenciada</span>
+<span class="cf">for</span> (i <span class="cf">in</span> (L<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>n) {
+  csm &lt;-<span class="st"> </span>x[i]
+  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>L) csm &lt;-<span class="st"> </span>csm <span class="op">+</span><span class="st"> </span>((<span class="op">-</span><span class="dv">1</span>)<span class="op">^</span>j) <span class="op">*</span><span class="st"> </span>fdc[j] <span class="op">*</span><span class="st"> </span>x[i<span class="op">-</span>j]
+  y[i] &lt;-<span class="st"> </span>csm
+}
+y &lt;-<span class="st"> </span>y[(L<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>n]
+z.ar &lt;-<span class="st"> </span><span class="kw">ar</span>(y)
+ns &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>z.ar<span class="op">$</span>order
+z &lt;-<span class="st"> </span>z.ar<span class="op">$</span>res [ns<span class="op">:</span><span class="kw">length</span>(y)]
+<span class="co"># Graficos</span>
+<span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="kw">as.ts</span>(x), <span class="dt">ylab =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Tiempo&quot;</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)
+<span class="kw">acf</span>(x) ; <span class="kw">acf</span>(y) ; <span class="kw">acf</span>(z)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-68-1.svg" /><!-- --></p>
+<p>La figura muestra una realización <span class="math inline">\(\{x_t\}\)</span> del proceso fraccionadamente diferenciado <span class="math inline">\(FARIMA(1,0.4,0)\)</span> (parte superior izquierda) con parámetro <span class="math inline">\(AR\)</span>, <span class="math inline">\(\phi=0.9\)</span>. Los valores estimados para <span class="math inline">\(d\)</span> y <span class="math inline">\(\phi\)</span> son 0.429 y 0.8839 respectivamente. En la parte superio derecha observamos la ACF para la realización <span class="math inline">\(\{x_t\}\)</span>, y en la parte inferior izquierda la PACF para la serie fraccionadamente diferenciada <span class="math inline">\(\{y_t\}\)</span>, como podemos notar, ambas funciones decaen lentamente, lo que indica la memoria larga. En la parte inferior derecha de la misma figura se mmuestra la ACF para los residuales de <span class="math inline">\(y_t\)</span>. Con la función ‘summary()’ podemos ver los valores de los parámetros del modelo, así como algunos estadísticos.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Resumen</span>
+<span class="kw">summary</span>(fds.fit)</code></pre></div>
+<pre><code>## 
+## Call:
+##   fracdiff(x = x, nar = 1) 
+## 
+## Coefficients:
+##    Estimate Std. Error z value Pr(&gt;|z|)    
+## d   0.42904    0.01439    29.8   &lt;2e-16 ***
+## ar  0.88368    0.00877   100.7   &lt;2e-16 ***
+## ---
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## sigma[eps] = 1.012 
+## [d.tol = 0.0001221, M = 100, h = 0.0001508]
+## Log likelihood: -1.43e+04 ==&gt; AIC = 28630 [3 deg.freedom]</code></pre>
+</div>
+<div id="evaluacion-de-las-pruebas-de-dependencia-a-largo-plazo" class="section level3">
+<h3><span class="header-section-number">10.2.3</span> Evaluación de las pruebas de dependencia a largo plazo</h3>
+<p>A continuación mostraremos tre ejemplos donde evaluaremos las dependencias a largo plazo. El primer ejemplo es con los datos en el archivo “Nilemin.txt”, el cual contiene los nivéles mínimos de agua (<span class="math inline">\(mm\)</span>) del río Nilo para los años 622 a 1284, medidos en la Isla de Roda cerca del Cairo. El segundo ejemplo son los números de llegadas de paquetes (bits) en 4000 intervalos consecutivos de <span class="math inline">\(10ms\)</span> vistos en una Ethernet en las instalaciones de Bellcore Morristown Research and Engineering, el archivo es “LAN.txt”. El último ejemplo son los datos del porcentaje mensual de la tasa preferencial del Banco de la Reserva Federal de los Estados Unidos, cortesía de la Junta de Gobernadores del Sistema de la Reserva Federal, desde enero de 1949 hasta noviembre de 2007. El archivo es “mprime.txt”. Todos los archivos de datos fueron obtenidos de: <a href="https://github.com/AtefOuni/ts/tree/master/Data" class="uri">https://github.com/AtefOuni/ts/tree/master/Data</a>.</p>
+
+<div class="example">
+<span id="exm:ejem-minimo-Nilo" class="example"><strong>Ejemplo 10.1  (Nivéles mínimo del río Nilo)  </strong></span>Para estos datos, es probable que haya una tendencia creciente durante el período de 600 años debido a los cambios climáticos o a los cambios en los canales alrededor de la Isla de Roda. Iniciamos el análisis estimando y removiendo la tendencia usando regresión lineal. Luego elegimos el valor de ‘nar’ inicial para aplicar la función ‘fracdiff’ sobre los residuales de la regresión. El valor estimado de <span class="math inline">\(d\)</span> con <span class="math inline">\(nar=5\)</span> es 0.3456 con un error estándar de 0.0295. El mejor modelo para la serie fraccionadamente diferenciada es un <span class="math inline">\(AR(1)\)</span> con parámetro <span class="math inline">\(\phi=0.076\)</span> y <span class="math inline">\(d=0.3420\)</span>.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Nilo=<span class="kw">read.table</span>(<span class="st">&quot;data/Nilemin.txt&quot;</span>, <span class="dt">header =</span> T)
+<span class="co"># Variables</span>
+Nivel=Nilo<span class="op">$</span>Depth
+n=<span class="kw">length</span>(Nivel)
+tiempo=<span class="kw">seq</span>(<span class="dv">1</span><span class="op">:</span>n)
+<span class="co"># Regresion linela para removver la tendencia</span>
+y=<span class="kw">lm</span>(Nivel<span class="op">~</span>tiempo, Nilo)
+<span class="kw">summary</span>(y)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Nivel ~ tiempo, data = Nilo)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -245.4  -57.0   -7.0   49.3  335.1 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 1.11e+03   6.67e+00  166.13  &lt; 2e-16 ***
+## tiempo      1.20e-01   1.74e-02    6.88  1.4e-11 ***
+## ---
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 85.8 on 661 degrees of freedom
+## Multiple R-squared:  0.0668, Adjusted R-squared:  0.0653 
+## F-statistic: 47.3 on 1 and 661 DF,  p-value: 1.42e-11</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reg=y<span class="op">$</span>coefficients[<span class="dv">1</span>]<span class="op">+</span>y<span class="op">$</span>coefficients[<span class="dv">2</span>]<span class="op">*</span>tiempo
+Nilo.det=Nivel<span class="op">-</span>reg
+<span class="co"># Ajuste de la serie fraccionada diferenciada</span>
+Nilo.frac=<span class="kw">fracdiff</span>(Nilo.det, <span class="dt">nar =</span> <span class="dv">1</span>)
+<span class="kw">summary</span>(Nilo.frac)</code></pre></div>
+<pre><code>## 
+## Call:
+##   fracdiff(x = Nilo.det, nar = 1) 
+## 
+## Coefficients:
+##    Estimate Std. Error z value Pr(&gt;|z|)    
+## d    0.3420     0.0291   11.76   &lt;2e-16 ***
+## ar   0.0764     0.0491    1.56     0.12    
+## ---
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## sigma[eps] = 69.92 
+## [d.tol = 0.0001221, M = 100, h = 3.96e-05]
+## Log likelihood: -3.76e+03 ==&gt; AIC = 7520 [3 deg.freedom]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulacion de la serie fraccionada diferenciada</span>
+Nilo.sim=<span class="kw">fracdiff.sim</span>(n,<span class="dt">ar=</span>Nilo.frac<span class="op">$</span>ar,<span class="dt">d=</span>Nilo.frac<span class="op">$</span>d)
+Nilo.sim.ts=Nilo.sim<span class="op">$</span>series
+<span class="co"># Modelo AR(1) para conseguir los residuales</span>
+Nilo.ar=<span class="kw">ar</span>(Nilo.sim.ts,<span class="dt">order.max =</span> <span class="dv">1</span>)
+Nilo.resid=Nilo.ar<span class="op">$</span>resid[<span class="dv">2</span><span class="op">:</span>n]</code></pre></div>
+<p>En la gráfica siguiente se muestran los nivéles del río Nilo junto con la recta de regresión de tendencia (superior izquierda); la ACF de la serie de tiempo una vez removida la tendencia (superior derecha); la serie simulada con el proceso <span class="math inline">\(FARIMA(1,d,0)\)</span>, con <span class="math inline">\(d=0.342\)</span> (medio izquierda); la ACF para la serie fraccionadamente diferenciada (medio izquierda); la ACF de los residuales del modelo <span class="math inline">\(AR(1)\)</span> (inferior izquierda) y la ACF de los residuales al cuadrado (inferior derecha).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(tiempo,Nivel, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Nivel del río Nilo&quot;</span>)
+<span class="kw">lines</span>(tiempo,y<span class="op">$</span>coefficients[<span class="dv">1</span>]<span class="op">+</span>y<span class="op">$</span>coefficients[<span class="dv">2</span>]<span class="op">*</span>tiempo,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)
+<span class="kw">acf</span>(Nilo.det, <span class="dt">main=</span><span class="st">&quot;ACF de la serie con la tendencia removida&quot;</span>)
+<span class="kw">plot</span>(tiempo,Nilo.sim.ts, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Simulación&quot;, main=&quot;</span>Serie fraccionada diferenciada<span class="st">&quot;)</span>
+<span class="st">acf(Nilo.sim.ts, main=&quot;</span>ACF de la serie fraccionada diferenciada<span class="st">&quot;)</span>
+<span class="st">acf(Nilo.resid, main=&quot;</span>ACF de los residuales<span class="st">&quot;)</span>
+<span class="st">acf(Nilo.resid^2, main=&quot;</span>ACF de los residuales cuadrados<span class="st">&quot;)</span></code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-71"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-71-1.svg" alt="Nivéles del río Nilo (serie de tiempo) y tendencia (superior izquierda); ACF de la serie de tiempo sin tendencia (superior derecha); serie simulada con un proceso $FARIMA(1,0.342,0)$ (medio izquierda); ACF para la serie fraccionadamente diferenciada (medio izquierda); ACF de los residuales del modelo $AR(1)$ (inferior izquierda) y la ACF de los residuales al cuadrado (inferior derecha)"  />
+<p class="caption">
+Figura 10.1: Nivéles del río Nilo (serie de tiempo) y tendencia (superior izquierda); ACF de la serie de tiempo sin tendencia (superior derecha); serie simulada con un proceso <span class="math inline">\(FARIMA(1,0.342,0)\)</span> (medio izquierda); ACF para la serie fraccionadamente diferenciada (medio izquierda); ACF de los residuales del modelo <span class="math inline">\(AR(1)\)</span> (inferior izquierda) y la ACF de los residuales al cuadrado (inferior derecha)
+</p>
+</div>
+<hr />
+
+<div class="example">
+<span id="exm:ejem-ethernet-bellcore" class="example"><strong>Ejemplo 10.2  (Datos de Ethernet en Bellcore)  </strong></span>al trazar el historgramas de frecuencias de estos datos, nos damos cuenta que está notablemente sesgado, por lo que trabajamos con el logaritmo de uno más el número de bits. La ACF del log(bits) sugiere un modelo <span class="math inline">\(FARIMA\)</span> con un ‘nar’ mayor a 40. Usando <span class="math inline">\(nar=48\)</span>, estimamos el modelo, el valor estimado para <span class="math inline">\(d=0.3404\)</span> y la serie fraccionadamente diferenciada no tiene correlación sustancial. Sin embargo, la función ‘ar’ fija un modelo <span class="math inline">\(AR(26)\)</span> a la serie, con un error estándar estimado de 2.10 el cual es ligeramente menor que 2.13 dado para el modelo <span class="math inline">\(FARIMA\)</span>. Existe una autocrrelación notable en la serie de residuos cuadrados del modelo <span class="math inline">\(AR(26)\)</span>, que es una característica de las series de tiempo con estallidos de actividad y que podemos modelar como un proceso <span class="math inline">\(GARCH\)</span>.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">LAN=<span class="kw">read.table</span>(<span class="st">&quot;data/LAN.txt&quot;</span>, <span class="dt">header =</span> T)
+bits=LAN<span class="op">$</span>bits
+<span class="co"># Transformacion log(bits+1)</span>
+bits.t=<span class="kw">log</span>(bits<span class="op">+</span><span class="dv">1</span>)
+<span class="co"># Histogramas</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">hist</span>(bits)
+<span class="kw">hist</span>(bits.t)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-72-1.svg" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Ajuste de un modelo FARIMA con d=48</span>
+bits.frac=<span class="kw">fracdiff</span>(bits.t,<span class="dt">nar=</span><span class="dv">48</span>)
+<span class="kw">summary</span>(bits.frac)</code></pre></div>
+<pre><code>## 
+## Call:
+##   fracdiff(x = bits.t, nar = 48) 
+## 
+## Coefficients:
+##       Estimate Std. Error z value Pr(&gt;|z|)    
+## d     0.340481   0.023313   14.60  &lt; 2e-16 ***
+## ar1  -0.014851   0.027578   -0.54  0.59023    
+## ar2  -0.096160   0.019795   -4.86  1.2e-06 ***
+## ar3  -0.049305   0.017644   -2.79  0.00520 ** 
+## ar4   0.016784   0.017196    0.98  0.32905    
+## ar5  -0.010652   0.016283   -0.65  0.51298    
+## ar6  -0.023007   0.016158   -1.42  0.15449    
+## ar7   0.011378   0.016358    0.70  0.48673    
+## ar8   0.056854   0.016261    3.50  0.00047 ***
+## ar9   0.040561   0.016408    2.47  0.01344 *  
+## ar10  0.048990   0.016267    3.01  0.00260 ** 
+## ar11  0.056088   0.016165    3.47  0.00052 ***
+## ar12  0.014485   0.016180    0.90  0.37063    
+## ar13  0.049191   0.016206    3.04  0.00240 ** 
+## ar14  0.046020   0.016066    2.86  0.00418 ** 
+## ar15  0.039909   0.016050    2.49  0.01290 *  
+## ar16 -0.003971   0.016152   -0.25  0.80582    
+## ar17 -0.033314   0.016088   -2.07  0.03839 *  
+## ar18  0.000339   0.016048    0.02  0.98317    
+## ar19  0.000302   0.016076    0.02  0.98500    
+## ar20  0.002580   0.016081    0.16  0.87252    
+## ar21 -0.010736   0.016191   -0.66  0.50726    
+## ar22 -0.000402   0.015954   -0.03  0.97990    
+## ar23 -0.061302   0.015982   -3.84  0.00013 ***
+## ar24  0.018400   0.016115    1.14  0.25354    
+## ar25 -0.024523   0.016001   -1.53  0.12538    
+## ar26  0.032997   0.016021    2.06  0.03944 *  
+## ar27 -0.006242   0.016016   -0.39  0.69672    
+## ar28  0.016139   0.016048    1.01  0.31458    
+## ar29 -0.017378   0.016113   -1.08  0.28081    
+## ar30  0.021073   0.016053    1.31  0.18929    
+## ar31 -0.026200   0.016050   -1.63  0.10260    
+## ar32 -0.001268   0.015932   -0.08  0.93655    
+## ar33 -0.016156   0.016369   -0.99  0.32363    
+## ar34 -0.007927   0.016067   -0.49  0.62175    
+## ar35 -0.043696   0.015949   -2.74  0.00615 ** 
+## ar36 -0.016645   0.016103   -1.03  0.30130    
+## ar37 -0.008787   0.016008   -0.55  0.58308    
+## ar38 -0.017836   0.016063   -1.11  0.26685    
+## ar39 -0.020635   0.016039   -1.29  0.19826    
+## ar40 -0.015276   0.016044   -0.95  0.34102    
+## ar41 -0.022284   0.016026   -1.39  0.16438    
+## ar42  0.035214   0.016053    2.19  0.02826 *  
+## ar43 -0.018629   0.016031   -1.16  0.24520    
+## ar44 -0.010474   0.016073   -0.65  0.51463    
+## ar45  0.005752   0.016119    0.36  0.72119    
+## ar46 -0.048927   0.016067   -3.05  0.00233 ** 
+## ar47 -0.006103   0.016059   -0.38  0.70393    
+## ar48 -0.014164   0.016066   -0.88  0.37801    
+## ---
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## sigma[eps] = 2.073 
+## [d.tol = 0.0001221, M = 100, h = 9.055e-05]
+## Log likelihood: -8.59e+03 ==&gt; AIC = 17285 [50 deg.freedom]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># simulacion del proceso FARIMA</span>
+bits.sim=<span class="kw">fracdiff.sim</span>(<span class="kw">length</span>(bits),<span class="dt">ar=</span>bits.frac<span class="op">$</span>ar, <span class="dt">d=</span>bits.frac<span class="op">$</span>d)
+bits.ts=bits.sim<span class="op">$</span>series
+<span class="co"># Modelo AR(26) para conseguir los residuales</span>
+bits.ar=<span class="kw">ar</span>(bits.ts,<span class="dt">order.max =</span> <span class="dv">26</span>)
+bits.resid=bits.ar<span class="op">$</span>resid
+<span class="co"># Graficos</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(bits.t, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Serie de tiempo transformada, log(bits+1)&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Tiempo&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;x&quot;</span>)
+<span class="kw">acf</span>(bits.t, <span class="dt">lag.max =</span> <span class="dv">50</span>, <span class="dt">main=</span><span class="st">&quot;ACF de la serie log(bits+1)&quot;</span>)
+<span class="kw">plot</span>(bits.ts, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Serie fraccionada diferenciada de log(bits+1)&quot;</span>)
+<span class="kw">acf</span>(bits.ts, <span class="dt">main=</span><span class="st">&quot;ACF de la serie fraccionada diferenciada de log(bits+1)&quot;</span>)
+<span class="kw">acf</span>(bits.resid[<span class="dv">27</span><span class="op">:</span><span class="dv">4000</span>], <span class="dt">main=</span><span class="st">&quot;ACF de los residuales &quot;</span>)
+<span class="kw">acf</span>(bits.resid[<span class="dv">27</span><span class="op">:</span><span class="dv">4000</span>]<span class="op">^</span><span class="dv">2</span>, <span class="dt">main=</span><span class="st">&quot;ACF de los residuales cuadrado&quot;</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-72-2.svg" /><!-- --></p>
+<hr />
+
+<div class="example">
+<p><span id="exm:ejem-tasa-prestamo-bancario" class="example"><strong>Ejemplo 10.3  (Tasa de prestamo bancario)  </strong></span>La serie de tiempo es graficada en la parte superior de la figura <a href="#fig:fig-tasa-prestamo-bancario"><strong>??</strong></a> y parece que podría ser la realización de un paseo al azar. También tiene un período de alta variabilidad. El correlograma muestras correlaciones muy altas con pasos pequeños y correlaciones sustanciales de hasta paso 28. Ni un paseo al azar ni un modelo con tendencia son modelos adecuados para simulación a largo plazo de las tasa de interés en una economía estable. En lugar de ello ajustamos un modelo <span class="math inline">\(FARIMA\)</span> que tiene la ventaja de ser estacionario.</p>
+La estimación de <span class="math inline">\(d\)</span> es casi 0, lo que implica que el decaimiento de las correlaciones a partir de un valor inicial alto es más rápido que en el caso de un modelo <span class="math inline">\(FARIMA\)</span>. El modelo <span class="math inline">\(AR\)</span> ajustado tiene un orden de 17 y no es del todo satisfactorio debido a la correlación estadísticamente significativa en el paso 1 de la serie de residuales. Las autocorrelaciones sustanciales de los residuales cuadrados del modelo <span class="math inline">\(AR(17)\)</span> sugieren que un modelo que se ajusta mejor es un modelo <span class="math inline">\(GARCH\)</span>.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">TPB=<span class="kw">read.table</span>(<span class="st">&quot;data/mprime.txt&quot;</span>,<span class="dt">header =</span> T)
+tasa=TPB<span class="op">$</span>Interest
+<span class="co"># Graficos</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))
+<span class="kw">plot</span>(tasa, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Tiempo&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Tasa (%)&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Serie de tiempo de las tasa de prestamos bancario&quot;</span>)
+<span class="kw">acf</span>(tasa,<span class="dt">lag.max =</span> <span class="dv">40</span>, <span class="dt">main=</span><span class="st">&quot;ACF tasa de prestamo bancario&quot;</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/fig-tasa-prestamo-bancario-1.svg" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Ajuste de un modelo FARIMA con d=30</span>
+tasa.frac=<span class="kw">fracdiff</span>(tasa,<span class="dt">nar=</span><span class="dv">30</span>)</code></pre></div>
+<pre><code>## Warning: unable to compute correlation matrix; maybe
+## change &#39;h&#39;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(tasa.frac)</code></pre></div>
+<pre><code>## 
+## Call:
+##   fracdiff(x = tasa, nar = 30) 
+## 
+## *** Warning during (fdcov) fit: unable to compute correlation matrix; maybe change &#39;h&#39;
+## 
+## Coefficients:
+##      Estimate
+## d        0.00
+## ar1      1.67
+## ar2     -0.92
+## ar3      0.25
+## ar4     -0.18
+## ar5      0.46
+## ar6     -0.63
+## ar7      0.48
+## ar8     -0.02
+## ar9     -0.03
+## ar10    -0.21
+## ar11     0.20
+## ar12    -0.17
+## ar13     0.19
+## ar14     0.03
+## ar15    -0.24
+## ar16     0.24
+## ar17    -0.17
+## ar18     0.03
+## ar19    -0.01
+## ar20     0.05
+## ar21    -0.03
+## ar22    -0.06
+## ar23     0.06
+## ar24    -0.01
+## ar25     0.02
+## ar26     0.03
+## ar27     0.00
+## ar28    -0.06
+## ar29     0.05
+## ar30    -0.02
+## sigma[eps] = 0.3152 
+## [d.tol = 0.0001221, M = 100, h = 1.981e-06]
+## Log likelihood: -187 ==&gt; AIC = 438 [32 deg.freedom]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># simulacion del proceso FARIMA</span>
+tasa.sim=<span class="kw">fracdiff.sim</span>(<span class="kw">length</span>(tasa),<span class="dt">ar=</span>tasa.frac<span class="op">$</span>ar, <span class="dt">d=</span>tasa.frac<span class="op">$</span>d)
+tasa.ts=tasa.sim<span class="op">$</span>series
+<span class="co"># Modelo AR(17) para conseguir los residuales</span>
+tasa.ar=<span class="kw">ar</span>(tasa.ts,<span class="dt">order.max =</span> <span class="dv">17</span>)
+tasa.resid=tasa.ar<span class="op">$</span>resid</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(tasa, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Tiempo&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Tasa (%)&quot;</span>,
+     <span class="dt">main=</span><span class="st">&quot;Serie de tiempo de las tasa de prestamos bancario&quot;</span>)
+<span class="kw">acf</span>(tasa,<span class="dt">lag.max =</span> <span class="dv">40</span>, <span class="dt">main=</span><span class="st">&quot;ACF tasa de prestamo bancario&quot;</span>)
+<span class="kw">plot</span>(tasa.ts, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Tiempo&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Serie fraccionada diferenciada&quot;</span>)
+<span class="kw">acf</span>(tasa.ts, <span class="dt">main=</span><span class="st">&quot;ACF de la serie fraccionada diferenciada&quot;</span>)
+<span class="kw">acf</span>(tasa.resid[<span class="dv">18</span><span class="op">:</span><span class="dv">707</span>], <span class="dt">main=</span><span class="st">&quot;ACF de los residuales &quot;</span>)
+<span class="kw">acf</span>(tasa.resid[<span class="dv">18</span><span class="op">:</span><span class="dv">707</span>]<span class="op">^</span><span class="dv">2</span>, <span class="dt">main=</span><span class="st">&quot;ACF de los residuales cuadrado&quot;</span>)</code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-73"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-73-1.svg" alt="Serie de tiempo de tasa de prestamos bancario (superior izquierda); ACF de la tasa de prestamo bancario (superior derecha); Serie con un proceso FARIMA(30,0.00012,0) (medio izquierda); ACF de la serie fraccionada diferenciada (medio derecha); ACF de los residuales (inferior izquierda); ACF de los residuales cuadrados (inferior derecha)."  />
+<p class="caption">
+Figura 10.2: Serie de tiempo de tasa de prestamos bancario (superior izquierda); ACF de la tasa de prestamo bancario (superior derecha); Serie con un proceso FARIMA(30,0.00012,0) (medio izquierda); ACF de la serie fraccionada diferenciada (medio derecha); ACF de los residuales (inferior izquierda); ACF de los residuales cuadrados (inferior derecha).
+</p>
+</div>
+<hr />
+<p>En el capítulo <a href="modelos-arch-y-garch.html#modelos-arch-y-garch">Modelos ARCH y GARCH</a> retomaremos estos 3 ejemplos y realizaremos los ajustes y simulación con modelos <span class="math inline">\(GARCH\)</span>, de manera de observar las diferencias y lo apropiado de dichos modelos a estos datos.</p>
+</div>
+<div id="simulacion" class="section level3">
+<h3><span class="header-section-number">10.2.4</span> Simulación</h3>
+<p>Los modelos FARIMA son importantes para la simulación porque los modelos de memoria corta, que ignoran la evidencia de memoria larga, pueden llevar a una sobreestimación seria del rendimiento del sistema. Esto se ha demostrado de forma convincente en las escalas de los enrutadores de las redes de telecomunicaciones.</p>
+<p>Los modelos realistas para la simulación normalmente necesitarán incorporar modelos GARCH y distribuciones de cola pesada para la serie de ruido blanco. El procedimiento es ajustar un modelo GARCH a los residuos del modelo AR ajustado a las series fraccionadamente diferenciadas. Entonces podemos ajustar los residuos del modelo GARCH y una distribución de probabilidad adecuada a los mismos. Una vez fijados los modelos, procedemos de la siguiente manera: generamos números aleatorios a partir del modelo GARCH de probabilidad ajustado de lo residuos y realizamos la simulación.</p>
+</div>
+</div>
+<div id="modelos-no-estacionarios" class="section level2">
+<h2><span class="header-section-number">10.3</span> Modelos no estacionarios</h2>
+<p>Los modelos que hasta ahora hemos considerado están basados en la suposición de que son procesos estacionarios. Esta suposición implica que la media, la varianza y la función de autocovaraizna del proceso son invariantes bajo traslaciones respecto al tiempo, es decir, la media y la varianza son constantes y la función de autocovarianza solo depende de los retardos. En esta sección trabajaremos con modelos no estacionarios, dado que muchas series de tiempo económicas y financieras son no-estacionarias, y en particular suelen presentar variaciones en sus niveles a lo largo del tiempo y en algunos casos en la varianza.</p>
+<p>Vamos a ver dos casos:</p>
+<ol style="list-style-type: decimal">
+<li><p>No estacionaridad en la varianza</p></li>
+<li><p>No estacionaridad en la media</p></li>
+</ol>
+<p>También decribiremos brevemente el test de raíz unitaria.</p>
+<div id="no-estacionarios-en-varianza" class="section level3">
+<h3><span class="header-section-number">10.3.1</span> No estacionarios en Varianza</h3>
+<p>Cuando observamos una serie a lo largo del tiempo, con frecuencia ocurre que la varianza suele presentar una tendencia. Para ver esto, asumiremos primeramente que podemos descomponer una serie de tiempo en dos componentes; una componente no estocástica, su media, y una componente aleatoria, de modo que si <span class="math inline">\(x_t\)</span> es nuestra serie de tiempo, entonces</p>
+<span class="math display" id="eq:eq-descomposicion-serie-dos-terminos">\[\begin{equation}
+x_t = \mu_t+\varepsilon_t
+\tag{10.9}
+\end{equation}\]</span>
+<p>y supondremos además que la varianza de los errores, <span class="math inline">\(\varepsilon_t\)</span> está relacionada de manera funcional con la media <span class="math inline">\(\mu_t\)</span> por medio de <span class="math inline">\(Var(x_t)=Var(\varepsilon_t)=\mu_th^2\sigma^2\)</span>, donde <span class="math inline">\(h\)</span> es una función conocida. Nuestro objetivo ahora es hallar una transformación, digamos <span class="math inline">\(g(x_t)\)</span>, que estabilice la varianza, es decir, queremos que la varianza de <span class="math inline">\(y_t=g(x_t)\)</span> sea constante. Una transformación general y práctica para selecccionar <span class="math inline">\(g(x_t)\)</span> fue definida por Box y Cox (1964), la misma se define como</p>
+<span class="math display" id="eq:eq-transformacion-box-cox">\[\begin{equation}
+g(x_t) = \begin{cases}
+          \frac{x_t^{\lambda}-1}{\lambda},&amp; \lambda\neq0\\
+          \ln(x_t),&amp; \lambda=0
+        \end{cases}
+\tag{10.10}
+\end{equation}\]</span>
+<p>Meidante la regla de L’Hopital podemos demostrar que</p>
+<p><span class="math display">\[\lim_{\lambda\to0}\frac{x_t^{\lambda}-1}{\lambda}=\log(x_t).\]</span> Así mismo, para contemplar el caso de <span class="math inline">\(x_t\)</span> negativos, se define</p>
+<span class="math display" id="eq:eq-transformacion-box-cox-general">\[\begin{equation}
+g(x_t) = \begin{cases}
+          \frac{(x_t+\lambda_2)^{\lambda_1}-1}{\lambda_1},&amp; \lambda_1\neq0\\
+          \ln(x_t+\lambda_2),&amp; \lambda_1=0
+        \end{cases}
+\tag{10.11}
+\end{equation}\]</span>
+<p>Donde <span class="math inline">\(\lambda_2\)</span> se elige de tal forma que <span class="math inline">\(x_t+\lambda_2&gt;0\)</span> para todo <span class="math inline">\(t\)</span>. De manera que sólo veremos a <span class="math inline">\(\lambda_1\)</span> como parámetro de estas transformaciones. Esta familia en continua en <span class="math inline">\(\lambda\)</span> y monótona creciente para cada <span class="math inline">\(\lambda\)</span>, es decir que el orden original entre las <span class="math inline">\(x_t\)</span> se preserva; si <span class="math inline">\(x_1&gt;x_2\)</span>, entonces <span class="math inline">\(g(x_1)&gt;g(x_2)\)</span>.</p>
+</div>
+<div id="no-estacionarios-en-media" class="section level3">
+<h3><span class="header-section-number">10.3.2</span> No estacionarios en Media</h3>
+<p>Consideremos nuevamente la ecuacion <a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#eq:eq-descomposicion-serie-dos-terminos">(10.9)</a> y supongamos ahora que <span class="math inline">\(\mu_t\)</span> no es constante. Este tipo de series ha sidio ampliamente estudiado con una amplia variedad de formas para modelar series de tiempo con estas características. Supongamos que la media es un término de <em>tendencia</em>, el cual está expresado como un polinomio de orden <span class="math inline">\(d\)</span>, en el tiempo y que el término de error <span class="math inline">\(\varepsilon_t\)</span> es un proceso estocástico, estacinario de media cero. Esto es siempre posible si tomamos en cuenta el teorema de descomposición de Wold para proceso no-estacionarios. De esta manera, se tiene que el proceso lo podemos escribir como</p>
+<span class="math display" id="eq:eq-modelo-media-tendencia">\[\begin{equation}
+x_t = \mu_t+\varepsilon_t = \sum_{j=1}^d\beta_jt^j+\psi(B)\varepsilon_t
+\tag{10.12}
+\end{equation}\]</span>
+<p>Dado que <span class="math inline">\(\mathbb{E}(\varepsilon_t) = \psi(B)\mathbb{E}(\varepsilon_t)=0\)</span>, entonces <span class="math inline">\(\mathbb{E}(x_t)=\mathbb{E}(\mu_t)=\sum_{j=1}^d\beta_jt^j\)</span>, y dado que los coeficientes <span class="math inline">\(\beta_j\)</span> permanecen constantes en el tiempo, dicha tendencia la consideramos un término <em>determinista</em>. Así pues, este tipo de tendencia las podemos remover aplicando una transformación simple. Por ejemplo, consideremos <span class="math inline">\(d=1\)</span>, en la ecuación <a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#eq:eq-descomposicion-serie-dos-terminos">(10.9)</a>, entonces tenemos una <em>tendencia lineal</em>, supongamos por simplicidad que <span class="math inline">\(\varepsilon_t\)</span> es un ruido blanco, entonces</p>
+<span class="math display" id="eq:eq-modelo-serie-tendencia-lineal">\[\begin{equation}
+x_t = \beta_0+\beta_1t+\varepsilon_t
+\tag{10.13}
+\end{equation}\]</span>
+<p>Si consideramos una diferenciación de orden 1 de <span class="math inline">\(x_t\)</span>, entonces</p>
+<span class="math display">\[\begin{eqnarray*}
+y_t = x_t-x_{t-1} &amp;=&amp; (1-B)x_t = \nabla x_t\\
+                  &amp;=&amp; \beta_1+\nabla\varepsilon_t
+\end{eqnarray*}\]</span>
+<p>donde <span class="math inline">\(\nabla=(1-B)\)</span> es el operador de diferencias de primer orden definido en <a href="caracteristicas-de-series-de-tiempo.html#eq:eq-operador-diferencia">(2.41)</a>. De esta forma, el nuevo proceso <span class="math inline">\(y_t\)</span> es ujn proceso <span class="math inline">\(MA(1)\)</span> estacionario, dado que <span class="math inline">\(\mathbb{E}(y_t)=\beta_1\)</span>, sin embargo no es invertible.</p>
+<p>En general, si la tendencia es determinada por un polinomio de orden <span class="math inline">\(d\)</span>, y <span class="math inline">\(\varepsilon_t\)</span> está caracterizado por un proceso <span class="math inline">\(ARMA\)</span></p>
+<p><span class="math display">\[\phi(B)x_t = \theta(B)\varepsilon_t,\]</span></p>
+<p>entonces consideramos las diferencias de orden <span class="math inline">\(d\)</span>, <span class="math inline">\(\nabla^dx_t\)</span>, obteniendo el nuevo proceso</p>
+<p><span class="math display">\[y_t = \nabla^dx_t = \theta_0+\frac{\nabla^d\theta(B)}{\phi(B)}\varepsilon_t,\]</span></p>
+<p>donde <span class="math inline">\(\theta_0=d!\beta_d\)</span>. Así, la parte <span class="math inline">\(MA\)</span> del proceso generado por <span class="math inline">\(\nabla^dx_t\)</span> tendrá <span class="math inline">\(d\)</span> raíces unitarias.</p>
+</div>
+<div id="test-de-raiz-unitaria" class="section level3">
+<h3><span class="header-section-number">10.3.3</span> Test de raíz unitaria</h3>
+<p>En esta sección demostraremos la presencia de una o más raíces unitarias en el polinomio autorregresivo de orden <span class="math inline">\(p\)</span>, <span class="math inline">\(\phi(B)\)</span> en el modelo</p>
+<p><span class="math display">\[\phi(B)x_t = \theta_0+\theta(B)\varepsilon_t,\]</span> donde <span class="math inline">\(x_0\)</span> se asume fijo y <span class="math inline">\(\theta_0=\phi(1)\mu\)</span> con <span class="math inline">\(\mu\)</span> la media de <span class="math inline">\(x_t\)</span>. Usaremos el test de Dickey-Fuller (ADF). Este test contrasta la hipótesis nula de existencia de una raíz unitaria contra la alternativa de que no existen raíces unitarias. Las hipóstesis son:</p>
+<span class="math display">\[\begin{eqnarray*}
+H_0 &amp;:&amp; \beta=1\\
+H_a &amp;:&amp; \beta&lt;1
+\end{eqnarray*}\]</span>
+<p>El estadístico de prueba es:</p>
+<p><span class="math display">\[T_{DF} = ADF-test = \frac{\hat{\beta}-1}{\sqrt{Var(\hat{\beta})}}\]</span> El cual se aplica sobre la regresión</p>
+<span class="math display" id="eq:eq-modelo-regresion-ADF">\[\begin{equation}
+x_t = c_t+\beta x_{t-1}+\sum_{i=1}^{p-1}\phi_i\delta x_{t-i}+e_t
+\tag{10.14}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(c_t\)</span> es una función determinista del tiempo <span class="math inline">\(t\)</span> y <span class="math inline">\(\delta x_j=x_j-x_{j-1}\)</span> es la serie diferenciada de <span class="math inline">\(x_t\)</span>, el valor <span class="math inline">\(p\)</span> lo fijamos de modo que el error <span class="math inline">\(e_t\)</span> sea correlacionado serialmente. El término de error también se supone homocedástico. En la práctica, <span class="math inline">\(c_t\)</span> puede ser cero, una constane <span class="math inline">\(\neq0\)</span>, o incluso <span class="math inline">\(c_t=w_0+w_1t\)</span>, <span class="math inline">\(\hat{\beta}\)</span> es la estimación por mínimos cuadrados de <span class="math inline">\(\beta\)</span>.</p>
+<p>La determinación o especificación del retardo <span class="math inline">\(p\)</span>, es un punto importante a la hora de aplicar el test de Dickey-Fuller. Si seleccionamos un <span class="math inline">\(p\)</span> muy pequeño, enotnces la correlación restante producirá un sesgo en el test. Por otra parte, si escogemos un <span class="math inline">\(p\)</span> muy grande, entonces se verá afectada la potencia del test. Ng y Perron (1995) propusieron el siguiente procedimiento para la selección de <span class="math inline">\(p\)</span>; para garantizar la estabilidad en el tamaño del test y pérdida mínima en la potencia.</p>
+<ol style="list-style-type: decimal">
+<li><p>Establecer una cota superior para <span class="math inline">\(p\)</span> denotada por <span class="math inline">\(p_{max}\)</span>.</p></li>
+<li><p>Estimar la regresión ADF con <span class="math inline">\(p=p_{max}\)</span>.</p></li>
+<li><p>Si el valor absoluto del estadístico <span class="math inline">\(T_{DF}\)</span> para el test de la última diferencia tomada es mayor que 1.6, fijamos <span class="math inline">\(p=p_{max}\)</span> y aplicamos el test de raíz unitaria.</p></li>
+<li><p>Si no es así, hacemos <span class="math inline">\(p=p_{max}-1\)</span> y repetimos los pasos 2 y 3.</p></li>
+</ol>
+<p>Una regla útil para determinar <span class="math inline">\(p_{max}\)</span> es</p>
+<p><span class="math display">\[p_{max} = \left[12\left(\frac{T}{100}\right)^{1/4}\right]\]</span></p>
+<p>donde <span class="math inline">\([\cdot]\)</span> denota la parte entera y <span class="math inline">\(T\)</span> es el tamaño de la muestra. Esta selección de <span class="math inline">\(p_{max}\)</span> permite que este aumente cuando el tamaño de la muestra aumenta.</p>
+</div>
+</div>
+<div id="modelos-de-regresion" class="section level2">
+<h2><span class="header-section-number">10.4</span> Modelos de regresión</h2>
+<p>Las técnicas de regresión de series de tiempo se aplican con mucha frecuencia en el análisis de datos financieros, en la estimación y en la validación de modelos de precios de activos y rentabilidades. En finanzas, la capacidad de predicción de los rendimientos de los activos haciendo uso de tasas de valoración como dividendo/precio, ganancias/precio entre otras, generalmente se establecen mediante las técnicas de regresión de series de tiempo, y donde el modelo de regresión resultante es usado para la predicción de las rentabilidades futuras. Los modelos de regresión de series de tiempo tambi´en se utilizan para probar la eficiencia informativa de los mercados financieros. Sin embargo, es importante ser cuidadosos a la hora de aplicar este tipo de modelos, puesto que las propiedades de las series de tiempo de los datos puede influir en las propiedades de los valores estimados en la regresión y en la inferencia. En términos generales, estos modelos son apropiados para el análisis de series estacionarias. Para el caso de las series con tendencia no-estacionarias puede ser o no apropiadas, dependiendo entonces de la naturaleza del componente de tendencia.</p>
+<p>Consideremos el <em>modelo de regresión de series de tiempo</em></p>
+<span class="math display" id="eq:eq-modelo-regresion-ST">\[\begin{equation}
+y_t=\beta_0+\beta_1x_{1t}+\cdots+\beta_kx_{kt}+\varepsilon_t = x_t^t\vec{\beta}+\varepsilon_t, t=1,\ldots,T
+\tag{10.15}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(x_t=(1,x_{1t},\ldots,x_{kt})^t\)</span> es un vector de variables explicativas de dimensión <span class="math inline">\((k+1)\times1\)</span>, <span class="math inline">\(\vec{\beta}=(\beta_0,\beta_1,\ldots,\beta_k)^t\)</span> un vector de coeficientes de dimensión <span class="math inline">\((k+1)\times1\)</span> y <span class="math inline">\(\varepsilon_t\)</span> es un término de error aleatorio.</p>
+<p>El modelo <a href="modelos-lineales-estacionales-y-modelos-no-estacionarios.html#eq:eq-modelo-regresion-ST">(10.15)</a> satisface las siguietnes suposiciones:</p>
+<ol style="list-style-type: decimal">
+<li><p>El modelo está especificado correctamente.</p></li>
+<li><p><span class="math inline">\(\{y_t,x_t\}\)</span> es estacionario y ergódico conjuntamente.</p></li>
+<li><p>Las variables regresoras <span class="math inline">\(x_t\)</span> son tales que <span class="math inline">\(\mathbb{E}(x_{is}\varepsilon_t)=0\)</span> para todo <span class="math inline">\(s\leq t, i = 1,\ldots,k\)</span>.</p></li>
+<li><p><span class="math inline">\(\mathbb{E}(x_tx_t^t)=\Sigma_{xx}\)</span> es de rango <span class="math inline">\(k+1\)</span>.</p></li>
+<li><p><span class="math inline">\(\{x_t\varepsilon\}\)</span> es un proceso no correlacionado con matriz de covarianza <span class="math inline">\((k+1)\times(k+1)\)</span> finita <span class="math inline">\(\mathbb{E}(\varepsilon_t^2x_tx_t^t)=S=\sigma^2\Sigma_{xx}\)</span>.</p></li>
+</ol>
+<p><strong>Observaciones:</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>La segunda suposición descarta los regresores con tendencia.</p></li>
+<li><p>La trcera suposición descarta los regresores endógenos pero permite variables y retardos dependientes.</p></li>
+<li><p>La suposición (4) evita regresores redundantes o multicolinealidad exacta.</p></li>
+<li><p>La quinta suposición implica que el término de error es un proceso no correlacionado serialmente con varianza incondicional <span class="math inline">\(\sigma^2\)</span> constante.</p></li>
+<li><p>Los regresores <span class="math inline">\(x_t\)</span> son aleatorios y el error <span class="math inline">\(\varepsilon_t\)</span> no se asume gaussiano.</p></li>
+</ol>
+<hr />
+<p>La estimación del modelo se obtiene por <em>minimos cuadrados ordinarios</em> y está basada en la suma de los residuso al cuadrado</p>
+<p><span class="math display">\[SSR(\vec{\beta}) = \sum_{t=1}^T(y_t-x_t^t\vec{\beta})^2 = \sum_{t=1}^T\varepsilon_t^2,\]</span></p>
+<p>obteniéndose así</p>
+<p><span class="math display">\[y_t=x_t^t\hat{\mathbf{\beta}}+\hat{\varepsilon}_t,\hspace{0.5cm} t=1,\ldots,T,\]</span> donde</p>
+<p><span class="math display">\[\hat{\mathbf{\beta}}=(X^tX)^{-1}X^ty = \left[\sum_{t=1}^Tx_tx_t^t\right]^{-1}\sum_{t=1}^Tx_ty_t\]</span> y <span class="math inline">\(\hat{\varepsilon}_t=y_t-\hat{y}_t=y_t-x_t^t\hat{\mathbf{\beta}}\)</span>. La varianza del error la estimamos por <span class="math inline">\(\sigma^2=\hat{\varepsilon}^t\hat{\varepsilon}/(T-k-1)\)</span>.</p>
+<p>La relación entre dos series de tiempo resulta de gran interés en muchas aplicaciones. Veamos un ejemplo de dos series de tipos de interés con diferentes plazos de vencimiento y como ajustar una regresión lineal para ambas series.</p>
+
+<div class="example">
+<p><span id="exm:ejem-euribor-regresion" class="example"><strong>Ejemplo 10.4  (Mercado Interbancario Europeo (EURIBOR))  </strong></span>Analicemos el modelo que considera la relación entre dos series de tipos de interés, con frecuencia diaria, del Mercado Intercambiario Europeo (EURIBOR):</p>
+<ul>
+<li><span class="math inline">\(r_{3t}\)</span>: serie de tipo de interés con plazo de vencimiento a 3 meses</li>
+<li><span class="math inline">\(r_{6t}\)</span>: serie de tipo de interés con plazo de vencimiento a 6 meses</li>
+</ul>
+<p>Ambas series tienen 1532 observaciones. Las muestras fueron tomadas del 07/11/2012 al 06/11/2018. Los archivos de datos son “EURIBOR-3m.xlsx” y “EURIBOR-6m.xlsx”. La primera columna es la fecha, la segunda el precio y la tercera columna la diferencia en porcentaje con relación al día anterior.</p>
+<p>Para estas series podemos considerar el siguiente modelo de regresión</p>
+<p><span class="math display">\[r_{6t}=\beta_0+\beta_1r_{3t}+\varepsilon,\]</span></p>
+<p>donde <span class="math inline">\(r_{6t}\)</span> y <span class="math inline">\(r_{3t}\)</span> son las series ya descritas y <span class="math inline">\(\varepsilon_t\)</span> el término de error.</p>
+La gráfica <a href="#fig:fig-euribor-interes"><strong>??</strong></a> muestra las dos series de tipo de interés, en azul con vencimiento a 3 meses yen rojo con vencimiento a 6 meses.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Series EURIBOR a 3 y 6 meses de plazo</span>
+r3t=<span class="kw">read.table</span>(<span class="st">&quot;data/EURIBOR-3m.txt&quot;</span>, <span class="dt">header =</span> F)
+r6t=<span class="kw">read.table</span>(<span class="st">&quot;data/EURIBOR-6m.txt&quot;</span>, <span class="dt">header =</span> F)
+<span class="co"># Grafico</span>
+<span class="kw">plot</span>(r3t<span class="op">$</span>V2, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Precio&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;tiempo&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="fl">0.35</span>,<span class="fl">0.5</span>))
+<span class="kw">lines</span>(r6t<span class="op">$</span>V2, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/fig-euribor-interes-1.svg" /><!-- --></p>
+<p>El modelo resultante del ajuste es el siguiente</p>
+<p><span class="math display">\[r_{6t}=0.0919+1.0608r_{3t}+\varepsilon_t,\hspace{0.5cm}\hat{\sigma}_{\varepsilon}=0.0204,\]</span></p>
+<p>con <span class="math inline">\(R^2=0.9937\)</span>. En la tabla siguiente mostramos un resumen del modelo</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">Estimado</th>
+<th align="center">Error. std</th>
+<th align="center">t-valor</th>
+<th align="center">$P(&gt;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\beta_0\)</span></td>
+<td align="center">0.0919</td>
+<td align="center">0.00054</td>
+<td align="center">168.8</td>
+<td align="center"><span class="math inline">\(&lt;2e^{-16}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\beta_1\)</span></td>
+<td align="center">1.0608</td>
+<td align="center">0.00215</td>
+<td align="center">491.8</td>
+<td align="center"><span class="math inline">\(&lt;2e^{-16}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>El modelo confirma la correlación alta que existe entre las dos series, sin embargo, observando los residuales del modelo notamos que el modelo ajustado es inadecuado para estas dos series. Las instrucciones en R para el ajuste de regresión son las siguientes:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Regresion</span>
+yt=<span class="kw">lm</span>(r6t<span class="op">$</span>V2<span class="op">~</span>r3t<span class="op">$</span>V2, <span class="dt">data =</span> r3t[,<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])
+<span class="kw">summary</span>(yt)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = r6t$V2 ~ r3t$V2, data = r3t[, 2:3])
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.03335 -0.01588 -0.00631  0.01512  0.07648 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 0.091959   0.000545     169   &lt;2e-16 ***
+## r3t$V2      1.060851   0.002157     492   &lt;2e-16 ***
+## ---
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.0204 on 1530 degrees of freedom
+## Multiple R-squared:  0.994,  Adjusted R-squared:  0.994 
+## F-statistic: 2.42e+05 on 1 and 1530 DF,  p-value: &lt;2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Residuales</span>
+m&lt;-<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>),<span class="dv">2</span>,<span class="dv">2</span>,<span class="dt">byrow=</span><span class="ot">TRUE</span>)
+<span class="kw">layout</span>(m)
+<span class="kw">plot</span>(yt<span class="op">$</span>residuals, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuales&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;tiempo&quot;</span>)
+<span class="kw">qqnorm</span>(yt<span class="op">$</span>residuals);<span class="kw">qqline</span>(yt<span class="op">$</span>residuals, <span class="dt">col=</span><span class="dv">2</span>)
+<span class="kw">acf</span>(yt<span class="op">$</span>residuals, <span class="dt">main=</span><span class="st">&quot;ACF de los residuales&quot;</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/fig-ACF-euribor-residuales-1.svg" /><!-- --></p>
+<p>En la parte inferior de la figura <a href="#fig:fig-ACF-euribor-residuales"><strong>??</strong></a> podemos observar la ACF de los residuales, la cual es significativa con un decaimiento bastante lento, mostrando un patrón similar a una serie con raíces unitarias.</p>
+<p>El comportamiento de los residuos sugiere que existen diferencias bien marcadas entre ambas series. Tomando en cuenta el comportamiento no-estacionario de ambas series de tipos de interés y de los residuos obtenidos del modelo de regresión previo, vemos necesario considerar la diferenciación para las series de EURIBOR, teniendo dos nuevas series.</p>
+<span class="math display">\[\begin{eqnarray*}
+  d_{3t} &amp;=&amp; r_{3t}-r_{3,t-1} = (1-B)r_{3t}\text{, con }t\geq2\\
+  d_{6t} &amp;=&amp; r_{6t}-r_{6,t-1} = (1-B)r_{6t}\text{, con }t\geq2
+\end{eqnarray*}\]</span>
+<p>y el modelo de regresión será</p>
+<p><span class="math display">\[d_{6t}=\beta_0&#39;+\beta_1&#39;d_{3t}+\varepsilon_t&#39;\]</span></p>
+<p>En la figura <a href="#fig:fig-euribor-diferencias"><strong>??</strong></a> se muestran las series diferenciadas. Al realizar el ajuste del modelo obtenemos lo siguiente:</p>
+<p><span class="math display">\[d_{6t} = 0.00024+0.4877d_{3t}+\varepsilon_t&#39;,\hspace{0.5cm}\hat{\sigma}_{\varepsilon}&#39;=0.0021,\]</span></p>
+<p>con <span class="math inline">\(R^2=0.3577\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Diferencias</span>
+d3t=<span class="kw">diff</span>(r3t<span class="op">$</span>V2)
+d6t=<span class="kw">diff</span>(r6t<span class="op">$</span>V2)
+<span class="co"># Grafico diff</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))
+<span class="kw">plot</span>(d3t, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Diferencias&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;tiempo&quot;</span>)
+<span class="kw">plot</span>(d6t, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Diferencias&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;tiempo&quot;</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/fig-euribor-diferencias-1.svg" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Regresion diff</span>
+data.diff=<span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(d3t,<span class="kw">diff</span>(r3t<span class="op">$</span>V3)))
+dyt=<span class="kw">lm</span>(d6t<span class="op">~</span>d3t, <span class="dt">data =</span> data.diff)
+<span class="kw">summary</span>(dyt)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = d6t ~ d3t, data = data.diff)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.016371 -0.001248 -0.000248  0.000752  0.021366 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 2.48e-04   5.44e-05    4.56  5.6e-06 ***
+## d3t         4.88e-01   1.67e-02   29.18  &lt; 2e-16 ***
+## ---
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.00212 on 1529 degrees of freedom
+## Multiple R-squared:  0.358,  Adjusted R-squared:  0.357 
+## F-statistic:  852 on 1 and 1529 DF,  p-value: &lt;2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Residuales diff</span>
+m&lt;-<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>),<span class="dv">2</span>,<span class="dv">2</span>,<span class="dt">byrow=</span><span class="ot">TRUE</span>)
+<span class="kw">layout</span>(m)
+<span class="kw">plot</span>(dyt<span class="op">$</span>residuals, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuales&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;tiempo&quot;</span>)
+<span class="kw">qqnorm</span>(dyt<span class="op">$</span>residuals);<span class="kw">qqline</span>(dyt<span class="op">$</span>residuals, <span class="dt">col=</span><span class="dv">2</span>)
+<span class="kw">acf</span>(dyt<span class="op">$</span>residuals, <span class="dt">main=</span><span class="st">&quot;ACF de los residuales&quot;</span>)</code></pre></div>
+<p><img src="Serie-de-Tiempo-en-R_files/figure-html/fig-euribor-diferencias-2.svg" /><!-- --></p>
+</div>
+<div id="estimacion-consistente-de-la-matriz-de-covarianza" class="section level2">
+<h2><span class="header-section-number">10.5</span> Estimación consistente de la matriz de covarianza</h2>
+<p>Bajo la suposición de que las estiamciones (de los coeficientes), mediante el método de mínimos cuadrados ordianrios, son consistentes, los métodos disponibles para obtener una estimación consistente de la matriz de covarianza de los coeficientes son:</p>
+<ul>
+<li><p>Heterocedasticidad consistente (HC)</p></li>
+<li><p>Heterocedasticidad y Autocorrelación consistente (HAC)</p></li>
+</ul>
+<p>El estimador de White es</p>
+<span class="math display" id="eq:eq-estimador-White-HC">\[\begin{equation}
+Cov(\hat{\beta})_{HC} = \left[\sum_{t=1}^Tx_tx_t^t\right]^{-1}\left[\sum_{t=1}^T\hat{\varepsilon}_tx_tx_t^t\right]\left[\sum_{t=1}^Tx_tx_t^t\right]^{-1}
+\tag{10.16}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(\hat{\varepsilon}_t=y_t-x_t^t\hat{\beta}\)</span> es el residuo estimado en el instante <span class="math inline">\(t\)</span>. El estimador de Newey y West es</p>
+<span class="math display" id="eq:eq-estimador-Newey-West-HAC">\[\begin{equation}
+Cov(\hat{\beta})_{HAC} = \left[\sum_{t=1}^Tx_tx_t^t\right]^{-1}\hat{C}_{HAC}\left[\sum_{t=1}^Tx_tx_t^t\right]^{-1}
+\tag{10.17}
+\end{equation}\]</span>
+<p>donde</p>
+<p><span class="math display">\[\hat{C}_{HAC} = \sum_{t=1}^T\hat{\varepsilon}_t^2x_tx_t^t + \sum_{j=1}^lw_j\sum_{t=1}^T(x_t\hat{\varepsilon}_t\hat{\varepsilon}_{t-j}x_{t-j}^t+x_{t-j}\hat{\varepsilon}_{t-j}\hat{\varepsilon}_tx_t^t),\]</span> donde <span class="math inline">\(l\)</span> es un parámetro de truncamiento, el cual se sugiere ser seleccionado como parte entera de <span class="math inline">\(4(T/100)^{2/9}\)</span> y <span class="math inline">\(w_j\)</span> es la función de pesos de Bartlett definida por</p>
+<p><span class="math display">\[w_j = 1-\frac{j}{l+1}.\]</span></p>
+
+</div>
+</div>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-78759535-1', 'auto');
+ga('send', 'pageview');  
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="modelos-arch-y-garch.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="analisis-espectral.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/synergyvision/Teoria-de-Portafolio/edit/master/bookdown/307-Modelos-estacionales-no-estacionarios.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["Serie-de-Tiempo-en-R.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

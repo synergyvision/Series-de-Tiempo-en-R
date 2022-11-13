@@ -46,7 +46,11 @@
 <polyline points='59.04,286.56 473.76,286.56 473.76,59.04 59.04,59.04 59.04,286.56 ' style='stroke-width: 0.75;' clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDAuMDA=)' />
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDAuMDA=)'><text x='154.74' y='34.53' style='font-size: 14.40px; font-weight: bold; font-family: Arial;' textLength='223.32px' lengthAdjust='spacingAndGlyphs'>Serie EURIBOR anual (1999-2018)</text></g>
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDAuMDA=)'><text x='245.72' y='341.28' style='font-size: 12.00px; font-family: Arial;' textLength='41.36px' lengthAdjust='spacingAndGlyphs'>Periodo</text></g>
+<<<<<<< HEAD
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDAuMDA=)'><text transform='translate(12.96,222.82) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='100.04px' lengthAdjust='spacingAndGlyphs'>EURIBORa$Índice</text></g>
+=======
+<g clip-path='url(#cpMC4wMHw1MDQuMDB8MzYwLjAwfDAuMDA=)'><text transform='translate(12.96,188.81) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='32.02px' lengthAdjust='spacingAndGlyphs'>Índice</text></g>
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 <defs>
   <clipPath id='cpNTkuMDR8NDczLjc2fDI4Ni41Nnw1OS4wNA=='>
     <rect x='59.04' y='59.04' width='414.72' height='227.52' />

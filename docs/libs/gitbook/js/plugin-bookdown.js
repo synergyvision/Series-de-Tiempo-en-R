@@ -28,6 +28,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
       }
     });
 
+<<<<<<< HEAD
     // add the View button (file view on Github)
     var view = config.view;
     if (view && view.link) gitbook.toolbar.createButton({
@@ -41,6 +42,8 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     });
 
     // add the Download button
+=======
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
     var down = config.download;
     var normalizeDownload = function() {
       if (!down || !(down instanceof Array) || down.length === 0) return;

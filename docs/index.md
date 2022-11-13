@@ -4,7 +4,11 @@
 title: "Series de Tiempo en R"
 subtitle: "Ciencia de los Datos Financieros"
 author: "Synergy Vision"
+<<<<<<< HEAD
 date: "2022-11-12"
+=======
+date: "2020-01-31"
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 knit: "bookdown::render_book"
 documentclass: krantz
 bibliography: [book.bib, packages.bib]
@@ -2523,10 +2527,17 @@ d) $x_t=-0.2x_{t-1}+0.35x_{t-2}+w_t$
 
 <div class="figure">
 <img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-45-1.svg" alt="ACF de 4 procesos estacionarios AR(2)"  />
+<<<<<<< HEAD
 <p class="caption">(\#fig:unnamed-chunk-451)ACF de 4 procesos estacionarios AR(2)</p>
 </div><div class="figure">
 <img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-45-2.svg" alt="ACF de 4 procesos estacionarios AR(2)"  />
 <p class="caption">(\#fig:unnamed-chunk-452)ACF de 4 procesos estacionarios AR(2)</p>
+=======
+<p class="caption">(\#fig:unnamed-chunk-45)ACF de 4 procesos estacionarios AR(2)</p>
+</div><div class="figure">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-45-2.svg" alt="ACF de 4 procesos estacionarios AR(2)"  />
+<p class="caption">(\#fig:unnamed-chunk-45)ACF de 4 procesos estacionarios AR(2)</p>
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 </div>
 
 La serie (b) tiene raíces características complejas, en efecto 
@@ -3570,7 +3581,11 @@ En el caso de raíces distintas, la solución de la ecuación en diferencias hom
   u_n &=& z_1^{-n}\times(\text{un polinomio en } n \text{ de grado }m_1-1) \\
       &+& z_2^{-n}\times(\text{un polinomio en } n \text{ de grado }m_2-1)
 \end{eqnarray*}
+<<<<<<< HEAD
 donde $m_1$ es la multiplicidad de la raíz $z_1$ y $m_2$ es la multiplicidad de la raíz $z_2$. En este ejemplo, se tiene $m_1=m_2=1$ y decimos que $c_1$ y $c_2 $ son polinomios de grado cero respectivamente.
+=======
+donde $m_1$ es la multiplicidad de la raíz $z_1$ y $m_2$ es la multiplicidad de la raíz $z_2$. En este ejemplo, se tiene $m_1=m_2=1$ y decimos que $c_1$ y $c_2$ son polinomios de grado cero respectivamente.
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 
 En el caso de raíces repetidas, la solución es
 $$u_n=z_0^{-n}\times(\text{un polinomio en } n \text{ de grado }m_0-1),$$
@@ -4665,7 +4680,11 @@ Si en \@ref(eq:eq-funcion-verosimilitud-AR1) tomamos logaritmo, reemplazamos $\s
 
 Esto es, $l(\mu,\phi)\propto-2\ln L(\mu,\phi,\hat{\sigma}_w^2)$. [^nota11]
 
+<<<<<<< HEAD
 [^nota11:] La función de criterio a veces es llamada perfil de verosimilitud.
+=======
+[^nota11]: La función de criterio a veces es llamada perfil de verosimilitud.
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 
 Dado que \@ref(eq:eq-S-AR1) o \@ref(eq:eq-funcion-criterio-AR1) son funciones complicadas de los parámetros, la minimización de $l(\mu,\phi)$ o $S(\mu,\phi)$ se hace numéricamente. En el caso de modelos AR, tenemos la ventaja que, condicionando los valores inicial, ellos son modelos lineales. Esto es, podemos eliminar el término en la verosimilitud que causa la no-linealidad.
 
@@ -4836,7 +4855,11 @@ Cuando $n$ es grande, condicionando sobre unos pocos valores iniciales tendremos
 
 La suma de cuadrados incondicional se puede escribir de varias maneras. Una de las maneras es la siguiente forma [^nota12]
 
+<<<<<<< HEAD
 [^nota12:] Para detalles, véase Box, G.E.P., Jenkins, G.M. and Reinsel, G.C. (1994). *Time Series Analysis, Forecasting and Control, 3rd ed.* Englewood Cliffs, NJ: Prentice Hall. Apéndice A7.3.
+=======
+[^nota12]: Para detalles, véase Box, G.E.P., Jenkins, G.M. and Reinsel, G.C. (1994). *Time Series Analysis, Forecasting and Control, 3rd ed.* Englewood Cliffs, NJ: Prentice Hall. Apéndice A7.3.
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 
 $$S(\mathbf{\beta})=\sum_{t=-\infty}^{n}\hat{w}_t^2(\mathbf{\beta})$$
 
@@ -5647,13 +5670,24 @@ $$x_t=\beta_0+\beta_1t+\beta_2t^2+\cdots+\beta_8t^8+w_t$$
 
 El modelo fijado, el cual es graficado hasta el año 2010, (linea continua roja), pasa a través de los 9 puntos. El modelo predice que la población de los EE.UU. estará cercana a cero en el año 2000, y cruzará el cero en algún mes del año 2002, lo cual es falso.</div>\EndKnitrBlock{example}
 
+<<<<<<< HEAD
 ```{rfig.cap="Población de los EE.UU (puntos azules) y modelos ajustado (linea roja continua) de 1910 hasta 2010",fig-sobreajuste-poblacion-usa}
+=======
+
+```r
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 uspop=read.table("data/USPOP2.txt", header = TRUE)
 fit.usp=lm(Pob~t+I(t^2)+I(t^3)+I(t^4)+I(t^5)+I(t^6)+I(t^7)+I(t^8),
            data=uspop)
 plot(uspop,type="p",lty=19,col="blue",xlim=c(1910,2010))
 lines(x = uspop$t, y=predict(fit.usp), col = "red", lwd = 2)
 ```
+<<<<<<< HEAD
+=======
+
+![](Serie-de-Tiempo-en-R_files/figure-html/fig-sobreajuste-poblacion-usa-1.svg)<!-- -->
+
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ----
 
 El paso final en el ajuste de modelos es la elección del modelo. Esto es, debemos decidir que modelo mantendremos para la predicción. La técnica más popular es calcular los índices AIC, AICc y SIC (BIC), descritos en las definiciones \@ref(def:defi-AIC-2), \@ref(def:defi-AICc) y \@ref(def:defi-SIC).
@@ -6001,6 +6035,7 @@ acf2(ddlx,50)
 </div>
 
 ```
+<<<<<<< HEAD
 ##       [,1]  [,2]  [,3]  [,4] [,5] [,6]  [,7]  [,8]
 ## ACF  -0.34  0.11 -0.20  0.02 0.06 0.03 -0.06  0.00
 ## PACF -0.34 -0.01 -0.19 -0.13 0.03 0.03 -0.06 -0.02
@@ -6022,6 +6057,59 @@ acf2(ddlx,50)
 ##      [,49] [,50]
 ## ACF   0.11 -0.02
 ## PACF  0.09  0.13
+=======
+##         ACF  PACF
+##  [1,] -0.34 -0.34
+##  [2,]  0.11 -0.01
+##  [3,] -0.20 -0.19
+##  [4,]  0.02 -0.13
+##  [5,]  0.06  0.03
+##  [6,]  0.03  0.03
+##  [7,] -0.06 -0.06
+##  [8,]  0.00 -0.02
+##  [9,]  0.18  0.23
+## [10,] -0.08  0.04
+## [11,]  0.06  0.05
+## [12,] -0.39 -0.34
+## [13,]  0.15 -0.11
+## [14,] -0.06 -0.08
+## [15,]  0.15 -0.02
+## [16,] -0.14 -0.14
+## [17,]  0.07  0.03
+## [18,]  0.02  0.11
+## [19,] -0.01 -0.01
+## [20,] -0.12 -0.17
+## [21,]  0.04  0.13
+## [22,] -0.09 -0.07
+## [23,]  0.22  0.14
+## [24,] -0.02 -0.07
+## [25,] -0.10 -0.10
+## [26,]  0.05 -0.01
+## [27,] -0.03  0.04
+## [28,]  0.05 -0.09
+## [29,] -0.02  0.05
+## [30,] -0.05  0.00
+## [31,] -0.05 -0.10
+## [32,]  0.20 -0.02
+## [33,] -0.12  0.01
+## [34,]  0.08 -0.02
+## [35,] -0.15  0.02
+## [36,] -0.01 -0.16
+## [37,]  0.05 -0.03
+## [38,]  0.03  0.01
+## [39,] -0.02  0.05
+## [40,] -0.03 -0.08
+## [41,] -0.07 -0.17
+## [42,]  0.10  0.07
+## [43,] -0.09 -0.10
+## [44,]  0.03 -0.06
+## [45,] -0.04 -0.03
+## [46,] -0.04 -0.12
+## [47,]  0.11 -0.01
+## [48,] -0.05 -0.05
+## [49,]  0.11  0.09
+## [50,] -0.02  0.13
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ```
 
 *Componente estacional*: Parece que en la estacionalidad, la ACF se corta en paso $1s$ ($s=12$), mientras que la PACF se rezaga en pasos $1s,2s,3s,4s,\ldots$. Estos resultados implican un $SMA(1), P=0,Q=1$, en la componente estacional (s=12).
@@ -6076,9 +6164,15 @@ sarima(lx, 1,1,1, 0,1,1,12)
 ## $fit
 ## 
 ## Call:
+<<<<<<< HEAD
 ## arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, Q), period = S), 
 ##     include.mean = !no.constant, transform.pars = trans, fixed = fixed, optim.control = list(trace = trc, 
 ##         REPORT = 1, reltol = tol))
+=======
+## stats::arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, 
+##     Q), period = S), include.mean = !no.constant, transform.pars = trans, fixed = fixed, 
+##     optim.control = list(trace = trc, REPORT = 1, reltol = tol))
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ## 
 ## Coefficients:
 ##         ar1     ma1    sma1
@@ -6097,6 +6191,7 @@ sarima(lx, 1,1,1, 0,1,1,12)
 ## sma1  -0.5643 0.0747 -7.5544  0.0000
 ## 
 ## $AIC
+<<<<<<< HEAD
 ## [1] -3.679
 ## 
 ## $AICc
@@ -6104,6 +6199,15 @@ sarima(lx, 1,1,1, 0,1,1,12)
 ## 
 ## $BIC
 ## [1] -3.591
+=======
+## [1] -3.394
+## 
+## $AICc
+## [1] -3.392
+## 
+## $BIC
+## [1] -3.313
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ```
 
 Sin embargo, el parámetro $AR$ no es significativo, así que intentamos eliminando un parámetro de la parte dentro de las estaciones. En este caso probaremos con los modelos $ARIMA(0,1,1)\times(0,1,1)_{12}$ y $ARIMA(1,1,0)\times(0,1,1)_{12}$.
@@ -6145,9 +6249,15 @@ sarima(lx, 0,1,1, 0,1,1,12)
 ## $fit
 ## 
 ## Call:
+<<<<<<< HEAD
 ## arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, Q), period = S), 
 ##     include.mean = !no.constant, transform.pars = trans, fixed = fixed, optim.control = list(trace = trc, 
 ##         REPORT = 1, reltol = tol))
+=======
+## stats::arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, 
+##     Q), period = S), include.mean = !no.constant, transform.pars = trans, fixed = fixed, 
+##     optim.control = list(trace = trc, REPORT = 1, reltol = tol))
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ## 
 ## Coefficients:
 ##          ma1    sma1
@@ -6165,6 +6275,7 @@ sarima(lx, 0,1,1, 0,1,1,12)
 ## sma1  -0.5569 0.0731  -7.619       0
 ## 
 ## $AIC
+<<<<<<< HEAD
 ## [1] -3.69
 ## 
 ## $AICc
@@ -6172,6 +6283,15 @@ sarima(lx, 0,1,1, 0,1,1,12)
 ## 
 ## $BIC
 ## [1] -3.624
+=======
+## [1] -3.404
+## 
+## $AICc
+## [1] -3.404
+## 
+## $BIC
+## [1] -3.343
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ```
 
 
@@ -6207,6 +6327,7 @@ sarima(lx, 1,1,0, 0,1,1,12)
 </div>
 
 ```
+<<<<<<< HEAD
 ## $fit
 ## 
 ## Call:
@@ -6426,6 +6547,1304 @@ Por otro lado, las condiciones para la existencia de momentos de orden mayor, im
 
 
 <!--chapter:end:306-Modelos-ARCH-GARCH.Rmd-->
+=======
+## $fit
+## 
+## Call:
+## stats::arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, 
+##     Q), period = S), include.mean = !no.constant, transform.pars = trans, fixed = fixed, 
+##     optim.control = list(trace = trc, REPORT = 1, reltol = tol))
+## 
+## Coefficients:
+##          ar1    sma1
+##       -0.340  -0.562
+## s.e.   0.082   0.075
+## 
+## sigma^2 estimated as 0.00137:  log likelihood = 243.7,  aic = -481.5
+## 
+## $degrees_of_freedom
+## [1] 129
+## 
+## $ttable
+##      Estimate     SE t.value p.value
+## ar1   -0.3395 0.0822  -4.130   1e-04
+## sma1  -0.5619 0.0748  -7.511   0e+00
+## 
+## $AIC
+## [1] -3.391
+## 
+## $AICc
+## [1] -3.39
+## 
+## $BIC
+## [1] -3.33
+```
+
+Todos los criterios de información prefieren el modelo $ARIMA(0,1,1)\times(0,1,1)_{12}$. En la Figura \@ref(fig:fig-residuales-pasajeros) mostramos los diagnósticos para los residuales y excepto para uno o dos datos atípicos, el modelo parece ajustarse bien.
+
+Finalmente, el pronóstico para 12 meses de los datos con la transformación logarítmica lo mostramo en la Figura \@ref(fig:fig-pronostico-pasajeros).
+
+
+```r
+sarima.for(lx, 12, 0,1,1, 0,1,1,12)
+```
+
+<div class="figure">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-pronostico-pasajeros-1.svg" alt="Pronóstico de 12 meses usando el modelo ARIMA(0,1,1)x(0,1,1)_12 de los datos transformados de pasajeros aéreos"  />
+<p class="caption">(\#fig:fig-pronostico-pasajeros)Pronóstico de 12 meses usando el modelo ARIMA(0,1,1)x(0,1,1)_12 de los datos transformados de pasajeros aéreos</p>
+</div>
+
+```
+## $pred
+##        Jan   Feb   Mar   Apr   May   Jun   Jul   Aug
+## 1961 6.110 6.054 6.172 6.199 6.233 6.369 6.507 6.503
+##        Sep   Oct   Nov   Dec
+## 1961 6.325 6.209 6.063 6.168
+## 
+## $se
+##          Jan     Feb     Mar     Apr     May     Jun
+## 1961 0.03672 0.04278 0.04809 0.05287 0.05725 0.06132
+##          Jul     Aug     Sep     Oct     Nov     Dec
+## 1961 0.06513 0.06873 0.07216 0.07543 0.07856 0.08157
+```
+
+----
+
+
+<!--chapter:end:305-modelos-ARIMA.Rmd-->
+
+# Modelos ARCH y GARCH
+
+Antes de comenzar, es necesario precisar el concepto de volatilidad en el contexto del análisis financiero. Se denomina volatilidad a la tasa relativa a la que un activo experimenta una drástica disminución o aumento de su precio dentro de un período predeterminado de tiempo. La volatilidad se determina mediante el cálculo de la desviación estándar anualizada de la variación diaria del precio. Si el precio de la acción aumenta y disminuye rápidamente durante cortos períodos de tiempo, entonces se dice que tiene una volatilidad alta. Si el precio se mantiene casi siempre en el mismo valor entonces se dice que tiene volatilidad baja. Los inversores evalúan la volatilidad de las acciones antes de tomar una decisión en, la compra de una oferta de acciones nuevas, la adquisición de acciones adicionales de un activo ya presente en una cartera, o en la venta de acciones que actualmente est án en poder del inversionista. La idea detrás de la comprensión del comportamiento de la volatilidad de los activos es organizar las inversiones para obtener el máximo rendimiento con el mínimo de oportunidades de pérdida.
+
+En esta sección se discutirán algunos de los modelos estadísticos y econométricos mas importantes para la modelización de la volatilidad de series de tiempo de rentabilidades de activos. A diferencia del análisis de series de tiempo tradicional, el cual se enfoca principalmente en la modelización del momento condicional de primer orden, los denominados modelos de heterocedasticidad condicional buscan captar la dependencia dentro del momento condicional de segundo orden, en otras palabras, el objetivo ahora es modelizar la volatilidad. La incertidumbre o riesgo constituye uno de los temas de investigación principales en el análisis financiero. Como se mencion´o, la volatilidad es un factor importante en las finanzas puesto que proporciona un método simple para calcular el valor en riesgo de una situación financiera en la gestión de riesgos. Por otra parte, la modelización de la volatilidad de una serie de tiempo puede mejorar la eficiencia en la estimación de parámetros y la exactitud en los intervalos de predicción. En esta sección se discutirán los modelos univariados de la volatilidad entre los que se incluyen el modelo autorregresivo de heterocedasticidad condicional (*ARCH*) de Engle
+(1982), el modelo generalizado ARCH (*GARCH*) de Bollerslev (1986), entre otros.
+
+La volatilidad tiene la particularidad de que no es posible su observación directa. Aún cuando esto no es posible, la volatilidad tiene algunas características que pueden ser observadas en las series de rentabilidad de activos entre los que se pueden destacar,
+
+- Agrupamiento de la volatilidad (cluster). En otras palabras, períodos
+de volatilidades altas y períodos de volatilidades bajas.
+
+- Evolución continua de la volatilidad en el tiempo.
+
+- Las variaciones de la volatilidad se presentan en un rango fijo,
+es decir, no diverge al infinito. En términos estadísticos, se puede
+decir que la volatilidad es a menudo estacionaria.
+
+- La volatilidad parece reaccionar de manera diferente a un incremento
+elevado de los precios o una disminución sustancial de los precios. Este efecto es conocido con el nombre de apalancamiento o efecto palanca.
+
+Tales propiedades descritas anteriormente juegan un papel importante
+en el desarrollo de los modelos usados para caracterizar la volatilidad.
+
+## Estructura de los Modelos
+
+Como se analizó en secciones previas, más precisamente en la sección de modelos lineales, una serie de tiempo $x_t$ se puede escribir como la suma de dos componentes,
+
+\begin{equation}
+x_t=\mu_t+w_t = \mathbb{E}(x_t|\mathcal{F}_{t-1})
+(\#eq:eq-modelos-xt-2-componentes)
+\end{equation}
+
+donde $\mathcal{F}_{t-1}$ representa la información disponible hasta el tiempo $t-1$. Usualmente, $\mathcal{F}_{t-1}$ consiste de todas la funciones lineales del pasado de $x_t$. El objetivo de los proceso descritos por \@ref(eq:eq-modelos-xt-2-componentes) es la modelización de $\mu_t=\mathbb{E}(x_t|\mathcal{F}_{t-1})$, con la suposición de que $w_t$ sea un ruido blanco condicionalmente homocedástico, es decir,
+
+\begin{equation}
+\mathbb{E}(w_t^2) = \mathbb{E}(w_t^2|\mathcal{F}_{t-1}) = \sigma_w^2.
+(\#eq:eq-ruido-blanco-homocedastico)
+\end{equation}
+
+Los modelos de heterocedasticidad condicional suponen que el segundo momento condicional depende del tiempo, es decir,
+
+\begin{equation}
+\sigma_t^2=Var(x_t|\mathcal{F}_{t-1})=\mathbb{E}((x_t-\mu_t)^2|\mathcal{F}_{t-1})=\mathbb{E}(w_t^2|\mathcal{F}_{t-1})=h_t,
+(\#eq:eq-varianza-heterocedastica)
+\end{equation}
+
+siendo $h_t$ una función no negtiva, $h_t=h_t(\mathcal{F}_{t-1})$. A través de este capítulo discutiremos algunas de las posibles funciones para $h_t$.
+
+La forma en que $h_t$ evoluciona respecto del tiempo distinguirá una forma de otra. Ya que nuestro objetivo esel estudio de modelos que nos permitan caracterizar series de tiempo financieras, consideraremos de forma general que $x_t$ representa la serie de rentabilidades de activos. Así mismo, haremos referencia de $w_t$ como la *rentabilidad corregida en media* o *impulso* del activo.
+
+Los modelos de heterocedasticidad condicional los podemos clasificar en dos categorías generales
+
+1) La primera categoría, agrupa los modelos que usan una función exacta que rige la evolución de $\sigma_t^2=h_t$.
+
+2) La segunda categoría, agrupa los modelos que usan una ecuación estocástica para describir $\sigma_t^2=h_t$.
+
+Los modelos GARCH pertenecen a la primera categoría, mientras que los modelos de volatilidad estocástica están en la segunda categoría.
+
+
+## Modelos ARCH
+
+El primer modelo que proporciona un enfoque sistemático para el modelado de la volatilidad es el modelo *Autorregresivo de Heterocedasticidad Condicional* denotado por sus sigla en inglés $ARCH$ (Autoregressive Conditional Heteroscedasticity), introducido por Engle (1982). un modelo $ARCH(p)$ tiene la forma
+
+\begin{eqnarray}
+w_t^2 &=& \nu_t\sqrt{h_t} \nonumber \\
+h_t   &=& \alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2.
+(\#eq:eq-modelos-ARCHp)
+\end{eqnarray}
+
+Donde $\{\nu_t\}$ es una sucesión de variables aleatorias iid con media 0 y varianza 1, $\alpha_0>0,\alpha_p>0$ y $\alpha_i\geq0, i=1,\ldots,p-1$. La condición de no negatividad sobre los coeficinetes $\alpha_i$ garantizan que la varianza condicional $h_t$ sea positiva.
+
+\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota. </em></span>  \fi{}Algunos autores usan $\sigma_t^2$ para denotar la varianza condicional en la ecuación \@ref(eq:eq-modelos-ARCHp) en lugar de $h_t$ tal como lo denotamos. Así pues, el modelo $ARCH(p)$ también lo podemos escirbir de la siguiente manera:
+
+\begin{eqnarray}
+w_t &=& \nu_t\sigma_t \\
+\sigma_t^2 &=& \alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2.
+\end{eqnarray}
+
+Sin embargo, en lo que sigue y por razones prácticas, usareos la primera notación que describimos en la ecuación \@ref(eq:eq-modelos-ARCHp).</div>\EndKnitrBlock{remark}
+
+---
+
+El modelo $ARCH(P)$ lo podemos escribir como un modelo $AR(p)$ para $w_t^2$. En efecto,
+
+\begin{equation}
+w_t^2=\alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2+\eta_t,
+(\#eq:eq-modelo-AR-wt2)
+\end{equation}
+
+donde $\eta_t=w_t^2-h_t$. Recordando la teoría de los modelos $AR$, si las raíces de la ecuación característica del proceso $AR$ están fuera del círculo unitario, entonces el proceso es estacionario y además podemos calcular la varianza incondicional de $w_t$, como
+
+$$Var(w_t^2) = \sigma_w^2 = \mathbb{E}(w_t^2) = \frac{\alpha_0}{1-\alpha_1-\cdots-\alpha_p}$$
+
+siempre y cuando $1-\alpha_1-\cdots-\alpha_p>0$. Tomando en cuenta la ecuación \@ref(eq:eq-modelos-ARCHp), podemos ver la razón por la cual los modelos $ARCH$ pueden describir el agrupamiento de la volatilidad. El mmodelo establece que la varianza condicional $h_t$ es una función creciente de $w_{t-1}^2$ para $i=1,\ldots,p$. Por lo tanto, valores grandes de $w_{t-1}$ (en módulo) dan lugar a valores grandes de $h_t$. Por consiguiente, $w_t$ también tiende a asumirvalores grandes (en módulo).
+
+Además de capturar el agrupamiento de la volatilidad, los modelos $ARCH$ tambie'n reflejan el exceso de kurtosis estándar de las series de rentabilidad. Para estudiar esta y otras propiedades, consideraremos por simplicidad el modelo $ARCH(1)$, que asume la forma siguiente:
+
+\begin{eqnarray}
+w_t &=& \nu_t\sqrt{h_t} \nonumber\\
+h_t &=& \alpha_0+\alpha_1w_{t-1}^2. 
+(\#eq:eq-modelo-ARCH1)
+\end{eqnarray}
+
+Entonces, tenemos que 
+
+$$\mathbb{E}(w_t) = \mathbb{E}[\mathbb{E}(w_t|\mathcal{F}_{t-1})] = \mathbb{E}(\sqrt{h_t}\mathbb{E}(\nu_t)) = 0.$$
+
+Por otro lado, suponiendo estacionaridad de la serie, la varianza incondicional de $w_t$ es 
+
+$$\sigma_w^2=\mathbb{E}(w_t^2) = \frac{\alpha_0}{1-\alpha_1},$$
+
+con $0\leq\alpha_1<1$. Suponiendo normalidad en $\nu_t$, tenemos
+
+$$\mathbb{E}(w_t^4|\mathcal{F}_{t-1}) = 3(\alpha_0+\alpha_1w_{t-1}^2)^2,$$
+
+y por lo tanto
+
+$$\mathbb{E}(w_t^4) = \mathbb{E}(\mathbb{E}(w_t^4|\mathcal{F}_{t-1})) = 3\mathbb{E}(\alpha_0^2+2\alpha_0\alpha_1w_{t-1}^2+\alpha_1^2w_{t-1}^4).$$
+
+Entonces si $w_t$ es estacionario de cuarto orden con $\mu_4=\mathbb{E}(w_t^4)$, tenemos que
+
+$$\mu_4 = 3(\alpha_0^2+2\alpha_0\alpha_1Var(w_t)+\alpha_1^2\mu_4) = 3\alpha_0^2\left(1+2\frac{\alpha_1}{1-\alpha_1}\right)+3\alpha_1^2\mu_4.$$
+
+Despejando, obtenemos
+
+$$\mu_4 = \frac{3\alpha_0^2(1+\alpha_1)}{(1-\alpha_1)(1-3\alpha_1^2)}.$$
+
+Con la condición $0\leq\alpha_1^2<\frac{1}{3}$, para asegurar que $\mu_4>0$. or otra parte, la kurtosis incondicional de $w_t$ es 
+
+$$k = \frac{\mathbb{E}(w_t^4)}{[Var(w_t)]^2} = 3\frac{1-\alpha_1^2}{1-3\alpha_1^2} > 3.$$
+
+En esta última ecuación vemos reflejado el exceso de kurtosis de $w_t$.
+
+El modelo $ARCH$ tiene múltiles propiedades que en cierta forma pueden mejorar el modelado de series de tiempo financieras, en epsecial si queremos modeloar o simular la volatilidad.Sin embargo, este modelo como los ya vistos presentan limitaciones a la hora de modelar series de rentabilidad de activos financieros. Es habitual que períodos de rentabilidades negativas sean seguidos por períodos de gran volatilidad. Así, los modelos $ARCH$ no tienen la capacidad de captar esta característica debido a que la volatilidad responde igualmente ante impulsos negativos y positivos, pues dependen del cuadrado de los mismos. 
+
+Por otro lado, las condiciones para la existencia de momentos de orden mayor, implica colocar restricciones muy estrictas sobre los parámetros del modelo. Como ya mencionamos, para un modelo $ARCH(1)$ con momento de cuarto orden finito exigimos que $0\leq\alpha_1^2<1/3$, de modo que para un modelo $ARCH$ de mayor orden las restricciones tienden a complicarse.
+
+
+### Estimación de un Modelo ARCH(p)
+
+Los estimadores que se usan con más frecuencia para estimar los modelos $ARCH$ son los que se obtienen de la función de máxima verosimilitud gaussiana condicional. Consideremos el modelo $ARCH(p)$ dado en la ecuación \@ref(eq:eq-modelos-ARCHp). Bao la hipótesis de normalidad de $\nu_t$, tenemos que la distribución de $w_t$ condicionado a $\mathcal{F}_{t-1}$, tiene una distribución normal co media $\mu=0$ y varianza $h_t=0$, y la función de máxima verosimilitud adopta la forma
+
+\begin{eqnarray}
+f(w_1,\ldots,w_T|\vec{\alpha}) &=& f(w_T|\mathcal{F}_{T-1})f(w_T-1|\mathcal{F}_{T-2})\cdots f(w_{p+1}|\mathcal{F}_p)f(w_1,\ldots,w_p|\vec{\alpha}) \nonumber\\
+  \prod_{t=p+1}^T\frac{1}{\sqrt{2\pi h_t}}\exp\left(\frac{-w_t^2}{2h_t}\right)f(w_1,\ldots,w_p|\vec{\alpha})
+  (\#eq:eq-FMV-ARCH)
+\end{eqnarray}
+
+donde $\vec{\alpha}=(\alpha_0,\alpha_1,\ldots,\alpha_p)^T$ y $f(w_1,\ldots,w_p|\vec{\alpha})$ es la función de densidad conjunta de $w_1,\ldots,w_p$. Dado que la forma exacta de esta densidad es difícil de calcular, consideraremos la función de verosimilitud condicionada siguiente:
+
+\begin{equation}
+f(w_{p+1},\ldots,w_T|\vec{\alpha},w_1,\ldots,w_p) = \prod_{t=p+1}^T\frac{1}{\sqrt{2\pi h_t}}\exp\left(\frac{-w_t^2}{2h_t}\right).
+(\#eq:eq-FMV-ARCH-2)
+\end{equation}
+
+Ya que maximizar la función de verosimilitud \@ref(eq:eq-FMV-ARCH-2) equivales= a maximizar su logaritmo, consideremos entonces
+
+$$L(\alpha_0,\vec{\alpha}) = \ln(f(w_{p+1},\ldots,w_T|\vec{\alpha},w_1,\ldots,w_p)) = \sum_{t=p+1}^T\frac{1}{2}\left[\ln(2\pi)+\ln(h_t)+\frac{w_t^2}{h_t}\right].$$
+
+ahora bien, dado que el primer término de la suma no depende de ningún parámetro, los estimadores de máxima verosimilitud condicional de $\alpha_0$ y $\vec{\alpha}=(\alpha_1,\ldots,\alpha_p)^T$ obtenemos maximizando
+
+$$L(\alpha_0,\vec{\alpha}) = -\sum_{t=p+1}^T\frac{1}{2}\ln\left[\ln(h_t)+\frac{w_t^2}{h_t}\right],$$
+
+donde $h_t=\alpha_0+\alpha_1w_{t-1}^2+\cdots+\alpha_pw_{t-p}^2$ lo podemos evaluar recursivamente.
+
+
+### Predicción con modelos ARCH
+
+Sean $x_1,\ldots,x_h$ observaciones de una serie de tiempo $\{x_t\}$. Queremos predecir la observación $x_{h+k}$ para algún horizonte de predicción $k>0$, a partir de las observaciones disponibles dadas. Denotemos por $\hat{x}_h(k)$ el estimador de mínimos cuadrados de $x_h(k)$, esto es
+
+$$\hat{x}_h(k)=\arg\inf_f\mathbb{E}(x_{h+k}-f)^2$$
+donde el ínfimo se considera sobre las funciones medibles de $x_1,\ldots,x_h$. Podemos ver que bajo estas condiciones,
+
+$$\hat{x}_h(k) = \mathbb{E}(x_{h+k}|x_1,\ldots,x_h).$$
+
+Teniendo en cuenta este resultado, las predicciones de $h_t$ para los modelos $ARCH$ los obtenemos recursivamente a partir de la ecuación de la volatilidad dada por \@ref(eq:eq-modelos-ARCHp), bajo la suposición de que conocemos la serie de tiempo hasta el instante $t$, así la predicción de $h_{t+1}$ está dada por 
+
+$$\hat{h}_t(1) = \alpha_0+\alpha_1w_t^2+\cdots+\alpha_pw_{t+1-p}^2.$$
+
+Ahora bien, tomando $\hat{w}_t^2(1)=\hat{h}_t(1)$, la predicción a dos pasos es 
+
+\begin{eqnarray*}
+\hat{h}_t(2) &=& \alpha_0+\alpha_1\hat{w}_t^2(1)+\alpha_2w_t^2+\cdots+\alpha_pw_{t+2-p}^2 \\
+    &=& \alpha_0+\alpha_1\hat{h}_t(1)+\alpha_2w_t^2+\cdots+\alpha_pw_{t+2-p}^2.
+\end{eqnarray*}
+
+En general, para la predicción de $k$ pasos, tenemos
+
+$$\hat{h}_t(k)=\alpha_0+\alpha_1\hat{h}_t(k-1)+\cdots+\alpha_p\hat{h}_t(k-p),$$
+donde $\hat{h}_t(k-i)=w_{t+k-i}^2$ con $i=1,\ldots,p$, si $k-i\leq0$.
+
+\BeginKnitrBlock{example}<div class="example"><span class="example" id="exm:unnamed-chunk-63"><strong>(\#exm:unnamed-chunk-63) </strong></span>Ejemplo ....</div>\EndKnitrBlock{example}
+
+
+
+## Modelos GARCH
+
+Cuando se consideran modelos $ARCH$ para caracterizar el comportamiento dinámico de la volatilidad suele ocurrir que el orden $p$ sea significativamente alto. Esto conlleva a que las restricciones sobre los parámetros, para garantizar la no negatividad de la varianza y la no estacionaridad del proceso, sea muy fuerte. Bollerslev (1986) propuso como solución alternativa los *modelos generalizados autoregresivos de heterocedasticidad condicional* y denotados como $GARCH$ (Generalized $ARCH$). Para estos modelos, la varianza condicional en un instante depende, no solo de los valores pasados de los impulsos la cuadrado, sino también de sus propios retardos. Así, un modelo $GARCH(p,q)$ tiene la siguiente expresión
+
+\begin{eqnarray}
+w_t &=& \nu_t\sqrt{h_t} \nonumber \\
+h_t &=& \alpha_0+\sum_{i=1}^p\alpha_iw_{t-i}^2+\sum_{j=1}^q\beta_jh_{t-j}
+(\#eq:eq-modelo-GARCHpq)
+\end{eqnarray}
+
+donde $\nu_t$ es una sucesión de variables aleatorias iid con media 0 y varianza 1, independientes de $\{w_{t-k}\}_{k\geq1}$ para todo $t$. Para garantizar la no negatividad de la varianza condicional $h_t$ hacemos $\alpha_0>0,\alpha_i\geq0$ y $\beta_j\geq0$ con $i=1,\ldots,p, j=1,\ldots,q$.
+
+Se puede demostrar que el proceso es estrictamente estacionario con $\mathbb{E}(w_t^2)<\infty$ si y solo si $\sum_{i=1}^p\alpha_i+\sum_{j=1}^q\beta_j<1$. En este caso, $\mathbb{E}(w_t)=0$ y la varianza incondicional de $w_t$ toma el valor
+
+$$\sigma_w^2 = \mathbb{E}(w_t^2) = \frac{\alpha_0}{1-(\sum_{i=1}^p\alpha_i+\sum_{j=1}^q\beta_j)}.$$
+
+En efecto, bajo la suposición de estacionaridad se tiene
+
+\begin{eqnarray*}
+\mathbb{E}(w_t^2) &=& \mathbb{E}(h_t) \\
+    &=& \alpha_0+\sum_{i=1}^p\alpha_i\mathbb{E}(w_{t-i}^2)+\sum_{j=1}^q\beta_j\mathbb{E}(h_{t-j}) \\
+    &=& \alpha_0+\sum_{i=1}^p\mathbb{E}(w_t^2)+\sum_{j=1}^q\beta_j\mathbb{E}(w_t^2),
+\end{eqnarray*}
+
+y despejando $\mathbb{E}(w_t^2)$ se obtiene la expresión dada para la varianza incondicional.
+
+Por otro lado, el modelo $GARCH(p,q)$ puede representarse alternativamente mediante un modelo $ARMA(m,q)$ para $w_t^2$, siendo $m=\max(p,q)$. Sea $\eta_t=w_t^2-h_t$. Sustituyendo $h_t=w_t^2-h_t$ en \@ref(eq:eq-modelo-GARCHpq)se tiene
+
+\begin{equation}
+w_t^2 = \alpha_0+\sum_{i=1}^m(\alpha_i+\beta_i)w_{t-1}^2-\sum_{j=1}^q\beta_j\eta_{t-j},
+(\#eq:eq-modelo-GARCH-alterno)
+\end{equation}
+
+donde $\alpha_{p+j}=\beta_{q+j}=0$ para $j\geq1$.
+
+\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota. </em></span>  \fi{}Se puede demostrar que el modelo $GARCH$ definido como un modelo $ARMA$ satisface $\mathbb{E}(\eta_t)=0$ y $Cov(\eta_t,\eta_{t-j})=0$ para $j\geq1$. Sin embargo $\{\eta_j\} no es, en general, una sucesión variables iid.</div>\EndKnitrBlock{remark}
+
+Similar a las consideraciones anteriores de los modelos de series de tiempo, consideraremos, por simplicidad el modelo $GARCH(1,1)$ para estudiar sus propiedades y que luego podemos generalizar.
+
+Consideremos el modelo $GARCH(1,1)$ dado por 
+
+\begin{eqnarray}
+w_t &=& \nu_t\sqrt{h_t} \nonumber\\
+h_t &=& \alpha_0+\alpha_1w_{t-1}^2+\beta_1h_{t-1}
+(\#eq:eq-modelo-GARCH11)
+\end{eqnarray}
+
+En primer lugar veremos como se puede reducir el númeor de retardos de los impulsos al cuadrado al hacer la volatilidad de sus valores pasados. El modelo \@ref(eq:eq-modelo-GARCH11) lo podemos escribir como
+
+$$h_t=\alpha_0+\alpha_1w_{t-1}^2+\beta_1(\alpha_0+\alpha_1w_{t-1}^2+\beta_1h_{t-2}),$$
+y de forma recursiva obtenemos
+
+\begin{equation}
+h_t = \alpha_0\sum_{i=0}^{\infty}\beta_1^i+\alpha_1\sum_{i=0}^{\infty}\beta_1^{i-1}w_{t-i}^2.
+(\#eq:eq-modelo-GRACH11-recursivo)
+\end{equation}
+
+Esto quiere decir, que el modelo $GARCH(1,1)$ admite una representación $ARCH(\infty)$. De \@ref(eq:eq-modelo-GARCH11) se deduce que valores grandes de $w_t^2$ o $h_{t-1}$ dan lugar a valores grandes de $h_t$. Esto significa que grandes valores de $w_{t-1}^2$ tienden a ir seguidos de grandes valores de $w_t^2$, dando lugar así al característico agrupamiento de la volatilidad de las series financieras. Por otra parte, si imponemos condiciones de existencia del momento de cuarto orden de $w_t$ y suponiendo normalidad en $\nu_t$, obtenemos
+
+$$\mathbb{E}(w_t^4) = 3\mathbb{E}(\alpha_0+\alpha_1w_{t-1}^2+\beta_1h_{t-1})^2.$$
+
+Desarrrollando la expresión anterior y despejando $\mu_4$ obtenemos
+
+$$\mu_4 = \frac{3\alpha_0^2[1+2(\alpha_1+\beta_1)]}{[1-(\alpha_1+\beta_1)][1-(\alpha_1+\beta_1)^2-2\alpha_1^2]}.$$
+
+Por lo tanto, la kurtosis de un proceso $GARCH(1,1)$ será 
+
+\begin{equation}
+K = \frac{\mathbb{E}(w_t^4)}{[\mathbb{E}(w_t^2)]^2} = \frac{3[1-(\alpha_1+\beta_1)^2]}{1-(\alpha_1+\beta_1)^2-2\alpha_1^2} >3.
+(\#eq:eq-kurtosis-GARCH11)
+\end{equation}
+
+En consecuencia, $1-(\alpha_1+\beta_1)^2-2\alpha_1^2>0$. Así, de la ecuación \@ref(eq:eq-kurtosis-GARCH11) tenemos que la distribución de las colas de un proceso $GARCH(1,1)$ es más pesada que la de una distribución normal. Por lo tanto, el modelo también es capaz de reflejar el exceso de kurtosis característico de las series de rentabilidades. Sin embargo, similar a lo que ocurre con los modelos $ARCH$, los modelos $GARCH$ responden de igual forma ante los impulsos independientemente de su signo y por este motivo no pueden reflejar los efectos asimétricos de las rentabilidades negativas o positivas.
+
+### Estimación de un Modelo GARCH
+
+De manera similar al procedimiento que realizamos para el modelo $ARCH$ y suponiendo que $\nu_t$ sigue una distribución normal, obtenemos una expresión para la función de verosimilitud gaussiana (condicional) dada por 
+
+\begin{equation}
+L(w_{p+1},\ldots,w_T|\vec{\alpha},\vec{\beta},w_1,\ldots,w_p) = -\sum_{t=p+1}^T\frac{1}{2}\left[ctte+\ln(h_t)+\frac{w_t^2}{h_t}\right],
+(\#eq:eq-verosimilitud-gaussiana-GARCH)
+\end{equation}
+
+con $h_t=\alpha_0+\sum_{i=1}^p\alpha_iw_{t-i}^2+\sum_{j=1}^q\beta_jh_{t-j}$. En esta situación la varianza condicional $h_t$ no la podemos expresar en términos de un número finito de observaciones pasadas de $w_t$, tal como sucede con los modelos $ARCH$. Para solucionar este inconveniente, sustituimos en la función de verosimilitud a $h_t$ por una versión truncada de la misma, llamémosla $\tilde{h}_t$. Los estimadores de máxima verosimilitud condicional de $\alpha_0, \vec{\alpha}=(\alpha_1,\ldots,\alpha_p)^t$ y $\vec{\beta}=(\beta_1,\ldots,\beta_p)^T$ los obtenemos al maximizar la función
+
+$$L(\alpha_0,\vec{\alpha},\vec{\beta}) = -\sum_{t=k}^T\frac{1}{2}\left[\ln(\tilde{h}_t)+\frac{w_t^2}{\tilde{h}_t}\right],$$
+donde $k$ es un entero ($k>p$).
+
+Hasta ahora hemos asumido que las innovaciones $\nu_t$ siguen una distribución normal, lo cual implica que la distribución condicional de $w_t$ es una normal con meda cero y varianza $h_t$. Por otro lado, la distribución incondicional de $\nu_t$ en los modelos $GARCH$ no es normal. Por ejemplo, para un modelo $GARCH(1,1)$, la kurtosis y la kurtosis incondicional de $w_t$ es mayor que la kurtosis de una normal.
+
+En aplicaciones prácticas en series de tiempo de alta frecuencia, es usual observar que la kurtosis incondicional de $w_t$ en un modelo $GARCH(1,1)$ dada por \@ref(eq:eq-kurtosis-GARCH11), es menor que la de la serie observada, es decir, el modelo $GARCH(1,1)$ con $\nu_t$ con distribución normal, no tiene la capacidad de recoger todo el peso de las colas de la distribución incondicional de $w_t$. Una manera de resolver este problema es considerar que $\nu_t$ tiene una distribución distinta de la normal. También se han desarrollado nuevos modelos para lidiar con este problema que suelen ser muy útiles.
+
+Una distribución comúnmente usada para $\nu$, es la $t$-de Student estandarizada con $v$ grados de libertad, motivado al hecho de que tiene propiedades relacionadas cn las colas pesadas. Sea 
+
+$$f(\nu_t) = \frac{\Gamma\left(\frac{v+1}{2}\right)}{\Gamma\left(\frac{v}{2}\right)}\frac{1}{\sqrt{\pi(v-2)}}\left(1+\frac{\nu_t^2}{v-2}\right)^{-\frac{v+1}{2}},$$
+con $v>2$, donde $\Gamma(\cdot)$ es la función Gamma.
+
+La función de verosimilitud en este caso se expresa como
+
+$$f(w_{p+1},\ldots,w_T|\vec{\alpha},\vec{\beta},w_1,\ldots,w_p) = \prod_{t=p+1}^T\frac{1}{\sqrt{h_t}}\frac{\Gamma\left(\frac{v+1}{2}\right)}{\Gamma\left(\frac{v}{2}\right)}\frac{1}{\sqrt{\pi(v-2)}}\left(1+\frac{\nu_t^2}{v-2}\right)^{-\frac{v+1}{2}}.$$
+
+Como antes, maximizar $f$ es equivalente a maximizar el $\ln f(\cdot)=L(\cdot)$,
+
+$$L(\alpha_0,\vec{\alpha},\vec{\beta},v) = -\sum_{t=p+1}^T\frac{1}{2}\left[\ln(h_t)-\ln\left(\frac{\Gamma\left(\frac{v+1}{2}\right)}{\Gamma\left(\frac{v}{2}\right)}\right)+\ln(\pi(v-2))+(v+1)\ln\left(1+\frac{\nu_t^2}{v-2}\right)\right].$$
+
+En este caso, la kurtosis incondicional de $w_t$ es mayor que la obtenida cuando se asume que la disribución de $\nu_t$ es normal.
+
+\BeginKnitrBlock{remark}<div class="remark">\iffalse{} <span class="remark"><em>Nota. </em></span>  \fi{}Los grados de libertad de la distribución $t$-de Student pueden ser especificados a priori o se pueden estimar con el resto de parámetros a partir de la función de verosimilitud.</div>\EndKnitrBlock{remark}
+
+### Predicción con modelos GARCH
+
+Tal como discutimos para los modelos $ARCH$, de forma análoga podemos calcular de manera recursiva las predicciones para la varianza condicional en los procesos $GARCH$. Sea el modelo $GARCH(1,1)$ con ecuación \@ref(eq:eq-modelo-GARCH11), la esperanza condicional de $h_{t+k}$, es teóricamente el estimador óptimo para la predicción de la varianza condicional, y se determina por
+
+$$\hat{h}_t(k) = \alpha_0+\alpha_1\hat{w}_t^2(k-1)+\beta_1\hat{h}_t(k-1),$$
+donde $\hat{w}_t(k-1)=\hat{h}_t(k-1)$ si $k-1>0$, mientras que $\hat{w}_t(k-1)=w_{t+k-1}^2$ y $\hat{h}_t(k-1)=h_{t-k+1}$ si $k-1\leq0$. Sustituyendo de forma recursiva,
+
+\begin{equation}
+\hat{h}_t(k)=\alpha_0\sum_{j=0}^{k-2}(\alpha_1+\beta_1)^j+(\alpha_1+\beta_1)^{k-1}h_{t+1},
+(\#eq:eq-prediccion-GARCH11-recursivo)
+\end{equation}
+donde, en este caso, $h_{t+1}$ se calcula directamente a partir de la serie histórica.
+
+Si el proceso es estacioanrio con $\alpha_1+\beta_1<1$, mediante un simple cálculo, obtenemos
+
+\begin{equation}
+\hat{h}_t(k)=\sigma_w^2+(\alpha_1+\beta_1)^{k-1}(h_{t+1}-\sigma_w^2)
+(\#eq:eq-prediccion-GARCH-estacionario)
+\end{equation}
+donde $\sigma_w^2=\frac{\alpha_0}{1-\alpha_1-\beta_1}$ es la varianza incondicional de $w_t$.
+
+
+
+<!--chapter:end:306-Modelos-ARCH-GARCH.Rmd-->
+
+# Modelos lineales estacionales y modelos no-estacionarios
+
+## Modelos Estacionales
+
+Algunas series en finanzas tales como los ingresos  trimestrales de los activos de una empresa presentan un cierto comportamiento cíclico o periódico. Tales tipos de series se denominan *series de tiempo estacionales*. En ciertas aplicaciones la estacionalidad la podemos considerar como algo secundario y por tanto la podemos remover, obteniendo una serie de tiempo estacionalmente ajustada la cula procedemos a estudiar. Sin embargo, en predicción de series financieras la estacionalidad es muy importante, tanto como otras características de los datos y por consiguiente la debemos considerar cuando hacemos el análisis de series de tiempo. En el capítulo [Modelos ARMA], en la sección [Modelos SARIMA] ya vimos un modelo estacional, el modelo SARIMA. Ahora veremos algunos modelos econométricos útiles para modelar series estacionales.
+
+Para una serie de tiempo estacional $x_t$ con periodo estacinal $s$, la *diferenciación estacional* se define como 
+
+\begin{equation}
+\Delta sx_t = x_t-x_{t-s}.
+(\#eq:eq-diferencia-estacional-s)
+\end{equation}
+
+La diferencia convencional $\Delta x_t=x_t-x_{t-1} = (1-B)x_t$ la llamaremos *diferenciación usual*. Consideremos ahora el caso especial de la siguiente serie estacional
+
+\begin{equation}
+(1-B^s)(1-B)x_t = (1-\theta B)(1-\Theta B^s)w_t,
+(\#eq:eq-serie-estacional-s)
+\end{equation}
+
+donde $s$ es el período estacional de la serie, $w_t$ es un ruido blanco, $|\theta|<1$ y $|\Theta|<1$. Este modelo se conoce como el *modelo de aerolinea* (ver Box et. al (1994), Cap. 9). La parte autorregresiva $AR$ (lado izquierdo de \@ref(eq:eq-serie-estacional-s)) del modelo consta de diferencias estacionales y usuales, mientras que el promedio móvil, $MA$ (lado derecho de \@ref(eq:eq-serie-estacional-s)) involucra dos parámetros, $\theta$ y $\Theta$. Consideremos la parte $MA$,
+
+$$w_t = (1-\theta B)(1-\Theta B^s)w_t = w_t-\theta w_{t-1}-\Theta w_{t-s}+\theta\Theta w_{t-s-1},$$
+
+donde $w_t=(1-B^s)(1-B)x_t$. El proceso $w_t$ se denomina *modelo estacional multiplicativo MA*. En aplicaciones, un modelo estacional multiplicativo supone que la dinámica de las componentes regular y estacional de la serie son aproximadamente ortogonales.
+
+## Modelos de memoria larga
+
+Algunas series de tiempo muestran marcadas correlaciones a rezagos grandes, nos referiremos a ellos como proceos de memoria larga. La *memoria larga* es una característica de muchas series de tiempo geofísicas. Los caudales en el río Nilo tienen correlación en rezagos grandes y Hurst (1951) demostró que esto afectaba la capacidad de diseño optima de una presa. Mudelsee (2007) demostró que la memoria larga es una propiedad hidrológica que puede conducir a sequías prolongadas o al agrupamiento temporal de inundaciones extremas. A una escala bastante diferente, Leland et. al (1993) encontraron que el tráfico de la red de área local (LAN) Ethernet parece ser estadísticamente autosimilar y un proceso de memoria larga. Demostraron que la naturaleza de la congestión producida por el tráfico autosimilar difiere drásticamente de la prevista por los modelos de tráfico utilizados en ese momento. Mandelbrot y sus compañeros de trabajo investigaron la relación entre la autosimilaridad y la memoria a largo plazo y desempeñaron un papel fundamental en el establecimiento de la geometría fractal como tema de estudio.
+
+### Diferenciación fraccionada
+
+Beran (1994) describió las características cualitativas de una trayectoria de muesteo típica (realización) de un proceso de memoria larga. Hay períodos relativmanete largos durante el cual las observaciones tienden a mantenerse a un nivel alto y periodos largos similares durante el cual las observaicones tienden a ser de bajo nivel. Puede parecer que hay tendencias o ciclos sobre períodos de tiempos cortos, pero no persisten y toda la serie parece estacionaria. Un criteio más objetivo es que la correlación muestral $r_k$ decaiga a cero a una tasa que es aproximadamente proporcional a $k^{-\lambda}$ para algún $0<\lambda<1$. Esto es notablemente más lento que la tasa de decaimiento de $r_k$ para realizaciones a partir de un proceso $AR(1)$, por ejemplo, el cual es aproximadamente proporcional a $\lambda^k$ para algún $0<\lambda<1$.
+
+La definición matemática de un proceso estacionario con memoria larga, también conocido como dependencia o persistencia a largo plazo, se puede dar en términos de la función de autocorrelación.
+
+\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-proceso-memoria-larga"><strong>(\#def:defi-proceso-memoria-larga) </strong></span>Un *proceso estacionario con memoria larga* $x_t$ tiene una función de autocorrelación $\rho_k$ que satisface la condición
+
+\begin{equation}
+\lim_{k\to\infty}\rho_k=ck^{-\lambda}
+(\#eq:eq-condicion-proceso-memoria-larga)
+\end{equation}
+
+para algún $c>0$ y $0<\lambda<1$. Cuanto más cerca está $\lambda$ de 0, más pronunciada es la memoria larga.</div>\EndKnitrBlock{definition}
+
+---
+
+El hidrólogo Harold Hurst halló que para muchos registros geofísicos, incluyendo los datos del río Nilo, el estadístico conocido como *rango reescalado* sobre un período $k$ es aproximadamente proporcional a $k^H$ para algún $H>1/2$. El parámetro de Hurst, $H$, se define como $H=1-\lambda/2$ y tiene rango $[1/2,1)$. Cuanto más cerca está $H$ de 1, más persistente es la serie. Si no hay efecto de memoria larga, entonces $H=1/2$.
+
+\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-modelo-diferencia-fraccional"><strong>(\#def:defi-modelo-diferencia-fraccional) </strong></span>Un modelo de diferencia fraccional de defiene como
+
+\begin{equation}
+(1-B)^dx_t=w_t,\quad -1/2<d>1/2,
+(\#eq:eq-modelo-diferencia-fraccional)
+\end{equation}
+
+donde $\{w_t\}$ es un proceso de ruido blanco.</div>\EndKnitrBlock{definition}
+
+---
+
+Algunas de las propiedades para este modelo son las siguientes:
+
+- Si $d<1/2$, entonces $x_t$ es un proceso débilmente estacionario con representación $MA$ infinita 
+\begin{eqnarray*}
+x_t &=& w_t = \sum_{i=1}^{\infty}\psi_iw_{t-i}\text{; con }\psi_k=\frac{d(d+1)\cdots(k-1+d)}{k!} \\
+    &=& \frac{(k+d+1)!}{k!(d-1)!}
+\end{eqnarray*}
+
+- Si $d>1/2$, entonces $x_t$ es invertible con representación $AR$ infinita
+\begin{eqnarray*}
+x_t &=& \sum_{i=1}^{\infty}\pi_ix_{t-i}+w_t\text{, con }\pi_k=\frac{-d(1-d)\cdots(k-1-d)}{k!} \\
+    &=& \frac{(k-d-1)!}{k!(-d-1)!}
+\end{eqnarray*}
+
+- Para $-1/2<d<1/2$, la ACF de $x_t$ es $$\rho_k=\frac{d(d+1)\cdots(k-1+d)}{(1-d)(2-d)\cdots(k-d)},\quad k=1,2,\ldots.$$ En particular $\rho_1=\frac{d}{1-d}$ y $$\rho_k\approx\frac{(-d)!}{(d-1)!}k^{2d-1}\text{, cuando }k\to \infty.$$
+
+- Para $-1/2<d<1/2$, la PACF de $x_t$ es $\phi_{kk}=\frac{d}{k-d}$ para $k=1,2,\ldots$.
+
+- Para $-1/2<d<1/2$, la función de densidad epsectral $f(\omega)$ de $x_t$, que es la transformada de Fourier de la ACF de $x_t$ satisface
+\begin{equation}
+f(\omega)\sim\omega^{-2d},\quad \omega\to0
+(\#eq:eq-densidad-espectral-proceso-memoria-larga)
+\end{equation}
+donde $\omega\in[0,2\pi]$ denota la frecuencia.
+
+\BeginKnitrBlock{definition}<div class="definition"><span class="definition" id="def:defi-diferencia-fraccional-ARIMA"><strong>(\#def:defi-diferencia-fraccional-ARIMA) </strong></span>Un proceso de diferencia fraccional ARIMA, denotado $FARIMA(p,d,q)$ tiene la forma 
+
+\begin{equation}
+\phi(B)(1-B)^dx_t = \psi(B)w_t
+(\#eq:eq-FARIMApdq)
+\end{equation}
+
+para algún $-1/2<d<1/2$. El rango $o<d<1/2$ da el proceso de memoria larga.</div>\EndKnitrBlock{definition}
+
+----
+
+Es útil introducir la serie fraccionadamente diferenciada $\{y_t\}$ y expresar la ecuación \@ref(eq:eq-FARIMApdq) como 
+
+\begin{equation}
+y_t = (1-B)^dx_t = [\phi(B)]^{-1}\psi(B)w_t,
+(\#eq:eq-serie-fraccionada-diferenciada)
+\end{equation}
+
+porque esto sugiere un medio para adaptar un modelo $FARIMA$ a las series de tiempo.
+
+Para un valor de prueba $d$, calculamos la serie fraccionadamente diferenciada $\{y_t\}$, ajustamos un modelo $ARIMA$ a $\{y_t\}$ y luego investigamos los residuos. El cálculo de las series fraccionadamente diferenciadas $\{y_t\}$ resulta de una expansión binomial formal de $(1-B)^d$ y está dada por
+
+$$(1-B)^d = 1-dB+\frac{d(d-1)}{2!}B^2-\frac{d(d-1)(d-2)}{3!}B^3+\cdots$$
+
+truncada para algún retardo convenientemente grande ($L$), que podríamos fijar razonablemente en 40. Por ejemplo, si $d=0.45$, entonces
+
+\begin{eqnarray*}
+y_t &=& x_t-0.45x_{t-1}+\frac{0.45(0.45-1)}{2!}x_{t-2}-\frac{0.45(0.45-1)(0.45-2)}{3!}x_{t-3}+\cdots\\
+    &=& x_t-0.450x_{t-1}-0.12375x_{t-2}-0.0639375x_{t-3}-\cdots-0.001287312x_{t-40}.
+\end{eqnarray*}
+
+El código en $R$ para calcular los coeficientes es 
+
+
+```r
+cf=rep(40)
+d=0.45
+cf[1]=-d
+for (i in 1:39) cf[i+1]=-cf[i]*(d-i)/(i+1)
+```
+
+Otra expresión equivalente para la ecuación \@ref(eq:eq-FARIMApdq), la cual resulta muy útil para simulación, es 
+
+\begin{equation}
+x_t = [\phi(B)]^{-1}\psi(B)(1-B)^{-d}w_t.
+(\#eq:eq-FARIMA-simulacion)
+\end{equation}
+
+En simulación, el primer paso es calcular $(1-B)^{-d}w_t$. El operador $(1-B)^{-d}$ lo desarrollamos como
+
+$$(1-B)^{-d} = 1-d(-B)+\frac{-d(-d-1)}{2!}B^2-\frac{-d(-d-1)(-d-2)}{3!}B^3+\cdots,$$
+
+con la serie truncada en algún paso $L$ convenientemente largo. Las distribuciones de la serie independiente de ruido blanco la podemos elegir de modo que se adapten a la aplicación. Cabe destacar que en finanzas y telecomunicaciones las distirbuciones de colas pesadas a menudo son apropiadas. En particular una distribución $t$ con $\nu (>4)$ grados de libertad tiene curtosis $6/\nu-4$ y es también de cola pesada. Si, por ejemplo, $d=0.45$ y $L=40$, entonces
+
+\begin{eqnarray*}
+(1-B)^{-d}w_t &=& w_t+0.45w_{t-1}+0.32625w_{t-2}+0.2664375w_{t-3}+\cdots\\
+              & & \cdots + 0.0657056w_{t-40}. 
+\end{eqnarray*}
+
+La función de autocorrelación $\rho_k$ de un proceso $FARIMA(0,d,0)$ tiende a 
+
+$$\frac{\Gamma(1-d)}{\Gamma(d)}|k|^{2d-1},$$
+
+para $n$ grande.
+
+Un modelo $FARIMA(0,d,0)$ con $0<d<1/2$, está entre un modelo $AR(1)$ y un camino aleatorio no estacionario. En la práctica, para ajustar o simular , debemos truncar el modelo $FARIMA(0,d,0)$ en algún paso $L$. Entonces, este es equivalente a un modelo $AR(L)$, pero todos los coeficientes en el modelo $FARIMA(0,d,0)$ dependen un solo parámetro $d$.
+
+### Ajuste de datos simulados
+
+En el siguiente script, la función 'fraccdiff.sim' genera una realizaci'pon de un proceso $FARIMA$. El primer parámetro es la longitud de larealización, los parámetros $AR$ y $MA$ los podemos especificar usando la función 'c()' si hay más de uno para cada un de ellos, el siguiente parámetro es el valor de $d$.
+
+
+```r
+library(fracdiff)
+```
+
+```
+## Warning: package 'fracdiff' was built under R version
+## 3.5.2
+```
+
+```r
+set.seed(1)
+fds.sim=fracdiff.sim(10000,ar=0.9,d=0.4)
+x=fds.sim$series
+fds.fit=fracdiff(x,nar = 1)
+```
+
+En el siguiente script, el primer 'for loop' calcula los coeficientes para los términos de rezago en las diferencias fraccionales usando el valor ajustado para $d$. El siguiente ciclo anidado calcula entonces la serie de tiempo fraccionadamente diferenciada. A continuación, se ajusta un modelo $AR$ a la serie diferenciada y se grafica la ACF de los residuales. Los residuales deben parecer una realización de un ruido blanco discreto.
+
+
+```r
+n <- length(x)
+L <- 30
+d <- fds.fit$d
+fdc <- d
+fdc[1] <- fdc
+# Calculo de los coeficientes
+for (k in 2:L) fdc[k] <- fdc[k-1] * (d+1-k) / k
+y <- rep(0, L)
+# Calculo de la serie fraccionadamente diferenciada
+for (i in (L+1):n) {
+  csm <- x[i]
+  for (j in 1:L) csm <- csm + ((-1)^j) * fdc[j] * x[i-j]
+  y[i] <- csm
+}
+y <- y[(L+1):n]
+z.ar <- ar(y)
+ns <- 1 + z.ar$order
+z <- z.ar$res [ns:length(y)]
+# Graficos
+par(mfcol = c(2, 2))
+plot(as.ts(x), ylab = "x", xlab="Tiempo", col="blue")
+acf(x) ; acf(y) ; acf(z)
+```
+
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-68-1.svg)<!-- -->
+
+La figura muestra una realización $\{x_t\}$ del proceso fraccionadamente diferenciado $FARIMA(1,0.4,0)$ (parte superior izquierda) con parámetro $AR$, $\phi=0.9$. Los valores estimados para $d$ y $\phi$ son 0.429 y 0.8839 respectivamente. En la parte superio derecha observamos la ACF para la realización $\{x_t\}$, y en la parte inferior izquierda la PACF para la serie fraccionadamente diferenciada $\{y_t\}$, como podemos notar, ambas funciones decaen lentamente, lo que indica la memoria larga. En la parte inferior derecha de la misma figura se mmuestra la ACF para los residuales de $y_t$. Con la función 'summary()' podemos ver los valores de los parámetros del modelo, así como algunos estadísticos.
+
+
+```r
+# Resumen
+summary(fds.fit)
+```
+
+```
+## 
+## Call:
+##   fracdiff(x = x, nar = 1) 
+## 
+## Coefficients:
+##    Estimate Std. Error z value Pr(>|z|)    
+## d   0.42904    0.01439    29.8   <2e-16 ***
+## ar  0.88368    0.00877   100.7   <2e-16 ***
+## ---
+## Signif. codes:  
+## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## sigma[eps] = 1.012 
+## [d.tol = 0.0001221, M = 100, h = 0.0001508]
+## Log likelihood: -1.43e+04 ==> AIC = 28630 [3 deg.freedom]
+```
+
+### Evaluación de las pruebas de dependencia a largo plazo
+
+A continuación mostraremos tre ejemplos donde evaluaremos las dependencias a largo plazo. El primer ejemplo es con los datos en el archivo "Nilemin.txt", el cual contiene los nivéles mínimos de agua ($mm$) del río Nilo para los años 622 a 1284, medidos en la Isla de Roda cerca del Cairo. El segundo ejemplo son los números de llegadas de paquetes (bits) en 4000 intervalos consecutivos de $10ms$ vistos en una Ethernet en las instalaciones de Bellcore Morristown Research and Engineering, el archivo es "LAN.txt". El último ejemplo son los datos del porcentaje mensual de la tasa preferencial del Banco de la Reserva Federal de los Estados Unidos, cortesía de la Junta de Gobernadores del Sistema de la Reserva Federal, desde enero de 1949 hasta noviembre de 2007. El archivo es "mprime.txt". Todos los archivos de datos fueron obtenidos de: <https://github.com/AtefOuni/ts/tree/master/Data>.
+
+\BeginKnitrBlock{example}\iffalse{-91-78-105-118-233-108-101-115-32-109-237-110-105-109-111-32-100-101-108-32-114-237-111-32-78-105-108-111-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-minimo-Nilo"><strong>(\#exm:ejem-minimo-Nilo)  \iffalse (Nivéles mínimo del río Nilo) \fi{} </strong></span>Para estos datos, es probable que haya una tendencia creciente durante el período de 600 años debido a los cambios climáticos o a los cambios en los canales alrededor de la Isla de Roda. Iniciamos el análisis estimando y removiendo la tendencia usando regresión lineal. Luego elegimos el valor de 'nar' inicial para aplicar la función 'fracdiff' sobre los residuales de la regresión. El valor estimado de $d$ con $nar=5$ es 0.3456 con un error estándar de 0.0295. El mejor modelo para la serie fraccionadamente diferenciada es un $AR(1)$ con parámetro $\phi=0.076$ y $d=0.3420$.</div>\EndKnitrBlock{example}
+
+
+```r
+Nilo=read.table("data/Nilemin.txt", header = T)
+# Variables
+Nivel=Nilo$Depth
+n=length(Nivel)
+tiempo=seq(1:n)
+# Regresion linela para removver la tendencia
+y=lm(Nivel~tiempo, Nilo)
+summary(y)
+```
+
+```
+## 
+## Call:
+## lm(formula = Nivel ~ tiempo, data = Nilo)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -245.4  -57.0   -7.0   49.3  335.1 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 1.11e+03   6.67e+00  166.13  < 2e-16 ***
+## tiempo      1.20e-01   1.74e-02    6.88  1.4e-11 ***
+## ---
+## Signif. codes:  
+## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 85.8 on 661 degrees of freedom
+## Multiple R-squared:  0.0668,	Adjusted R-squared:  0.0653 
+## F-statistic: 47.3 on 1 and 661 DF,  p-value: 1.42e-11
+```
+
+```r
+reg=y$coefficients[1]+y$coefficients[2]*tiempo
+Nilo.det=Nivel-reg
+# Ajuste de la serie fraccionada diferenciada
+Nilo.frac=fracdiff(Nilo.det, nar = 1)
+summary(Nilo.frac)
+```
+
+```
+## 
+## Call:
+##   fracdiff(x = Nilo.det, nar = 1) 
+## 
+## Coefficients:
+##    Estimate Std. Error z value Pr(>|z|)    
+## d    0.3420     0.0291   11.76   <2e-16 ***
+## ar   0.0764     0.0491    1.56     0.12    
+## ---
+## Signif. codes:  
+## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## sigma[eps] = 69.92 
+## [d.tol = 0.0001221, M = 100, h = 3.96e-05]
+## Log likelihood: -3.76e+03 ==> AIC = 7520 [3 deg.freedom]
+```
+
+```r
+# Simulacion de la serie fraccionada diferenciada
+Nilo.sim=fracdiff.sim(n,ar=Nilo.frac$ar,d=Nilo.frac$d)
+Nilo.sim.ts=Nilo.sim$series
+# Modelo AR(1) para conseguir los residuales
+Nilo.ar=ar(Nilo.sim.ts,order.max = 1)
+Nilo.resid=Nilo.ar$resid[2:n]
+```
+
+En la gráfica siguiente se muestran los nivéles del río Nilo junto con la recta de regresión de tendencia (superior izquierda); la ACF de la serie de tiempo una vez removida la tendencia (superior derecha); la serie simulada con el proceso $FARIMA(1,d,0)$, con $d=0.342$ (medio izquierda); la ACF para la serie fraccionadamente diferenciada (medio izquierda); la ACF de los residuales del modelo $AR(1)$ (inferior izquierda) y la ACF de los residuales al cuadrado (inferior derecha).
+
+
+```r
+par(mfrow=c(3,2))
+plot(tiempo,Nivel, type="l", col="blue", main="Nivel del río Nilo")
+lines(tiempo,y$coefficients[1]+y$coefficients[2]*tiempo,col="red")
+acf(Nilo.det, main="ACF de la serie con la tendencia removida")
+plot(tiempo,Nilo.sim.ts, type="l", col="blue", ylab="Simulación", main="Serie fraccionada diferenciada")
+acf(Nilo.sim.ts, main="ACF de la serie fraccionada diferenciada")
+acf(Nilo.resid, main="ACF de los residuales")
+acf(Nilo.resid^2, main="ACF de los residuales cuadrados")
+```
+
+<div class="figure">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-71-1.svg" alt="Nivéles del río Nilo (serie de tiempo) y tendencia (superior izquierda); ACF de la serie de tiempo sin tendencia (superior derecha); serie simulada con un proceso $FARIMA(1,0.342,0)$ (medio izquierda); ACF para la serie fraccionadamente diferenciada (medio izquierda); ACF de los residuales del modelo $AR(1)$ (inferior izquierda) y la ACF de los residuales al cuadrado (inferior derecha)"  />
+<p class="caption">(\#fig:unnamed-chunk-71)Nivéles del río Nilo (serie de tiempo) y tendencia (superior izquierda); ACF de la serie de tiempo sin tendencia (superior derecha); serie simulada con un proceso $FARIMA(1,0.342,0)$ (medio izquierda); ACF para la serie fraccionadamente diferenciada (medio izquierda); ACF de los residuales del modelo $AR(1)$ (inferior izquierda) y la ACF de los residuales al cuadrado (inferior derecha)</p>
+</div>
+
+----
+
+\BeginKnitrBlock{example}\iffalse{-91-68-97-116-111-115-32-100-101-32-69-116-104-101-114-110-101-116-32-101-110-32-66-101-108-108-99-111-114-101-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-ethernet-bellcore"><strong>(\#exm:ejem-ethernet-bellcore)  \iffalse (Datos de Ethernet en Bellcore) \fi{} </strong></span>al trazar el historgramas de frecuencias de estos datos, nos damos cuenta que está notablemente sesgado, por lo que trabajamos con el logaritmo de uno más el número de bits. La ACF del log(bits) sugiere un modelo $FARIMA$ con un 'nar' mayor a 40. Usando $nar=48$, estimamos el modelo, el valor estimado para $d=0.3404$ y la serie fraccionadamente diferenciada no tiene correlación sustancial. Sin embargo, la función 'ar' fija un modelo $AR(26)$ a la serie, con un error estándar estimado de 2.10 el cual es ligeramente menor que 2.13 dado para el modelo $FARIMA$. Existe una autocrrelación notable en la serie de residuos cuadrados del modelo $AR(26)$, que es una característica de las series de tiempo con estallidos de actividad y que podemos modelar como un proceso $GARCH$.</div>\EndKnitrBlock{example}
+
+
+```r
+LAN=read.table("data/LAN.txt", header = T)
+bits=LAN$bits
+# Transformacion log(bits+1)
+bits.t=log(bits+1)
+# Histogramas
+par(mfrow=c(1,2))
+hist(bits)
+hist(bits.t)
+```
+
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-72-1.svg)<!-- -->
+
+```r
+# Ajuste de un modelo FARIMA con d=48
+bits.frac=fracdiff(bits.t,nar=48)
+summary(bits.frac)
+```
+
+```
+## 
+## Call:
+##   fracdiff(x = bits.t, nar = 48) 
+## 
+## Coefficients:
+##       Estimate Std. Error z value Pr(>|z|)    
+## d     0.340481   0.023313   14.60  < 2e-16 ***
+## ar1  -0.014851   0.027578   -0.54  0.59023    
+## ar2  -0.096160   0.019795   -4.86  1.2e-06 ***
+## ar3  -0.049305   0.017644   -2.79  0.00520 ** 
+## ar4   0.016784   0.017196    0.98  0.32905    
+## ar5  -0.010652   0.016283   -0.65  0.51298    
+## ar6  -0.023007   0.016158   -1.42  0.15449    
+## ar7   0.011378   0.016358    0.70  0.48673    
+## ar8   0.056854   0.016261    3.50  0.00047 ***
+## ar9   0.040561   0.016408    2.47  0.01344 *  
+## ar10  0.048990   0.016267    3.01  0.00260 ** 
+## ar11  0.056088   0.016165    3.47  0.00052 ***
+## ar12  0.014485   0.016180    0.90  0.37063    
+## ar13  0.049191   0.016206    3.04  0.00240 ** 
+## ar14  0.046020   0.016066    2.86  0.00418 ** 
+## ar15  0.039909   0.016050    2.49  0.01290 *  
+## ar16 -0.003971   0.016152   -0.25  0.80582    
+## ar17 -0.033314   0.016088   -2.07  0.03839 *  
+## ar18  0.000339   0.016048    0.02  0.98317    
+## ar19  0.000302   0.016076    0.02  0.98500    
+## ar20  0.002580   0.016081    0.16  0.87252    
+## ar21 -0.010736   0.016191   -0.66  0.50726    
+## ar22 -0.000402   0.015954   -0.03  0.97990    
+## ar23 -0.061302   0.015982   -3.84  0.00013 ***
+## ar24  0.018400   0.016115    1.14  0.25354    
+## ar25 -0.024523   0.016001   -1.53  0.12538    
+## ar26  0.032997   0.016021    2.06  0.03944 *  
+## ar27 -0.006242   0.016016   -0.39  0.69672    
+## ar28  0.016139   0.016048    1.01  0.31458    
+## ar29 -0.017378   0.016113   -1.08  0.28081    
+## ar30  0.021073   0.016053    1.31  0.18929    
+## ar31 -0.026200   0.016050   -1.63  0.10260    
+## ar32 -0.001268   0.015932   -0.08  0.93655    
+## ar33 -0.016156   0.016369   -0.99  0.32363    
+## ar34 -0.007927   0.016067   -0.49  0.62175    
+## ar35 -0.043696   0.015949   -2.74  0.00615 ** 
+## ar36 -0.016645   0.016103   -1.03  0.30130    
+## ar37 -0.008787   0.016008   -0.55  0.58308    
+## ar38 -0.017836   0.016063   -1.11  0.26685    
+## ar39 -0.020635   0.016039   -1.29  0.19826    
+## ar40 -0.015276   0.016044   -0.95  0.34102    
+## ar41 -0.022284   0.016026   -1.39  0.16438    
+## ar42  0.035214   0.016053    2.19  0.02826 *  
+## ar43 -0.018629   0.016031   -1.16  0.24520    
+## ar44 -0.010474   0.016073   -0.65  0.51463    
+## ar45  0.005752   0.016119    0.36  0.72119    
+## ar46 -0.048927   0.016067   -3.05  0.00233 ** 
+## ar47 -0.006103   0.016059   -0.38  0.70393    
+## ar48 -0.014164   0.016066   -0.88  0.37801    
+## ---
+## Signif. codes:  
+## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## sigma[eps] = 2.073 
+## [d.tol = 0.0001221, M = 100, h = 9.055e-05]
+## Log likelihood: -8.59e+03 ==> AIC = 17285 [50 deg.freedom]
+```
+
+```r
+# simulacion del proceso FARIMA
+bits.sim=fracdiff.sim(length(bits),ar=bits.frac$ar, d=bits.frac$d)
+bits.ts=bits.sim$series
+# Modelo AR(26) para conseguir los residuales
+bits.ar=ar(bits.ts,order.max = 26)
+bits.resid=bits.ar$resid
+# Graficos
+par(mfrow=c(3,2))
+plot(bits.t, type="l", main = "Serie de tiempo transformada, log(bits+1)", xlab = "Tiempo", ylab = "x")
+acf(bits.t, lag.max = 50, main="ACF de la serie log(bits+1)")
+plot(bits.ts, type = "l", main = "Serie fraccionada diferenciada de log(bits+1)")
+acf(bits.ts, main="ACF de la serie fraccionada diferenciada de log(bits+1)")
+acf(bits.resid[27:4000], main="ACF de los residuales ")
+acf(bits.resid[27:4000]^2, main="ACF de los residuales cuadrado")
+```
+
+![](Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-72-2.svg)<!-- -->
+
+----
+
+\BeginKnitrBlock{example}\iffalse{-91-84-97-115-97-32-100-101-32-112-114-101-115-116-97-109-111-32-98-97-110-99-97-114-105-111-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-tasa-prestamo-bancario"><strong>(\#exm:ejem-tasa-prestamo-bancario)  \iffalse (Tasa de prestamo bancario) \fi{} </strong></span>La serie de tiempo es graficada en la parte superior de la figura \@ref(fig:fig-tasa-prestamo-bancario) y parece que  podría ser la realización de un paseo al azar. También tiene un período de alta variabilidad. El correlograma muestras correlaciones muy altas con pasos pequeños y correlaciones sustanciales de hasta paso 28. Ni un paseo al azar ni un modelo con tendencia son modelos adecuados para simulación a largo plazo de las tasa de interés en una economía estable. En lugar de ello ajustamos un modelo $FARIMA$ que tiene la ventaja de ser estacionario.
+
+La estimación de $d$ es casi 0, lo que implica que el decaimiento de las correlaciones a partir de un valor  inicial alto es más rápido que en el caso de un modelo $FARIMA$. El modelo $AR$ ajustado tiene un orden de 17 y no es del todo satisfactorio debido a la correlación estadísticamente significativa en el paso 1 de la serie de residuales. Las autocorrelaciones sustanciales de los residuales cuadrados del modelo $AR(17)$ sugieren que un modelo que se ajusta mejor es un modelo $GARCH$.</div>\EndKnitrBlock{example}
+
+
+```r
+TPB=read.table("data/mprime.txt",header = T)
+tasa=TPB$Interest
+# Graficos
+par(mfrow=c(2,1))
+plot(tasa, type = "l", xlab = "Tiempo", ylab="Tasa (%)", main="Serie de tiempo de las tasa de prestamos bancario")
+acf(tasa,lag.max = 40, main="ACF tasa de prestamo bancario")
+```
+
+![](Serie-de-Tiempo-en-R_files/figure-html/fig-tasa-prestamo-bancario-1.svg)<!-- -->
+
+```r
+# Ajuste de un modelo FARIMA con d=30
+tasa.frac=fracdiff(tasa,nar=30)
+```
+
+```
+## Warning: unable to compute correlation matrix; maybe
+## change 'h'
+```
+
+```r
+summary(tasa.frac)
+```
+
+```
+## 
+## Call:
+##   fracdiff(x = tasa, nar = 30) 
+## 
+## *** Warning during (fdcov) fit: unable to compute correlation matrix; maybe change 'h'
+## 
+## Coefficients:
+##      Estimate
+## d        0.00
+## ar1      1.67
+## ar2     -0.92
+## ar3      0.25
+## ar4     -0.18
+## ar5      0.46
+## ar6     -0.63
+## ar7      0.48
+## ar8     -0.02
+## ar9     -0.03
+## ar10    -0.21
+## ar11     0.20
+## ar12    -0.17
+## ar13     0.19
+## ar14     0.03
+## ar15    -0.24
+## ar16     0.24
+## ar17    -0.17
+## ar18     0.03
+## ar19    -0.01
+## ar20     0.05
+## ar21    -0.03
+## ar22    -0.06
+## ar23     0.06
+## ar24    -0.01
+## ar25     0.02
+## ar26     0.03
+## ar27     0.00
+## ar28    -0.06
+## ar29     0.05
+## ar30    -0.02
+## sigma[eps] = 0.3152 
+## [d.tol = 0.0001221, M = 100, h = 1.981e-06]
+## Log likelihood: -187 ==> AIC = 438 [32 deg.freedom]
+```
+
+```r
+# simulacion del proceso FARIMA
+tasa.sim=fracdiff.sim(length(tasa),ar=tasa.frac$ar, d=tasa.frac$d)
+tasa.ts=tasa.sim$series
+# Modelo AR(17) para conseguir los residuales
+tasa.ar=ar(tasa.ts,order.max = 17)
+tasa.resid=tasa.ar$resid
+```
+
+
+```r
+par(mfrow=c(3,2))
+plot(tasa, type = "l", xlab="Tiempo", ylab="Tasa (%)",
+     main="Serie de tiempo de las tasa de prestamos bancario")
+acf(tasa,lag.max = 40, main="ACF tasa de prestamo bancario")
+plot(tasa.ts, type = "l", xlab="Tiempo", main = "Serie fraccionada diferenciada")
+acf(tasa.ts, main="ACF de la serie fraccionada diferenciada")
+acf(tasa.resid[18:707], main="ACF de los residuales ")
+acf(tasa.resid[18:707]^2, main="ACF de los residuales cuadrado")
+```
+
+<div class="figure">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-73-1.svg" alt="Serie de tiempo de tasa de prestamos bancario (superior izquierda); ACF de la tasa de prestamo bancario (superior derecha); Serie con un proceso FARIMA(30,0.00012,0) (medio izquierda); ACF de la serie fraccionada diferenciada (medio derecha); ACF de los residuales (inferior izquierda); ACF de los residuales cuadrados (inferior derecha)."  />
+<p class="caption">(\#fig:unnamed-chunk-73)Serie de tiempo de tasa de prestamos bancario (superior izquierda); ACF de la tasa de prestamo bancario (superior derecha); Serie con un proceso FARIMA(30,0.00012,0) (medio izquierda); ACF de la serie fraccionada diferenciada (medio derecha); ACF de los residuales (inferior izquierda); ACF de los residuales cuadrados (inferior derecha).</p>
+</div>
+
+----
+
+En el capítulo [Modelos ARCH y GARCH] retomaremos estos 3 ejemplos y realizaremos los ajustes y simulación con modelos $GARCH$, de manera de observar las diferencias y lo apropiado de dichos modelos a estos datos.
+
+### Simulación
+
+Los modelos FARIMA son importantes para la simulación porque los modelos de memoria corta, que ignoran la evidencia de memoria larga, pueden llevar a una sobreestimación seria del rendimiento del sistema. Esto se ha demostrado de forma convincente en las escalas de los enrutadores de las redes de telecomunicaciones.
+
+Los modelos realistas para la simulación normalmente necesitarán incorporar modelos GARCH y distribuciones de cola pesada para la serie de ruido blanco. El procedimiento es ajustar un modelo GARCH a los residuos del modelo AR ajustado a las series fraccionadamente diferenciadas. Entonces podemos ajustar los residuos del modelo GARCH y una distribución de probabilidad adecuada a los mismos. Una vez fijados los modelos, procedemos de la siguiente manera: generamos números aleatorios a partir del modelo GARCH de probabilidad ajustado de lo residuos y realizamos la simulación.
+
+## Modelos no estacionarios
+
+Los modelos que hasta ahora hemos considerado están basados en la suposición de que son procesos estacionarios. Esta suposición implica que la media, la varianza y la función de autocovaraizna del proceso son invariantes bajo traslaciones respecto al tiempo, es decir, la media y la varianza son constantes y la función de autocovarianza solo depende de los retardos. En esta sección trabajaremos con modelos no estacionarios, dado que muchas series de tiempo económicas y financieras son no-estacionarias, y en particular suelen presentar variaciones en sus niveles a lo largo del tiempo y en algunos casos en la varianza.
+
+Vamos a ver dos casos:
+
+1) No estacionaridad en la varianza
+
+2) No estacionaridad en la media
+
+También decribiremos brevemente el test de raíz unitaria.
+
+### No estacionarios en Varianza
+
+Cuando observamos una serie a lo largo del tiempo, con frecuencia ocurre que la varianza suele presentar una tendencia. Para ver esto, asumiremos primeramente que podemos descomponer una serie de tiempo en dos componentes; una componente no estocástica, su media, y una componente aleatoria, de modo que si $x_t$ es nuestra serie de tiempo, entonces
+
+\begin{equation}
+x_t = \mu_t+\varepsilon_t
+(\#eq:eq-descomposicion-serie-dos-terminos)
+\end{equation}
+
+y supondremos además que la varianza de los errores, $\varepsilon_t$ está  relacionada de manera funcional con la media $\mu_t$ por medio de $Var(x_t)=Var(\varepsilon_t)=\mu_th^2\sigma^2$, donde $h$ es una función conocida. Nuestro objetivo ahora es hallar una transformación, digamos $g(x_t)$, que estabilice la varianza, es decir, queremos que la varianza de $y_t=g(x_t)$ sea constante. Una transformación general y práctica para selecccionar $g(x_t)$ fue definida por Box y Cox (1964), la misma se define como
+
+\begin{equation}
+g(x_t) = \begin{cases}
+          \frac{x_t^{\lambda}-1}{\lambda},& \lambda\neq0\\
+          \ln(x_t),& \lambda=0
+        \end{cases}
+(\#eq:eq-transformacion-box-cox)
+\end{equation}
+
+Meidante la regla de L'Hopital podemos demostrar que 
+
+$$\lim_{\lambda\to0}\frac{x_t^{\lambda}-1}{\lambda}=\log(x_t).$$
+Así mismo, para contemplar el caso de $x_t$ negativos, se define
+
+\begin{equation}
+g(x_t) = \begin{cases}
+          \frac{(x_t+\lambda_2)^{\lambda_1}-1}{\lambda_1},& \lambda_1\neq0\\
+          \ln(x_t+\lambda_2),& \lambda_1=0
+        \end{cases}
+(\#eq:eq-transformacion-box-cox-general)
+\end{equation}
+
+Donde $\lambda_2$ se elige de tal forma que $x_t+\lambda_2>0$ para todo $t$. De manera que sólo veremos a $\lambda_1$ como parámetro de estas transformaciones. Esta familia en continua en $\lambda$ y monótona creciente para cada $\lambda$, es decir que el orden original entre las $x_t$ se preserva; si $x_1>x_2$, entonces $g(x_1)>g(x_2)$.
+
+### No estacionarios en Media
+
+Consideremos nuevamente la ecuacion \@ref(eq:eq-descomposicion-serie-dos-terminos) y supongamos ahora que $\mu_t$ no es constante. Este tipo de series ha sidio ampliamente estudiado con una amplia variedad de formas para modelar series de tiempo con estas características. Supongamos que la media es un término de *tendencia*, el cual está expresado como un polinomio de orden $d$, en el tiempo y que el término de error $\varepsilon_t$ es un proceso estocástico, estacinario de media cero. Esto es siempre posible si tomamos en cuenta el teorema de descomposición de Wold para proceso no-estacionarios. De esta manera, se tiene que el proceso lo podemos escribir como
+
+\begin{equation}
+x_t = \mu_t+\varepsilon_t = \sum_{j=1}^d\beta_jt^j+\psi(B)\varepsilon_t
+(\#eq:eq-modelo-media-tendencia)
+\end{equation}
+
+Dado que $\mathbb{E}(\varepsilon_t) = \psi(B)\mathbb{E}(\varepsilon_t)=0$, entonces $\mathbb{E}(x_t)=\mathbb{E}(\mu_t)=\sum_{j=1}^d\beta_jt^j$, y dado que los coeficientes $\beta_j$ permanecen constantes en el tiempo, dicha tendencia la consideramos un término *determinista*. Así pues, este tipo de tendencia las podemos remover aplicando una transformación simple. Por ejemplo, consideremos $d=1$, en la ecuación \@ref(eq:eq-descomposicion-serie-dos-terminos), entonces tenemos una *tendencia lineal*, supongamos por simplicidad que $\varepsilon_t$ es un ruido blanco, entonces
+
+\begin{equation}
+x_t = \beta_0+\beta_1t+\varepsilon_t
+(\#eq:eq-modelo-serie-tendencia-lineal)
+\end{equation}
+
+Si consideramos una diferenciación de orden 1 de $x_t$, entonces
+
+\begin{eqnarray*}
+y_t = x_t-x_{t-1} &=& (1-B)x_t = \nabla x_t\\
+                  &=& \beta_1+\nabla\varepsilon_t
+\end{eqnarray*}
+
+donde $\nabla=(1-B)$ es el operador de diferencias de primer orden definido en \@ref(eq:eq-operador-diferencia). De esta forma, el nuevo proceso $y_t$ es ujn proceso $MA(1)$ estacionario, dado que $\mathbb{E}(y_t)=\beta_1$, sin embargo no es invertible. 
+
+En general, si la tendencia es determinada por un polinomio de orden $d$, y $\varepsilon_t$ está caracterizado por un proceso $ARMA$
+
+$$\phi(B)x_t = \theta(B)\varepsilon_t,$$
+
+entonces consideramos las diferencias de orden $d$, $\nabla^dx_t$, obteniendo el nuevo proceso
+
+$$y_t = \nabla^dx_t = \theta_0+\frac{\nabla^d\theta(B)}{\phi(B)}\varepsilon_t,$$
+
+donde $\theta_0=d!\beta_d$. Así, la parte $MA$ del proceso generado por $\nabla^dx_t$ tendrá $d$ raíces unitarias.
+
+### Test de raíz unitaria
+
+En esta sección demostraremos la presencia de una o más raíces unitarias en el polinomio autorregresivo de orden $p$, $\phi(B)$ en el modelo 
+
+$$\phi(B)x_t = \theta_0+\theta(B)\varepsilon_t,$$
+donde $x_0$ se asume fijo y $\theta_0=\phi(1)\mu$ con $\mu$ la media de $x_t$. Usaremos el test de Dickey-Fuller (ADF). Este test contrasta la hipótesis nula de existencia de una raíz unitaria contra la alternativa de que no existen raíces unitarias. Las hipóstesis son:
+
+\begin{eqnarray*}
+H_0 &:& \beta=1\\
+H_a &:& \beta<1
+\end{eqnarray*}
+
+El estadístico de prueba es:
+
+$$T_{DF} = ADF-test = \frac{\hat{\beta}-1}{\sqrt{Var(\hat{\beta})}}$$
+El cual se aplica sobre la regresión
+
+\begin{equation}
+x_t = c_t+\beta x_{t-1}+\sum_{i=1}^{p-1}\phi_i\delta x_{t-i}+e_t
+(\#eq:eq-modelo-regresion-ADF)
+\end{equation}
+
+donde $c_t$ es una función determinista del tiempo $t$ y $\delta x_j=x_j-x_{j-1}$ es la serie diferenciada de $x_t$, el valor $p$ lo fijamos de modo que el error $e_t$ sea correlacionado serialmente. El término de error también se supone homocedástico. En la práctica, $c_t$ puede ser cero, una constane $\neq0$, o incluso $c_t=w_0+w_1t$, $\hat{\beta}$ es la estimación por mínimos cuadrados de $\beta$.
+
+La determinación o especificación del retardo $p$, es un punto importante a la hora de aplicar el test de Dickey-Fuller. Si seleccionamos un $p$ muy pequeño, enotnces la correlación restante producirá un sesgo en el test. Por otra parte, si escogemos un $p$ muy grande, entonces se verá afectada la potencia del test. Ng y Perron (1995) propusieron el siguiente procedimiento para la selección de $p$; para garantizar la estabilidad en el tamaño del test y pérdida mínima en la potencia.
+
+1) Establecer una cota superior para $p$ denotada por $p_{max}$.
+
+2) Estimar la regresión ADF con $p=p_{max}$.
+
+3) Si el valor absoluto del estadístico $T_{DF}$ para el test de la última diferencia tomada es mayor que 1.6, fijamos $p=p_{max}$ y aplicamos el test de raíz unitaria.
+
+4) Si no es así, hacemos $p=p_{max}-1$ y repetimos los pasos 2 y 3.
+
+Una regla útil para determinar $p_{max}$ es 
+
+$$p_{max} = \left[12\left(\frac{T}{100}\right)^{1/4}\right]$$
+
+donde $[\cdot]$ denota la parte entera y $T$ es el tamaño de la muestra. Esta selección de $p_{max}$ permite que este aumente cuando el tamaño de la muestra aumenta.
+
+## Modelos de regresión
+
+Las técnicas de regresión de series de tiempo se aplican con mucha frecuencia en el análisis de datos financieros, en la estimación y en la validación de modelos de precios de activos y rentabilidades. En finanzas, la capacidad de predicción de los rendimientos de los activos haciendo uso de tasas de valoración como dividendo/precio, ganancias/precio entre otras, generalmente se establecen mediante las técnicas de regresión de series de tiempo, y donde el modelo de regresión resultante es usado para la predicción de las rentabilidades futuras. Los modelos de regresión de series de tiempo tambi´en se utilizan para probar la eficiencia informativa de los mercados financieros. Sin embargo, es importante ser cuidadosos a la hora de aplicar este tipo de modelos, puesto que las propiedades de las series de tiempo de los datos puede influir en las propiedades de los valores estimados en la regresión y en la inferencia. En términos generales, estos modelos son apropiados para el análisis de series estacionarias. Para el caso de las series con tendencia no-estacionarias puede ser o no apropiadas, dependiendo entonces de la naturaleza del componente de tendencia.
+
+Consideremos el *modelo de regresión de series de tiempo*
+
+\begin{equation}
+y_t=\beta_0+\beta_1x_{1t}+\cdots+\beta_kx_{kt}+\varepsilon_t = x_t^t\vec{\beta}+\varepsilon_t, t=1,\ldots,T
+(\#eq:eq-modelo-regresion-ST)
+\end{equation}
+
+donde $x_t=(1,x_{1t},\ldots,x_{kt})^t$ es un vector de variables explicativas de dimensión $(k+1)\times1$, $\vec{\beta}=(\beta_0,\beta_1,\ldots,\beta_k)^t$ un vector de coeficientes de dimensión $(k+1)\times1$ y $\varepsilon_t$ es un término de error aleatorio.
+
+El modelo \@ref(eq:eq-modelo-regresion-ST) satisface las siguietnes suposiciones:
+
+1) El modelo está especificado correctamente.
+
+2) $\{y_t,x_t\}$ es estacionario y ergódico conjuntamente.
+
+3) Las variables regresoras $x_t$ son tales que $\mathbb{E}(x_{is}\varepsilon_t)=0$ para todo $s\leq t, i = 1,\ldots,k$.
+
+4) $\mathbb{E}(x_tx_t^t)=\Sigma_{xx}$ es de rango $k+1$.
+
+5) $\{x_t\varepsilon\}$ es un proceso no correlacionado con matriz de covarianza $(k+1)\times(k+1)$ finita $\mathbb{E}(\varepsilon_t^2x_tx_t^t)=S=\sigma^2\Sigma_{xx}$.
+
+**Observaciones:**
+
+1) La segunda suposición descarta los regresores con tendencia.
+
+2) La trcera suposición descarta los regresores endógenos pero permite variables y retardos dependientes.
+
+3) La suposición (4) evita regresores redundantes o multicolinealidad exacta.
+
+4) La quinta suposición implica que el término de error es un proceso no correlacionado serialmente con varianza incondicional $\sigma^2$ constante.
+
+5) Los regresores $x_t$ son aleatorios y el error $\varepsilon_t$ no se asume gaussiano.
+
+----
+
+La estimación del modelo se obtiene por *minimos cuadrados ordinarios* y está basada en la suma de los residuso al cuadrado
+
+$$SSR(\vec{\beta}) = \sum_{t=1}^T(y_t-x_t^t\vec{\beta})^2 = \sum_{t=1}^T\varepsilon_t^2,$$
+
+obteniéndose así
+
+$$y_t=x_t^t\hat{\mathbf{\beta}}+\hat{\varepsilon}_t,\hspace{0.5cm} t=1,\ldots,T,$$
+donde
+
+$$\hat{\mathbf{\beta}}=(X^tX)^{-1}X^ty = \left[\sum_{t=1}^Tx_tx_t^t\right]^{-1}\sum_{t=1}^Tx_ty_t$$
+y $\hat{\varepsilon}_t=y_t-\hat{y}_t=y_t-x_t^t\hat{\mathbf{\beta}}$. La varianza del error la estimamos por $\sigma^2=\hat{\varepsilon}^t\hat{\varepsilon}/(T-k-1)$.
+
+La relación entre dos series de tiempo resulta de gran interés en muchas aplicaciones. Veamos un ejemplo de dos series de tipos de interés con diferentes plazos de vencimiento y como ajustar una regresión lineal para ambas series.
+
+\BeginKnitrBlock{example}\iffalse{-91-77-101-114-99-97-100-111-32-73-110-116-101-114-98-97-110-99-97-114-105-111-32-69-117-114-111-112-101-111-32-40-69-85-82-73-66-79-82-41-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-euribor-regresion"><strong>(\#exm:ejem-euribor-regresion)  \iffalse (Mercado Interbancario Europeo (EURIBOR)) \fi{} </strong></span>Analicemos el modelo que considera la relación entre dos series de tipos de interés, con frecuencia diaria, del Mercado Intercambiario Europeo (EURIBOR):
+  
+- $r_{3t}$: serie de tipo de interés con plazo de vencimiento a 3 meses
+- $r_{6t}$: serie de tipo de interés con plazo de vencimiento a 6 meses
+
+Ambas series tienen 1532 observaciones. Las muestras fueron tomadas del 07/11/2012 al 06/11/2018. Los archivos de datos son "EURIBOR-3m.xlsx" y "EURIBOR-6m.xlsx". La primera columna es la fecha, la segunda el precio y la tercera columna la diferencia en porcentaje con relación al día anterior.
+
+Para estas series podemos considerar el siguiente modelo de regresión
+
+$$r_{6t}=\beta_0+\beta_1r_{3t}+\varepsilon,$$
+  
+donde $r_{6t}$ y $r_{3t}$ son las series ya descritas y $\varepsilon_t$ el término de error.
+
+La gráfica \@ref(fig:fig-euribor-interes) muestra las dos series de tipo de interés, en azul con vencimiento a 3 meses yen rojo con vencimiento a 6 meses.</div>\EndKnitrBlock{example}
+
+
+```r
+# Series EURIBOR a 3 y 6 meses de plazo
+r3t=read.table("data/EURIBOR-3m.txt", header = F)
+r6t=read.table("data/EURIBOR-6m.txt", header = F)
+# Grafico
+plot(r3t$V2, type = "l", col="blue", ylab = "Precio", xlab = "tiempo", ylim=c(-0.35,0.5))
+lines(r6t$V2, col="red")
+```
+
+![](Serie-de-Tiempo-en-R_files/figure-html/fig-euribor-interes-1.svg)<!-- -->
+
+El modelo resultante del ajuste es el siguiente
+
+$$r_{6t}=0.0919+1.0608r_{3t}+\varepsilon_t,\hspace{0.5cm}\hat{\sigma}_{\varepsilon}=0.0204,$$
+
+con $R^2=0.9937$. En la tabla siguiente mostramos un resumen del modelo
+
+|   | Estimado  | Error. std  | t-valor  |  $P(>|t|)$ |
+|---|:-:|:-:|:-:|:-:|
+| $\beta_0$  |  0.0919 |  0.00054 | 168.8  |  $<2e^{-16}$ |
+| $\beta_1$  |  1.0608 |  0.00215 | 491.8  |  $<2e^{-16}$ |
+
+El modelo confirma la correlación alta que existe entre las dos series, sin embargo, observando los residuales del modelo notamos que el modelo ajustado es inadecuado para estas dos series. Las instrucciones en R para el ajuste de regresión son las siguientes:
+
+
+```r
+# Regresion
+yt=lm(r6t$V2~r3t$V2, data = r3t[,2:3])
+summary(yt)
+```
+
+```
+## 
+## Call:
+## lm(formula = r6t$V2 ~ r3t$V2, data = r3t[, 2:3])
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.03335 -0.01588 -0.00631  0.01512  0.07648 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 0.091959   0.000545     169   <2e-16 ***
+## r3t$V2      1.060851   0.002157     492   <2e-16 ***
+## ---
+## Signif. codes:  
+## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.0204 on 1530 degrees of freedom
+## Multiple R-squared:  0.994,	Adjusted R-squared:  0.994 
+## F-statistic: 2.42e+05 on 1 and 1530 DF,  p-value: <2e-16
+```
+
+
+```r
+# Residuales
+m<-matrix(c(1,2,3,3),2,2,byrow=TRUE)
+layout(m)
+plot(yt$residuals, type = "l", ylab = "Residuales", xlab = "tiempo")
+qqnorm(yt$residuals);qqline(yt$residuals, col=2)
+acf(yt$residuals, main="ACF de los residuales")
+```
+
+![](Serie-de-Tiempo-en-R_files/figure-html/fig-ACF-euribor-residuales-1.svg)<!-- -->
+
+En la parte inferior de la figura \@ref(fig:fig-ACF-euribor-residuales) podemos observar la ACF de los residuales, la cual es significativa con un decaimiento bastante lento, mostrando un patrón similar a una serie con raíces unitarias.
+
+El comportamiento de los residuos sugiere que existen diferencias bien marcadas entre ambas series. Tomando en cuenta el comportamiento no-estacionario de ambas series de tipos de interés y de los residuos obtenidos del modelo de regresión previo, vemos necesario considerar la diferenciación para las series de EURIBOR, teniendo dos nuevas series.
+
+\begin{eqnarray*}
+  d_{3t} &=& r_{3t}-r_{3,t-1} = (1-B)r_{3t}\text{, con }t\geq2\\
+  d_{6t} &=& r_{6t}-r_{6,t-1} = (1-B)r_{6t}\text{, con }t\geq2
+\end{eqnarray*}
+
+y el modelo de regresión será
+
+$$d_{6t}=\beta_0'+\beta_1'd_{3t}+\varepsilon_t'$$
+
+En la figura \@ref(fig:fig-euribor-diferencias) se muestran las series diferenciadas. Al realizar el ajuste del modelo obtenemos lo siguiente:
+
+$$d_{6t} = 0.00024+0.4877d_{3t}+\varepsilon_t',\hspace{0.5cm}\hat{\sigma}_{\varepsilon}'=0.0021,$$
+
+con $R^2=0.3577$.
+
+
+```r
+# Diferencias
+d3t=diff(r3t$V2)
+d6t=diff(r6t$V2)
+# Grafico diff
+par(mfrow=c(2,1))
+plot(d3t, type = "l", ylab = "Diferencias", xlab = "tiempo")
+plot(d6t, type = "l", ylab = "Diferencias", xlab = "tiempo")
+```
+
+![](Serie-de-Tiempo-en-R_files/figure-html/fig-euribor-diferencias-1.svg)<!-- -->
+
+```r
+# Regresion diff
+data.diff=as.data.frame(cbind(d3t,diff(r3t$V3)))
+dyt=lm(d6t~d3t, data = data.diff)
+summary(dyt)
+```
+
+```
+## 
+## Call:
+## lm(formula = d6t ~ d3t, data = data.diff)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.016371 -0.001248 -0.000248  0.000752  0.021366 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 2.48e-04   5.44e-05    4.56  5.6e-06 ***
+## d3t         4.88e-01   1.67e-02   29.18  < 2e-16 ***
+## ---
+## Signif. codes:  
+## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.00212 on 1529 degrees of freedom
+## Multiple R-squared:  0.358,	Adjusted R-squared:  0.357 
+## F-statistic:  852 on 1 and 1529 DF,  p-value: <2e-16
+```
+
+```r
+# Residuales diff
+m<-matrix(c(1,2,3,3),2,2,byrow=TRUE)
+layout(m)
+plot(dyt$residuals, type = "l", ylab = "Residuales", xlab = "tiempo")
+qqnorm(dyt$residuals);qqline(dyt$residuals, col=2)
+acf(dyt$residuals, main="ACF de los residuales")
+```
+
+![](Serie-de-Tiempo-en-R_files/figure-html/fig-euribor-diferencias-2.svg)<!-- -->
+
+## Estimación consistente de la matriz de covarianza
+
+Bajo la suposición de que las estiamciones (de los coeficientes), mediante el método de mínimos cuadrados ordianrios, son consistentes, los métodos disponibles para obtener una estimación consistente de la matriz de covarianza de los coeficientes son:
+
+- Heterocedasticidad consistente (HC)
+
+- Heterocedasticidad y Autocorrelación consistente (HAC)
+
+El estimador de White es 
+
+\begin{equation}
+Cov(\hat{\beta})_{HC} = \left[\sum_{t=1}^Tx_tx_t^t\right]^{-1}\left[\sum_{t=1}^T\hat{\varepsilon}_tx_tx_t^t\right]\left[\sum_{t=1}^Tx_tx_t^t\right]^{-1}
+(\#eq:eq-estimador-White-HC)
+\end{equation}
+
+donde $\hat{\varepsilon}_t=y_t-x_t^t\hat{\beta}$ es el residuo estimado en el instante $t$. El estimador de Newey y West es 
+
+\begin{equation}
+Cov(\hat{\beta})_{HAC} = \left[\sum_{t=1}^Tx_tx_t^t\right]^{-1}\hat{C}_{HAC}\left[\sum_{t=1}^Tx_tx_t^t\right]^{-1}
+(\#eq:eq-estimador-Newey-West-HAC)
+\end{equation}
+
+donde
+
+$$\hat{C}_{HAC} = \sum_{t=1}^T\hat{\varepsilon}_t^2x_tx_t^t + \sum_{j=1}^lw_j\sum_{t=1}^T(x_t\hat{\varepsilon}_t\hat{\varepsilon}_{t-j}x_{t-j}^t+x_{t-j}\hat{\varepsilon}_{t-j}\hat{\varepsilon}_tx_t^t),$$
+donde $l$ es un parámetro de truncamiento, el cual se sugiere ser seleccionado como parte entera de $4(T/100)^{2/9}$ y $w_j$ es la función de pesos de Bartlett definida por 
+
+$$w_j = 1-\frac{j}{l+1}.$$
+
+
+
+
+<!--chapter:end:307-Modelos-estacionales-no-estacionarios.Rmd-->
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 
 # Análisis Espectral
 
@@ -7178,6 +8597,7 @@ Los comandos en R para calcular los periodogramas y generar los gráficos son lo
 
 
 ```r
+<<<<<<< HEAD
 #soi=scan('data/soi.txt')
 #rec=scan('data/recruit.txt')
 #par(mfrow=c(2,1)) 
@@ -7189,16 +8609,68 @@ Los comandos en R para calcular los periodogramas y generar los gráficos son lo
 #abline(v=1/48,lty='dotted')
 ```
 
+=======
+soi=scan('data/soi.txt')
+rec=scan('data/recruit.txt')
+par(mfrow=c(2,1)) 
+soi.per=spec.pgram(soi,taper=0,log='no')
+abline(v=1/12,lty='dotted') 
+abline(v=1/48,lty='dotted') 
+rec.per=spec.pgram(rec,taper=0,log='no') 
+abline(v=1/12,lty='dotted') 
+abline(v=1/48,lty='dotted')
+```
+
+<div class="figure">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-periodograma-SOI-1.svg" alt="Periodograma de SOI y Reclutamiento (nuevos peces)"  />
+<p class="caption">(\#fig:fig-periodograma-SOI)Periodograma de SOI y Reclutamiento (nuevos peces)</p>
+</div>
+
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 Los intervalos de confianza de la serie SOI para el ciclo anual $w=1/12=40/480$ y los posibles ciclos de cuatro años de El Niño con $w=1/48=10/480$ se pueden calcular en Matlab y R con los siguientes comandos:
 
 
 ```r
+<<<<<<< HEAD
 #li=qchisq(0.975,2) 
 #ls=qchisq(0.025,2) 
 #2*soi.per$spec[10]/li
 #2*soi.per$spec[10]/ls
 #2*soi.per$spec[40]/li 
 #2*soi.per$spec[40]/ls
+=======
+li=qchisq(0.975,2) 
+ls=qchisq(0.025,2) 
+2*soi.per$spec[10]/li
+```
+
+```
+## [1] 0.1748
+```
+
+```r
+2*soi.per$spec[10]/ls
+```
+
+```
+## [1] 25.47
+```
+
+```r
+2*soi.per$spec[40]/li 
+```
+
+```
+## [1] 3.163
+```
+
+```r
+2*soi.per$spec[40]/ls
+```
+
+```
+## [1] 460.8
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ```
 
 ---
@@ -7285,7 +8757,14 @@ Podemos realizar también una prueba de hipótesis relativa a la igualdad del es
 
 \BeginKnitrBlock{example}\iffalse{-91-80-101-114-105-111-100-111-103-114-97-109-97-32-115-117-97-118-105-122-97-100-111-32-100-101-32-108-97-115-32-115-101-114-105-101-115-32-83-79-73-32-121-32-114-101-99-108-117-116-97-109-105-101-110-116-111-32-40-110-117-101-118-111-115-32-112-101-99-101-115-41-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-periodograma-suavizado-SOI"><strong>(\#exm:ejem-periodograma-suavizado-SOI)  \iffalse (Periodograma suavizado de las series SOI y reclutamiento (nuevos peces)) \fi{} </strong></span>En la Figura \@ref(fig:fig-periodograma-SOI) graficamos los periodogramas para las series SOI y Reclutamiento (nuevos peces). En la gráfica se puede notar una frecuencia baja en el efecto El Niño, lo que sugiere que un suavizado nos permitirá identificar las frecuencias dominantes sobre todos los periodos. La elección del valor de $L=9$ luce razonable para el suavizado. El ancho de banda en este caso es $B_w=9/480=0.01875$ ciclos por meses para el espectro estimado. La Figura \@ref(fig:fig-periodograma-suavizado-SOI) muestra los periodogramas suavizados de ambas series. Allí se puede notar, (líneas punteadas) las cuatro frecuencias dominantes, estas son $\omega_j=1/12,2/12,3/12$ y $1/48$. También puede observar el ancho de banda que es $B_w=0.00541$.</div>\EndKnitrBlock{example}
 
+<<<<<<< HEAD
 
+=======
+<div class="figure" style="text-align: center">
+<img src="images/ejemplo4p10.png" alt="Periodograma suavizado de las series SOI y Reclutamiento"  />
+<p class="caption">(\#fig:fig-periodograma-suavizado-SOI)Periodograma suavizado de las series SOI y Reclutamiento</p>
+</div>
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 
 ---
 
@@ -7293,6 +8772,7 @@ Podemos realizar también una prueba de hipótesis relativa a la igualdad del es
 
 
 ```r
+<<<<<<< HEAD
 # SP=matrix(scan("data/station14401.txt"), byrow=TRUE, ncol=2)
 # m<-matrix(c(1,1:3),2,2,byrow=TRUE)
 # layout(m)
@@ -7301,12 +8781,28 @@ Podemos realizar también una prueba de hipótesis relativa a la igualdad del es
 # I2=spectrum(SP[,2],log="no", main="Periodograma estacion 144")
 ```
 
+=======
+SP=matrix(scan("data/station14401.txt"), byrow=TRUE, ncol=2)
+m<-matrix(c(1,1:3),2,2,byrow=TRUE)
+layout(m)
+plot(SP[,1]/0.78,SP[,2],type="l", xlab="Tiempo (seg)",ylab="Alturas (m)", main="Altura de olas, Estacion 431, St. Petersburg, FL")
+I1=spectrum(SP[,2],spans=3,log="no", main="Periodograma suavizado estacion 144")
+I2=spectrum(SP[,2],log="no", main="Periodograma estacion 144")
+```
+
+<div class="figure">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-periodograma-altura-olas-1.svg" alt="Periodograma para las alturas de olas, Estación 144, St. Petersburg, FL."  />
+<p class="caption">(\#fig:fig-periodograma-altura-olas)Periodograma para las alturas de olas, Estación 144, St. Petersburg, FL.</p>
+</div>
+
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ---
 
 \BeginKnitrBlock{example}\iffalse{-91-80-101-114-105-111-100-111-103-114-97-109-97-115-32-112-97-114-97-32-108-97-115-32-115-101-114-105-101-115-32-100-101-32-84-101-114-114-101-109-111-116-111-115-32-121-32-69-120-112-108-111-115-105-111-110-101-115-93-}\fi{}<div class="example"><span class="example" id="exm:ejem-periodograma-terremoto-explosiones"><strong>(\#exm:ejem-periodograma-terremoto-explosiones)  \iffalse (Periodogramas para las series de Terremotos y Explosiones) \fi{} </strong></span>La Figura \@ref(fig:fig-periodograma-terremoto-explosiones) muestra el espectro calculado por separado de las dos fases del terremoto y explosión en la Figura 2.7 del capítulo 2.</div>\EndKnitrBlock{example}
 
 
 ```r
+<<<<<<< HEAD
 # x=matrix(scan("data/eq5exp6.txt"),ncol=2)
 # eqP=x[1:1024,1]; eqS=x[1025:2048,1]
 # exP=x[1:1024,2]; exS=x[1025:2048,2]
@@ -7317,6 +8813,23 @@ Podemos realizar también una prueba de hipótesis relativa a la igualdad del es
 # exSs=spectrum(exS, main="Espectro de explosiones (fase S)", log="no", xlim=c(0,0.25), ylim=c(0,0.4))
 ```
 
+=======
+x=matrix(scan("data/eq5exp6.txt"),ncol=2)
+eqP=x[1:1024,1]; eqS=x[1025:2048,1]
+exP=x[1:1024,2]; exS=x[1025:2048,2]
+par(mfrow=c(2,2))
+eqPs=spectrum(eqP, main="Espectro del sismo (fase P)", log="no", xlim=c(0,0.25), ylim=c(0,0.04))
+eqSs=spectrum(eqS, main="Espectro del sismo (fase S)", log="no", xlim=c(0,0.25), ylim=c(0,0.4))
+exPs=spectrum(exP, main="Espectro de explosiones (fase P)", log="no", xlim=c(0,0.25), ylim=c(0,0.04))
+exSs=spectrum(exS, main="Espectro de explosiones (fase S)", log="no", xlim=c(0,0.25), ylim=c(0,0.4))
+```
+
+<div class="figure">
+<img src="Serie-de-Tiempo-en-R_files/figure-html/fig-periodograma-terremoto-explosiones-1.svg" alt="Periodogramas para las series de Terremotos y Explosiones"  />
+<p class="caption">(\#fig:fig-periodograma-terremoto-explosiones)Periodogramas para las series de Terremotos y Explosiones</p>
+</div>
+
+>>>>>>> d29c4667e48a2762d89d8c516304a5bee625c8e4
 ---
 
 ## Procesos de Incremento Ortogonal sobre $[-\pi,\pi]$
