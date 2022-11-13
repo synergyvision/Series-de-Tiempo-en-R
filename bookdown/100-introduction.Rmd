@@ -286,7 +286,7 @@ A continuación mostramos dos series del EURIBOR. La primera es la evolución hi
 
 ```{r,fig.align = "center",fig.cap="Evolución anual del EURIBOR (1999-2018)"}
 EURIBORa<-read_excel("data/EURIBOR-anual.xlsx")
-plot(EURIBORa,type="l", col = "blue", xlab = "Periodo", 
+plot(EURIBORa$Año,EURIBORa$Índice,type="l", col = "blue", xlab = "Periodo", 
      main="Serie EURIBOR anual (1999-2018)")
 grid(col = "gray")
 ```

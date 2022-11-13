@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Series de Tiempo en R</title>
   <meta name="description" content="Series de Tiempo en R">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="Series de Tiempo en R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Synergy Vision">
 
 
-<meta name="date" content="2018-06-06">
+<meta name="date" content="2018-08-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -166,6 +166,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.2" data-path="modelos-ma.html"><a href="modelos-ma.html#identificacion-del-orden-de-un-ma"><i class="fa fa-check"></i><b>5.2</b> Identificación del orden de un MA</a></li>
 <li class="chapter" data-level="5.3" data-path="modelos-ma.html"><a href="modelos-ma.html#estimacion"><i class="fa fa-check"></i><b>5.3</b> Estimación</a></li>
 <li class="chapter" data-level="5.4" data-path="modelos-ma.html"><a href="modelos-ma.html#predicciones-usando-modelos-ma"><i class="fa fa-check"></i><b>5.4</b> Predicciones usando modelos MA</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="modelos-arma.html"><a href="modelos-arma.html"><i class="fa fa-check"></i><b>6</b> Modelos ARMA</a><ul>
+<li class="chapter" data-level="6.1" data-path="modelos-arma.html"><a href="modelos-arma.html#propiedades-de-los-modelos-armapq"><i class="fa fa-check"></i><b>6.1</b> Propiedades de los modelos ARMA(p,q)</a></li>
+<li class="chapter" data-level="6.2" data-path="modelos-arma.html"><a href="modelos-arma.html#ecuaciones-en-diferencias"><i class="fa fa-check"></i><b>6.2</b> Ecuaciones en Diferencias</a></li>
+<li class="chapter" data-level="6.3" data-path="modelos-arma.html"><a href="modelos-arma.html#la-densidad-espectral"><i class="fa fa-check"></i><b>6.3</b> La Densidad Espectral</a></li>
+<li class="chapter" data-level="6.4" data-path="modelos-arma.html"><a href="modelos-arma.html#periodograma-y-transformada-discreta-de-fourier"><i class="fa fa-check"></i><b>6.4</b> Periodograma y Transformada Discreta de Fourier</a></li>
+<li class="chapter" data-level="6.5" data-path="modelos-arma.html"><a href="modelos-arma.html#estimacion-espectral-no-parametrica"><i class="fa fa-check"></i><b>6.5</b> Estimación Espectral No-paramétrica</a></li>
+<li class="chapter" data-level="6.6" data-path="modelos-arma.html"><a href="modelos-arma.html#procesos-de-incremento-ortogonal-sobre--pipi"><i class="fa fa-check"></i><b>6.6</b> Procesos de Incremento Ortogonal sobre <span class="math inline">\([-\pi,\pi]\)</span></a></li>
+<li class="chapter" data-level="6.7" data-path="modelos-arma.html"><a href="modelos-arma.html#integracion-con-respecto-a-un-proceso-de-incremento-ortogonal"><i class="fa fa-check"></i><b>6.7</b> Integración con Respecto a un Proceso de Incremento Ortogonal</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="modelos-arma.html"><a href="modelos-arma.html#propiedades-de-la-integral-estocastica"><i class="fa fa-check"></i><b>6.7.1</b> Propiedades de la Integral Estocástica</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="modelos-arma.html"><a href="modelos-arma.html#la-representacion-espectral"><i class="fa fa-check"></i><b>6.8</b> La Representación Espectral</a></li>
 </ul></li>
 <li class="appendix"><span><b>Apéndice</b></span></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
@@ -476,7 +488,7 @@ A continuación mostramos dos series del EURIBOR. La primera es la evolución hi
 </div>
 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">EURIBORa&lt;-<span class="kw">read_excel</span>(<span class="st">&quot;data/EURIBOR-anual.xlsx&quot;</span>)
-<span class="kw">plot</span>(EURIBORa,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Periodo&quot;</span>, 
+<span class="kw">plot</span>(EURIBORa<span class="op">$</span>Año,EURIBORa<span class="op">$</span>Índice,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Periodo&quot;</span>, 
      <span class="dt">main=</span><span class="st">&quot;Serie EURIBOR anual (1999-2018)&quot;</span>)
 <span class="kw">grid</span>(<span class="dt">col =</span> <span class="st">&quot;gray&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
@@ -653,11 +665,10 @@ gitbook.start({
 "facebook": false,
 "twitter": true,
 "google": false,
-"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -681,11 +692,9 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
-    script.src = src;
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

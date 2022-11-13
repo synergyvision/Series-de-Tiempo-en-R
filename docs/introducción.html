@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 1 Introducción | Series de Tiempo en R</title>
+  <meta name="description" content="Capítulo 1 Introducción | Series de Tiempo en R" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 1 Introducción | Series de Tiempo en R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://synergy.vision/Series-de-Tiempo-en-R/" />
+  <meta property="og:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+  
+  <meta name="github-repo" content="synergyvision/Series-de-Tiempo-en-R/" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 1 Introducción | Series de Tiempo en R" />
+  
+  
+  <meta name="twitter:image" content="http://synergy.vision/Series-de-Tiempo-en-R/images/cover.png" />
+
+<meta name="author" content="Synergy Vision" />
+
+
+<meta name="date" content="2022-11-12" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="acerca-del-autor.html"/>
+<link rel="next" href="características-de-series-de-tiempo.html"/>
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.datacamp.com/datacamp-light-latest.min.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><img src="images/logovision-black.png" width="160"></img></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#por-qué-leer-este-libro"><i class="fa fa-check"></i>¿Por qué leer este libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estructura-del-libro"><i class="fa fa-check"></i>Estructura del libro</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#información-sobre-los-programas-y-convenciones"><i class="fa fa-check"></i>Información sobre los programas y convenciones</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prácticas-interactivas-con-r"><i class="fa fa-check"></i>Prácticas interactivas con R</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="acerca-del-autor.html"><a href="acerca-del-autor.html"><i class="fa fa-check"></i>Acerca del Autor</a></li>
+<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a><ul>
+<li class="chapter" data-level="1.1" data-path="introducción.html"><a href="introducción.html#conceptos-financieros-básicos"><i class="fa fa-check"></i><b>1.1</b> Conceptos financieros básicos</a></li>
+<li class="chapter" data-level="1.2" data-path="introducción.html"><a href="introducción.html#conceptos-básicos"><i class="fa fa-check"></i><b>1.2</b> Conceptos básicos</a></li>
+<li class="chapter" data-level="1.3" data-path="introducción.html"><a href="introducción.html#ejemplos"><i class="fa fa-check"></i><b>1.3</b> Ejemplos</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introducción.html"><a href="introducción.html#clasificación-de-las-series-de-tiempo"><i class="fa fa-check"></i><b>1.3.1</b> Clasificación de las series de tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introducción.html"><a href="introducción.html#componentes-de-una-serie-de-tiempo"><i class="fa fa-check"></i><b>1.4</b> Componentes de una serie de tiempo</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introducción.html"><a href="introducción.html#el-modelo-aditivo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.1</b> El Modelo Aditivo de Componentes de Series de Tiempo</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introducción.html"><a href="introducción.html#el-modelo-multiplicativo-de-componentes-de-series-de-tiempo"><i class="fa fa-check"></i><b>1.4.2</b> El Modelo Multiplicativo de Componentes de Series de Tiempo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>2</b> Características de series de tiempo</a><ul>
+<li class="chapter" data-level="2.1" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#medidas-de-dependencia-para-series-de-tiempo"><i class="fa fa-check"></i><b>2.1</b> Medidas de dependencia para series de tiempo</a></li>
+<li class="chapter" data-level="2.2" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia"><i class="fa fa-check"></i><b>2.2</b> Estimación de la Tendencia</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia-en-ausencia-de-estacionalidad"><i class="fa fa-check"></i><b>2.2.1</b> Estimación de la tendencia en ausencia de estacionalidad</a></li>
+<li class="chapter" data-level="2.2.2" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia-y-la-estacionalidad"><i class="fa fa-check"></i><b>2.2.2</b> Estimación de la tendencia y la estacionalidad</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#estimación-de-la-tendencia-por-regresión-clásica"><i class="fa fa-check"></i><b>2.3</b> Estimación de la tendencia por regresión clásica</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="características-de-series-de-tiempo.html"><a href="características-de-series-de-tiempo.html#regresión-clásica"><i class="fa fa-check"></i><b>2.3.1</b> Regresión Clásica</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html"><i class="fa fa-check"></i><b>3</b> Modelos de series de tiempo</a><ul>
+<li class="chapter" data-level="3.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-estocásticos"><i class="fa fa-check"></i><b>3.1</b> Modelos Estocásticos</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#procesos-estocásticos"><i class="fa fa-check"></i><b>3.1.1</b> Procesos Estocásticos</a></li>
+<li class="chapter" data-level="3.1.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#momentos-varianza-covarianza-y-correlación"><i class="fa fa-check"></i><b>3.1.2</b> Momentos, Varianza, Covarianza y Correlación</a></li>
+<li class="chapter" data-level="3.1.3" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#variación-de-un-proceso"><i class="fa fa-check"></i><b>3.1.3</b> Variación de un proceso</a></li>
+<li class="chapter" data-level="3.1.4" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#martingalas"><i class="fa fa-check"></i><b>3.1.4</b> Martingalas</a></li>
+<li class="chapter" data-level="3.1.5" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#propiedad-de-markov"><i class="fa fa-check"></i><b>3.1.5</b> Propiedad de Markov</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#modelos-lineales"><i class="fa fa-check"></i><b>3.2</b> Modelos lineales</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="modelos-de-series-de-tiempo.html"><a href="modelos-de-series-de-tiempo.html#proceso-de-ruido-blanco"><i class="fa fa-check"></i><b>3.2.1</b> Proceso de Ruido Blanco</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="modelos-ar.html"><a href="modelos-ar.html"><i class="fa fa-check"></i><b>4</b> Modelos AR</a><ul>
+<li class="chapter" data-level="4.1" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar1"><i class="fa fa-check"></i><b>4.1</b> Modelo AR(1)</a></li>
+<li class="chapter" data-level="4.2" data-path="modelos-ar.html"><a href="modelos-ar.html#modelo-ar2"><i class="fa fa-check"></i><b>4.2</b> Modelo AR(2)</a></li>
+<li class="chapter" data-level="4.3" data-path="modelos-ar.html"><a href="modelos-ar.html#procesos-arp"><i class="fa fa-check"></i><b>4.3</b> Procesos AR(p)</a></li>
+<li class="chapter" data-level="4.4" data-path="modelos-ar.html"><a href="modelos-ar.html#función-de-autocorrelación-parcial"><i class="fa fa-check"></i><b>4.4</b> Función de Autocorrelación Parcial</a></li>
+<li class="chapter" data-level="4.5" data-path="modelos-ar.html"><a href="modelos-ar.html#criterios-de-información"><i class="fa fa-check"></i><b>4.5</b> Criterios de Información</a></li>
+<li class="chapter" data-level="4.6" data-path="modelos-ar.html"><a href="modelos-ar.html#estimación-de-parámetros."><i class="fa fa-check"></i><b>4.6</b> Estimación de Parámetros.</a></li>
+<li class="chapter" data-level="4.7" data-path="modelos-ar.html"><a href="modelos-ar.html#predicciones-con-modelos-ar"><i class="fa fa-check"></i><b>4.7</b> Predicciones con modelos AR</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="modelos-ar.html"><a href="modelos-ar.html#predicción-de-un-paso"><i class="fa fa-check"></i><b>4.7.1</b> Predicción de un paso</a></li>
+<li class="chapter" data-level="4.7.2" data-path="modelos-ar.html"><a href="modelos-ar.html#predicción-de-dos-pasos"><i class="fa fa-check"></i><b>4.7.2</b> Predicción de dos pasos</a></li>
+<li class="chapter" data-level="4.7.3" data-path="modelos-ar.html"><a href="modelos-ar.html#predicción-de-múltiples-pasos"><i class="fa fa-check"></i><b>4.7.3</b> Predicción de múltiples pasos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="modelos-ma.html"><a href="modelos-ma.html"><i class="fa fa-check"></i><b>5</b> Modelos MA</a><ul>
+<li class="chapter" data-level="5.1" data-path="modelos-ma.html"><a href="modelos-ma.html#propiedades-de-los-modelos-ma"><i class="fa fa-check"></i><b>5.1</b> Propiedades de los modelos MA</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="modelos-ma.html"><a href="modelos-ma.html#estacionaridad"><i class="fa fa-check"></i><b>5.1.1</b> Estacionaridad</a></li>
+<li class="chapter" data-level="5.1.2" data-path="modelos-ma.html"><a href="modelos-ma.html#función-de-autocorrelación-acf"><i class="fa fa-check"></i><b>5.1.2</b> Función de autocorrelación (ACF)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="modelos-ma.html"><a href="modelos-ma.html#identificación-del-orden-de-un-ma"><i class="fa fa-check"></i><b>5.2</b> Identificación del orden de un MA</a></li>
+<li class="chapter" data-level="5.3" data-path="modelos-ma.html"><a href="modelos-ma.html#estimación"><i class="fa fa-check"></i><b>5.3</b> Estimación</a></li>
+<li class="chapter" data-level="5.4" data-path="modelos-ma.html"><a href="modelos-ma.html#predicciones-usando-modelos-ma"><i class="fa fa-check"></i><b>5.4</b> Predicciones usando modelos MA</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="modelos-arma.html"><a href="modelos-arma.html"><i class="fa fa-check"></i><b>6</b> Modelos ARMA</a><ul>
+<li class="chapter" data-level="6.1" data-path="modelos-arma.html"><a href="modelos-arma.html#propiedades-de-los-modelos-armapq"><i class="fa fa-check"></i><b>6.1</b> Propiedades de los modelos ARMA(p,q)</a></li>
+<li class="chapter" data-level="6.2" data-path="modelos-arma.html"><a href="modelos-arma.html#ecuaciones-en-diferencias"><i class="fa fa-check"></i><b>6.2</b> Ecuaciones en Diferencias</a></li>
+<li class="chapter" data-level="6.3" data-path="modelos-arma.html"><a href="modelos-arma.html#la-densidad-espectral"><i class="fa fa-check"></i><b>6.3</b> La Densidad Espectral</a></li>
+<li class="chapter" data-level="6.4" data-path="modelos-arma.html"><a href="modelos-arma.html#periodograma-y-transformada-discreta-de-fourier"><i class="fa fa-check"></i><b>6.4</b> Periodograma y Transformada Discreta de Fourier</a></li>
+<li class="chapter" data-level="6.5" data-path="modelos-arma.html"><a href="modelos-arma.html#estimación-espectral-no-paramétrica"><i class="fa fa-check"></i><b>6.5</b> Estimación Espectral No-paramétrica</a></li>
+<li class="chapter" data-level="6.6" data-path="modelos-arma.html"><a href="modelos-arma.html#procesos-de-incremento-ortogonal-sobre--pipi"><i class="fa fa-check"></i><b>6.6</b> Procesos de Incremento Ortogonal sobre <span class="math inline">\([-\pi,\pi]\)</span></a></li>
+<li class="chapter" data-level="6.7" data-path="modelos-arma.html"><a href="modelos-arma.html#integración-con-respecto-a-un-proceso-de-incremento-ortogonal"><i class="fa fa-check"></i><b>6.7</b> Integración con Respecto a un Proceso de Incremento Ortogonal</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="modelos-arma.html"><a href="modelos-arma.html#propiedades-de-la-integral-estocástica"><i class="fa fa-check"></i><b>6.7.1</b> Propiedades de la Integral Estocástica</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="modelos-arma.html"><a href="modelos-arma.html#la-representación-espectral"><i class="fa fa-check"></i><b>6.8</b> La Representación Espectral</a></li>
+</ul></li>
+<li class="appendix"><span><b>Apéndice</b></span></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Series de Tiempo en R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introducción" class="section level1">
+<h1><span class="header-section-number">Capítulo 1</span> Introducción</h1>
+<p>Las series de tiempo ya han desempeñado un papel importante en las primeras ciencias naturales. La astronomía babilónica utilizó series de tiempo de las posiciones relativas de estrellas y planetas para predecir eventos astronómicos. Las observaciones de los movimientos de los planetas formaron la base de las leyes que Johannes Kepler descubrió. El análisis de las series de tiempo ayuda a detectar las regularidades en las observaciones de una variable y a derivar “leyes” de ellas, y/o explotar toda la información incluida en esta variable para predecir mejor los desarrollos futuros. La idea metodológica básica detrás de estos procedimientos, que también eran válidos para los babilonios, es que es posible descomponer series de tiempos en un número finito de componentes independientes pero no directamente observables que se desarrollan regularmente y que por lo tanto pueden ser calculados de antemano. Para este procedimiento es necesario que existan diferentes factores independientes que incidan en la variable.</p>
+<p>A mediados del siglo XIX, este enfoque metodológico de la astronomía fue asumido por los economistas Charles Babbage y William Stanley Jevons. La descomposición en componentes no observados que dependen de diferentes factores causales, como suele emplearse en el análisis clásico de series de tiempo, fue desarrollada por Warren M. Persons (1919). Distinguía cuatro componentes diferentes:</p>
+<ul>
+<li><p>Desarrollo a largo plazo, tendencia,</p></li>
+<li><p>Componente cíclico con períodos de más de un año, el ciclo económico,</p></li>
+<li><p>Componente que contiene los altibajos dentro de un año, el ciclo estacional, y</p></li>
+<li><p>Componente que contiene todos los movimientos que no pertenecen ni a la tendencia ni al ciclo económico ni al componente estacional, el residual.</p></li>
+</ul>
+<p>Suponiendo que los diferentes factores no observables son independientes, su recubrimiento aditivo genera las series de tiempo que, sin embargo, sólo podemos observar en su conjunto. Para obtener información sobre el proceso de generación de datos, tenemos que hacer suposiciones sobre sus componentes no observados. El análisis clásico de series de tiempo supone que los componentes sistemáticos, es decir, la tendencia, el ciclo económico y el ciclo estacional, no están influenciados por perturbaciones estocásticas y, por lo tanto, pueden representarse mediante funciones determinísticas del tiempo. El impacto estocástico se limita a los residuos, que, por otra parte, no contienen movimientos sistemáticos. Por lo tanto, se modela como una serie de variables aleatorias independientes o no correlacionadas con esperanza cero y varianza constante, es decir, como un proceso aleatorio puro.</p>
+<p>Este enfoque cambió desde la presentación de los trabajos de George E. P. Box and Gwilym M. Jenkins, “Time Series Analysis: Forecasting and Control”, en los años 70 del siglo XX. Se abandonaron los procedimientos puramente descriptivos del análisis clásico de series de tiempo y, en su lugar, se han utilizado los resultados y métodos de la teoría de la probabilidad y las estadísticas matemáticas. Desde ese entonces, el análisis de series ha tenido un desarrollo creciente. Se han presentado una gran variedad de libros sobre este tópico, cada uno de ellos influenciado principalmente por la orientación de las series que se discuten en sus contenidos. Una gran parte de la literatura está dirigida a exponer los aspectos teóricos alrededor de las series de tiempo, siendo en muchos casos, rigurosamente desarrollados y descritos, sin embargo poco de ellos presentan implementaciones de las técnicas estudiadas y su compresión en ejemplos reales lo que a veces puede dificultar su comprensión en especial para aquellos que no posean una apropiada formación matemática.</p>
+<p>Los primeros intentos de estudiar el comportamiento de las series de tiempo financieras fueron realizados por profesionales financieros y periodistas en lugar de por académicos. De hecho, esto parece haberse convertido en una tradición de larga data, ya que, incluso hoy en día, gran parte de la investigación y el desarrollo empíricos todavía se originan en la propia industria financiera. Esto puede explicarse por el carácter práctico de los problemas, la necesidad de datos especializados y las posibles ventajas de dicho análisis. El primer y más conocido ejemplo de la investigación publicada sobre series de tiempo financieras es el legendario Charles Dow, como se expresa en sus editoriales en el Wall Street Times entre 1900 y 1902. Estos escritos formaron la base de la “teoría del Dow” e influyeron en lo que más tarde se conoció como análisis técnico y carisma. Aunque Dow no coleccionó y publicó sus editoriales por separado, esto fue hecho póstumamente por su seguidor Samuel Nelson (Nelson, 1902). Las ideas originales de Dow fueron posteriormente interpretadas y ampliadas por Hamilton (1922) y Rhea (1932). Estas ideas gozaron de cierto reconocimiento entre los académicos de la época: por ejemplo, Hamilton fue elegido miembro de la Royal Statistical Society.</p>
+<p>Aunque Dow y sus seguidores discutieron muchas de las ideas que encontramos en el análisis moderno de finanzas y series de tiempo, incluyendo estacionalidad, eficiencia del mercado, correlación entre rendimiento de activos e índices, diversificación e imprevisibilidad, no hicieron ningún esfuerzo serio para adoptar métodos estadísticos formales. La mayor parte del análisis empírico consistió en la interpretación minuciosa de gráficos detallados de las medias bursátiles sectoriales, formando así los famosos Índices Dow-Jones. Se argumentó que estos índices descuentan toda la información necesaria y proporcionan el mejor pronóstico de eventos futuros. Una idea fundamental, muy relevante para la teoría de los ciclos de Stanley Jevons y la metodología de descomposición de tendencias de la “curva Harvard A-B-C” de Warren Persons, fue que las variaciones de precios del mercado consistían en tres movimientos primarios: diarios, a medio y largo plazo.</p>
+<p>La investigación empírica más temprana que utiliza métodos estadísticos formales se remonta a los documentos de Working (1934), Cowles (1933,1944) y Cowles and Jones (1937). El trabajo centró la atención en una característica previamente señalada de los precios de las materias primas y las acciones: que se asemejan a la acumulación de cambios puramente aleatorios. Alfred Cowles 3rd, analista financiero cuantitativamente entrenado y fundador de Econometric Society and the Cowles Foundation, investigó la habilidad de los analistas de mercado y servicios financieros para predecir los futuros cambios de precios, encontrando que había pocas pruebas de que pudieran hacerlo. Cowles y Jones reportaron evidencia de correlación positiva entre sucesivas variaciones de precios, pero, como posteriormente Cowles (1960) comentó, esto fue probablemente debido a que tomaron promedios mensuales de precios diarios o semanales antes de computar los cambios: un fenómeno de “correlación espuria”, analizado por Working (1960).</p>
+<p>La previsibilidad de los cambios de precios se ha convertido desde entonces en un tema importante de la investigación financiera, pero, sorprendentemente, poco más se publicó hasta el estudio de Kendall (1953), en el que encontró que los cambios semanales en una amplia variedad de precios financieros no podían predecirse ni a partir de los cambios pasados en las series ni a partir de los cambios pasados en otras series de precios. Este parece haber sido el primer informe explícito de esta propiedad de los precios financieros a menudo citada, aunque la investigación sobre la previsibilidad de los precios sólo se vio impulsada por la publicación de los documentos de Roberts (1959) y Osborne (1959). El primero presenta un argumento en gran medida heurístico sobre por qué las sucesivas variaciones de precios deben ser independientes, mientras que el segundo desarrolla la proposición de que no se trata de cambios absolutos de precios, sino de cambios logarítmicos de precios independientes entre sí. Con la suposición auxiliar de que las propias modificaciones se distribuyen normalmente, esto implica que los precios se generan como movimiento Browniano.</p>
+<p>El análisis de series de tiempo desempeña un papel importante en el análisis requerido para el pronóstico de eventos futuros. Existen varias formas o métodos de calcular cual va a ser la tendencia del comportamiento del proceso en estudio.</p>
+<p>Un <strong>pronóstico</strong> es una predicción de algún evento o eventos futuros. Como sugirió Neils Bohr, hacer buenas predicciones no siempre es fácil. Los pronósticos famosamente “malos” incluyen lo siguiente del libro <em>“Malas Predicciones”</em>:</p>
+<ul>
+<li><p>“La población es de tamaño constante y se mantendrá hasta el fin de la humanidad.” La Enciclopedia, 1756.</p></li>
+<li><p>“1930 será un espléndido año de empleo.” Departamento de Trabajo de los EE.UU., pronóstico de Año Nuevo en 1929, justo antes de que el mercado se desplomara el 29 de octubre.</p></li>
+<li><p>“Las computadoras se multiplican a un ritmo rápido. Para el cambio de siglo habrá 220,000 en los EE.UU.” Wall Street Journal, 1966.</p></li>
+</ul>
+<p>Algunos ejemplos donde se puede utilizar y hacer precciones con series de tiempo:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Dirección de Operaciones</strong>. Las organizaciones empresariales utilizan habitualmente las previsiones de ventas de productos o la demanda de servicios para programar la producción, controlar los inventarios, gestionar la cadena de suministro, determinar las necesidades de personal y planificar la capacidad. Las previsiones también pueden utilizarse para determinar la combinación de productos o servicios que deben ofrecerse y las ubicaciones en las que deben fabricarse los productos.</p></li>
+<li><p><strong>Marketing</strong>. La previsión es importante en muchas decisiones de marketing. Las previsiones de respuesta de las ventas a los gastos publicitarios, las nuevas romociones o los cambios en las políticas de precios permiten a las empresas evaluar su eficacia, determinar si se están alcanzando los objetivos y realizar ajustes.</p></li>
+<li><p><strong>Finanzas y Gestión de Riesgos</strong>. Los inversores en activos financieros están interesados en pronosticar los rendimientos de sus inversiones. Estos activos incluyen, pero no se limitan a acciones, bonos y materias primas; otras decisiones de inversión se pueden tomar en relación con las previsiones de tasas de inter?s, opciones y tipos de cambio. La gestión del riesgo financiero requiere previsiones de la volatilidad de la rentabilidad de los activos para que se puedan evaluar y asegurar los riesgos asociados a las carteras de inversion, y para que los derivados financieros puedan cotizarse adecuadamente.</p></li>
+<li><p><strong>Economía</strong>. Los gobiernos, las instituciones financieras y las organizaciones de política requieren pronósticos de las principales variables económicas, como el producto interno bruto, el crecimiento demográfico, el desempleo, las tasas de interés, la inflación, el crecimiento del empleo, la producción y el consumo. Estas previsiones son parte integrante de la orientación de la política monetaria y fiscal, así como de los planes y decisiones presupuestarias adoptadas por los gobiernos. también son fundamentales en las decisiones de planificación estratégica tomadas por organizaciones empresariales e instituciones financieras.</p></li>
+<li><p><strong>Control de Procesos Industriales</strong>. Las previsiones de los valores futuros de las características de calidad crítica de un proceso de producción pueden ayudar a determinar cuándo deben cambiarse las variables controlables importantes del proceso, o si el proceso debe detenerse y revisarse. Los esquemas de retroalimentación y control feedforward son ampliamente utilizados en el monitoreo y ajuste de procesos industriales, y las predicciones de la producción del proceso son una parte integral de estos esquemas.</p></li>
+<li><p><strong>Demografía</strong>. Las previsiones de población por país y región se realizan de manera rutinaria, a menudo estratificadas por variables como el género, la edad y la raza. Los demógrafos también pronostican nacimientos, muertes y patrones migratorios de las poblaciones. Los gobiernos utilizan estas previsiones para planificar políticas y acciones de servicio social, como el gasto en atención médica, programas de jubilación y programas de lucha contra la pobreza. Muchas empresas utilizan pronósticos de poblaciones por grupos de edad para hacer planes estratégicos en relación con el desarrollo de nuevas líneas de productos o tipos de servicios que será ofrecido.</p></li>
+</ol>
+<div id="conceptos-financieros-básicos" class="section level2">
+<h2><span class="header-section-number">1.1</span> Conceptos financieros básicos</h2>
+<p>La mayoría de los estudios financieros y econ?micos implican rendimiento, en lugar de precios de los activos. Existen dos buenas razones para ello. Primero, para los inversores medios, el rendimiento de un activo es un resumen completo y libre de escala de la oportunidad de inversión. Segundo, las series de rendimiento son más fáciles de manejar que las series de precios porque las primeras tienen propiedades estadísticas más atractivas. Sin embargo, existen varias definiciones de rendimiento de activos. Sea <span class="math inline">\(P_t\)</span> el precio de un activo en tiempo <span class="math inline">\(t\)</span>. Discutiremos algunas definiciones de rendimiento que utilizaremos a lo largo del libro. Supongamos por el momento que el activo no paga dividendos.</p>
+
+<div class="definition">
+<span id="def:defi-rendimiento-simple" class="definition"><strong>Definición 1.1  (Rendimiento simple de un periodo)  </strong></span>Mantener el activo fijo durante un periodo a partir de tiempo <span class="math inline">\(t-1\)</span> hasta tiempo <span class="math inline">\(t\)</span> da lugar a una <strong>rentabilidad bruta simple</strong>
+<span class="math display" id="eq:eq-rentabilidad-bruta-simple">\[\begin{equation}
+1+R_t=\frac{P_t}{P_{t-1}}\quad\text{ o }\quad P_t=P_{t-1}(1+R_t)
+\tag{1.1}
+\end{equation}\]</span>
+El correspondiente <strong>rendimiento neto simple</strong> de un periodo o <strong>rendimiento simple</strong> es
+<span class="math display" id="eq:eq-rendimiento-neto-simple">\[\begin{equation}
+R_t=\frac{P_t}{P_{t-1}}-1=\frac{P_t-P_{t-1}}{P_{t-1}}
+\tag{1.2}
+\end{equation}\]</span>
+</div>
+
+
+<div class="definition">
+<span id="def:defi-rendimiento-simple-multiperiodo" class="definition"><strong>Definición 1.2  (Rendimiento simple multiperiodo)  </strong></span>Mantener el activo fijo durante <span class="math inline">\(k\)</span> periodos entre los tiempos <span class="math inline">\(t-k\)</span> y <span class="math inline">\(t\)</span> da un <strong>rendimiento bruto simple de periodo <span class="math inline">\(k\)</span></strong>
+<span class="math display">\[\begin{eqnarray*}
+1+ R_t[k] &amp;=&amp; \frac{P_t}{P_{t-k}} = \frac{P_t}{P_{t-1}}\times\frac{P_{t-1}}{P_{t-2}}\times \cdots \times\frac{P_{t-k+1}}{P_{t-k}} \\
+        &amp;=&amp; (1+R_t)(1+R_{t-1})\cdots(1+R_{t-k+1}) \\
+        &amp;=&amp; \prod_{j=0}^{k-1}(1+R_{t-j})
+\end{eqnarray*}\]</span>
+</div>
+
+<p>De la definición, se tiene que la rentabilidad bruta simple de periodo <span class="math inline">\(k\)</span> es el producto de las <span class="math inline">\(k\)</span> rentabilidades brutas simples de un periodo. Esto se llama <strong>rendimiento compuesto</strong>. El <strong>rendimiento neto simple de periodo <span class="math inline">\(k\)</span></strong> es <span class="math inline">\(R_t[k]=(P_t-P_{t-k})/P_{t-k}\)</span>.</p>
+<p>En la práctica, el intervalo de tiempo real es importante para discutir y comparar los rendimientos (por ejemplo, rendimiento mensual o rendimiento anual). Si no se indica el intervalo de tiempo, se asume implícitamente que es de un año. Si el activo se mentuvo durante <span class="math inline">\(k\)</span> años, entonces el rendimiento anualizado se define como</p>
+<p><span class="math display">\[\text{Anualizado}\{R_t[k]\} = \left[\prod_{j=0}^{k-1}(1+R_{t-j})\right]^{1/k}-1.\]</span> Esta es una media geométrica de los <span class="math inline">\(k\)</span> rendimientos brutos simple de un periodo y lo podemos calcular por</p>
+<p><span class="math display">\[\text{Anualizado}\{R_t[k]\} = \exp\left[\frac{1}{k}\sum_{j=0}^{k-1}\ln(1+R_{t-j})\right]-1.\]</span></p>
+<p>Debido a que es más fácil calcular el promedio aritmético que la media geométrica y los rendimientos de un periodo tienden a ser pequeños, podemos utilizar el desarrollo de Taylor de primer orden para aproximar el rendimiento anualizado y obtener</p>
+<span class="math display" id="eq:eq-rendimiento-anualizado">\[\begin{equation}
+\text{Anualizado}\{R_t[k]\} \approx \frac{1}{k}\sum_{j=0}^{k-1}R_{t-j}
+\tag{1.3}
+\end{equation}\]</span>
+<p>Sin embargo, la exactitud de la aproximación en la ecuación <a href="introducción.html#eq:eq-rendimiento-anualizado">(1.3)</a> puede no ser suficiente en algunas aplicaciones.</p>
+<p>Otra definición útil es la de <strong>rendimiento compuesto continuo</strong>, pero antes de discutir tales definiciones, discutamos el efecto de la capitalización. Supongamos que la tasa de interés de un depósito bancario es del 10% anual y el depósito inicial es de <span class="math inline">\(\$1,00\)</span>. Si el banco paga intereses una vez al año, entonces el valor neto del depósito se convierte en <span class="math inline">\(\$1,00(1+0.10)=\$1,10\)</span> un año después. Si el banco paga intereses semestralmente, el tipo de interés a 6 meses es <span class="math inline">\(10\%/2=5\%\)</span> y el valor del depósito será <span class="math inline">\(\$1,00(1+0.10/2)2=\$1,1025\)</span> después del primer año. En general, si el banco para intereses <span class="math inline">\(m\)</span> veces al año, entonces la tasa de interés para cada pago es <span class="math inline">\(10\%/m\)</span> y el valor neto del depósito se convierte en <span class="math inline">\(\$1.00(1+0.1/m)m\)</span> un año después. La tabla siguiente da los resultados para algunos intervalos de tiempo comúnmente usados. En particular, el valor neto se aproxima a <span class="math inline">\(\$1,1052\)</span>, que se obtiene con <span class="math inline">\(\exp(0.1)\)</span> y se refiere al resultado de la capitalización continua.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Tipo</th>
+<th>Número de pagos</th>
+<th>Tasa de interés por periodo</th>
+<th>Valor neto</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Anual</td>
+<td>1</td>
+<td>0.1</td>
+<td>$1.10000</td>
+</tr>
+<tr class="even">
+<td align="left">Semestral</td>
+<td>2</td>
+<td>0.05</td>
+<td>$1.10250</td>
+</tr>
+<tr class="odd">
+<td align="left">Trimestral</td>
+<td>4</td>
+<td>0.025</td>
+<td>$1.10831</td>
+</tr>
+<tr class="even">
+<td align="left">Mensual</td>
+<td>12</td>
+<td>0.0083</td>
+<td>$1.10471</td>
+</tr>
+<tr class="odd">
+<td align="left">Semanal</td>
+<td>52</td>
+<td>0.1/52</td>
+<td>$1.10506</td>
+</tr>
+<tr class="even">
+<td align="left">Diario</td>
+<td>365</td>
+<td>0.1/365</td>
+<td>$1.10516</td>
+</tr>
+<tr class="odd">
+<td align="left">Continuo</td>
+<td>Inf.</td>
+<td></td>
+<td>$1.10517</td>
+</tr>
+</tbody>
+</table>
+<p>Tabla. Ilustración de los efectos de la combinación. El intervalo de tiempo es de 1 año y la tasa de interés es del 10% anual.</p>
+En general, el valor liquidativo <span class="math inline">\(A\)</span> de la capitalización continua es
+<span class="math display" id="eq:eq-valor-capitalizacion-continua">\[\begin{equation}
+A=C\exp(r\times n)
+\tag{1.4}
+\end{equation}\]</span>
+donde <span class="math inline">\(r\)</span> es el tipo de interés anual, <span class="math inline">\(C\)</span> es el capital inicial y <span class="math inline">\(n\)</span> es el número de años. A partir de la ecuación <a href="introducción.html#eq:eq-valor-capitalizacion-continua">(1.4)</a>, tenemos
+<span class="math display" id="eq:eq-valor-presente-activo">\[\begin{equation}
+C=A\exp(-r\times n)
+\tag{1.5}
+\end{equation}\]</span>
+<p>el cual se refiere como el valor presente de un activo que vale <span class="math inline">\(A\)</span> dolares <span class="math inline">\(n\)</span> años a partir de ahora, asumiendo que la tasa de interés compuesta continua es <span class="math inline">\(r\)</span> por año.</p>
+
+<div class="definition">
+<span id="def:defi-rendimiento-compuesto-continuo" class="definition"><strong>Definición 1.3  (Rendimiento compuesto continuo)  </strong></span>El logaritmo natural de rendimiento bruto simple de un activo se denomina <strong>rendimiento compuesto continuo</strong> o <strong>rendimiento logarítmico</strong>
+<span class="math display" id="eq:eq-rendimiento-compuesto-continuo">\[\begin{equation}
+r_t=\ln(1+R_t) = \ln\left(\frac{P_t}{P_{t-1}}\right) = p_t-o_{t-1}
+\tag{1.6}
+\end{equation}\]</span>
+donde <span class="math inline">\(p_t=\ln(P_t)\)</span>.
+</div>
+
+Los rendimientos compuestos continuos deisfrutan de algunas ventajas sobre los rendimientos netos simples <span class="math inline">\(R_t\)</span>. En primer lugar, consideremos los rendimientos multiperiodos. Tenemos
+<span class="math display">\[\begin{eqnarray*}
+r_t[k] &amp;=&amp; \ln(1+R_t[k]) = \ln[(1+R_t)(1+R_{t-1})\cdots(1+R_{t-k+1})]\\
+       &amp;=&amp; \ln(1+R_t)+\ln(1+R_{t_1})+\cdots+\ln(1+R_{t-k+1})\\
+       &amp;=&amp; r_t+r_{t-1}+\cdots+r_{t-k+1}.
+\end{eqnarray*}\]</span>
+<p>Por lo tanto, el rendimiento multiperiodo compuesto continuo es simplemente la suma de los rendimientos compuesto continuo de un periodo involucrados. En segundo lugar, las propiedades estadísticas de los logaritmos de los rendimientos son más manejables.</p>
+
+<div class="definition">
+<span id="def:defi-rentabilidad-cartera" class="definition"><strong>Definición 1.4  (Rentabilidad de la cartera)  </strong></span>El rendimiento neto simple de una cartera de inversión compuesta por <span class="math inline">\(N\)</span> activos es una media ponderada de los rendimientos netos simples de los activos en cuestión, en la que la ponderación de cada activo es el porcentaje del valor de la cartera invertido en ese activo. Sea <span class="math inline">\(p\)</span> un portafolio que ponga peso con el activo <span class="math inline">\(i\)</span>, entonces el rendimineto simple <span class="math inline">\(p\)</span> en el tiempo <span class="math inline">\(t\)</span> es <span class="math display">\[R_{p,t} = \sum_{i=1}^N\omega_iR_{it}\]</span> donde <span class="math inline">\(R_{it}\)</span> es el rendimiento simple del activo <span class="math inline">\(i\)</span>.
+</div>
+
+<p>Los rendimientos compuestos continuos de una cartera, sin embargo, no tienen la propiedad conveniente anterior. Si los rendimientos simples <span class="math inline">\(R_t\)</span> son todos pequeños en magnitud, entonces tenemos <span class="math display">\[r_{p,t} \approx \sum_{i=1}^N\omega_ir_{it}\]</span> donde <span class="math inline">\(r_{p,t}\)</span> es el rendimiento compuesto continuo de la cartera en el momento <span class="math inline">\(t\)</span>. Esta aproximación se utiliza a menudo para estudiar los rendimientos de las carteras.</p>
+
+<div class="definition">
+<p><span id="def:defi-pago-dividendos" class="definition"><strong>Definición 1.5  (Pago de dividendos)  </strong></span>Si un activo paga dividendos periódicamente, debemos modificar las definiciones de rendimientos de activos.</p>
+Sea <span class="math inline">\(D_t\)</span> el pago de dividendos de un activo entre los tiempos <span class="math inline">\(t-1\)</span> y <span class="math inline">\(t\)</span> y sea <span class="math inline">\(P_t\)</span> el precio del activo al final del periodo <span class="math inline">\(t\)</span>. Entonces el dividendo no se incluye en <span class="math inline">\(P_t\)</span>. Entonces el rendimiento neto simple y el rendimiento compuesto continuo en el tiempo <span class="math inline">\(t\)</span> están dados por
+<span class="math display">\[\begin{eqnarray*}
+R_t &amp;=&amp; \frac{P_t+D_t}{P_{t-1}}-1 \\
+r_t &amp;=&amp; \ln(P_t+D_t) - \ln(P_{t-1})
+\end{eqnarray*}\]</span>
+</div>
+
+
+<div class="definition">
+<span id="def:exceso-rendimiento" class="definition"><strong>Definición 1.6  (Exceso de rendimiento)  </strong></span>El <strong>rendimiento excesivo</strong> de un activo en el momento <span class="math inline">\(t\)</span> es la diferencia entre el rendimiento del activo y el rendimiento de algún activo de referencia.
+</div>
+
+A menudo se considera que el activo de referencia no tiene riesgo, como una devolución de letras del Tesoro de EE.UU. a corto plazo. El exceso de rentabilidad simple y el logaritmo de exceso de rentabilidad de un activo se definen como
+<span class="math display" id="eq:eq-exceso-rentabilidad-simple-log">\[\begin{equation}
+Z_t = R_t-R_{0t}; \quad z_t=r_t-r_{0t}
+\tag{1.7}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(R_{0t}\)</span> y <span class="math inline">\(r_{0t}\)</span> son los rendimientos simples y logarítmicos del activo de referencia, respectivamente.</p>
+<p>En la literatura financiera, el exceso de rentabilidad se considera como el pago de una cartera de arbitraje que va larga en un activo y corta en el activo de referencia sin inversión inicial neta.</p>
+<p>** Resumen de la relación**</p>
+Las relaciones entre el rendimiento simple <span class="math inline">\(R_t\)</span> y el rendimiento compuesto continuo (o logarítmico) <span class="math inline">\(r_t\)</span> son <span class="math display">\[r_t=\ln(1+R_t), \qquad R_t=e^{r_t}-1\]</span> La agregación temporal de los rendimientos produce
+<span class="math display">\[\begin{eqnarray*}
+1+R_t[k] &amp;=&amp; (1+R_t)(1+R_{t-1})\cdots(1+R_{t-k+1}) \\
+  r_t[k] &amp;=&amp; r_t+r_{t-1}+\cdots+r_{t-k+1}
+\end{eqnarray*}\]</span>
+<p>Si el tipo de interés compuesto continuo es por año, entonces la relación entre los valores presentes y futuros de un activo fijo es <span class="math display">\[A = C\exp(r\times n),\qquad C=A\exp(-r\times n).\]</span></p>
+</div>
+<div id="conceptos-básicos" class="section level2">
+<h2><span class="header-section-number">1.2</span> Conceptos básicos</h2>
+<p>Una serie tiempo es una secuencia de observaciones, medidos en determinados momentos del tiempo, ordenados cronológicamente y, espaciados entre sí de manera uniforme, así los datos usualmente son dependientes entre sí. El principal objetivo de una serie de tiempo es su análisis para hacer pronóstico. Formalmente se tiene la siguiente definición.</p>
+
+<div class="definition">
+<p><span id="def:defi-serie-tiempo" class="definition"><strong>Definición 1.7  </strong></span>Una <strong>serie de tiempo</strong> es un conjunto de observaciones <span class="math inline">\(x_t\)</span>, cada una registrada a un tiempo específico <span class="math inline">\(t\)</span>.</p>
+</div>
+
+
+<div class="definition">
+<span id="def:defi-modelo-serie-tiempo" class="definition"><strong>Definición 1.8  </strong></span>Un <strong>modelo de series de tiempo</strong> para los datos observados <span class="math inline">\(\{x_t\}\)</span> es una especificación de una distribución conjunta (o posiblemente solo de medias y covarianzas) de una sucesión de variables aleatorias <span class="math inline">\(\{X_t\}\)</span> de las cuales <span class="math inline">\(\{x_t\}\)</span> es una realización.
+</div>
+
+<p>A continuación presentaremos una serie de ejemplos que demuestran la utilidad y lo cotidiano de las series de tiempo, también se mostrarán los códigos en <strong>R</strong> para cargar los archivos de datos y graficar las respectivas series de tiempo.</p>
+</div>
+<div id="ejemplos" class="section level2">
+<h2><span class="header-section-number">1.3</span> Ejemplos</h2>
+
+<div class="example">
+<p><span id="exm:ejem-beneficios-acciones" class="example"><strong>Ejemplo 1.1  (Beneficios de acciones)  </strong></span>Beneficios por acción trimestrales para la compañía Johnson y Johnson. Se tienen 84 trimestres iniciando el primer trimestre de 1960 hasta el último trimestre de 1980. Los métodos para analizar tales datos se verán en el Tema 3 usando técnicas de regresión. El archivo es <em>“jj.txt”</em>.</p>
+Los comandos en R para cargar el archivo y graficar la serie de tiempo son los siguientes:
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">jj=<span class="kw">ts</span>(<span class="kw">scan</span>(<span class="st">&quot;data/jj.txt&quot;</span>),<span class="dt">start=</span><span class="dv">1960</span>,<span class="dt">freq=</span><span class="dv">4</span>) 
+<span class="kw">plot</span>(jj, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Beneficios por acción trimestrales&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-8-1.svg" alt="Beneficios por acción trimestrales para la compañía Johnson y Johnson"  />
+<p class="caption">
+Figura 1.1: Beneficios por acción trimestrales para la compañía Johnson y Johnson
+</p>
+</div>
+
+<div class="example">
+<span id="exm:reservas-internacionales" class="example"><strong>Ejemplo 1.2  </strong></span>El archivo <em>“ReservasInternacionales.xlsx”</em>, contiene el registro mensual de Reservas Internacionales Venezolanas en millones de dólares ($), iniciando en el mes de enero de 1996 hasta el mes de diciembre de 2017
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readxl)
+reservas &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;data/ReservasInternacionales.xlsx&quot;</span>)
+reservas=<span class="kw">ts</span>(reservas,<span class="dt">start =</span> <span class="dv">1996</span>,<span class="dt">frequency =</span> <span class="dv">12</span>)
+<span class="kw">plot.ts</span>(reservas[,<span class="dv">2</span>], <span class="dt">xlab=</span><span class="st">&quot;Año&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Monto&quot;</span>,
+        <span class="dt">main=</span><span class="st">&quot;Reservas Internacionales de Venezuela (millones $)&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-9-1.svg" alt="Reservas Internacionales de Venezuela (millones $) 1996-2017"  />
+<p class="caption">
+Figura 1.2: Reservas Internacionales de Venezuela (millones $) 1996-2017
+</p>
+</div>
+
+<div class="example">
+<span id="exm:precio-petroleo" class="example"><strong>Ejemplo 1.3  </strong></span>El archivo <em>“PreciosPetroleoVzla.xlsx”</em> contiene el precio promedio mensual de venta para el petróleo venezolano (en dólares) desde enero 2006 hasta noviembre 2017
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readxl)
+petroleo &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;data/PreciosPetroleoVzla.xlsx&quot;</span>)
+petroleo=<span class="kw">ts</span>(petroleo,<span class="dt">start =</span> <span class="dv">2006</span>,<span class="dt">frequency =</span> <span class="dv">12</span>)
+<span class="kw">plot.ts</span>(petroleo[,<span class="dv">2</span>], <span class="dt">xlab=</span><span class="st">&quot;Año&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Monto&quot;</span>,
+        <span class="dt">main=</span><span class="st">&quot;Precio promedio del petróleo venezolano (en dolares $)&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-10-1.svg" alt="Precio promedio del petróleo venezolano (en dolares $) 2006-2017"  />
+<p class="caption">
+Figura 1.3: Precio promedio del petróleo venezolano (en dolares $) 2006-2017
+</p>
+</div>
+
+<div class="example">
+<span id="exm:indice-dow-jones" class="example"><strong>Ejemplo 1.4  </strong></span>El archivo <em>“IndiceDowJones.xlsx”</em> contiene los valores histórico del Índice Dow-Jones desde enero de 1930 hasta octubre de 2017. En el archivo podems notar que desde enero de 1930 hasta diciembre de 1994, los registros son el promedio semanal, a partir de enero de 1995, los registros son diarios. La primera columa es la fecha, la segunda columna es el valor de apertura, la tercera columna el valor máximo, la cuarta el valor mínimo, la quinta el último valor del índice o valor de cierre y la sexta columna es el volumen de acciones.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DJ=<span class="kw">read_excel</span>(<span class="st">&quot;data/IndiceDowJones.xlsx&quot;</span>)
+DJ=<span class="kw">ts</span>(DJ)
+<span class="kw">plot.ts</span>(DJ[,<span class="op">-</span><span class="dv">1</span>], <span class="dt">xlab=</span><span class="st">&quot;Días&quot;</span>, 
+        <span class="dt">main=</span><span class="st">&quot;Índice Dow-Jones desde enero 1930 hasta octubre 2017&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-11-1.svg" alt="Índice Dow-Jones desde enero 1930 hasta octubre 2017"  />
+<p class="caption">
+Figura 1.4: Índice Dow-Jones desde enero 1930 hasta octubre 2017
+</p>
+</div>
+
+<div class="example">
+<span id="exm:Bolsa-Valores-New-York" class="example"><strong>Ejemplo 1.5  </strong></span>La figura siguiente muestra los porcentajes de cambio diario de la Bolsa de Valores de New York desde el 2 de febrero de 1984 hasta el 31 de diciembre de 1991. Como se ve hay una caída fuerte, esta ocurrió el 19 de octubre de 1987 en <span class="math inline">\(t=938\)</span>. El archivo de datos es <em>“nyse.txt”</em>.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">NYSE=<span class="kw">ts</span>(<span class="kw">scan</span>(<span class="st">&quot;data/nyse.txt&quot;</span>))
+<span class="kw">plot</span>(NYSE,<span class="dt">xlab=</span><span class="st">&quot;Tiempo&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Porcentaje de cambio, NYSE&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-12-1.svg" alt="Porcentaje de cambio de la bolsa de New York"  />
+<p class="caption">
+Figura 1.5: Porcentaje de cambio de la bolsa de New York
+</p>
+</div>
+
+<div class="example">
+<p><span id="exm:euribor" class="example"><strong>Ejemplo 1.6  </strong></span>La evolución del EURIBOR es algo que fluctúa a diario. Se entiende por EURIBOR (Euro Interbank Offered Rate) el tipo de interés, promovido por el Instituto Europeo de Mercados Monetarios (EMMI), consistente en la media aritmética simple de los valores diarios con días de mercado para operaciones de depósitos en euros a plazo de uno/tres/seis/doce meses y referido al día quince del mes anterior al comienzo de cada período de interés o al día siguiente hábil si aquel no lo fuese, calculado a partir del ofertado por una muestra de Bancos para operaciones entre entidades de similar calificación.</p>
+A continuación mostramos dos series del EURIBOR. La primera es la evolución histórica anual del EURIBOR desde su implantación en 1999 hasta 2018, los datos se corresponden al mes de enero de cada año. La segunda es la evolución mensual desde enero de 2007 hasta marzo de 2018.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">EURIBORa&lt;-<span class="kw">read_excel</span>(<span class="st">&quot;data/EURIBOR-anual.xlsx&quot;</span>)
+<span class="kw">plot</span>(EURIBORa<span class="op">$</span>Año,EURIBORa<span class="op">$</span>Índice,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Periodo&quot;</span>, 
+     <span class="dt">main=</span><span class="st">&quot;Serie EURIBOR anual (1999-2018)&quot;</span>)
+<span class="kw">grid</span>(<span class="dt">col =</span> <span class="st">&quot;gray&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-13-1.svg" alt="Evolución anual del EURIBOR (1999-2018)"  />
+<p class="caption">
+Figura 1.6: Evolución anual del EURIBOR (1999-2018)
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">EURIBORm&lt;-<span class="kw">read_excel</span>(<span class="st">&quot;data/EURIBOR-mensual.xlsx&quot;</span>)
+EURIts&lt;-<span class="kw">ts</span>(EURIBORm[,<span class="dv">2</span>],<span class="dt">start =</span> <span class="dv">2007</span>, <span class="dt">frequency =</span> <span class="dv">12</span>)
+<span class="kw">plot.ts</span>(EURIts,<span class="dt">xlab =</span> <span class="st">&quot;Periodo&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, 
+        <span class="dt">main=</span><span class="st">&quot;Serie EURIBOR mensual (enero 2007- marzo 2018)&quot;</span>)
+<span class="kw">grid</span>(<span class="dt">col =</span> <span class="st">&quot;gray&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-14"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-14-1.svg" alt="Evolución mensual del EURIBOR (2007-2018)"  />
+<p class="caption">
+Figura 1.7: Evolución mensual del EURIBOR (2007-2018)
+</p>
+</div>
+
+<div class="example">
+<span id="exm:cambio-dolar-euro" class="example"><strong>Ejemplo 1.7  </strong></span>El archivo <em>Cambio-EUR-USD.xlsx</em> contiene el histórico de la cotización dolar estadounidense versus el euro desde el 01/05/2017 hasta el 26/04/2018. En la primera columna se muestra la fecha, la segunda columna el precio de apertura, la tercera el precio de cierre, la cuarta la diferencia en %, la quinta el precio máximo del día, la sexta el precio mínimo y la utlima el volumen de transacciones. A continuación presentamos los gráficos de apertura, cierre, máximo y mínimo.
+</div>
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Cambio&lt;-<span class="kw">read_excel</span>(<span class="st">&quot;data/Cambio-EUR-USD.xlsx&quot;</span>)
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(Cambio<span class="op">$</span>Fecha,Cambio<span class="op">$</span>Apertura, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Periodo&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Cotizacion&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Apertura&quot;</span>)
+<span class="kw">plot</span>(Cambio<span class="op">$</span>Fecha,Cambio<span class="op">$</span>Cierre, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Periodo&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Cotizacion&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Cierre&quot;</span>)
+<span class="kw">plot</span>(Cambio<span class="op">$</span>Fecha,Cambio<span class="op">$</span>Máximo, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Periodo&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Cotizacion&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Máximo&quot;</span>)
+<span class="kw">plot</span>(Cambio<span class="op">$</span>Fecha,Cambio<span class="op">$</span>Mínimo, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Periodo&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Cotizacion&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Mínimo&quot;</span>)
+<span class="kw">plot</span>(Cambio<span class="op">$</span>Fecha,Cambio<span class="op">$</span><span class="st">`</span><span class="dt">Dif.%</span><span class="st">`</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Periodo&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Porcentaje&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Diferencia (apetura-cierre) %&quot;</span>)
+<span class="kw">plot</span>(Cambio<span class="op">$</span>Fecha,Cambio<span class="op">$</span>Volumen, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Periodo&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Monto&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Volumen&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-15-1.svg" alt="Histórico de cambio del USD vs. EUR (01/05/2017 al 26/04/2018)"  />
+<p class="caption">
+Figura 1.8: Histórico de cambio del USD vs. EUR (01/05/2017 al 26/04/2018)
+</p>
+</div>
+<div id="clasificación-de-las-series-de-tiempo" class="section level3">
+<h3><span class="header-section-number">1.3.1</span> Clasificación de las series de tiempo</h3>
+<p>Como se ha mostrado en los ejemplos anteriores, hay una amplia variedad de series de tiempo que pueden clasificarse en varias categorías desde varios puntos de vista.</p>
+<ul>
+<li><p><strong>Series de tiempo continuas y discretas</strong>. Los datos registrados continuamente, por ejemplo, por un dispositivo analógico, se denominan series de tiempo continuas. Por otra parte, los datos observados en ciertos intervalos de tiempo, como la presión atmosférica medida cada hora, se denominan series de tiempo discretas. Existen dos tipos de series de tiempo discretas: una en la que las observaciones de los datos se realizan a intervalos de igual espaciamiento y otra en la que las observaciones de los datos se realizan a intervalos de espaciamiento desigual. Aunque las series de tiempo mostradas en los ejemplos anteriores están conectadas continuamente por líneas sólidas, todas ellas son series de tiempo discretas. A partir de ahora en este libro, consideramos sólo series de tiempo discretas registradas a intervalos igualmente espaciados, porque las series de tiempo que analizamos en ordenadores digitales son generalmente series de tiempo discretas.</p></li>
+<li><p><strong>Series de tiempo univariadas y multivariadas</strong>. Las series de tiempo que consisten en una sola observación en cada punto temporal, como se muestran en los ejemplos 1.1, 1.2, 1.3 y 1.5, se denominan series de tiempo univariadas. Por otra parte, las series de tiempo que se obtienen grabando simultáneamente dos o más fenómenos como los ilustrados en el ejemplo 1.4 se denominan series de tiempo multivariadas. Sin embargo, puede ser difícil distinguir entre series de tiempo univariadas y multivariadas desde su naturaleza; más bien, la distinción se hace desde el punto de vista del analista y por varios otros factores, como la restricción de la medición y los conocimientos empíricos o teóricos sobre el tema. Desde el punto de vista del modelado estadístico, la selección de variables en sí misma es un problema importante en el análisis de series de tiempo.</p></li>
+<li><p><strong>Series de tiempo estacionarias y no estacionarias</strong>. Una serie de tiempo es un registro de un fenómeno que varía irregularmente con el tiempo. En el análisis de series de tiempo, las series de tiempo de variación irregular se expresan generalmente mediante modelos estocásticos. En algunos casos, un fenómeno aleatorio puede ser considerado como la realización de un modelo estocástico con una estructura de variación temporal. Estas series de tiempo se denominan series de tiempo estacinarias. El ejemplo 1.5 es un ejemplo típico de una serie de tiempo estacionaria. Por otra parte, si la estructura estoc?stica de una serie de tiempo cambia con el tiempo, se denomina serie de tiempo no estacionaria. Como ejemplos típicos de series de tiempo no estacionarias, considere la serie en los ejemplos 1.1 a 1.4 . Se puede observar que los valores medios cambian a lo largo del tiempo.</p></li>
+<li><p><strong>Series de tiempo gaussianas y no gaussianas</strong>. Cuando una distribución de una serie de tiempo sigue una distribución normal, la serie de tiempo se denomina serie de tiempo gaussiana; de lo contrario, se denomina serie de tiempo no gausiana. La mayoría de los modelos considerados en este libro son modelos gaussianos, asumiendo que las series de tiempo siguen distribuciones gaussianas. Al igual que en el caso del ejemplo 1.3, el patrón de las series de tiempo es a veces asimétrico, de modo que la distribución marginal no puede considerarse gaussiana. Incluso en tal situación, podemos obtener una serie de tiempo gaussiana aproximada mediante una transformación de datos apropiada.</p></li>
+<li><p><strong>Series de tiempo lineales y no lineales</strong>. Una serie de tiempo expresable como la salida de un modelo lineal se denomina serie de tiempo lineal. Por el contrario, la salida de un modelo no lineal se denomina serie de tiempo no lineal.</p></li>
+<li><p><strong>Datos faltantes y valores atípicos</strong>. En el modelado de series de tiempo de problemas del mundo real, a veces necesitamos tratar con observaciones faltante y valores atípicos. Algunos valores de las series de tiempo que no se han registrado por algunas razones se denominan observaciones que faltan en las series de tiempo. Los valores atípicos (observaciones exteriores) pueden ocurrir debido al comportamiento extraordinario del objeto, mal funcionamiento del dispositivo de observación o errores en el registro. En los datos de los ejemplos 1.4 y 1.5 se pueden observar datos atípicos. En el ejemplo 1.4 podemos notar caídas en los índices del DowJones y en el ejemplo 1.4 podemos notar una fuerte caída en el porcentaje de cambio de diario ocurrido el 19 de octubre de 1987.</p></li>
+</ul>
+</div>
+</div>
+<div id="componentes-de-una-serie-de-tiempo" class="section level2">
+<h2><span class="header-section-number">1.4</span> Componentes de una serie de tiempo</h2>
+<p>El análisis clásico de las series de tiempo se basa en la suposición de que los valores que toma la variable de observación es la consecuencia de tres componentes, cuya actuación conjunta da como resultado los valores medidos, estos componentes son:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Componente de tendencia</strong>. Se puede definir como un cambio a largo plazo que se produce en la relación al nivel medio, o el cambio a largo plazo de la media. La tendencia se identifica con un movimiento suave de la serie a largo plazo.</p></li>
+<li><p><strong>Componente estacional</strong>. Muchas series de tiempo presentan cierta periodicidad o dicho de otro modo, variación de cierto período (semestral, mensual, etc.). Por ejemplo las Ventas al Detalle en Puerto Rico aumentan por los meses de noviembre y diciembre por las festividades navideñas. Estos efectos son fáciles de entender y se pueden medir explícitamente o incluso se pueden eliminar de la serie de datos, a este proceso se le llama desestacionalización de la serie.</p></li>
+<li><p><strong>Componente aleatoria</strong>. Esta componente no responde a ningún patrón de comportamiento, sino que es el resultado de factores fortuitos o aleatorios que inciden de forma aislada en una serie de tiempo.</p></li>
+</ol>
+<p>De los tres componentes anteriores los dos primeros son componentes determinísticos, mientras que la última es aleatoria.</p>
+<p>Los modelos que se utilizan con más frecuencia son:</p>
+<ul>
+<li><p><strong>Modelo aditivo</strong>: <span class="math inline">\(X_t=T_t+E_t+\epsilon_t\)</span></p></li>
+<li><p><strong>Modelos multiplicativos</strong>:</p>
+<ul>
+<li><p><em>Puro</em>: <span class="math inline">\(X_t = T_t\times E_t\times\epsilon_t\)</span></p></li>
+<li><p><em>Mixto</em>: <span class="math inline">\(X_t = T_t\times E_t+\epsilon_t\)</span></p></li>
+</ul></li>
+</ul>
+<p>La elección de uno de estos modelos se hará de manera que el modelo seleccionado sea capaz de agrupar las principales características observadas en el gráfico de la serie en estudio.</p>
+<div id="el-modelo-aditivo-de-componentes-de-series-de-tiempo" class="section level3">
+<h3><span class="header-section-number">1.4.1</span> El Modelo Aditivo de Componentes de Series de Tiempo</h3>
+Dada una serie <span class="math inline">\(X_t, t=1,\ldots,n\)</span>, el <em>Modelo Aditivo de Componentes</em> consiste en asumir que <span class="math inline">\(X_t\)</span> se puede descomponer en tres componentes:
+<span class="math display" id="eq:eq-modelo-aditivo">\[\begin{equation}
+X_t = T_t+E_t+\epsilon_t
+\tag{1.8}
+\end{equation}\]</span>
+<p>donde <span class="math inline">\(T_t\)</span> es la componente de tendencia, <span class="math inline">\(E_t\)</span> es la componente estacional y <span class="math inline">\(\epsilon_t\)</span> es la componente aleatoria o de errores. Las componentes <span class="math inline">\(T_t\)</span> y <span class="math inline">\(E_t\)</span> son funciones de <span class="math inline">\(t\)</span> determinísticas. Su evolución es perfectamente predecible.</p>
+<p>Este modelo es apropiado cuando la magnitud de la fluctuaciones estacionales de la serie no varía al hacerlo la tendencia.</p>
+<p>La componente <span class="math inline">\(T_t\)</span> en algunos casos también puede ser una componente estacional, pero de baja frecuencia, o, equivalentemente, una componente con período muy grande. Por ejemplo, en una serie diaria, <span class="math inline">\(E_t\)</span> puede tener período 30 días, y <span class="math inline">\(T_t\)</span> período 360 días.</p>
+<p>En la Figura  se muestra la idea de la descomposición. Al superponer las series en los gráficos (a), (b) y (c) se obtiene la serie en el gráfico (d).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-16"></span>
+<img src="images/Grafica-tema3-modelo-aditivo.png" alt="Modelo aditivo de series de tiempo" width="585" />
+<p class="caption">
+Figura 1.9: Modelo aditivo de series de tiempo
+</p>
+</div>
+<p>Asumiendo el modelo aditivo, el análisis de series de tiempo consiste en modelar y estimar <span class="math inline">\(T_t\)</span> y <span class="math inline">\(E_t\)</span> y luego extraerlas de <span class="math inline">\(X_t\)</span> para obtener <span class="math inline">\(\hat{\epsilon}_t = X_t - \hat{T}_t - \hat{E}_t\)</span>. La serie <span class="math inline">\(\hat{\epsilon}_t\)</span> se modela y estima para finalmente reconstruir <span class="math inline">\(X_t\)</span>, <span class="math inline">\(\hat{X}_t = \hat{T}_t+\hat{E}_t+\hat{\epsilon}_t\)</span>, y poder realizar el pronóstico <span class="math inline">\(\hat{X}_{t+h}=\hat{T}_{t+h}+\hat{E}_{t+h}+\hat{\epsilon}_{t+h}\)</span>, utilizando la información disponible <span class="math inline">\(X_t,\ldots,X_n\)</span> con <span class="math inline">\(h=1,2,\ldots,m\)</span>. Sin embargo, puede suceder que la serie <span class="math inline">\(\hat{\epsilon}_t\)</span> sea incorrelacionada, es decir, <span class="math inline">\(Corr(\hat{\epsilon}_t,\hat{\epsilon}_{t+s}) = 0\)</span>, para <span class="math inline">\(s\neq0\)</span>. En este caso <span class="math inline">\(\hat{\epsilon}_{t+h}=0\)</span> para todo <span class="math inline">\(h&gt;0\)</span>.</p>
+<p>En <strong>R</strong> podemos descomponer una serie de tiempo usando la función <em>stl()</em> o la función <em>decompose()</em>. Retomando la serie de beneficios trimestrales de las acciones de Johnson y Johnson (Ejemplo <a href="introducción.html#exm:ejem-beneficios-acciones">1.1</a>) podemos observar la descomposición de la misma. En la parte superior de la gráfica se observa la serie original, en el gráfico siguiente la estacionalidad, en el tercero la tendencia y en el gráfico inferior los residuales.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">decompose</span>(jj, <span class="dt">type =</span> <span class="st">&quot;additive&quot;</span>, <span class="dt">filter =</span> <span class="ot">NULL</span>))</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-17"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-17-1.svg" alt="Descomposición aditiva de la serie Johnson y Johnson"  />
+<p class="caption">
+Figura 1.10: Descomposición aditiva de la serie Johnson y Johnson
+</p>
+</div>
+<p>La función <em>stl()</em> es más sofisticada que <em>decompose()</em>, la misma usa la descomposición de estacionalidad y tendencia de Loess (Seasonal and Trend decomposition using Loess) el cual es un método robusto y versátil para la descomposición de series de tiempo. El método STL fue desarrollado por Cleveland et al. (1990). A continuación mostramos la misma serie de beneficios de acciones de Johnson y Johnson usando esta función.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">stl</span>(jj,<span class="dt">s.window=</span><span class="st">&quot;periodic&quot;</span>), <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>,
+     <span class="dt">main=</span><span class="st">&quot;Descomposicion de la serie Johnson y Johnson&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-18"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-18-1.svg" alt="Descomposición de la serie Johnson y Johnson usando la descomposición de Loess (STL)"  />
+<p class="caption">
+Figura 1.11: Descomposición de la serie Johnson y Johnson usando la descomposición de Loess (STL)
+</p>
+</div>
+</div>
+<div id="el-modelo-multiplicativo-de-componentes-de-series-de-tiempo" class="section level3">
+<h3><span class="header-section-number">1.4.2</span> El Modelo Multiplicativo de Componentes de Series de Tiempo</h3>
+<p>Dada una serie de tiempo <span class="math inline">\(X_t,t=1,\ldots,n\)</span>, el <em>Modelo Multiplicativo de Componentes</em> consiste en asumir que <span class="math inline">\(X_t\)</span> se puede descomponer de una de las siguientes maneras:</p>
+<ul>
+<li><em>Puro</em>:
+<span class="math display" id="eq:eq-modelo-multiplicativo-puro">\[\begin{equation}
+X_t = T_t\times E_t\times\epsilon_t
+\tag{1.9}
+\end{equation}\]</span></li>
+<li><em>Mixto</em>:
+<span class="math display" id="eq:eq-modelo-multiplicativo-mixto">\[\begin{equation}
+X_t = T_t\times E_t+\epsilon_t
+\tag{1.10}
+\end{equation}\]</span></li>
+</ul>
+<p>donde <span class="math inline">\(T_t\)</span> es la componente de tendencia, <span class="math inline">\(E_t\)</span> es la componente estacional y <span class="math inline">\(\epsilon_t\)</span> es la componente aleatoria o de errores. Estos modelos son apropiados cuando la magnitud de las fluctuaciones estacionales de la serie crece y decrece proporcionalmente con los crecimientos y decrecimientos de la tendencia respectivamente.</p>
+<p>Usamos la misma función <em>decompose()</em> para realizar la descomposición multiplicativa de la serie de tiempo, para ello en ‘type’ cambiamos “additive” por “multiplicative”</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">decompose</span>(jj, <span class="dt">type =</span> <span class="st">&quot;multiplicative&quot;</span>, <span class="dt">filter =</span> <span class="ot">NULL</span>))</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-19"></span>
+<img src="Serie-de-Tiempo-en-R_files/figure-html/unnamed-chunk-19-1.svg" alt="Descomposición multiplicativa de la serie Johnson y Johnson"  />
+<p class="caption">
+Figura 1.12: Descomposición multiplicativa de la serie Johnson y Johnson
+</p>
+</div>
+
+</div>
+</div>
+</div>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-78759535-1', 'auto');
+ga('send', 'pageview');  
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="acerca-del-autor.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="características-de-series-de-tiempo.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/synergyvision/Teoria-de-Portafolio/edit/master/bookdown/100-introduction.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Serie-de-Tiempo-en-R.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
